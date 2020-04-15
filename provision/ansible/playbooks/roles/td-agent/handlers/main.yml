@@ -1,0 +1,10 @@
+---
+- name: reload td-agent
+  systemd:
+    name: td-agent
+    state: reloaded
+
+- name: restart rsyslog
+  systemd:
+    name: rsyslog
+    state: restarted

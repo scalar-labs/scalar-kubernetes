@@ -1,0 +1,16 @@
+[Unit]
+Description=Cassandra Exporter Monitor
+After=cloud-final.service
+Wants=cloud-final.service
+StartLimitBurst=5
+StartLimitIntervalSec=300
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/java -jar /etc/prometheus/cassandra_exporter.jar /etc/prometheus/cassandra_exporter_config.yml
+Restart=always
+RestartSec=30
+
+
+[Install]
+WantedBy=multi-user.target

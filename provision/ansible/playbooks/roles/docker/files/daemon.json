@@ -1,0 +1,8 @@
+{
+    "log-driver": "fluentd",
+    "log-opts": {
+        "fluentd-address": "localhost:24225",
+        "fluentd-async-connect": "true",
+        "tag": "docker.{{.Name}}"
+    }
+}

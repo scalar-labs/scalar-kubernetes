@@ -1,0 +1,12 @@
+[Unit]
+Description=DriveMount
+After=cloud-final.service default.target
+Wants=cloud-final.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash -c '. /etc/profile.d/volumes.sh; /usr/local/bin/drive_mount.sh'
+
+[Install]
+WantedBy=multi-user.target

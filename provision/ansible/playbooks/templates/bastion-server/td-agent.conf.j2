@@ -1,0 +1,31 @@
+<source>
+  @type syslog
+  port 5140
+  tag system
+</source>
+
+<filter **>
+  @type record_transformer
+  <record>
+    hostname ${hostname}
+  </record>
+</filter>
+
+<match **>
+  @type forward
+  send_timeout 60s
+  recover_wait 10s
+  hard_timeout 60s
+
+  # Start up even if monitor host is not present
+  ignore_network_errors_at_startup true
+
+  <server>
+    host {{ monitor_host }}
+  </server>
+
+  <secondary>
+    @type file
+    path /var/log/td-agent/forward-failed
+  </secondary>
+</match>

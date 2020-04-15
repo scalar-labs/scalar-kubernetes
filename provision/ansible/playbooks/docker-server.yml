@@ -1,0 +1,33 @@
+---
+- name: Install td-agent
+  hosts: all
+  roles:
+    - role: td-agent
+      when: enable_tdagent is undefined or enable_tdagent == '1'
+  vars:
+    tdagent_conf_template: templates/docker-server/td-agent.conf.j2
+  gather_facts: no
+  become: yes
+
+- name: Common Install
+  hosts: all
+  roles:
+    - "common"
+  gather_facts: no
+  become: yes
+
+- name: Docker Server
+  hosts: all
+  roles:
+    - "docker"
+  gather_facts: yes
+  become: no
+
+- name: Add multiple public keys
+  hosts: all
+  gather_facts: no
+  become: no
+  roles:
+    - "ssh"
+  tags:
+  - ssh

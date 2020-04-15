@@ -1,0 +1,71 @@
+---
+# Before Installation documentation: https://docs.fluentd.org/installation/before-install
+
+# This section is not needed since we use td-agent controled by systemd.
+# - name: Increase Max \# of File Descriptors
+#   pam_limits:
+#     domain: "{{ item.domain }}"
+#     limit_type: "{{ item.limit_type }}"
+#     limit_item: nofile
+#     value: "65536"
+#   with_items:
+#     - domain: root
+#       limit_type: soft
+#     - domain: root
+#       limit_type: hard
+#     - domain: "*"
+#       limit_type: soft
+#     - domain: "*"
+#       limit_type: hard
+
+- name: Install td-agent From Script
+  script: td-agent_install.sh
+  become: yes
+
+- name: Enable td-agent
+  systemd:
+    name: td-agent
+    enabled: yes
+
+- name: Update rsyslog.conf to forward logs
+  lineinfile:
+    path: /etc/rsyslog.conf
+    line: '*.* @127.0.0.1:5140'
+  notify:
+    - restart rsyslog
+
+#
+# Plays for td-agent.conf installation taken from https://galaxy.ansible.com/william-yeh/fluentd
+#
+- name: rename default td-agent.conf
+  command: creates="/etc/td-agent/td-agent.conf.bak" mv /etc/td-agent/td-agent.conf /etc/td-agent/td-agent.conf.bak
+
+- name: copy new td-agent.conf from role's default
+  copy:
+    src: td-agent.conf
+    dest: /etc/td-agent/td-agent.conf
+    owner: td-agent
+    group: td-agent
+  when: tdagent_conf_copy is not defined
+  notify:
+    - reload td-agent
+
+- name: copy new "td-agent.conf" verbatim from main playbook's
+  copy:
+    src:  "{{ playbook_dir }}/{{ tdagent_conf_copy }}"
+    dest: /etc/td-agent/td-agent.conf
+    owner: td-agent
+    group: td-agent
+  when: tdagent_conf_copy is defined
+  notify:
+    - reload td-agent
+
+- name: copy (from template) new "td-agent.conf" from main playbook's
+  template:
+    src:  "{{ playbook_dir }}/{{ tdagent_conf_template }}"
+    dest: /etc/td-agent/td-agent.conf
+    owner: td-agent
+    group: td-agent
+  when: tdagent_conf_template is defined
+  notify:
+    - reload td-agent

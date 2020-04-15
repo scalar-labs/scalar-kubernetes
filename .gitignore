@@ -1,0 +1,24 @@
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+*.tfvars
+!example.tfvars
+
+# Plan files
+*.out
+*.tfplan
+
+# key files
+*.pem
+example_key*
+
+.DS_Store
+*.tar.gz
+
+# SSH cfg
+*.cfg

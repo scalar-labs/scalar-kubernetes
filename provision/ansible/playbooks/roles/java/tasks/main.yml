@@ -1,0 +1,55 @@
+---
+- name: Install Open JDK 8
+  block:
+    - name: Install Open JDK 8 for Debian Based Linux
+      package:
+        name: openjdk-8-jdk
+        state: present
+      register: install_java_result
+      until: install_java_result is succeeded
+      retries: 3
+      delay: 5
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Install Open JDK 8 for RedHat Based Linux
+      package:
+        name: java-1.8.0-openjdk
+        state: present
+      register: install_java_result
+      until: install_java_result is succeeded
+      retries: 3
+      delay: 5
+      when: ansible_facts['os_family'] == "RedHat"
+  when: not install_java_from_source|bool
+
+- name: Install Java From Archive
+  block:
+    - name: Copy Java Archive File {{java_tar_gz_source}}
+      copy:
+        src: "{{ playbook_dir }}/{{ java_tar_gz_source }}"
+        dest: /tmp
+    - name: Create Java Home Directory
+      file:
+        path: /usr/local/lib/java
+        state: directory
+        mode: 0755
+    - name: Unarchive {{java_tar_gz_source}} to Java Home Directory
+      unarchive:
+        src: "/tmp/{{ java_tar_gz_source }}"
+        dest: /usr/local/lib/java
+        owner: root
+        group: root
+        remote_src: yes
+        extra_opts:
+        - --strip-components=1
+    - name: Setup Java Link in /usr/bin/java
+      file:
+        src: /usr/local/lib/java/bin/java
+        dest: /usr/bin/java
+        state: link
+    - name: Set JAVA_HOME variable on Boot
+      lineinfile:
+        path: /etc/profile.d/java.sh
+        line: export JAVA_HOME=/usr/local/lib/java
+        create: yes
+  when: install_java_from_source|bool

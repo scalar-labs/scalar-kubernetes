@@ -1,0 +1,20 @@
+[Unit]
+Description=Cassandra
+After=drivemount.service
+Wants=drivemount.service
+
+[Service]
+PIDFile=/var/run/cassandra/cassandra.pid
+User=cassandra
+Group=cassandra
+ExecStart=/bin/sh -c '. /etc/profile.d/cassandra.sh; cassandra -Dcom.sun.management.jmxremote.authenticate=$JMX_AUTH -f -p /var/run/cassandra/cassandra.pid'
+StandardOutput=journal
+StandardError=journal
+LimitNOFILE=1048576
+LimitMEMLOCK=infinity
+LimitNPROC=32768
+LimitAS=infinity
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
