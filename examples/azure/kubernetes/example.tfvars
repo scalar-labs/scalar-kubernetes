@@ -1,6 +1,6 @@
 # Required
-client_id     = "7a29497f-4184-42e9-b984-2016b9833ceb"
-client_secret = "51f0c44e-2741-4ff9-a6cb-77b238228ac7"
+client_id     = ""
+client_secret = ""
 
 # Optional
 kubernetes_global = {
