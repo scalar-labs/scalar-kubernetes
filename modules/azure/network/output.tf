@@ -23,16 +23,6 @@ output "subnet_map" {
   description = "The subnet map of virtual network."
 }
 
-output "subnet_map_cidr" {
-  value = {
-    public       = azurerm_subnet.subnet["public"].address_prefix
-    k8s_node_pod = azurerm_subnet.subnet["k8s_node_pod"].address_prefix
-    cassandra    = azurerm_subnet.subnet["cassandra"].address_prefix
-    k8s_ingress  = azurerm_subnet.subnet["k8s_ingress"].address_prefix
-  }
-  description = "The subnet cidr map  of virtual network."
-}
-
 output "image_id" {
   value       = local.network.image_id
   description = "The image id to initiate."

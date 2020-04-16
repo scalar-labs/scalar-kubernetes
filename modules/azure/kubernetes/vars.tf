@@ -14,12 +14,12 @@ variable "kubernetes_global" {
   default = {}
 }
 
-variable "kubernetes_app_pool" {
+variable "kubernetes_default_node_pool" {
   type    = map
   default = {}
 }
 
-variable "kubernetes_utility_pool" {
+variable "kubernetes_additional_node_pools" {
   type    = map
   default = {}
 }

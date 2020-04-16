@@ -9,7 +9,7 @@ module "kubernetes" {
   network = local.network
 
   # Optional Variables
-  kubernetes_global       = var.kubernetes_global
-  kubernetes_app_pool     = var.kubernetes_app_pool
-  kubernetes_utility_pool = var.kubernetes_utility_pool
+  kubernetes_global                = var.kubernetes_global
+  kubernetes_default_node_pool     = var.kubernetes_default_node_pool
+  kubernetes_additional_node_pools = var.kubernetes_additional_node_pools
 }

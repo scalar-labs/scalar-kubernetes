@@ -22,10 +22,6 @@ output "subnet_map" {
   value = module.network.subnet_map
 }
 
-output "subnet_map_cidr" {
-  value = module.network.subnet_map_cidr
-}
-
 output "image_id" {
   value = module.network.image_id
 }

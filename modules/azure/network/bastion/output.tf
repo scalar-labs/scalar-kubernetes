@@ -4,7 +4,7 @@ output "bastion_host_ids" {
 }
 
 output "bastion_host_ips" {
-  value       = module.bastion_cluster.public_ip_dns_name
+  value       = module.bastion_cluster.public_ip_address
   description = "A list of bastion hosts' IP addresses."
 }
 
