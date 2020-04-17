@@ -1,0 +1,4 @@
+# Scalar ledger
+
+## Manual installation
+

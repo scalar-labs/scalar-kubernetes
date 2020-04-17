@@ -1,0 +1,81 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: envoy
+    version: v1
+  name: envoy
+  namespace: scalardlt
+spec:
+  minReadySeconds: 120
+  replicas: 3
+  selector:
+    matchLabels:
+      k8s-app: envoy
+      version: v1
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io.port: "9901"
+        prometheus.io/path: /stats/prometheus
+        prometheus.io/scrape: "true"
+      creationTimestamp: null
+      labels:
+        k8s-app: envoy
+        version: v1
+    spec:
+      containers:
+      - command:
+        - /usr/local/bin/envoy
+        - -c
+        - /etc/envoy/envoy.yaml
+        - -l
+        - debug
+        image: envoyproxy/envoy:v1.12.2
+        imagePullPolicy: Always
+        name: envoy
+        ports:
+        - containerPort: 50051
+          name: envoy
+          protocol: TCP
+        - containerPort: 50052
+          name: envoy-priv
+          protocol: TCP
+        - containerPort: 9901
+          name: envoy-admin
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /ready
+            port: 9901
+          failureThreshold: 3
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 9901
+          failureThreshold: 3
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/envoy/envoy.yaml
+          name: envoy-config
+          subPath: envoy.yaml
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - configMap:
+          defaultMode: 493
+          name: envoy
+        name: envoy-config
