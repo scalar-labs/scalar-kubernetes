@@ -37,8 +37,8 @@ spec:
         - -c 
         - "sleep 20 && echo loading cassandra keyspace && cqlsh cassandra.cassandra.svc.cluster.local -u cassandra -p cassandra -f /init.cql"
       containers:
-      - name: scalar-legder
-        image: pauldozancukscalar/scalardl-k8s:2.0.3
+      - name: scalar-ledger
+        image: <your_choosen_registry>/scalardl-k8s:2.0.2
         imagePullPolicy: Always
         args:
         - sh

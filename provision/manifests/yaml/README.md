@@ -249,7 +249,7 @@ statefulset.apps/cassandra   1/1     3h6m
 
 ### Start Scalar-Ledger
 
-first create a dedicated namespace for Scalar-Ledger name `scalardlt`
+first create a dedicated k8s namespace for Scalar-Ledger name `scalardlt`
 
 ```console
 kubectl create -f 00-scalardlt-ns.yaml
@@ -259,6 +259,8 @@ namespace/scalardlt created
 #### build your image
 
 to build docker images of scalar-ledger with grpc_health_probe to help kubernetes know if the container is running fine.
+
+create a `Dockerfile` file with
 
 ```DockerFile
 ARG FROM_SCALAR_IMAGE=scalarlabs/scalar-ledger:2.0.2
@@ -270,7 +272,17 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.3.1 && \
     chmod +x /bin/grpc_health_probe
 ```
 
-and upload it to private hub docker or another private registry
+Build the image and push it to registry
+
+```console
+docker build -t <your_choosen_registry>/scalardl-k8s:2.0.2
+```
+
+```console
+docker push <your_choosen_registry>/scalardl-k8s:2.0.2
+```
+
+and upload it to private hub docker or another private registry.
 
 #### docker registry setting up
 
@@ -286,7 +298,11 @@ kubectl create secret docker-registry reg-docker-secrets \
 
 #### deploy Scalar-Ledger
 
-to deploy yaml containing scalar ledger app
+it is time to deploy our scalar-ledger into minikube
+
+*before that you need to edit `scalardlt/20-scalar-ledger-deployment.yaml`, line 41. image: `<your_choosen_registry>/scalardl-k8s:2.0.2`*
+
+to deploy scalar-ledger app with kubectl
 
 ```console
 kubectl create -f scalardlt/
@@ -295,7 +311,7 @@ deployment.extensions/scalar-ledger created
 service/scalar-ledger-headless created
 ```
 
-to deploy yaml containing envoy proxy
+to deploy envoy proxy with kubectl
 
 ```console
 kubectl create -f envoy/
@@ -304,7 +320,7 @@ deployment.extensions/envoy created
 service/envoy created
 ```
 
-check the status
+check the status of the pods and services
 
 ```console
 kubectl get po,svc -n scalardlt
