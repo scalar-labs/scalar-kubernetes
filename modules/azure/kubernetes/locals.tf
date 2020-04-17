@@ -13,7 +13,7 @@ locals {
   triggers = [var.network.bastion_provision_id]
 }
 
-### default
+### Default
 locals {
   kubernetes_global_default = {
     name                            = "scalar-kubernetes"
@@ -25,14 +25,12 @@ locals {
     public_ssh_key_path             = var.network.public_key_path
     role_based_access_control       = true
     kube_dashboard                  = true
-    client_id                       = var.client_id
-    client_secret                   = var.client_secret
     network_plugin                  = "azure"
     load_balancer_sku               = "Standard"
     service_cidr                    = cidrsubnet(var.network.cidr, 6, 4)
     docker_bridge_cidr              = "172.17.0.1/16"
     dns_service_ip                  = cidrhost(cidrsubnet(var.network.cidr, 6, 4), 2)
-    api_server_authorized_ip_ranges = ["${var.network.bastion_ip}/32"]
+    api_server_authorized_ip_ranges = var.network.bastion_ip
   }
 }
 

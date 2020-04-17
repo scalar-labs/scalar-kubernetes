@@ -1,11 +1,36 @@
-## AKS kubernetes cluster ##
+# Create Service Principals
+resource "random_password" "aks" {
+  length  = 20
+  special = true
+}
+
+resource "azuread_application" "aks" {
+  count = length(var.service_principal) == 2 ? 1 : 0
+  name = var.network.name
+}
+
+resource "azuread_service_principal" "aks" {
+  count = length(var.service_principal) == 2 ? 1 : 0
+  application_id = azuread_application.aks[0].application_id
+}
+
+resource "azuread_service_principal_password" "aks" {
+  count = length(var.service_principal) == 2 ? 1 : 0
+  service_principal_id = azuread_service_principal.aks[0].id
+  value                = random_password.aks.result
+  end_date_relative    = "8760h"
+}
+
+# AKS kubernetes cluster #
 resource "azurerm_kubernetes_cluster" "aks" {
   name                            = local.kubernetes_global.name
   resource_group_name             = local.kubernetes_global.resource_group_name
   location                        = local.kubernetes_global.location
   dns_prefix                      = local.kubernetes_global.dns_prefix
   kubernetes_version              = local.kubernetes_global.kubernetes_version
-  api_server_authorized_ip_ranges = local.kubernetes_global.api_server_authorized_ip_ranges
+  api_server_authorized_ip_ranges = [
+    "${local.kubernetes_global.api_server_authorized_ip_ranges == "" ? local.kubernetes_global.api_server_authorized_ip_ranges : "0.0.0.0/0"}"
+  ]
 
   linux_profile {
     admin_username = local.kubernetes_global.admin_username
@@ -40,8 +65,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   service_principal {
-    client_id     = local.kubernetes_global.client_id
-    client_secret = local.kubernetes_global.client_secret
+    client_id = lookup(var.service_principal, "client_id", azuread_service_principal.aks[0].application_id)
+    client_secret = lookup(var.service_principal, "client_secret", azuread_service_principal_password.aks[0].value)
   }
 
   network_profile {
@@ -55,7 +80,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   lifecycle {
     ignore_changes = [
-      default_node_pool,
+      default_node_pool[0].node_count,
       windows_profile
     ]
   }
@@ -85,4 +110,17 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks" {
   enable_auto_scaling   = each.value.cluster_auto_scaling
   min_count             = each.value.cluster_auto_scaling_min_count
   max_count             = each.value.cluster_auto_scaling_max_count
+}
+
+# Set Network Contributor permission to service principal
+resource "azurerm_role_assignment" "aks_subnet_node_pod" {
+  scope                = local.kubernetes_default_node_pool.vnet_subnet_id
+  role_definition_name = "Network Contributor"
+  principal_id         = lookup(var.service_principal, "client_id", azuread_service_principal.aks[0].application_id)
+}
+
+resource "azurerm_role_assignment" "aks_subnet_ingress" {
+  scope                = var.network.subnet_k8s_ingress
+  role_definition_name = "Network Contributor"
+  principal_id         = lookup(var.service_principal, "client_id", azuread_service_principal.aks[0].application_id)
 }

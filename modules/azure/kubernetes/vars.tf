@@ -1,12 +1,11 @@
-variable "network" {
-  type    = map
+variable "service_principal" {
+  type = map
   default = {}
 }
 
-variable "client_secret" {
-}
-
-variable "client_id" {
+variable "network" {
+  type    = map
+  default = {}
 }
 
 variable "kubernetes_global" {

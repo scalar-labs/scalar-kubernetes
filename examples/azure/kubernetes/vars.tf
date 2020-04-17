@@ -3,12 +3,9 @@ variable "network" {
   default = {}
 }
 
-variable "client_secret" {
-  type = string
-}
-
-variable "client_id" {
-  type = string
+variable "service_principal" {
+  type    = map
+  default = {}
 }
 
 variable "kubernetes_global" {

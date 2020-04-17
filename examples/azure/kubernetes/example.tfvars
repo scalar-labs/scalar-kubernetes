@@ -1,8 +1,9 @@
-# Required
-client_id     = ""
-client_secret = ""
-
 # Optional
+service_principal = {
+  # client_id     = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  # client_secret = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
+
 kubernetes_global = {
   # name                            = "scalar-kubernetes"
   # dns_prefix                      = "scalar-k8s"
