@@ -1,5 +1,5 @@
 variable "service_principal" {
-  type = map
+  type    = map
   default = {}
 }
 
