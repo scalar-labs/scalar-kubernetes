@@ -61,7 +61,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix          = local.kubernetes_global.dns_prefix
   kubernetes_version  = local.kubernetes_global.kubernetes_version
   api_server_authorized_ip_ranges = [
-    "${local.kubernetes_global.api_server_authorized_ip_ranges == "" ? local.kubernetes_global.api_server_authorized_ip_ranges : "0.0.0.0/0"}"
+    local.kubernetes_global.api_server_authorized_ip_ranges
   ]
 
   linux_profile {
