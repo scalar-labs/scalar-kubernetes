@@ -1,3 +1,0 @@
----
-- name: Install Ansible
-  command: python3 -m pip install ansible

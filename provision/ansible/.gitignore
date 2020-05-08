@@ -1,5 +1,0 @@
-*.tar.gz
-*.retry
-ssh.cfg
-.vagrant
-Vagrantfile
