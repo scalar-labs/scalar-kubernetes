@@ -6,12 +6,17 @@ locals {
   network_cidr = var.network.cidr
   location     = var.network.location
 
-  bastion_ip      = var.network.bastion_ip
   public_key_path = var.network.public_key_path
   internal_domain = var.network.internal_domain
-
-  triggers = [var.network.bastion_provision_id]
 }
+
+locals {
+  kubernetes_global_network = {
+    k8s_node_pod = cidrsubnet(local.network_cidr, 6, 10)
+    k8s_ingress  = cidrsubnet(local.network_cidr, 6, 11)
+  }
+}
+
 
 ### Default
 locals {
@@ -27,10 +32,10 @@ locals {
     kube_dashboard                  = true
     network_plugin                  = "azure"
     load_balancer_sku               = "Standard"
-    service_cidr                    = cidrsubnet(var.network.cidr, 6, 4)
+    service_cidr                    = cidrsubnet(var.network.cidr, 6, 12)
     docker_bridge_cidr              = "172.17.0.1/16"
-    dns_service_ip                  = cidrhost(cidrsubnet(var.network.cidr, 6, 4), 2)
-    api_server_authorized_ip_ranges = var.network.bastion_ip
+    dns_service_ip                  = cidrhost(cidrsubnet(var.network.cidr, 6, 12), 2)
+    api_server_authorized_ip_ranges = cidrsubnet(var.network.cidr, 8, 0)
   }
 }
 
@@ -50,7 +55,6 @@ locals {
     max_pods                       = 100
     os_disk_size_gb                = 64
     taints                         = []
-    vnet_subnet_id                 = var.network.subnet_k8s_node_pod
     cluster_auto_scaling           = true
     cluster_auto_scaling_min_count = 1
     cluster_auto_scaling_max_count = 9
@@ -74,7 +78,6 @@ locals {
       os_disk_size_gb                = 64
       node_os                        = "Linux"
       taints                         = ["kubernetes.io/app=scalardl:NoSchedule"]
-      vnet_subnet_id                 = var.network.subnet_k8s_node_pod
       cluster_auto_scaling           = true
       cluster_auto_scaling_min_count = 1
       cluster_auto_scaling_max_count = 9

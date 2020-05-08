@@ -1,3 +1,14 @@
+# Create network for kubernetes cluster
+
+resource "azurerm_subnet" "subnet" {
+  for_each = local.kubernetes_global_network
+
+  name                 = each.key
+  virtual_network_name = local.network_name
+  resource_group_name  = local.network_name
+  address_prefix       = each.value
+}
+
 # Create Service Principals
 resource "random_password" "aks" {
   length  = 20
@@ -5,18 +16,15 @@ resource "random_password" "aks" {
 }
 
 resource "azuread_application" "aks" {
-  count = length(var.service_principal) == 2 ? 1 : 0
   name = var.network.name
 }
 
 resource "azuread_service_principal" "aks" {
-  count = length(var.service_principal) == 2 ? 1 : 0
-  application_id = azuread_application.aks[0].application_id
+  application_id = azuread_application.aks.application_id
 }
 
 resource "azuread_service_principal_password" "aks" {
-  count = length(var.service_principal) == 2 ? 1 : 0
-  service_principal_id = azuread_service_principal.aks[0].id
+  service_principal_id = azuread_service_principal.aks.id
   value                = random_password.aks.result
   end_date_relative    = "8760h"
 }
@@ -46,7 +54,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     availability_zones    = local.kubernetes_default_node_pool.availability_zones
     max_pods              = local.kubernetes_default_node_pool.max_pods
     os_disk_size_gb       = local.kubernetes_default_node_pool.os_disk_size_gb
-    vnet_subnet_id        = local.kubernetes_default_node_pool.vnet_subnet_id
+    vnet_subnet_id        = azurerm_subnet.subnet["k8s_node_pod"].id
     node_taints           = []
     enable_node_public_ip = "false"
     enable_auto_scaling   = local.kubernetes_default_node_pool.cluster_auto_scaling
@@ -65,8 +73,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   service_principal {
-    client_id = lookup(var.service_principal, "client_id", azuread_service_principal.aks[0].application_id)
-    client_secret = lookup(var.service_principal, "client_secret", azuread_service_principal_password.aks[0].value)
+    client_id = azuread_service_principal.aks.application_id
+    client_secret = azuread_service_principal_password.aks.value
   }
 
   network_profile {
@@ -84,6 +92,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
       windows_profile
     ]
   }
+  depends_on = [
+    azurerm_subnet.subnet,
+  ]
 }
 
 # add one or more kubernetes node pool
@@ -104,23 +115,37 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks" {
   max_pods              = each.value.max_pods
   os_disk_size_gb       = each.value.os_disk_size_gb
   os_type               = each.value.node_os
-  vnet_subnet_id        = each.value.vnet_subnet_id
+  vnet_subnet_id        = azurerm_subnet.subnet["k8s_node_pod"].id
   node_taints           = each.value.taints
   enable_node_public_ip = "false"
   enable_auto_scaling   = each.value.cluster_auto_scaling
   min_count             = each.value.cluster_auto_scaling_min_count
   max_count             = each.value.cluster_auto_scaling_max_count
+
+  depends_on = [
+    azurerm_subnet.subnet,
+  ]
 }
 
 # Set Network Contributor permission to service principal
 resource "azurerm_role_assignment" "aks_subnet_node_pod" {
-  scope                = local.kubernetes_default_node_pool.vnet_subnet_id
+  scope                = azurerm_subnet.subnet["k8s_node_pod"].id
   role_definition_name = "Network Contributor"
-  principal_id         = lookup(var.service_principal, "client_id", azuread_service_principal.aks[0].application_id)
+  principal_id         = azuread_service_principal.aks.application_id
+
+  depends_on = [
+    azurerm_subnet.subnet,
+    azurerm_kubernetes_cluster.aks,
+  ]
 }
 
 resource "azurerm_role_assignment" "aks_subnet_ingress" {
-  scope                = var.network.subnet_k8s_ingress
+  scope                = azurerm_subnet.subnet["k8s_ingress"].id
   role_definition_name = "Network Contributor"
-  principal_id         = lookup(var.service_principal, "client_id", azuread_service_principal.aks[0].application_id)
+  principal_id         = azuread_service_principal.aks.application_id
+
+  depends_on = [
+    azurerm_subnet.subnet,
+    azurerm_kubernetes_cluster.aks,
+  ]
 }

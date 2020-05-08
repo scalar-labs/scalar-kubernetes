@@ -1,4 +1,4 @@
-name = "scalar-k8s-azure" # maximum of 82 characters
+name = "paul-scalar-k8s-azure" # maximum of 82 characters
 
 location = "West US 2"
 
