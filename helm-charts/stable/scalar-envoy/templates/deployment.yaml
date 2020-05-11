@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "scalar-envoy.fullname" . }}
+  labels:
+{{ include "scalar-envoy.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "scalar-envoy.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  {{- with .Values.strategy }}
+  strategy:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "scalar-envoy.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+      - configMap:
+          defaultMode: 493
+          name: {{ include "scalar-envoy.fullname" . }}
+        name: envoy-config
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+          - /usr/local/bin/envoy
+          - -c
+          - /etc/envoy/envoy.yaml
+          ports:
+          - containerPort: 50051
+            name: envoy
+            protocol: TCP
+          - containerPort: 50052
+            name: envoy-priv
+            protocol: TCP
+          - containerPort: 9901
+            name: envoy-admin
+            protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: envoy-admin
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: envoy-admin
+          volumeMounts:
+          - mountPath: /etc/envoy/envoy.yaml
+            name: envoy-config
+            subPath: envoy.yaml
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

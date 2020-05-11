@@ -1,0 +1,14 @@
+apiVersion: v1
+appVersion: "1.0"
+description: Implementation of Envoy for scalar-ledger. Envoy is an open source edge and service proxy, designed for cloud-native applications. 
+keywords:
+- envoy
+- proxy
+home: https://www.envoyproxy.io/
+maintainers:
+- name: Hiroyuki Yamada
+  email: hiroyuki.yamada@scalar-labs.com
+- name: Paul Dozancuk
+  email: paul.dozancuk@scalar-labs.com
+name: scalar-envoy
+version: 0.1.0

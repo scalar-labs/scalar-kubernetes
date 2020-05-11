@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "scalar-envoy.fullname" . }}
+  labels:
+{{ include "scalar-envoy.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 50051
+      targetPort: envoy
+      protocol: TCP
+      name: envoy
+    - port: 50052
+      targetPort: envoy-priv
+      protocol: TCP
+      name: envoy-priv
+  selector:
+    app.kubernetes.io/name: {{ include "scalar-envoy.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

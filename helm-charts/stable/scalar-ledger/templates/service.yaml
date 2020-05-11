@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  labels:
+{{ include "scalar-ledger.labels" . | indent 4 }}
+spec:
+  clusterIP: {{ .Values.service.clusterIP }}
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 50051
+      targetPort: scalar-dl
+      protocol: TCP
+      name: scalar-dl
+    - port: 50052
+      targetPort: scalar-dl-priv
+      protocol: TCP
+      name: scalar-dl-priv
+  selector:
+    app.kubernetes.io/name: {{ include "scalar-ledger.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "scalar-ledger.fullname" . }}
+  labels:
+{{ include "scalar-ledger.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "scalar-ledger.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  {{- with .Values.strategy }}
+  strategy:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "scalar-ledger.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+      - configMap:
+          defaultMode: 493
+          name: {{ include "scalar-ledger.fullname" . }}
+        name: scalar-ledger-config
+      initContainers:
+      - name: cassandra-load-keyspace
+        image: cassandra:latest
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /init.cql
+          name: scalar-ledger-config
+          subPath: init.cql
+        command:
+        - /bin/bash 
+        - -c 
+        - "sleep 20 && echo loading cassandra keyspace && cqlsh cassandra.cassandra.svc.cluster.local -u cassandra -p cassandra -f /init.cql"
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+          - sh
+          - -c
+          - dockerize  -template ledger.properties.tmpl:ledger.properties -wait tcp://${SCALAR_CASSANDRA_HOST}:${SCALAR_CASSANDRA_PORT}
+            -timeout 30s /startup.sh
+          env:
+          - name: SCALAR_CASSANDRA_HOST
+            value: "{{ .Values.cassandra.host }}"
+          - name: SCALAR_CASSANDRA_PORT
+            value: "{{ .Values.cassandra.port }}"
+          - name: SCALAR_CASSANDRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "scalar-ledger.fullname" . }}
+                key: cassandra-user
+          - name: SCALAR_CASSANDRA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "scalar-ledger.fullname" . }}
+                key: cassandra-password
+          - name: CASSANDRA_REPLICATION_FACTOR
+            value: "{{ .Values.cassandra.rf }}"
+          ports:
+          - containerPort: 50051
+            name: scalar-dl
+            protocol: TCP
+          - containerPort: 50052
+            name: scalar-dl-priv
+            protocol: TCP
+          - containerPort: 50053
+            name: scalar-dl-admin
+            protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+              - /bin/grpc_health_probe
+              - -addr=:50051
+          readinessProbe:
+            exec:
+              command:
+              - /bin/grpc_health_probe
+              - -addr=:50051
+          volumeMounts:
+          - mountPath: /startup.sh
+            name: scalar-ledger-config
+            subPath: startup.sh
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
