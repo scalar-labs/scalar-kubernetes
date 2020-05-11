@@ -1,8 +1,3 @@
-variable "service_principal" {
-  type    = map
-  default = {}
-}
-
 variable "network" {
   type    = map
   default = {}
