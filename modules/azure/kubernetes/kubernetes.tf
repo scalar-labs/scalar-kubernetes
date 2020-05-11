@@ -79,7 +79,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     max_pods              = local.kubernetes_default_node_pool.max_pods
     os_disk_size_gb       = local.kubernetes_default_node_pool.os_disk_size_gb
     vnet_subnet_id        = azurerm_subnet.subnet["k8s_node_pod"].id
-    node_taints           = []
     enable_node_public_ip = "false"
     enable_auto_scaling   = local.kubernetes_default_node_pool.cluster_auto_scaling
     min_count             = local.kubernetes_default_node_pool.cluster_auto_scaling_min_count

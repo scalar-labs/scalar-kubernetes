@@ -3,11 +3,6 @@ variable "network" {
   default = {}
 }
 
-variable "service_principal" {
-  type    = map
-  default = {}
-}
-
 variable "kubernetes_global" {
   type    = map
   default = {}

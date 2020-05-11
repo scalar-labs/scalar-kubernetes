@@ -1,13 +1,8 @@
 # General network
 locals {
-  network_name = var.network.name
-  network_dns  = var.network.dns
-  network_id   = var.network.id
-  network_cidr = var.network.cidr
-  location     = var.network.location
-
+  network_name    = var.network.name
+  network_cidr    = var.network.cidr
   public_key_path = var.network.public_key_path
-  internal_domain = var.network.internal_domain
 }
 
 # Network subnet
