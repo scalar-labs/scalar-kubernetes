@@ -1,5 +1,4 @@
 # Create network for kubernetes cluster
-
 resource "azurerm_subnet" "subnet" {
   for_each = local.kubernetes_global_network
 
@@ -41,9 +40,11 @@ resource "azuread_service_principal_password" "aks_sp" {
   }
 }
 
+# Retrieve scope id for assignment 
 data "azurerm_subscription" "current" {
 }
 
+# Set assignment Contributor to SP
 resource "azurerm_role_assignment" "aks_sp_role_assignment" {
   scope                = data.azurerm_subscription.current.id
   role_definition_name = "Contributor"
@@ -53,16 +54,15 @@ resource "azurerm_role_assignment" "aks_sp_role_assignment" {
   ]
 }
 
-# # AKS kubernetes cluster #
+# AKS kubernetes cluster
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                = local.kubernetes_global.name
-  resource_group_name = local.kubernetes_global.resource_group_name
-  location            = local.kubernetes_global.location
-  dns_prefix          = local.kubernetes_global.dns_prefix
-  kubernetes_version  = local.kubernetes_global.kubernetes_version
-  api_server_authorized_ip_ranges = [
-    local.kubernetes_global.api_server_authorized_ip_ranges
-  ]
+  name                            = local.kubernetes_global.name
+  resource_group_name             = local.kubernetes_global.resource_group_name
+  location                        = local.kubernetes_global.location
+  dns_prefix                      = local.kubernetes_global.dns_prefix
+  kubernetes_version              = local.kubernetes_global.kubernetes_version
+  api_server_authorized_ip_ranges = local.kubernetes_global.api_server_authorized_ip_ranges
+
 
   linux_profile {
     admin_username = local.kubernetes_global.admin_username
@@ -117,10 +117,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
   depends_on = [
     azurerm_subnet.subnet,
+    azurerm_role_assignment.aks_sp_role_assignment,
+    azuread_service_principal_password.aks_sp
   ]
 }
 
-# add one or more kubernetes node pool
+# Add one or more kubernetes node pool
 resource "azurerm_kubernetes_cluster_node_pool" "aks" {
   lifecycle {
     ignore_changes = [
@@ -150,7 +152,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks" {
   ]
 }
 
-# Set Network Contributor permission to service principal
+# Set Network Contributor permission to service principal for network
 resource "azurerm_role_assignment" "aks_subnet_node_pod" {
   scope                            = azurerm_subnet.subnet["k8s_node_pod"].id
   role_definition_name             = "Network Contributor"

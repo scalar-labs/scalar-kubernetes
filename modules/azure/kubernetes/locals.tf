@@ -1,4 +1,4 @@
-### General
+# General network
 locals {
   network_name = var.network.name
   network_dns  = var.network.dns
@@ -10,6 +10,7 @@ locals {
   internal_domain = var.network.internal_domain
 }
 
+# Network subnet
 locals {
   kubernetes_global_network = {
     k8s_node_pod = cidrsubnet(local.network_cidr, 6, 10)
@@ -18,7 +19,7 @@ locals {
 }
 
 
-### Default
+# Default k8s global
 locals {
   kubernetes_global_default = {
     name                            = "scalar-kubernetes"
@@ -35,10 +36,11 @@ locals {
     service_cidr                    = cidrsubnet(var.network.cidr, 6, 12)
     docker_bridge_cidr              = "172.17.0.1/16"
     dns_service_ip                  = cidrhost(cidrsubnet(var.network.cidr, 6, 12), 2)
-    api_server_authorized_ip_ranges = cidrsubnet(var.network.cidr, 8, 0)
+    api_server_authorized_ip_ranges = [cidrsubnet(var.network.cidr, 8, 0)]
   }
 }
 
+## Merge k8s global with user input
 locals {
   kubernetes_global = merge(
     local.kubernetes_global_default,
@@ -46,6 +48,7 @@ locals {
   )
 }
 
+# K8s default node pool
 locals {
   kubernetes_node_pool = {
     name                           = "default"
@@ -61,6 +64,7 @@ locals {
   }
 }
 
+## Merge k8s default node pool with user input
 locals {
   kubernetes_default_node_pool = merge(
     local.kubernetes_node_pool,
@@ -68,6 +72,7 @@ locals {
   )
 }
 
+# K8s additional node pools (scalardl dedicated)
 locals {
   additional_node_pools = {
     scalardl = {
@@ -85,6 +90,7 @@ locals {
   }
 }
 
+## Merge k8s additional node pools (scalardl dedicated)
 locals {
   kubernetes_additional_node_pools = merge(
     local.additional_node_pools,
