@@ -1,6 +1,6 @@
 name = "exemple-k8s-azure" # maximum of 82 characters
 
-location = "West US 2"
+location = "japaneast"
 
 public_key_path = "./example_key.pub"
 
