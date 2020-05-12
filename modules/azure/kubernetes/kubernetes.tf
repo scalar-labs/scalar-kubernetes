@@ -5,7 +5,7 @@ resource "azurerm_subnet" "subnet" {
   name                 = each.key
   virtual_network_name = local.network_name
   resource_group_name  = local.network_name
-  address_prefix       = each.value
+  address_prefixes     = [each.value]
 }
 
 # Create Service Principals
