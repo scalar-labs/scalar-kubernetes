@@ -1,0 +1,50 @@
+name: 'Terraform test for Kubernetes module of Azure Example'
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'modules/azure/kubernetes/**'
+      - 'examples/azure/kubernetes/**'
+  push:
+    branches:
+      - master
+    paths:
+      - 'modules/azure/kubernetes/**'
+      - 'examples/azure/kubernetes/**'
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      TF_VERSION: 0.12.19
+      TF_ACTIONS_COMMENT: false
+      TF_TEST_WORKING_DIR: ./examples/azure/kubernetes
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@master
+      - name: 'Terraform Format'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_subcommand: 'fmt'
+          tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
+          tf_actions_version: ${{ env.TF_VERSION }}
+          tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
+      - name: 'Terraform Init'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_subcommand: 'init'
+          tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
+          tf_actions_version: ${{ env.TF_VERSION }}
+          tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
+      - name: 'Terraform Validate'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_subcommand: 'validate'
+          tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
+          tf_actions_version: ${{ env.TF_VERSION }}
+          tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
