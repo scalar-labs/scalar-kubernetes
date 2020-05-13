@@ -8,12 +8,17 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = [each.value]
 }
 
+# create a random sp name
+resource "random_id" "id" {
+  byte_length = 5
+}
+
 # Create Service Principals
 resource "azuread_application" "aks_sp" {
-  name                       = "aks-${local.network_name}"
-  homepage                   = "https://aks-${local.network_name}"
-  identifier_uris            = ["https://aks-${local.network_name}"]
-  reply_urls                 = ["https://aks-${local.network_name}"]
+  name                       = "aks-${local.network_name}-${random_id.id.b64_url}"
+  homepage                   = "https://aks-${local.network_name}-${random_id.id.b64_url}"
+  identifier_uris            = ["https://aks-${local.network_name}-${random_id.id.b64_url}"]
+  reply_urls                 = ["https://aks-${local.network_name}-${random_id.id.b64_url}"]
   available_to_other_tenants = false
   oauth2_allow_implicit_flow = false
 }
@@ -57,12 +62,14 @@ resource "azurerm_role_assignment" "aks_sp_role_assignment" {
 
 # AKS kubernetes cluster
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                            = local.kubernetes_cluster_properties.name
-  resource_group_name             = local.kubernetes_cluster_properties.resource_group_name
-  location                        = local.kubernetes_cluster_properties.location
-  dns_prefix                      = local.kubernetes_cluster_properties.dns_prefix
-  kubernetes_version              = local.kubernetes_cluster_properties.kubernetes_version
-  api_server_authorized_ip_ranges = local.kubernetes_cluster_properties.api_server_authorized_ip_ranges
+  name                = local.kubernetes_cluster_properties.name
+  resource_group_name = local.kubernetes_cluster_properties.resource_group_name
+  location            = local.kubernetes_cluster_properties.location
+  dns_prefix          = local.kubernetes_cluster_properties.dns_prefix
+  kubernetes_version  = local.kubernetes_cluster_properties.kubernetes_version
+  api_server_authorized_ip_ranges = [
+    local.kubernetes_cluster_properties.api_server_authorized_ip_ranges
+  ]
 
   linux_profile {
     admin_username = local.kubernetes_cluster_properties.admin_username
@@ -75,7 +82,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     name                  = substr(local.kubernetes_default_node_pool.name, 0, 12)
     node_count            = local.kubernetes_default_node_pool.node_count
     vm_size               = local.kubernetes_default_node_pool.vm_size
-    availability_zones    = local.kubernetes_default_node_pool.availability_zones
+    availability_zones    = var.kubernetes_cluster_availability_zones
     max_pods              = local.kubernetes_default_node_pool.max_pods
     os_disk_size_gb       = local.kubernetes_default_node_pool.os_disk_size_gb
     vnet_subnet_id        = azurerm_subnet.subnet["k8s_node_pod"].id
@@ -130,22 +137,20 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks" {
     ]
   }
 
-  for_each = local.kubernetes_additional_node_pools
-
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  name                  = substr(each.key, 0, 12)
-  node_count            = each.value.node_count
-  vm_size               = each.value.vm_size
-  availability_zones    = each.value.availability_zones
-  max_pods              = each.value.max_pods
-  os_disk_size_gb       = each.value.os_disk_size_gb
-  os_type               = each.value.node_os
+  name                  = substr(local.kubernetes_additional_node_pools.name, 0, 12)
+  node_count            = local.kubernetes_additional_node_pools.node_count
+  vm_size               = local.kubernetes_additional_node_pools.vm_size
+  availability_zones    = var.kubernetes_cluster_availability_zones
+  max_pods              = local.kubernetes_additional_node_pools.max_pods
+  os_disk_size_gb       = local.kubernetes_additional_node_pools.os_disk_size_gb
+  os_type               = local.kubernetes_additional_node_pools.node_os
   vnet_subnet_id        = azurerm_subnet.subnet["k8s_node_pod"].id
-  node_taints           = each.value.taints
+  node_taints           = [local.kubernetes_additional_node_pools.taints]
   enable_node_public_ip = "false"
-  enable_auto_scaling   = each.value.cluster_auto_scaling
-  min_count             = each.value.cluster_auto_scaling_min_count
-  max_count             = each.value.cluster_auto_scaling_max_count
+  enable_auto_scaling   = local.kubernetes_additional_node_pools.cluster_auto_scaling
+  min_count             = local.kubernetes_additional_node_pools.cluster_auto_scaling_min_count
+  max_count             = local.kubernetes_additional_node_pools.cluster_auto_scaling_max_count
 
   depends_on = [
     azurerm_subnet.subnet,

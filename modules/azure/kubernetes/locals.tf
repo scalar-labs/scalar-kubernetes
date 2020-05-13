@@ -31,7 +31,7 @@ locals {
     service_cidr                    = cidrsubnet(var.network.cidr, 6, 12)
     docker_bridge_cidr              = "172.17.0.1/16"
     dns_service_ip                  = cidrhost(cidrsubnet(var.network.cidr, 6, 12), 2)
-    api_server_authorized_ip_ranges = [cidrsubnet(var.network.cidr, 8, 0)]
+    api_server_authorized_ip_ranges = cidrsubnet(var.network.cidr, 8, 0)
   }
 }
 
@@ -47,15 +47,13 @@ locals {
 locals {
   kubernetes_node_pool = {
     name                           = "default"
-    node_count                     = 3
+    node_count                     = "3"
     vm_size                        = "Standard_DS2_v2"
-    availability_zones             = ["1", "2", "3"]
-    max_pods                       = 100
-    os_disk_size_gb                = 64
-    taints                         = []
-    cluster_auto_scaling           = true
-    cluster_auto_scaling_min_count = 3
-    cluster_auto_scaling_max_count = 6
+    max_pods                       = "100"
+    os_disk_size_gb                = "64"
+    cluster_auto_scaling           = "true"
+    cluster_auto_scaling_min_count = "3"
+    cluster_auto_scaling_max_count = "6"
   }
 }
 
@@ -70,18 +68,16 @@ locals {
 # K8s additional node pools (scalardl dedicated)
 locals {
   additional_node_pools = {
-    scalardl = {
-      node_count                     = 3
-      vm_size                        = "Standard_DS2_v2"
-      availability_zones             = ["1", "2", "3"]
-      max_pods                       = 100
-      os_disk_size_gb                = 64
-      node_os                        = "Linux"
-      taints                         = ["kubernetes.io/app=scalardl:NoSchedule"]
-      cluster_auto_scaling           = true
-      cluster_auto_scaling_min_count = 3
-      cluster_auto_scaling_max_count = 6
-    }
+    name                           = "scalardl"
+    node_count                     = "3"
+    vm_size                        = "Standard_DS2_v2"
+    max_pods                       = "100"
+    os_disk_size_gb                = "64"
+    node_os                        = "Linux"
+    taints                         = "kubernetes.io/app=scalardl:NoSchedule"
+    cluster_auto_scaling           = "true"
+    cluster_auto_scaling_min_count = "3"
+    cluster_auto_scaling_max_count = "6"
   }
 }
 

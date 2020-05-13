@@ -10,6 +10,12 @@ variable "kubernetes_cluster_properties" {
   description = "Custom definition kubernetes properties that include name of the cluster, kubernetes version, etc.."
 }
 
+variable "kubernetes_cluster_availability_zones" {
+  type        = list
+  default     = ["1", "2", "3"]
+  description = "Select the available zone for the kubernetes cluster"
+}
+
 variable "kubernetes_default_node_pool" {
   type        = map
   default     = {}
@@ -19,5 +25,5 @@ variable "kubernetes_default_node_pool" {
 variable "kubernetes_additional_node_pools" {
   type        = map
   default     = {}
-  description = "Custom definition kubernetes additional node pools, same as default_node_pool but for muliple dedicated node pools"
+  description = "Custom definition kubernetes additional node pools, same as default_node_pool"
 }
