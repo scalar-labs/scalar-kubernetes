@@ -1,19 +1,27 @@
 # Azure Kubernetes Module
 The Azure Kubernetes Module creates a subnet for k8s, service principal, set permission and deploy AKS in azure with one additional node pool
 
-## Providers
+## Requirements
 
 | Name | Version |
 |------|---------|
-| azurerm | >=2.5.0 |
+| terraform | >= 0.12.20 |
 | azuread | >= 0.8 |
+| azurerm | >=2.5.0 |
 
 ## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| kubernetes_additional_node_pools | Custom definition kubernetes additional node pools, same as default_node_pool but for muliple dedicated node pools | `map` | `{}` | no |
+| kubernetes_default_node_pool | Custom definition kubernetes default node pool that include number of node, node size, autoscaling, etc.. | `map` | `{}` | no |
+| kubernetes_global | Custom definition kubernetes global that include name of the cluster, kubernetes version, etc.. | `map` | `{}` | no |
+| network | Custom definition for network and bastion | `map` | `{}` | no |
 
 ### kubernetes_global map
 
 | Name | Description | Type | Default | Required |
-|------|:-----:|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | name | cluster name | strings | scalar-kubernetes | no |
 | dns_prefix | dns prefix for the cluster | strings | scalar-k8s | no |
 | kubernetes_version | kubernetes version | strings | 1.15.10 | no|
@@ -25,7 +33,7 @@ The Azure Kubernetes Module creates a subnet for k8s, service principal, set per
 ### kubernetes_default_node_pool map
 
 | Name | Description | Type | Default | Required |
-|------|:-------------:|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | name | name of node pool | strings | default | no |
 | node_count | number of node | int | 1 | no |
 | vm_size | azure vm type | strings| Standard_DS2_v2 | no |
@@ -41,7 +49,7 @@ The Azure Kubernetes Module creates a subnet for k8s, service principal, set per
 Please be careful kubernetes_additional_node_pools is a map with key. the key represent the name of the node pool.
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | key | name of node pool | strings | scalardl | no |
 | node_count | number of node | int | 1 | no |
 | vm_size | azure vm type | strings| Standard_DS2_v2 | no |
