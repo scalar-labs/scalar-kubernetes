@@ -1,0 +1,2 @@
+VERSION: v1.15.7
+KUBECTL_PATH: /usr/local/bin/kubectl

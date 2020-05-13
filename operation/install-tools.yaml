@@ -1,0 +1,10 @@
+---
+- name: install necessary kubernetes binary on bastion
+  hosts: bastion
+  gather_facts: no
+  become: yes
+  roles:
+    - "scalar.kubectl"
+    - "scalar.helm"
+  tags:
+  - kubernetes tool

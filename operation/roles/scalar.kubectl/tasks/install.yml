@@ -1,0 +1,10 @@
+---
+- name: download and install binary
+  get_url:
+    url: "https://storage.googleapis.com/kubernetes-release/release/{{ VERSION }}/bin/linux/amd64/kubectl"
+    dest: "{{ KUBECTL_PATH }}"
+
+- name: Set permissions for kubectl
+  file:
+    path: "{{ KUBECTL_PATH }}"
+    mode: '0755'

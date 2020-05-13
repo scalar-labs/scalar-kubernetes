@@ -1,0 +1,10 @@
+---
+- name: download and install binary
+  get_url:
+    url: "https://get.helm.sh/helm-{{ VERSION }}-linux-amd64.tar.gz"
+    dest: "{{ HELM_PATH }}"
+
+- name: Set permissions for helm
+  file:
+    path: "{{ HELM_PATH }}"
+    mode: '0755'

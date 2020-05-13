@@ -1,0 +1,2 @@
+VERSION: v2.16.7
+HELM_PATH: /usr/local/bin/helm
