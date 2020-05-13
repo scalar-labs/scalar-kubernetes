@@ -13,12 +13,12 @@ The Azure Kubernetes Module creates a subnet for k8s, service principal, set per
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| kubernetes_additional_node_pools | Custom definition kubernetes additional node pools, same as default_node_pool but for muliple dedicated node pools | `map` | `{}` | no |
+| kubernetes_additional_node_pools | Custom definition kubernetes additional node pools, same as default_node_pool but for multiple dedicated node pools | `map` | `{}` | no |
+| kubernetes_cluster_properties | Custom definition kubernetes properties that include name of the cluster, kubernetes version, etc.. | `map` | `{}` | no |
 | kubernetes_default_node_pool | Custom definition kubernetes default node pool that include number of node, node size, autoscaling, etc.. | `map` | `{}` | no |
-| kubernetes_global | Custom definition kubernetes global that include name of the cluster, kubernetes version, etc.. | `map` | `{}` | no |
 | network | Custom definition for network and bastion | `map` | `{}` | no |
 
-### kubernetes_global map
+### kubernetes_cluster_properties map
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|

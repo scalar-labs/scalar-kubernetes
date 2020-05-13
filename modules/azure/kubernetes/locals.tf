@@ -16,7 +16,7 @@ locals {
 
 # Default k8s global
 locals {
-  kubernetes_global_default = {
+  kubernetes_cluster_properties_default = {
     name                            = "scalar-kubernetes"
     resource_group_name             = var.network.name
     location                        = var.network.location
@@ -37,9 +37,9 @@ locals {
 
 ## Merge k8s global with user input
 locals {
-  kubernetes_global = merge(
-    local.kubernetes_global_default,
-    var.kubernetes_global
+  kubernetes_cluster_properties = merge(
+    local.kubernetes_cluster_properties_default,
+    var.kubernetes_cluster_properties
   )
 }
 
@@ -47,15 +47,15 @@ locals {
 locals {
   kubernetes_node_pool = {
     name                           = "default"
-    node_count                     = 1
+    node_count                     = 3
     vm_size                        = "Standard_DS2_v2"
     availability_zones             = ["1", "2", "3"]
     max_pods                       = 100
     os_disk_size_gb                = 64
     taints                         = []
     cluster_auto_scaling           = true
-    cluster_auto_scaling_min_count = 1
-    cluster_auto_scaling_max_count = 9
+    cluster_auto_scaling_min_count = 3
+    cluster_auto_scaling_max_count = 6
   }
 }
 
@@ -71,7 +71,7 @@ locals {
 locals {
   additional_node_pools = {
     scalardl = {
-      node_count                     = 1
+      node_count                     = 3
       vm_size                        = "Standard_DS2_v2"
       availability_zones             = ["1", "2", "3"]
       max_pods                       = 100
@@ -79,8 +79,8 @@ locals {
       node_os                        = "Linux"
       taints                         = ["kubernetes.io/app=scalardl:NoSchedule"]
       cluster_auto_scaling           = true
-      cluster_auto_scaling_min_count = 1
-      cluster_auto_scaling_max_count = 9
+      cluster_auto_scaling_min_count = 3
+      cluster_auto_scaling_max_count = 6
     }
   }
 }

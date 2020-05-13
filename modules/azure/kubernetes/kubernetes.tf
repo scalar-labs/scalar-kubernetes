@@ -49,6 +49,7 @@ resource "azurerm_role_assignment" "aks_sp_role_assignment" {
   scope                = data.azurerm_subscription.current.id
   role_definition_name = "Contributor"
   principal_id         = azuread_service_principal.aks_sp.id
+
   depends_on = [
     azuread_service_principal_password.aks_sp
   ]
@@ -56,18 +57,17 @@ resource "azurerm_role_assignment" "aks_sp_role_assignment" {
 
 # AKS kubernetes cluster
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                            = local.kubernetes_global.name
-  resource_group_name             = local.kubernetes_global.resource_group_name
-  location                        = local.kubernetes_global.location
-  dns_prefix                      = local.kubernetes_global.dns_prefix
-  kubernetes_version              = local.kubernetes_global.kubernetes_version
-  api_server_authorized_ip_ranges = local.kubernetes_global.api_server_authorized_ip_ranges
-
+  name                            = local.kubernetes_cluster_properties.name
+  resource_group_name             = local.kubernetes_cluster_properties.resource_group_name
+  location                        = local.kubernetes_cluster_properties.location
+  dns_prefix                      = local.kubernetes_cluster_properties.dns_prefix
+  kubernetes_version              = local.kubernetes_cluster_properties.kubernetes_version
+  api_server_authorized_ip_ranges = local.kubernetes_cluster_properties.api_server_authorized_ip_ranges
 
   linux_profile {
-    admin_username = local.kubernetes_global.admin_username
+    admin_username = local.kubernetes_cluster_properties.admin_username
     ssh_key {
-      key_data = file(local.kubernetes_global.public_ssh_key_path)
+      key_data = file(local.kubernetes_cluster_properties.public_ssh_key_path)
     }
   }
 
@@ -86,12 +86,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   role_based_access_control {
-    enabled = local.kubernetes_global.role_based_access_control
+    enabled = local.kubernetes_cluster_properties.role_based_access_control
   }
 
   addon_profile {
     kube_dashboard {
-      enabled = local.kubernetes_global.kube_dashboard
+      enabled = local.kubernetes_cluster_properties.kube_dashboard
     }
   }
 
@@ -101,11 +101,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   network_profile {
-    network_plugin     = local.kubernetes_global.network_plugin
-    load_balancer_sku  = local.kubernetes_global.load_balancer_sku
-    service_cidr       = local.kubernetes_global.service_cidr
-    docker_bridge_cidr = local.kubernetes_global.docker_bridge_cidr
-    dns_service_ip     = local.kubernetes_global.dns_service_ip
+    network_plugin     = local.kubernetes_cluster_properties.network_plugin
+    load_balancer_sku  = local.kubernetes_cluster_properties.load_balancer_sku
+    service_cidr       = local.kubernetes_cluster_properties.service_cidr
+    docker_bridge_cidr = local.kubernetes_cluster_properties.docker_bridge_cidr
+    dns_service_ip     = local.kubernetes_cluster_properties.dns_service_ip
   }
 
   lifecycle {
@@ -114,6 +114,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       windows_profile
     ]
   }
+
   depends_on = [
     azurerm_subnet.subnet,
     azurerm_role_assignment.aks_sp_role_assignment,
