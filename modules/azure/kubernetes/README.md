@@ -47,7 +47,6 @@ The Azure Kubernetes Module creates a subnet for k8s, service principal, set per
 
 ### kubernetes_additional_node_pools map
 
-
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | name | name of node pool | `strings` | `scalardl` | no |
