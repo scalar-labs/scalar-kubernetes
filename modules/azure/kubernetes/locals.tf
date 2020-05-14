@@ -17,21 +17,20 @@ locals {
 # Default k8s global
 locals {
   kubernetes_cluster_properties_default = {
-    name                            = "scalar-kubernetes"
-    resource_group_name             = var.network.name
-    location                        = var.network.location
-    dns_prefix                      = "scalar-k8s"
-    kubernetes_version              = "1.15.10"
-    admin_username                  = "azureuser"
-    public_ssh_key_path             = var.network.public_key_path
-    role_based_access_control       = true
-    kube_dashboard                  = true
-    network_plugin                  = "azure"
-    load_balancer_sku               = "Standard"
-    service_cidr                    = cidrsubnet(var.network.cidr, 6, 12)
-    docker_bridge_cidr              = "172.17.0.1/16"
-    dns_service_ip                  = cidrhost(cidrsubnet(var.network.cidr, 6, 12), 2)
-    api_server_authorized_ip_ranges = cidrsubnet(var.network.cidr, 8, 0)
+    name                      = "scalar-kubernetes"
+    resource_group_name       = var.network.name
+    location                  = var.network.location
+    dns_prefix                = "scalar-k8s"
+    kubernetes_version        = "1.15.10"
+    admin_username            = "azureuser"
+    public_ssh_key_path       = var.network.public_key_path
+    role_based_access_control = true
+    kube_dashboard            = true
+    network_plugin            = "azure"
+    load_balancer_sku         = "Standard"
+    service_cidr              = cidrsubnet(var.network.cidr, 6, 12)
+    docker_bridge_cidr        = "172.17.0.1/16"
+    dns_service_ip            = cidrhost(cidrsubnet(var.network.cidr, 6, 12), 2)
   }
 }
 

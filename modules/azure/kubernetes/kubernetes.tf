@@ -62,14 +62,12 @@ resource "azurerm_role_assignment" "aks_sp_role_assignment" {
 
 # AKS kubernetes cluster
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                = local.kubernetes_cluster_properties.name
-  resource_group_name = local.kubernetes_cluster_properties.resource_group_name
-  location            = local.kubernetes_cluster_properties.location
-  dns_prefix          = local.kubernetes_cluster_properties.dns_prefix
-  kubernetes_version  = local.kubernetes_cluster_properties.kubernetes_version
-  api_server_authorized_ip_ranges = [
-    local.kubernetes_cluster_properties.api_server_authorized_ip_ranges
-  ]
+  name                    = local.kubernetes_cluster_properties.name
+  resource_group_name     = local.kubernetes_cluster_properties.resource_group_name
+  location                = local.kubernetes_cluster_properties.location
+  dns_prefix              = local.kubernetes_cluster_properties.dns_prefix
+  kubernetes_version      = local.kubernetes_cluster_properties.kubernetes_version
+  private_cluster_enabled = true
 
   linux_profile {
     admin_username = local.kubernetes_cluster_properties.admin_username

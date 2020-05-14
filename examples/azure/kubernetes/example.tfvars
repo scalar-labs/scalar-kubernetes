@@ -6,7 +6,6 @@ kubernetes_cluster_properties = {
   # admin_username                  = "azureuser"
   # role_based_access_control       = true
   # kube_dashboard                  = true
-  # api_server_authorized_ip_ranges = "0.0.0.0/0"
 }
 
 # kubernetes_cluster_availability_zones =  ["1", "2", "3"]

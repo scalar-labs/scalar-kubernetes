@@ -30,7 +30,6 @@ The Azure Kubernetes Module creates a subnet for k8s, service principal, set per
 | admin_username | ssh user for node | `strings` | `azureuser` | no |
 | role_based_access_control | activate RBAC in k8s | `strings` | `true` | no |
 | kube_dashboard | activate the dashboard | `strings` | `true` | no |
-| api_server_authorized_ip_ranges | one CDIR who can have access to k8s api | `strings` | bastion CDIR range | no |
 
 ### kubernetes_default_node_pool map
 
