@@ -24,42 +24,41 @@ The Azure Kubernetes Module creates a subnet for k8s, service principal, set per
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| name | cluster name | strings | "scalar-kubernetes" | no |
-| dns_prefix | dns prefix for the cluster | strings | "scalar-k8s" | no |
-| kubernetes_version | kubernetes version | strings | "1.15.10" | no|
-| admin_username | ssh user for node | strings | "azureuser" | no |
-| role_based_access_control | activate RBAC in k8s | strings | "true" | no |
-| kube_dashboard | activate the dashboard | strings | "true" | no |
-| api_server_authorized_ip_ranges | one CDIR who can have access to k8s api | strings | bastion CDIR range | no |
+| name | cluster name | `strings` | `scalar-kubernetes` | no |
+| dns_prefix | dns prefix for the cluster | `strings` | `scalar-k8s` | no |
+| kubernetes_version | kubernetes version | `strings` | `1.15.10` | no|
+| admin_username | ssh user for node | `strings` | `azureuser` | no |
+| role_based_access_control | activate RBAC in k8s | `strings` | `true` | no |
+| kube_dashboard | activate the dashboard | `strings` | `true` | no |
+| api_server_authorized_ip_ranges | one CDIR who can have access to k8s api | `strings` | bastion CDIR range | no |
 
 ### kubernetes_default_node_pool map
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| name | name of node pool | strings | "default" | no |
-| node_count | number of node | strings | "3" | no |
-| vm_size | azure vm type | strings | "Standard_DS2_v2" | no |
-| max_pods | number max of pod per node | strings | "100" | no |
-| os_disk_size_gb | disk size per node | strings | "64" | no |
-| cluster_auto_scaling | activate cluster auto scaling | strings | "true" | no |
-| cluster_auto_scaling_min_count | minimum number of node| strings | "3" | no |
-| cluster_auto_scaling_max_count | max number of node | strings | "6" | no |
+| name | name of node pool | `strings` | `default` | no |
+| node_count | number of node | `strings` | `3` | no |
+| vm_size | azure vm type | `strings` | `Standard_DS2_v2` | no |
+| max_pods | number max of pod per node | `strings` | `100` | no |
+| os_disk_size_gb | disk size per node | `strings` | `64` | no |
+| cluster_auto_scaling | activate cluster auto scaling | `strings` | `true` | no |
+| cluster_auto_scaling_min_count | minimum number of node| `strings` | `3` | no |
+| cluster_auto_scaling_max_count | max number of node | `strings` | `6` | no |
 
 ### kubernetes_additional_node_pools map
 
-Please be careful kubernetes_additional_node_pools is a map with key. the key represent the name of the node pool.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| name | name of node pool | strings | "scalardl" | no |
-| node_count | number of node | strings | "3" | no |
-| vm_size | azure vm type | strings| "Standard_DS2_v2" | no |
-| max_pods | number max of pod per node | strings | "100" | no |
-| os_disk_size_gb | disk size per node | strings | "64" | no |
-| taints | apply a toleration on the node pool | strings | "kubernetes.io/app=scalardl:NoSchedule" | no |
-| cluster_auto_scaling | activate cluster auto scaling | strings | "true" | no |
-| cluster_auto_scaling_min_count | minimum number of node| strings | "3" | no |
-| cluster_auto_scaling_max_count | max number of node | strings | "6" | no |
+| name | name of node pool | `strings` | `scalardl` | no |
+| node_count | number of node | `strings` | `3` | no |
+| vm_size | azure vm type | `strings`| `Standard_DS2_v2` | no |
+| max_pods | number max of pod per node | `strings` | `100` | no |
+| os_disk_size_gb | disk size per node | `strings` | `64` | no |
+| taints | apply a toleration on the node pool | `strings` | `kubernetes.io/app=scalardl:NoSchedule` | no |
+| cluster_auto_scaling | activate cluster auto scaling | `strings` | `true` | no |
+| cluster_auto_scaling_min_count | minimum number of node| `strings` | `3` | no |
+| cluster_auto_scaling_max_count | max number of node | `strings` | `6` | no |
 
 ## Outputs
 
