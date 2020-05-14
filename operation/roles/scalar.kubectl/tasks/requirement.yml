@@ -1,0 +1,4 @@
+---
+- name: install pip requirements for k8s
+  pip:
+    name: ['kubernetes', 'openshift', 'kubernetes-validate']

@@ -1,0 +1,14 @@
+---
+- name: create kubectl config folder
+  become: no
+  file:
+    path: "/home/{{ ansible_user }}/.kube"
+    state: directory
+    mode: '0755'
+  
+- name: copy the kube_config into kubectl bastion
+  become: no
+  copy: 
+    src: "{{ KUBE_CONFIG }}"
+    dest: "/home/{{ ansible_user }}/.kube/config"
+    mode: '0644'

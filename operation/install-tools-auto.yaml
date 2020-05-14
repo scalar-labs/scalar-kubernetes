@@ -1,0 +1,56 @@
+---
+- name: read tf modules
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+  tasks:
+  - name: load network tfstate file
+    shell: cat ../../examples/azure/network/terraform.tfstate
+    register: network_json
+
+  - name: retrieve bastion_ip and user_name from network tfstate
+    set_fact:
+      bastion_ip: "{{ (network_json.stdout | from_json).outputs.bastion_ip.value }}"
+      user_name: "{{ (network_json.stdout | from_json).outputs.user_name.value }}"
+
+  - name: add bastion ip to host group
+    add_host:
+      hostname: bastion
+      ansible_ssh_host: "{{ bastion_ip }}"
+      ansible_user: "{{ user_name }}"
+      groups: bastion
+
+  - name: load kubernetes tfstate file
+    shell: cat ../../examples/azure/kubernetes/terraform.tfstate
+    register: kubernetes_json
+
+  - name: retrieve kube_config from network tfstate
+    set_fact:
+      kube_config: "{{ (kubernetes_json.stdout | from_json).outputs.kube_config.value }}"
+
+  - name: copy the kube_config into tmp
+    copy: 
+      content: "{{ kube_config }}" 
+      dest: tmp/kube_config
+
+- name: install necessary kubernetes binary on bastion
+  hosts: bastion
+  gather_facts: no
+  become: yes
+  roles:
+    - "scalar.kubectl"
+    - "scalar.helm"
+  tags:
+  - kubernetes tool
+
+- name: cleanup 
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+  tasks:
+  - name: cleanup tmp kube_config
+    file:
+      path: tmp/kube_config
+      state: absent

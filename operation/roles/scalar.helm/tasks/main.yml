@@ -1,2 +1,4 @@
 ---
 - include: install.yml
+- include: rbac.yml
+- include: tiller.yml

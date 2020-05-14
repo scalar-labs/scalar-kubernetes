@@ -1,0 +1,4 @@
+---
+- name: install or upgrade tiller
+  become: no
+  shell: "helm init --service-account tiller --upgrade --wait"
