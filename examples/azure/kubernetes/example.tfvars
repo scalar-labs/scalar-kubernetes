@@ -1,3 +1,6 @@
+# Required
+kubernetes_cluster_availability_zones = ["1", "2", "3"]
+
 # Optional
 kubernetes_cluster_properties = {
   # name                            = "scalar-kubernetes"
@@ -7,9 +10,6 @@ kubernetes_cluster_properties = {
   # role_based_access_control       = true
   # kube_dashboard                  = true
 }
-
-# kubernetes_cluster_availability_zones =  ["1", "2", "3"]
-
 
 kubernetes_default_node_pool = {
   # name                           = "default"

@@ -13,7 +13,6 @@ locals {
   }
 }
 
-
 # Default k8s global
 locals {
   kubernetes_cluster_properties_default = {
