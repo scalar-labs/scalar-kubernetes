@@ -46,7 +46,7 @@ locals {
   kubernetes_node_pool = {
     name                           = "default"
     node_count                     = "3"
-    vm_size                        = "Standard_DS2_v2"
+    vm_size                        = "Standard_D2s_v3"
     max_pods                       = "100"
     os_disk_size_gb                = "64"
     cluster_auto_scaling           = "true"
@@ -68,7 +68,7 @@ locals {
   additional_node_pools = {
     name                           = "scalardl"
     node_count                     = "3"
-    vm_size                        = "Standard_DS2_v2"
+    vm_size                        = "Standard_D2s_v3"
     max_pods                       = "100"
     os_disk_size_gb                = "64"
     node_os                        = "Linux"
