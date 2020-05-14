@@ -1,0 +1,33 @@
+---
+- name: teardown tf modules
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+  vars:
+    TF_variables_file: example-us.tfvars
+  tasks:
+  - name: destroy terraform kubernetes
+    terraform:
+      project_path: ../examples/azure/kubernetes/
+      variables_file: "{{ TF_variables_file }}"
+      state: absent
+    tags:
+    - kubernetes
+
+  - name: start terraform cassandra
+    terraform:
+      project_path: ../examples/azure/cassandra/
+      variables_file: "{{ TF_variables_file }}"
+      state: absent
+    tags:
+    - cassandra
+
+  - name: destroy terraform network
+    terraform:
+      project_path: ../examples/azure/network/
+      variables_file: "{{ TF_variables_file }}"
+      state: absent
+    tags:
+    - network
+  
