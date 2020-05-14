@@ -4,7 +4,7 @@ kubernetes_cluster_availability_zones = ["1", "2", "3"]
 # Optional
 kubernetes_cluster_properties = {
   # name                            = "scalar-kubernetes"
-  # dns_prefix                      = "scalar-k8s"
+  # dns_prefix                      = "scalar-kubernetes"
   # kubernetes_version              = "1.15.10"
   # admin_username                  = "azureuser"
   # role_based_access_control       = true
