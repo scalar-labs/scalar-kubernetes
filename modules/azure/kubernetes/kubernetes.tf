@@ -21,6 +21,11 @@ resource "azuread_application" "aks_sp" {
   reply_urls                 = ["https://aks-${local.network_name}-${random_id.id.b64_url}"]
   available_to_other_tenants = false
   oauth2_allow_implicit_flow = false
+
+  # Waiting for AAD global replication - see https://github.com/Azure/AKS/issues/1206#issue-493516902
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
 }
 
 resource "azuread_service_principal" "aks_sp" {
@@ -54,6 +59,11 @@ resource "azurerm_role_assignment" "aks_sp_role_assignment" {
   scope                = data.azurerm_subscription.current.id
   role_definition_name = "Contributor"
   principal_id         = azuread_service_principal.aks_sp.id
+
+  # Waiting for AAD global replication - see https://github.com/Azure/AKS/issues/1206#issue-493516902
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
 
   depends_on = [
     azuread_service_principal_password.aks_sp
