@@ -15,7 +15,7 @@ locals {
 
 # Default k8s global
 locals {
-  kubernetes_cluster_properties_default = {
+  kubernetes_cluster_default = {
     name                      = "scalar-kubernetes"
     resource_group_name       = var.network.name
     location                  = var.network.location
@@ -35,9 +35,9 @@ locals {
 
 ## Merge k8s global with user input
 locals {
-  kubernetes_cluster_properties = merge(
-    local.kubernetes_cluster_properties_default,
-    var.kubernetes_cluster_properties
+  kubernetes_cluster = merge(
+    local.kubernetes_cluster_default,
+    var.kubernetes_cluster
   )
 }
 

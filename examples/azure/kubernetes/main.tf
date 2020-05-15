@@ -8,7 +8,7 @@ module "kubernetes" {
   kubernetes_cluster_availability_zones = var.kubernetes_cluster_availability_zones
 
   # Optional variables
-  kubernetes_cluster_properties    = var.kubernetes_cluster_properties
+  kubernetes_cluster               = var.kubernetes_cluster
   kubernetes_default_node_pool     = var.kubernetes_default_node_pool
   kubernetes_additional_node_pools = var.kubernetes_additional_node_pools
 }

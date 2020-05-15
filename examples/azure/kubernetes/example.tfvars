@@ -2,7 +2,7 @@
 kubernetes_cluster_availability_zones = ["1", "2", "3"]
 
 # Optional
-kubernetes_cluster_properties = {
+kubernetes_cluster = {
   # name                            = "scalar-kubernetes"
   # dns_prefix                      = "scalar-kubernetes"
   # kubernetes_version              = "1.15.10"

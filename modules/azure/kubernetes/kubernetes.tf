@@ -72,17 +72,17 @@ resource "azurerm_role_assignment" "aks_sp_role_assignment" {
 
 # AKS kubernetes cluster
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                    = local.kubernetes_cluster_properties.name
-  resource_group_name     = local.kubernetes_cluster_properties.resource_group_name
-  location                = local.kubernetes_cluster_properties.location
-  dns_prefix              = local.kubernetes_cluster_properties.dns_prefix
-  kubernetes_version      = local.kubernetes_cluster_properties.kubernetes_version
+  name                    = local.kubernetes_cluster.name
+  resource_group_name     = local.kubernetes_cluster.resource_group_name
+  location                = local.kubernetes_cluster.location
+  dns_prefix              = local.kubernetes_cluster.dns_prefix
+  kubernetes_version      = local.kubernetes_cluster.kubernetes_version
   private_cluster_enabled = true
 
   linux_profile {
-    admin_username = local.kubernetes_cluster_properties.admin_username
+    admin_username = local.kubernetes_cluster.admin_username
     ssh_key {
-      key_data = file(local.kubernetes_cluster_properties.public_ssh_key_path)
+      key_data = file(local.kubernetes_cluster.public_ssh_key_path)
     }
   }
 
@@ -101,12 +101,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   role_based_access_control {
-    enabled = local.kubernetes_cluster_properties.role_based_access_control
+    enabled = local.kubernetes_cluster.role_based_access_control
   }
 
   addon_profile {
     kube_dashboard {
-      enabled = local.kubernetes_cluster_properties.kube_dashboard
+      enabled = local.kubernetes_cluster.kube_dashboard
     }
   }
 
@@ -116,11 +116,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   network_profile {
-    network_plugin     = local.kubernetes_cluster_properties.network_plugin
-    load_balancer_sku  = local.kubernetes_cluster_properties.load_balancer_sku
-    service_cidr       = local.kubernetes_cluster_properties.service_cidr
-    docker_bridge_cidr = local.kubernetes_cluster_properties.docker_bridge_cidr
-    dns_service_ip     = local.kubernetes_cluster_properties.dns_service_ip
+    network_plugin     = local.kubernetes_cluster.network_plugin
+    load_balancer_sku  = local.kubernetes_cluster.load_balancer_sku
+    service_cidr       = local.kubernetes_cluster.service_cidr
+    docker_bridge_cidr = local.kubernetes_cluster.docker_bridge_cidr
+    dns_service_ip     = local.kubernetes_cluster.dns_service_ip
   }
 
   lifecycle {

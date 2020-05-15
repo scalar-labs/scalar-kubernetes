@@ -4,7 +4,7 @@ variable "network" {
   description = "Custom definition for network and bastion"
 }
 
-variable "kubernetes_cluster_properties" {
+variable "kubernetes_cluster" {
   type        = map
   default     = {}
   description = "Custom definition kubernetes properties that include name of the cluster, kubernetes version, etc.."
