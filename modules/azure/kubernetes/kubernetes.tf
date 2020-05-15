@@ -74,7 +74,7 @@ resource "azurerm_role_assignment" "aks_service_principal_role_assignment" {
 }
 
 # AKS kubernetes cluster
-resource "azurerm_kubernetes_cluster" "aks" {
+resource "azurerm_kubernetes_cluster" "aks_cluster" {
   name                    = local.kubernetes_cluster.name
   resource_group_name     = local.kubernetes_cluster.resource_group_name
   location                = local.kubernetes_cluster.location
@@ -140,15 +140,15 @@ resource "azurerm_kubernetes_cluster" "aks" {
   ]
 }
 
-# Add one or more kubernetes node pool
-resource "azurerm_kubernetes_cluster_node_pool" "aks" {
+# Add one more kubernetes node pool
+resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_node_pool" {
   lifecycle {
     ignore_changes = [
       node_count
     ]
   }
 
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
   name                  = substr(local.kubernetes_additional_node_pools.name, 0, 12)
   node_count            = local.kubernetes_additional_node_pools.node_count
   vm_size               = local.kubernetes_additional_node_pools.vm_size
