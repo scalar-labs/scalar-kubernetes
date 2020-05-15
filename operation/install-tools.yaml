@@ -10,14 +10,3 @@
     - "scalar.helm"
   tags:
   - kubernetes tool
-
-- name: cleanup 
-  hosts: localhost
-  connection: local
-  gather_facts: no
-  become: no
-  tasks:
-  - name: cleanup tmp kube_config
-    file:
-      path: tmp/kube_config
-      state: absent
