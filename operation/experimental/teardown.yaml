@@ -30,4 +30,3 @@
       state: absent
     tags:
     - network
-  

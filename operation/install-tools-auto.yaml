@@ -6,7 +6,7 @@
   become: no
   tasks:
   - name: load network tfstate file
-    shell: cat ../../examples/azure/network/terraform.tfstate
+    shell: cat ../examples/azure/network/terraform.tfstate
     register: network_json
 
   - name: retrieve bastion_ip and user_name from network tfstate
@@ -22,7 +22,7 @@
       groups: bastion
 
   - name: load kubernetes tfstate file
-    shell: cat ../../examples/azure/kubernetes/terraform.tfstate
+    shell: cat ../examples/azure/kubernetes/terraform.tfstate
     register: kubernetes_json
 
   - name: retrieve kube_config from network tfstate
