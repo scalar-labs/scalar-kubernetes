@@ -23,7 +23,7 @@ kubernetes_default_node_pool = {
 }
 
 kubernetes_additional_node_pools = {
-  # name                           = scalardl
+  # name                           = "scalardl"
   # node_count                     = "3"
   # vm_size                        = "Standard_D2s_v3"
   # max_pods                       = "100"
