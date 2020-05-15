@@ -8,13 +8,13 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = [each.value]
 }
 
-# create a random sp name
+# Create a random sp name
 resource "random_id" "id" {
   byte_length = 5
 }
 
-# Create Service Principals
-resource "azuread_application" "aks_sp" {
+# Create application for Service Principals
+resource "azuread_application" "aks_application_name" {
   name                       = "aks-${local.network_name}-${random_id.id.b64_url}"
   homepage                   = "https://aks-${local.network_name}-${random_id.id.b64_url}"
   identifier_uris            = ["https://aks-${local.network_name}-${random_id.id.b64_url}"]
@@ -28,18 +28,21 @@ resource "azuread_application" "aks_sp" {
   }
 }
 
-resource "azuread_service_principal" "aks_sp" {
-  application_id = azuread_application.aks_sp.application_id
+# Create Service Principal
+resource "azuread_service_principal" "aks_service_principal" {
+  application_id = azuread_application.aks_application_name.application_id
 }
 
-resource "random_password" "aks_sp" {
+# Create password for Service Principal
+resource "random_password" "aks_service_principal_password" {
   length  = 24
   special = false
 }
 
-resource "azuread_service_principal_password" "aks_sp" {
-  service_principal_id = azuread_service_principal.aks_sp.id
-  value                = random_password.aks_sp.result
+# Assign Service Principal password (activation)
+resource "azuread_service_principal_password" "aks_assign_service_principal_password" {
+  service_principal_id = azuread_service_principal.aks_service_principal.id
+  value                = random_password.aks_service_principal_password.result
   end_date             = timeadd(timestamp(), "87600h") # 10 years
 
   lifecycle {
@@ -54,11 +57,11 @@ resource "azuread_service_principal_password" "aks_sp" {
 data "azurerm_subscription" "current" {
 }
 
-# Set assignment Contributor to SP
-resource "azurerm_role_assignment" "aks_sp_role_assignment" {
+# Set assignment Contributor to Service Principal
+resource "azurerm_role_assignment" "aks_service_principal_role_assignment" {
   scope                = data.azurerm_subscription.current.id
   role_definition_name = "Contributor"
-  principal_id         = azuread_service_principal.aks_sp.id
+  principal_id         = azuread_service_principal.aks_service_principal.id
 
   # Waiting for AAD global replication - see https://github.com/Azure/AKS/issues/1206#issue-493516902
   provisioner "local-exec" {
@@ -66,7 +69,7 @@ resource "azurerm_role_assignment" "aks_sp_role_assignment" {
   }
 
   depends_on = [
-    azuread_service_principal_password.aks_sp
+    azuread_service_principal_password.aks_assign_service_principal_password
   ]
 }
 
@@ -111,8 +114,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   service_principal {
-    client_id     = azuread_service_principal.aks_sp.application_id
-    client_secret = azuread_service_principal_password.aks_sp.value
+    client_id     = azuread_service_principal.aks_service_principal.application_id
+    client_secret = azuread_service_principal_password.aks_assign_service_principal_password.value
   }
 
   network_profile {
@@ -132,8 +135,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   depends_on = [
     azurerm_subnet.subnet,
-    azurerm_role_assignment.aks_sp_role_assignment,
-    azuread_service_principal_password.aks_sp
+    azurerm_role_assignment.aks_service_principal_role_assignment,
+    azuread_service_principal_password.aks_assign_service_principal_password
   ]
 }
 
@@ -169,13 +172,13 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks" {
 resource "azurerm_role_assignment" "aks_subnet_node_pod" {
   scope                            = azurerm_subnet.subnet["k8s_node_pod"].id
   role_definition_name             = "Network Contributor"
-  principal_id                     = azuread_service_principal.aks_sp.application_id
+  principal_id                     = azuread_service_principal.aks_service_principal.application_id
   skip_service_principal_aad_check = true
 }
 
 resource "azurerm_role_assignment" "aks_subnet_ingress" {
   scope                            = azurerm_subnet.subnet["k8s_ingress"].id
   role_definition_name             = "Network Contributor"
-  principal_id                     = azuread_service_principal.aks_sp.application_id
+  principal_id                     = azuread_service_principal.aks_service_principal.application_id
   skip_service_principal_aad_check = true
 }
