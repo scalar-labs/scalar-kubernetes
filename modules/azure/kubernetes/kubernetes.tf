@@ -1,11 +1,17 @@
 # Create network for kubernetes cluster
 resource "azurerm_subnet" "subnet" {
-  for_each = local.kubernetes_global_network
+  for_each = local.kubernetes_cluster_network
 
   name                 = each.key
   virtual_network_name = local.network_name
   resource_group_name  = local.network_name
   address_prefixes     = [each.value]
+
+  lifecycle {
+    ignore_changes = [
+      enforce_private_link_endpoint_network_policies
+    ]
+  }
 }
 
 # Create a random sp name
@@ -80,6 +86,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   location                = local.kubernetes_cluster.location
   dns_prefix              = local.kubernetes_cluster.dns_prefix
   kubernetes_version      = local.kubernetes_cluster.kubernetes_version
+  node_resource_group     = "${local.kubernetes_cluster.resource_group_name}_MC"
   private_cluster_enabled = true
 
   linux_profile {
@@ -134,7 +141,6 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
   depends_on = [
-    azurerm_subnet.subnet,
     azurerm_role_assignment.aks_service_principal_role_assignment,
     azuread_service_principal_password.aks_assign_service_principal_password
   ]
@@ -166,19 +172,4 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_node_pool" {
   depends_on = [
     azurerm_subnet.subnet,
   ]
-}
-
-# Set Network Contributor permission to service principal for network
-resource "azurerm_role_assignment" "aks_subnet_node_pod" {
-  scope                            = azurerm_subnet.subnet["k8s_node_pod"].id
-  role_definition_name             = "Network Contributor"
-  principal_id                     = azuread_service_principal.aks_service_principal.application_id
-  skip_service_principal_aad_check = true
-}
-
-resource "azurerm_role_assignment" "aks_subnet_ingress" {
-  scope                            = azurerm_subnet.subnet["k8s_ingress"].id
-  role_definition_name             = "Network Contributor"
-  principal_id                     = azuread_service_principal.aks_service_principal.application_id
-  skip_service_principal_aad_check = true
 }

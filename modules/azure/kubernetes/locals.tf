@@ -2,12 +2,13 @@
 locals {
   network_name    = var.network.name
   network_cidr    = var.network.cidr
+  network_id      = var.network.id
   public_key_path = var.network.public_key_path
 }
 
 # Network subnet
 locals {
-  kubernetes_global_network = {
+  kubernetes_cluster_network = {
     k8s_node_pod = cidrsubnet(local.network_cidr, 6, 10)
     k8s_ingress  = cidrsubnet(local.network_cidr, 6, 11)
   }
