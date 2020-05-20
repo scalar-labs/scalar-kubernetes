@@ -39,38 +39,52 @@ spec:
         - mountPath: /init.cql
           name: scalar-ledger-config
           subPath: init.cql
+        env:
+        - name: SCALAR_DB_CONTACT_POINTS
+          value: "{{ .Values.cassandra.host }}"
+        - name: SCALAR_DB_CONTACT_PORT
+          value: "{{ .Values.cassandra.port }}"
+        - name: SCALAR_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "scalar-ledger.fullname" . }}
+              key: cassandra-user
+        - name: SCALAR_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "scalar-ledger.fullname" . }}
+              key: cassandra-password
+        - name: CASSANDRA_REPLICATION_FACTOR
+          value: "{{ .Values.cassandra.rf }}"
         command:
         - /bin/bash 
         - -c 
-        - "sleep 20 && echo loading cassandra keyspace && cqlsh cassandra.cassandra.svc.cluster.local -u cassandra -p cassandra -f /init.cql"
+        - "sleep 20 && echo loading cassandra keyspace && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /init.cql"
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args:
-          - sh
-          - -c
-          - dockerize  -template ledger.properties.tmpl:ledger.properties -wait tcp://${SCALAR_CASSANDRA_HOST}:${SCALAR_CASSANDRA_PORT}
-            -timeout 30s /startup.sh
           env:
-          - name: SCALAR_CASSANDRA_HOST
+          - name: SCALAR_DB_CONTACT_POINTS
             value: "{{ .Values.cassandra.host }}"
-          - name: SCALAR_CASSANDRA_PORT
+          - name: SCALAR_DB_CONTACT_PORT
             value: "{{ .Values.cassandra.port }}"
-          - name: SCALAR_CASSANDRA_USERNAME
+          - name: SCALAR_DB_USERNAME
             valueFrom:
               secretKeyRef:
                 name: {{ include "scalar-ledger.fullname" . }}
                 key: cassandra-user
-          - name: SCALAR_CASSANDRA_PASSWORD
+          - name: SCALAR_DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: {{ include "scalar-ledger.fullname" . }}
                 key: cassandra-password
           - name: CASSANDRA_REPLICATION_FACTOR
             value: "{{ .Values.cassandra.rf }}"
+          - name: SCALAR_DL_LEDGER_LOG_LEVEL
+            value: "INFO"
           ports:
           - containerPort: 50051
             name: scalar-dl

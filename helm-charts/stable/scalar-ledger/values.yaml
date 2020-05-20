@@ -6,13 +6,13 @@ replicaCount: 1
 
 image:
   repository: scalarlabs/scalar-ledger
-  tag: 2.0.4
+  tag: 2.0.5
   pullPolicy: IfNotPresent
 
 cassandra:
   user: cassandra
   password: cassandra
-  host: cassandra.cassandra.svc.cluster.local
+  host: cassandra-lb.internal.scalar-labs.com.
   port: 9042
   rf: 1
 
