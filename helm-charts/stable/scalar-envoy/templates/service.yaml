@@ -4,17 +4,17 @@ metadata:
   name: {{ include "scalar-envoy.fullname" . }}
   labels:
 {{ include "scalar-envoy.labels" . | indent 4 }}
+  annotations:
+{{- with .Values.service.annotations }}
+{{ toYaml . | indent 4 }}
+{{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: 50051
-      targetPort: envoy
-      protocol: TCP
-      name: envoy
-    - port: 50052
-      targetPort: envoy-priv
-      protocol: TCP
-      name: envoy-priv
+  {{- range $key, $value := .Values.service.ports }}
+    - name: {{ $key }}
+{{ toYaml $value | indent 6 }}
+  {{- end }}
   selector:
     app.kubernetes.io/name: {{ include "scalar-envoy.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
