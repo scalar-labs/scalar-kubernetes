@@ -61,9 +61,21 @@ resources: {}
 
 nodeSelector: {}
 
-tolerations: []
+tolerations:
+- key: kubernetes.io/app
+  operator: Equal
+  value: scalardl
+  effect: NoSchedule
 
-affinity: {}
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: agentpool
+          operator: In
+          values:
+          - "scalardl"
 
 serviceMonitor:
   enabled: false
