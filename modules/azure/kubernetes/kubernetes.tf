@@ -136,7 +136,6 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   lifecycle {
     ignore_changes = [
       default_node_pool[0].node_count,
-      windows_profile
     ]
   }
 
@@ -148,12 +147,6 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
 # Add one more kubernetes node pool
 resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_node_pool" {
-  lifecycle {
-    ignore_changes = [
-      node_count
-    ]
-  }
-
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
   name                  = substr(local.kubernetes_additional_node_pools.name, 0, 12)
   node_count            = local.kubernetes_additional_node_pools.node_count
@@ -168,6 +161,12 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_node_pool" {
   enable_auto_scaling   = local.kubernetes_additional_node_pools.cluster_auto_scaling
   min_count             = local.kubernetes_additional_node_pools.cluster_auto_scaling_min_count
   max_count             = local.kubernetes_additional_node_pools.cluster_auto_scaling_max_count
+  
+  lifecycle {
+    ignore_changes = [
+      node_count
+    ]
+  }
 
   depends_on = [
     azurerm_subnet.subnet,
