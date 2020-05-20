@@ -10,6 +10,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "scalar-envoy.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+      app: envoy
   {{- with .Values.strategy }}
   strategy:
     {{- toYaml . | nindent 8 }}
@@ -19,6 +20,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "scalar-envoy.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+        app: envoy
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

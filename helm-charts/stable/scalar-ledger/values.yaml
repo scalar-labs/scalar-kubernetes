@@ -75,3 +75,14 @@ affinity:
           operator: In
           values:
           - "scalardl"
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 50
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - scalar-ledger
+        topologyKey: kubernetes.io/hostname

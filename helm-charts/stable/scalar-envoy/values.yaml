@@ -76,6 +76,17 @@ affinity:
           operator: In
           values:
           - "scalardl"
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 50
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - envoy
+        topologyKey: kubernetes.io/hostname
 
 serviceMonitor:
   enabled: false
