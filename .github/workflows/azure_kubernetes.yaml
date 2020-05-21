@@ -7,11 +7,11 @@ on:
   #     - 'modules/azure/kubernetes/**'
   #     - 'test/modules/azuredeploy/kubernetes/**'
   push:
-    # branches:
-    #   - master
-    # paths:
-    #   - 'modules/azure/kubernetes/**'
-    #   - 'test/modules/azuredeploy/kubernetes/**'
+  # branches:
+  #   - master
+  # paths:
+  #   - 'modules/azure/kubernetes/**'
+  #   - 'test/modules/azuredeploy/kubernetes/**'
 jobs:
   terraform:
     name: 'Terraform'
@@ -49,5 +49,5 @@ jobs:
         working-directory: ${{ env.TF_TEST_WORKING_DIR }}
 
       - name: 'Terraform Plan'
-        run: terraform plan
+        run: terraform plan --var-file=terraform.tfvars
         working-directory: ${{ env.TF_TEST_WORKING_DIR }}
