@@ -26,7 +26,6 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@master
       - name: "Prepare SSH known hosts"
-        uses: hashicorp/terraform-github-actions@master
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
@@ -35,24 +34,31 @@ jobs:
           chmod 600 ~/.ssh/id_rsa ~/.ssh/known_hosts
           eval $(ssh-agent)
           ssh-add ~/.ssh/id_rsa
-      - name: 'Terraform Format'
-        uses: hashicorp/terraform-github-actions@master
+      - uses: hashicorp/setup-terraform@v1
         with:
-          tf_actions_subcommand: 'fmt'
-          tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
-          tf_actions_version: ${{ env.TF_VERSION }}
-          tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
-      - name: 'Terraform Init'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_subcommand: 'init'
-          tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
-          tf_actions_version: ${{ env.TF_VERSION }}
-          tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
-      - name: 'Terraform Validate'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_subcommand: 'validate'
-          tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
-          tf_actions_version: ${{ env.TF_VERSION }}
-          tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
+            terraform_version: ${{ TF_VERSION }}
+      
+      - run: terraform init
+        working-directory: ${{ TF_TEST_WORKING_DIR }}
+        
+      # - name: 'Terraform Format'
+      #   uses: hashicorp/terraform-github-actions@master
+      #   with:
+      #     tf_actions_subcommand: 'fmt'
+      #     tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
+      #     tf_actions_version: ${{ env.TF_VERSION }}
+      #     tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
+      # - name: 'Terraform Init'
+      #   uses: hashicorp/terraform-github-actions@master
+      #   with:
+      #     tf_actions_subcommand: 'init'
+      #     tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
+      #     tf_actions_version: ${{ env.TF_VERSION }}
+      #     tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
+      # - name: 'Terraform Validate'
+      #   uses: hashicorp/terraform-github-actions@master
+      #   with:
+      #     tf_actions_subcommand: 'validate'
+      #     tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
+      #     tf_actions_version: ${{ env.TF_VERSION }}
+      #     tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
