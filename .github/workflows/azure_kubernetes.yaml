@@ -34,6 +34,7 @@ jobs:
         run: |
           rm -f remote.tf locals.tf
           mv locals.tf.dummy locals.tf
+        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
 
       - name: Terraform Format
         run: terraform fmt -check
