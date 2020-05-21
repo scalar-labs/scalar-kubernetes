@@ -6,7 +6,7 @@ locals {
     location = "japaneast"
     cidr     = "10.42.0.0/16"
 
-    public_key_path  = "../../test_key.pub"
+    public_key_path = "../../test_key.pub"
     internal_domain = "internal.scalar-labs.com"
   }
 }
