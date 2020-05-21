@@ -26,6 +26,7 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@master
       - name: "Prepare SSH known hosts"
+        uses: hashicorp/terraform-github-actions@master
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
