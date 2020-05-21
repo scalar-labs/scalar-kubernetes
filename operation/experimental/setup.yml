@@ -6,7 +6,15 @@
   become: no
   vars:
    TF_variables_file: example-us.tfvars
+   WAIT: no
   tasks:
+  - name: wait to before starting mdoules network
+    pause:
+    when: WAIT
+    tags:
+    - network
+    
+    
   - name: start terraform network
     terraform:
       project_path: ../../examples/azure/network/
@@ -26,6 +34,7 @@
 
   - name: wait to before starting mdoules kubernetes
     pause:
+    when: WAIT
     tags:
     - kubernetes
 
@@ -44,6 +53,7 @@
 
   - name: wait to before starting mdoules cassandra
     pause:
+    when: WAIT
     tags:
     - cassandra
 
