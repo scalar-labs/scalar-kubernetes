@@ -12,3 +12,6 @@
     src: "{{ KUBE_CONFIG }}"
     dest: "/home/{{ ansible_user }}/.kube/config"
     mode: '0644'
+
+- name: install kubectl completion
+  shell: "{{ KUBECTL_PATH }} completion bash > /etc/bash_completion.d/kubectl"
