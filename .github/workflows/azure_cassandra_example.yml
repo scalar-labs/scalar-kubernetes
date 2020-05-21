@@ -1,15 +1,15 @@
 name: 'Terraform test for Cassandra module of Azure Example'
 on:
-  # pull_request:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - 'examples/azure/cassandra/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'examples/azure/cassandra/**'
   push:
-    # branches:
-    #   - master
-    # paths:
-    #   - 'examples/azure/cassandra/**'
+    branches:
+      - master
+    paths:
+      - 'examples/azure/cassandra/**'
 jobs:
   terraform:
     name: 'Terraform'

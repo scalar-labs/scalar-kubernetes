@@ -1,17 +1,17 @@
 name: 'Terraform test for Kubernetes module of Azure'
 on:
-  # pull_request:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - 'modules/azure/kubernetes/**'
-  #     - 'test/modules/azuredeploy/kubernetes/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'modules/azure/kubernetes/**'
+      - 'test/modules/azuredeploy/kubernetes/**'
   push:
-  # branches:
-  #   - master
-  # paths:
-  #   - 'modules/azure/kubernetes/**'
-  #   - 'test/modules/azuredeploy/kubernetes/**'
+    branches:
+      - master
+    paths:
+      - 'modules/azure/kubernetes/**'
+      - 'test/modules/azuredeploy/kubernetes/**'
 jobs:
   terraform:
     name: 'Terraform'

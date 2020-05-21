@@ -1,15 +1,15 @@
 name: 'Terraform test for Network module of Azure Example'
 on:
-  # pull_request:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - 'examples/azure/network/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'examples/azure/network/**'
   push:
-    # branches:
-    #   - master
-    # paths:
-    #   - 'examples/azure/network/**'
+    branches:
+      - master
+    paths:
+      - 'examples/azure/network/**'
 jobs:
   terraform:
     name: 'Terraform'
