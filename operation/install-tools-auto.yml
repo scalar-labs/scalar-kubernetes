@@ -4,15 +4,25 @@
   connection: local
   gather_facts: no
   become: no
+  vars:
+    DEBUG: yes
   tasks:
   - name: load network tfstate file
-    shell: cat ../examples/azure/network/terraform.tfstate
+    shell: cat ../../examples/azure/network/terraform.tfstate
     register: network_json
 
   - name: retrieve bastion_ip and user_name from network tfstate
     set_fact:
       bastion_ip: "{{ (network_json.stdout | from_json).outputs.bastion_ip.value }}"
       user_name: "{{ (network_json.stdout | from_json).outputs.user_name.value }}"
+
+  - debug:
+      var: bastion_ip
+    when: DEBUG
+
+  - debug:
+      var: user_name
+    when: DEBUG
 
   - name: add bastion ip to host group
     add_host:
@@ -22,12 +32,16 @@
       groups: bastion
 
   - name: load kubernetes tfstate file
-    shell: cat ../examples/azure/kubernetes/terraform.tfstate
+    shell: cat ../../examples/azure/kubernetes/terraform.tfstate
     register: kubernetes_json
 
   - name: retrieve kube_config from network tfstate
     set_fact:
       kube_config: "{{ (kubernetes_json.stdout | from_json).outputs.kube_config.value }}"
+
+  - debug:
+      var: kube_config
+    when: DEBUG
 
   - name: copy the kube_config into tmp
     copy: 
@@ -38,6 +52,17 @@
   hosts: bastion
   gather_facts: no
   become: yes
+  pre_tasks:
+  - name: Switch Ansible's Python interpreter to Python 2
+    set_fact:
+      ansible_python_interpreter: "/usr/bin/python"
+  - name: ensure libselinux-python3 is installed
+    package:
+      name: libselinux-python3
+      state: present
+  - name: Switch Ansible's Python interpreter to Python 3
+    set_fact:
+      ansible_python_interpreter: "/usr/bin/python3"
   roles:
     - "scalar.kubectl"
     - "scalar.helm"

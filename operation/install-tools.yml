@@ -1,0 +1,23 @@
+---
+- name: install necessary kubernetes binary on bastion
+  hosts: bastion
+  gather_facts: no
+  become: yes
+  vars:
+    KUBE_CONFIG: tmp/kube_config
+  pre_tasks:
+  - name: Switch Ansible's Python interpreter to Python 2
+    set_fact:
+      ansible_python_interpreter: "/usr/bin/python"
+  - name: ensure libselinux-python3 is installed
+    package:
+      name: libselinux-python3
+      state: present
+  - name: Switch Ansible's Python interpreter to Python 3
+    set_fact:
+      ansible_python_interpreter: "/usr/bin/python3"
+  roles:
+    - "scalar.kubectl"
+    - "scalar.helm"
+  tags:
+  - kubernetes tool
