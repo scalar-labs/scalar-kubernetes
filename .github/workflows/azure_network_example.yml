@@ -1,15 +1,15 @@
 name: 'Terraform test for Network module of Azure Example'
 on:
-  pull_request:
-    branches:
-      - master
-    paths:
-      - 'examples/azure/network/**'
+  # pull_request:
+  #   branches:
+  #     - master
+  #   paths:
+  #     - 'examples/azure/network/**'
   push:
-    branches:
-      - master
-    paths:
-      - 'examples/azure/network/**'
+    # branches:
+    #   - master
+    # paths:
+    #   - 'examples/azure/network/**'
 jobs:
   terraform:
     name: 'Terraform'
@@ -19,30 +19,23 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-      TF_VERSION: 0.12.19
-      TF_ACTIONS_COMMENT: false
       TF_TEST_WORKING_DIR: ./examples/azure/network
     steps:
       - name: 'Checkout'
         uses: actions/checkout@master
-      - name: 'Terraform Format'
-        uses: hashicorp/terraform-github-actions@master
+      
+      - uses: hashicorp/setup-terraform@v1
         with:
-          tf_actions_subcommand: 'fmt'
-          tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
-          tf_actions_version: ${{ env.TF_VERSION }}
-          tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
-      - name: 'Terraform Init'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_subcommand: 'init'
-          tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
-          tf_actions_version: ${{ env.TF_VERSION }}
-          tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
-      - name: 'Terraform Validate'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_subcommand: 'validate'
-          tf_actions_working_dir: ${{ env.TF_TEST_WORKING_DIR }}
-          tf_actions_version: ${{ env.TF_VERSION }}
-          tf_actions_comment: ${{ env.TF_ACTIONS_COMMENT }}
+          terraform_version: 0.12.19
+      
+      - name: Terraform Format
+        run: terraform fmt -check
+        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
