@@ -22,19 +22,15 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@master
-      - name: "Prepare SSH known hosts"
-        run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/id_rsa ~/.ssh/known_hosts
-          eval $(ssh-agent)
-          ssh-add ~/.ssh/id_rsa
+      
       - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.12.19
       
+      - name: Terraform Format
+        run: terraform fmt -check
+        working-directory: ./examples/azure/cassandra
+
       - name: Terraform Init
         run: terraform init
         working-directory: ./examples/azure/cassandra
