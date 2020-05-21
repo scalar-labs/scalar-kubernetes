@@ -21,8 +21,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-      TF_VERSION: 0.12.19
-      TF_ACTIONS_COMMENT: false
       TF_TEST_WORKING_DIR: ./examples/azure/kubernetes
     steps:
       - name: 'Checkout'
@@ -30,7 +28,7 @@ jobs:
       
       - uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.12.19
+          terraform_version: 0.12.21
       
       - name: Terraform Format
         run: terraform fmt -check
