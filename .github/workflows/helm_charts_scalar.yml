@@ -62,7 +62,7 @@ jobs:
       - name: Create kind ${{ matrix.k8s }} cluster
         uses: helm/kind-action@v1.0.0-alpha.3
         with:
-          config: .github/kind-config.yaml
+          config: .github/kind-cluster.yaml
           node_image: kindest/node:${{ matrix.k8s }}
 
       - name: Run chart-testing (install)
