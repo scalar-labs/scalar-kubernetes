@@ -1,0 +1,25 @@
+name: 'Helm charts validate for scalar ledger'
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'helm-charts/stable/scalar-ledger/**'
+  push:
+    branches:
+      - master
+    paths:
+      - 'helm-charts/stable/scalar-ledger/**'
+jobs:
+  hrval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: Validate Helm Releases in test dir
+        uses: stefanprodan/hrval-action@v3.1.0
+        with:
+          helmRelease: helm-charts/stable/scalar-ledger
+          kubernetesVersion: 1.15.7
+          helmVersion: v2
+      
