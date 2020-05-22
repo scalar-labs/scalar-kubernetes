@@ -140,8 +140,8 @@ files:
               - name: envoy.router
       - name: listener_1
         address:
-          socket_address: 
-            address: 0.0.0.0 
+          socket_address:
+            address: 0.0.0.0
             port_value: 50052
         filter_chains:
         - filters:
@@ -175,8 +175,8 @@ files:
         connect_timeout: 0.25s
         type: strict_dns
         lb_policy: round_robin
-        hosts: 
-          socket_address: 
+        hosts:
+          socket_address:
             address: scalar-ledger-headless
             port_value: 50051
         health_checks:
@@ -188,13 +188,12 @@ files:
             grpc_health_check: {}
         http2_protocol_options: {}
         drain_connections_on_host_removal: true
-       
       - name: scalar-ledger-privileged
         connect_timeout: 0.25s
         type: strict_dns
         lb_policy: round_robin
-        hosts: 
-          socket_address: 
+        hosts:
+          socket_address:
             address: scalar-ledger-headless
             port_value: 50052
         health_checks:

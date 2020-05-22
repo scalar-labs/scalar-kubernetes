@@ -7,8 +7,6 @@ keywords:
 - proxy
 home: https://www.envoyproxy.io/
 maintainers:
-- name: Hiroyuki Yamada
-  email: hiroyuki.yamada@scalar-labs.com
 - name: Paul Dozancuk
   email: paul.dozancuk@scalar-labs.com
 name: scalar-envoy
