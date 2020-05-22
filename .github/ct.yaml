@@ -5,6 +5,3 @@ debug: true
 chart-dirs: 
   - charts/stable
 validate-maintainers: false
-# chart-repos:
-#   - stable=https://kubernetes-charts.storage.googleapis.com/
-#   - bitnami=https://charts.bitnami.com

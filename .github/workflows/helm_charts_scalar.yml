@@ -22,18 +22,14 @@ jobs:
         with:
           command: lint
           config: .github/ct.yaml
-    
+
   kubeval-chart:
     runs-on: ubuntu-latest
     needs: lint-chart
     strategy:
       matrix:
-        # the versions supported by kubeval are the ones for
-        # which a folder exists at
-        # https://github.com/instrumenta/kubernetes-json-schema
         k8s:
           - v1.15.7
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -44,13 +40,4 @@ jobs:
       - name: Run kubeval
         env:
           KUBERNETES_VERSION: ${{ matrix.k8s }}
-        run: .github/kubeval.sh 
-
-
-      # - name: Validate Helm Releases in test dir
-      #   uses: stefanprodan/hrval-action@v3.1.0
-      #   with:
-      #     helmRelease: helm-charts/stable/scalar-envoy
-      #     kubernetesVersion: 1.15.7
-      #     helmVersion: v2
-      
+        run: .github/kubeval.sh
