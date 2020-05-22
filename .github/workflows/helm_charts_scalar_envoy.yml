@@ -1,15 +1,15 @@
-name: 'Helm charts validate for scalar envoy'
+name: 'Helm charts validate for scalar charts'
 on:
   pull_request:
     branches:
       - master
     paths:
-      - 'charts/stable/scalar-envoy/**'
+      - 'charts/stable/**'
   push:
     branches:
       - master
     paths:
-      - 'charts/stable/scalar-envoy/**'
+      - 'charts/stable/**'
 jobs:
   ct:
     runs-on: ubuntu-latest
