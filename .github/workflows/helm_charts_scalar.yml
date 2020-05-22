@@ -11,7 +11,7 @@ on:
     paths:
       - 'charts/stable/**'
 jobs:
-  ct:
+  lint-chart:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
