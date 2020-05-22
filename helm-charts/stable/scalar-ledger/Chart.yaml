@@ -3,6 +3,7 @@ appVersion: "1.0"
 description: A Helm chart for Kubernetes Scalar Ledger
 name: scalar-ledger
 version: 0.1.0
+icon: https://scalar-labs.com/wp-content/themes/scalar/assets/img/logo_scalar.svg
 keywords:
 - ledger
 - DLT
@@ -12,5 +13,3 @@ maintainers:
   email: hiroyuki.yamada@scalar-labs.com
 - name: Paul Dozancuk
   email: paul.dozancuk@scalar-labs.com
-name: scalar-ledger
-version: 0.1.0
