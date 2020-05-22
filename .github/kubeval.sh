@@ -13,6 +13,7 @@ KUBEVAL_VERSION="0.15.0"
 curl --silent --show-error --fail --location --output get_helm.sh https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
 chmod 700 get_helm.sh
 ./get_helm.sh --version "${HELM_VERSION}"
+helm init --client-only
 
 # install kubeval plugins to helm
 helm plugin install https://github.com/instrumenta/helm-kubeval
