@@ -35,8 +35,8 @@ spec:
         name: scalar-ledger-config
       initContainers:
       - name: cassandra-load-keyspace
-        image: cassandra:latest
-        imagePullPolicy: Always
+        image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
+        imagePullPolicy: "{{ .Values.initContainer.image.pullPolicy }}"
         volumeMounts:
         - mountPath: /init.cql
           name: scalar-ledger-config
@@ -56,18 +56,16 @@ spec:
             secretKeyRef:
               name: {{ include "scalar-ledger.fullname" . }}
               key: cassandra-password
-        - name: CASSANDRA_REPLICATION_FACTOR
-          value: "{{ .Values.cassandra.rf }}"
         command:
         - /bin/bash 
         - -c 
-        - "sleep 20 && echo loading cassandra keyspace && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /init.cql"
+        - "sleep {{ .Values.initContainer.waitCassandra }} && echo loading cassandra keyspace && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /init.cql"
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           env:
           - name: SCALAR_DB_CONTACT_POINTS
             value: "{{ .Values.cassandra.host }}"
@@ -83,8 +81,6 @@ spec:
               secretKeyRef:
                 name: {{ include "scalar-ledger.fullname" . }}
                 key: cassandra-password
-          - name: CASSANDRA_REPLICATION_FACTOR
-            value: "{{ .Values.cassandra.rf }}"
           - name: SCALAR_DL_LEDGER_LOG_LEVEL
             value: "INFO"
           ports:
@@ -107,10 +103,6 @@ spec:
               command:
               - /bin/grpc_health_probe
               - -addr=:50051
-          volumeMounts:
-          - mountPath: /startup.sh
-            name: scalar-ledger-config
-            subPath: startup.sh
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
