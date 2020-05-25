@@ -1,4 +1,4 @@
-name: 'Terraform test for Network module of Azure Example'
+name: Terraform test for Network module of Azure Example
 on:
   pull_request:
     branches:
@@ -10,6 +10,9 @@ on:
       - master
     paths:
       - 'examples/azure/network/**'
+defaults:
+  run:
+    working-directory: ./examples/azure/network
 jobs:
   terraform:
     name: 'Terraform'
@@ -19,23 +22,19 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-      TF_TEST_WORKING_DIR: ./examples/azure/network
     steps:
       - name: 'Checkout'
         uses: actions/checkout@master
       
       - uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.12.21
+          terraform_version: 0.12.25
       
       - name: Terraform Format
         run: terraform fmt -check
-        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
 
       - name: Terraform Init
         run: terraform init
-        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: ${{ env.TF_TEST_WORKING_DIR }}

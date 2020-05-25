@@ -1,4 +1,4 @@
-name: 'Terraform test for Kubernetes module of Azure'
+name: Terraform test for Kubernetes module of Azure
 on:
   pull_request:
     branches:
@@ -12,6 +12,9 @@ on:
     paths:
       - 'modules/azure/kubernetes/**'
       - 'test/modules/azuredeploy/kubernetes/**'
+defaults:
+  run:
+    working-directory: ./test/modules/azuredeploy/kubernetes
 jobs:
   terraform:
     name: 'Terraform'
@@ -21,33 +24,27 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-      TF_TEST_WORKING_DIR: ./test/modules/azuredeploy/kubernetes
     steps:
       - name: 'Checkout'
         uses: actions/checkout@master
       
       - uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.12.21
+          terraform_version: 0.12.25
         
       - name: 'Set up to using dummy local variables'
         run: |
           rm -f remote.tf locals.tf
           mv locals.tf.dummy locals.tf
-        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
 
       - name: Terraform Format
         run: terraform fmt -check
-        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
 
       - name: Terraform Init
         run: terraform init
-        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
 
       - name: 'Terraform Plan'
         run: terraform plan --var-file=terraform.tfvars
-        working-directory: ${{ env.TF_TEST_WORKING_DIR }}
