@@ -49,7 +49,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  # service.type -- Different service types in kubernetes
+  # service.type -- service types in kubernetes
   type: ClusterIP
   # service.annotations -- Service annotations, e.g: prometheus, etc.
   annotations: {}
@@ -69,7 +69,7 @@ service:
       # service.ports.envoy-priv.protocol -- envoy protocol
       protocol: TCP
 
-# resources -- resources allowing to the pod
+# resources -- resources allowed to the pod
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

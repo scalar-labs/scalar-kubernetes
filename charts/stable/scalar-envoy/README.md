@@ -24,7 +24,7 @@ Source code can be found [here](https://www.envoyproxy.io/)
 | podDisruptionBudget | string | `"maxUnavailable: 1\n"` | podDisruptionBudget Settings |
 | podSecurityContext | object | `{}` | PodSecurityContext holds pod-level security attributes and common container settings |
 | replicaCount | int | `1` | number of replicas to deploy |
-| resources | object | `{}` | resources allowing to the pod |
+| resources | object | `{}` | resources allowed to the pod |
 | securityContext | object | `{}` | Setting security context at the pod applies those settings to all containers in the pod |
 | service.annotations | object | `{}` | Service annotations, e.g: prometheus, etc. |
 | service.ports.envoy-priv.port | int | `50052` | nvoy public port |
@@ -33,7 +33,7 @@ Source code can be found [here](https://www.envoyproxy.io/)
 | service.ports.envoy.port | int | `50051` | envoy public port |
 | service.ports.envoy.protocol | string | `"TCP"` | envoy protocol |
 | service.ports.envoy.targetPort | string | `"envoy"` | envoy k8s internal name |
-| service.type | string | `"ClusterIP"` | Different service types in kubernetes |
+| service.type | string | `"ClusterIP"` | service types in kubernetes |
 | serviceMonitor.additionalLabels | object | `{}` |  |
 | serviceMonitor.enabled | bool | `false` | to able prometheus collect |
 | serviceMonitor.interval | string | `"15s"` |  |
