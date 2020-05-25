@@ -1,4 +1,4 @@
-name: 'Helm charts validate for scalar charts'
+name: Helm testing and validate for scalar charts
 on:
   pull_request:
     branches:
@@ -69,6 +69,8 @@ jobs:
         run: |
           kubectl cluster-info
           kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=${{ secrets.DOCKERHUB_USER }} --docker-password=${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo update
           helm upgrade --install cassandra --namespace cassandra --set dbUser.user=cassandra --set dbUser.password=cassandra bitnami/cassandra --version 5.1.2
 
       - name: Run chart-testing (install)
