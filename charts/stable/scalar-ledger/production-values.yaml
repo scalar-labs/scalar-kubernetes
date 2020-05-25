@@ -59,35 +59,35 @@ resources: {}
 
 nodeSelector: {}
 
-tolerations: []
-# - key: kubernetes.io/app
-#   operator: Equal
-#   value: scalardl
-#   effect: NoSchedule
+tolerations:
+- key: kubernetes.io/app
+  operator: Equal
+  value: scalardl
+  effect: NoSchedule
 
-affinity: {}
-  # nodeAffinity:
-  #   requiredDuringSchedulingIgnoredDuringExecution:
-  #     nodeSelectorTerms:
-  #     - matchExpressions:
-  #       - key: agentpool
-  #         operator: In
-  #         values:
-  #         - "scalardl"
-  # podAntiAffinity:
-  #   preferredDuringSchedulingIgnoredDuringExecution:
-  #   - weight: 50
-  #     podAffinityTerm:
-  #       labelSelector:
-  #         matchExpressions:
-  #         - key: app
-  #           operator: In
-  #           values:
-  #           - scalar-ledger
-  #       topologyKey: kubernetes.io/hostname
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: agentpool
+          operator: In
+          values:
+          - "scalardl"
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 50
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - scalar-ledger
+        topologyKey: kubernetes.io/hostname
 
 initContainer:
-  enabled: false
+  enabled: true
   image:
     repository: cassandra
     tag: latest

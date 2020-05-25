@@ -33,6 +33,7 @@ spec:
           defaultMode: 493
           name: {{ include "scalar-ledger.fullname" . }}
         name: scalar-ledger-config
+      {{- if .Values.initContainer.enabled }}
       initContainers:
       - name: cassandra-load-keyspace
         image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
@@ -60,6 +61,7 @@ spec:
         - /bin/bash 
         - -c 
         - "sleep {{ .Values.initContainer.waitCassandra }} && echo loading cassandra keyspace && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /init.cql"
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
