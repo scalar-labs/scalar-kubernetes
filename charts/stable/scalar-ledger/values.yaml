@@ -87,7 +87,7 @@ affinity: {}
   #       topologyKey: kubernetes.io/hostname
 
 initContainer:
-  enabled: false
+  enabled: true
   image:
     repository: cassandra
     tag: latest
