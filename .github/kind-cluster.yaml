@@ -5,4 +5,3 @@ nodes:
 - role: control-plane
 # the 2 workers
 - role: worker
-- role: worker
