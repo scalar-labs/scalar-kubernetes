@@ -2,30 +2,44 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# replicaCount -- number of replicas to deploy
 replicaCount: 1
 
 image:
+  # image.repository -- Docker image
   repository: envoyproxy/envoy
+  # image.tag -- Docker image tag, e.g: latest or specific version
   tag: v1.12.2
+  # image.pullPolicy -- Specify a imagePullPolicy
   pullPolicy: IfNotPresent
 
+# imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
 imagePullSecrets: []
+
+# nameOverride -- String to partially override scalar-envoy.fullname template (will maintain the release name)
 nameOverride: ""
+
+# fullnameOverride -- String to fully override scalar-envoy.fullname template
 fullnameOverride: ""
 
+# podDisruptionBudget -- podDisruptionBudget Settings
 podDisruptionBudget: |
   maxUnavailable: 1
 
 strategy:
   rollingUpdate:
+    # strategy.rollingUpdate -- The number of pods that can be created above the desired amount of pods during an update
     maxSurge: 0
+    # strategy.rollingUpdate -- The number of pods that can be unavailable during the update process
     maxUnavailable: 1
+  # strategy.type -- New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate
   type: RollingUpdate
 
-
+# podSecurityContext -- PodSecurityContext holds pod-level security attributes and common container settings
 podSecurityContext: {}
   # fsGroup: 2000
 
+# securityContext -- Setting security context at the pod applies those settings to all containers in the pod
 securityContext: {}
   # capabilities:
   #   drop:
@@ -35,18 +49,27 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+  # service.type -- Different service types in kubernetes
   type: ClusterIP
+  # service.annotations -- Service annotations, e.g: prometheus, etc.
   annotations: {}
   ports:
     envoy:
+      # service.ports.envoy.port -- envoy public port
       port: 50051
+      # service.ports.envoy.targetPort -- envoy k8s internal name
       targetPort: envoy
+      # service.ports.envoy.protocol -- envoy protocol
       protocol: TCP
     envoy-priv:
+      # service.ports.envoy-priv.port -- nvoy public port
       port: 50052
+      # service.ports.envoy-priv.targetPort -- envoy k8s internal name
       targetPort: envoy-priv
+      # service.ports.envoy-priv.protocol -- envoy protocol
       protocol: TCP
 
+# resources -- resources allowing to the pod
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -59,14 +82,17 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+# nodeSelector -- nodeSelector is form of node selection constraint
 nodeSelector: {}
 
+# tolerations -- Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
 tolerations: []
 # - key: kubernetes.io/app
 #   operator: Equal
 #   value: scalardl
 #   effect: NoSchedule
 
+# affinity -- the affinity/anti-affinity feature, greatly expands the types of constraints you can express
 affinity: {}
   # nodeAffinity:
   #   requiredDuringSchedulingIgnoredDuringExecution:
@@ -89,14 +115,21 @@ affinity: {}
   #       topologyKey: kubernetes.io/hostname
 
 serviceMonitor:
+  # serviceMonitor.enabled -- to able prometheus collect
   enabled: false
+  # serviceMonitor.interval --
   interval: "15s"
+  # serviceMonitor.targetLabels --
   targetLabels: []
+  # serviceMonitor.podTargetLabels --
   podTargetLabels: []
-  # namespace: monitoring
+  # serviceMonitor.namespace -- prometheus namespace
+  namespace: monitoring
+  # serviceMonitor.additionalLabels --
   additionalLabels: {}
 
 files:
+  # files.envoy.yaml -- envoy configuration
   envoy.yaml: |-
     admin:
       access_log_path: /dev/stdout
