@@ -12,7 +12,7 @@ image:
 cassandra:
   user: cassandra
   password: cassandra
-  host: cassandra-lb.internal.scalar-labs.com.
+  host: cassandra
   port: 9042
 
 podDisruptionBudget: |

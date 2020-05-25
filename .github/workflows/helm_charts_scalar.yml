@@ -71,7 +71,7 @@ jobs:
           kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=${{ secrets.DOCKERHUB_USER }} --docker-password=${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo update
-          helm upgrade --install cassandra --namespace cassandra --set dbUser.user=cassandra --set dbUser.password=cassandra bitnami/cassandra --version 5.1.2
+          helm upgrade --install cassandra --namespace default --set dbUser.user=cassandra --set dbUser.password=cassandra bitnami/cassandra --version 5.1.2
 
       - name: Run chart-testing (install)
         uses: helm/chart-testing-action@v1.0.0-rc.2
