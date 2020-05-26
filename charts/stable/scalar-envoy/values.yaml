@@ -83,32 +83,9 @@ nodeSelector: {}
 
 # tolerations -- Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
 tolerations: []
-# - key: kubernetes.io/app
-#   operator: Equal
-#   value: scalardl
-#   effect: NoSchedule
 
 # affinity -- the affinity/anti-affinity feature, greatly expands the types of constraints you can express
 affinity: {}
-  # nodeAffinity:
-  #   requiredDuringSchedulingIgnoredDuringExecution:
-  #     nodeSelectorTerms:
-  #     - matchExpressions:
-  #       - key: agentpool
-  #         operator: In
-  #         values:
-  #         - "scalardl"
-  # podAntiAffinity:
-  #   preferredDuringSchedulingIgnoredDuringExecution:
-  #   - weight: 50
-  #     podAffinityTerm:
-  #       labelSelector:
-  #         matchExpressions:
-  #         - key: app
-  #           operator: In
-  #           values:
-  #           - envoy
-  #       topologyKey: kubernetes.io/hostname
 
 serviceMonitor:
   # serviceMonitor.enabled -- to able prometheus collect

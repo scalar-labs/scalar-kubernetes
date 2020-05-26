@@ -6,8 +6,7 @@ set -o errexit
 set -o pipefail
 
 CHART_DIRS="$(git diff --find-renames --name-only "$(git rev-parse --abbrev-ref HEAD)" remotes/origin/master -- charts charts/stable | grep '[cC]hart.yaml' | sed -e 's#/[Cc]hart.yaml##g')"
-HELM_VERSION="v2.16.6"
-KUBEVAL_VERSION="0.15.0"
+HELM_VERSION="v2.16.7"
 
 # install helm
 curl --silent --show-error --fail --location --output get_helm.sh https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get

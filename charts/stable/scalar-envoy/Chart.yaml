@@ -1,4 +1,4 @@
-apiVersion: v2
+apiVersion: v1
 appVersion: "1.0"
 deprecated: false
 description: Implementation of Envoy for scalar-ledger. Envoy is an open source edge and service proxy, designed for cloud-native applications.
@@ -8,7 +8,6 @@ keywords:
 - proxy
 home: https://www.envoyproxy.io/
 sources: ["https://github.com/envoyproxy/envoy"]
-type: application
 maintainers:
   - name: Paul Dozancuk
     email: paul.dozancuk@scalar-labs.com
