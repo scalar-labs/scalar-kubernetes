@@ -103,7 +103,7 @@ data:
         lb_policy: round_robin
         hosts:
           socket_address:
-            address: sscalar-ledger-headless
+            address: scalar-ledger-headless
             port_value: 50052
         health_checks:
           - timeout: 1s
