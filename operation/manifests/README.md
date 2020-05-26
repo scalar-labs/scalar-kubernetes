@@ -8,45 +8,6 @@
   * `scalar-ledger` is available to only our partners and customers at the moment.
 * deploy terraform k8s from this repository
 
-## Setup the requirements
-
-This guide will cover `howto` install tools for setting up your environment with asdf.
-
-### ASDF (Manage multiple runtime versions with a single CLI tool)
-
-* [asdf](https://asdf-vm.com/#/)
-
-On OSX and Linux
-
-```console
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.7
-```
-
-For Bash
-
-```console
-echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
-echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
-```
-
-For Zsh
-
-```console
-echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.zshrc
-```
-
-To see all the version
-
-```console
-asdf list
-helm
-  2.16.3
-kubectl
-  1.15.10
-minikube
-  1.9.2
-```
-
 ### kubectl
 
 Kubectl tool install instructions can be found [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
@@ -54,9 +15,9 @@ Kubectl tool install instructions can be found [here](https://kubernetes.io/docs
 #### Install kubectl
 
 ```console
-asdf plugin-add kubectl
-asdf install kubectl 1.15.10
-asdf global kubectl 1.15.10
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.7/bin/linux/amd64/kubectl
+mv kubectl $PATH/kubectl
+chmod +x $PATH/kubectl
 ```
 
 #### Verify kubectl
@@ -80,10 +41,12 @@ setup the docker registry on kubernetes
 
 ```console
 kubectl create secret docker-registry reg-docker-secrets \
-  --docker-server=<your-registry-server> \
+  --docker-server=https://index.docker.io/v2/ \
   --docker-username=<your-name> \
   --docker-password=<your-pword> \
 ```
+
+you need to adapt this to your need
 
 #### deploy Scalar-Ledger
 
