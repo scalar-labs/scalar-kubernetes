@@ -1,6 +1,6 @@
 ---
 - name: download and install binary
-  unarchive: 
+  unarchive:
     src: "https://get.helm.sh/helm-{{ VERSION }}-linux-amd64.tar.gz"
     dest: /tmp
     copy: no

@@ -33,7 +33,7 @@
     tags:
     - kubernetes
 
-  - debug: msg={{ tf_run_kubernetes.outputs.kube_config.value }} 
+  - debug: msg={{ tf_run_kubernetes.outputs.kube_config.value }}
     tags:
     - kubernetes
 

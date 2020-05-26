@@ -44,8 +44,8 @@
     when: DEBUG
 
   - name: copy the kube_config into tmp
-    copy: 
-      content: "{{ kube_config }}" 
+    copy:
+      content: "{{ kube_config }}"
       dest: ../tmp/kube_config
 
 - name: install necessary kubernetes binary on bastion
@@ -71,7 +71,7 @@
   tags:
   - kubernetes tool
 
-- name: cleanup 
+- name: cleanup
   hosts: localhost
   connection: local
   gather_facts: no
