@@ -1,0 +1,50 @@
+name: Terraform test for Kubernetes module of Azure
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'modules/azure/kubernetes/**'
+      - 'test/modules/azuredeploy/kubernetes/**'
+  push:
+    branches:
+      - master
+    paths:
+      - 'modules/azure/kubernetes/**'
+      - 'test/modules/azuredeploy/kubernetes/**'
+defaults:
+  run:
+    working-directory: ./test/modules/azuredeploy/kubernetes
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@master
+      
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.12.25
+        
+      - name: 'Set up to using dummy local variables'
+        run: |
+          rm -f remote.tf locals.tf
+          mv locals.tf.dummy locals.tf
+
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: 'Terraform Plan'
+        run: terraform plan --var-file=terraform.tfvars
