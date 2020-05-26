@@ -2,17 +2,16 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    k8s-app: envoy
-    version: v1
+    app.kubernetes.io/name: envoy
+    app.kubernetes.io/version: v1
   name: envoy
-  namespace: scalardlt
 spec:
   minReadySeconds: 120
   replicas: 3
   selector:
     matchLabels:
-      k8s-app: envoy
-      version: v1
+      app.kubernetes.io/name: envoy
+      app.kubernetes.io/version: v1
   strategy:
     rollingUpdate:
       maxSurge: 0
@@ -24,10 +23,9 @@ spec:
         prometheus.io.port: "9901"
         prometheus.io/path: /stats/prometheus
         prometheus.io/scrape: "true"
-      creationTimestamp: null
       labels:
-        k8s-app: envoy
-        version: v1
+        app.kubernetes.io/name: envoy
+        app.kubernetes.io/version: v1
     spec:
       containers:
       - command:
@@ -37,7 +35,7 @@ spec:
         - -l
         - debug
         image: envoyproxy/envoy:v1.12.2
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         name: envoy
         ports:
         - containerPort: 50051
@@ -79,3 +77,28 @@ spec:
           defaultMode: 493
           name: envoy
         name: envoy-config
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                - scalardl
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - envoy
+              topologyKey: kubernetes.io/hostname
+            weight: 50
+      tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/app
+          operator: Equal
+          value: scalardl
