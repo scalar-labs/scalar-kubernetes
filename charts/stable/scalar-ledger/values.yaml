@@ -113,7 +113,7 @@ affinity: {}
   #       topologyKey: kubernetes.io/hostname
 
 initContainer:
-  # initContainer.enabled -- to enabled cassandra keyspace creation 
+  # initContainer.enabled -- to enabled cassandra keyspace creation
   enabled: true
   image:
     # initContainer.image.repository -- Docker image for initContainer
@@ -126,7 +126,7 @@ initContainer:
   waitCassandra: 20
 
 files:
-  # files.init.cql-- scalar-ledger configuration for cassandra
+  # files."init.cql" -- scalar-ledger configuration for cassandra
   init.cql: |
     CREATE KEYSPACE IF NOT EXISTS scalar WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': 1 };
     CREATE KEYSPACE IF NOT EXISTS coordinator WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': 1 };
