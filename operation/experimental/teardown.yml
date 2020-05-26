@@ -9,7 +9,7 @@
   tasks:
   - name: destroy terraform kubernetes
     terraform:
-      project_path: ../examples/azure/kubernetes/
+      project_path: ../../examples/azure/kubernetes/
       variables_file: "{{ TF_variables_file }}"
       state: absent
     tags:
@@ -17,7 +17,7 @@
 
   - name: start terraform cassandra
     terraform:
-      project_path: ../examples/azure/cassandra/
+      project_path: ../../examples/azure/cassandra/
       variables_file: "{{ TF_variables_file }}"
       state: absent
     tags:
@@ -25,7 +25,7 @@
 
   - name: destroy terraform network
     terraform:
-      project_path: ../examples/azure/network/
+      project_path: ../../examples/azure/network/
       variables_file: "{{ TF_variables_file }}"
       state: absent
     tags:

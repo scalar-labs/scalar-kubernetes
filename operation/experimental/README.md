@@ -7,7 +7,19 @@ Collection of ansible script to deploy automatically the env in azure
 this script is to spin up TF modules (network, kubernetes, cassandra) in azure
 
 ```console
-ansible-playbook -i inventory.ini setup.yaml
+ansible-playbook -i ../inventory.ini setup.yaml
+```
+
+or if you want to do one per one
+
+```console
+ansible-playbook -i ../inventory.ini setup.yaml --step
+```
+
+or per modules e.g network, kubernetes, cassandra
+
+```console
+ansible-playbook -i ../inventory.ini setup.yaml --tags network,kubernetes
 ```
 
 ## Teardown
@@ -15,5 +27,5 @@ ansible-playbook -i inventory.ini setup.yaml
 this script is to un-deploy TF modules (network, kubernetes, cassandra) in azure
 
 ```console
-ansible-playbook -i inventory.ini teardown.yaml
+ansible-playbook -i ../inventory.ini teardown.yaml
 ```

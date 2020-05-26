@@ -46,12 +46,14 @@
   - name: copy the kube_config into tmp
     copy: 
       content: "{{ kube_config }}" 
-      dest: tmp/kube_config
+      dest: ../tmp/kube_config
 
 - name: install necessary kubernetes binary on bastion
   hosts: bastion
   gather_facts: no
   become: yes
+  vars:
+    KUBE_CONFIG: ../tmp/kube_config
   pre_tasks:
   - name: Switch Ansible's Python interpreter to Python 2
     set_fact:
@@ -77,5 +79,5 @@
   tasks:
   - name: cleanup tmp kube_config
     file:
-      path: tmp/kube_config
+      path: ../tmp/kube_config
       state: absent
