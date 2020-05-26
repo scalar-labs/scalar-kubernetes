@@ -70,6 +70,7 @@ spec:
         - mountPath: /etc/envoy/envoy.yaml
           name: envoy-config
           subPath: envoy.yaml
+          readOnly: true
       restartPolicy: Always
       terminationGracePeriodSeconds: 60
       volumes:

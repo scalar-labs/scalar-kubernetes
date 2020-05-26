@@ -31,6 +31,7 @@ spec:
         - mountPath: /init.cql
           name: scalar-ledger-config
           subPath: init.cql
+          readOnly: true
         env:
         - name: SCALAR_DB_CONTACT_POINTS
           value: cassandra-lb.internal.scalar-labs.com
