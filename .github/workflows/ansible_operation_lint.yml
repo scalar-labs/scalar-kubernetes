@@ -20,5 +20,5 @@ jobs:
       - name: Lint Ansible Playbook
         uses: ansible/ansible-lint-action@master
         with:
-          targets: "operation/**/*.(yml|yaml)"
-          args: ""
+          targets: operation/**/*.(yml|yaml)
+          args: --exclude=operation/config --exclude=operation/manifests
