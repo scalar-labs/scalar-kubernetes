@@ -39,14 +39,8 @@ spec:
         name: envoy
         ports:
         - containerPort: 50051
-          name: envoy
-          protocol: TCP
         - containerPort: 50052
-          name: envoy-priv
-          protocol: TCP
         - containerPort: 9901
-          name: envoy-admin
-          protocol: TCP
         livenessProbe:
           httpGet:
             path: /ready

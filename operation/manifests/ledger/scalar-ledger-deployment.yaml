@@ -62,14 +62,8 @@ spec:
           value: "INFO"
         ports:
         - containerPort: 50051
-          name: scalar-dl
-          protocol: TCP
         - containerPort: 50052
-          name: scalar-dl-priv
-          protocol: TCP
         - containerPort: 50053
-          name: scalar-dl-admin
-          protocol: TCP
         livenessProbe:
           exec:
             command:

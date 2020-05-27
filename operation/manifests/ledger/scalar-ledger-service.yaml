@@ -4,15 +4,6 @@ metadata:
   name: scalar-ledger-headless
 spec:
   clusterIP: None
-  ports:
-  - name: scalardl
-    port: 50051
-    protocol: TCP
-    targetPort: 50051
-  - name: scalardl-privileged
-    port: 50052
-    protocol: TCP
-    targetPort: 50052
   selector:
     app.kubernetes.io/name: scalar-ledger
     app.kubernetes.io/version: v1
