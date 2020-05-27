@@ -1,0 +1,31 @@
+name: Ansible Lint on operation folder
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'operation/**'
+  push:
+    branches:
+      - master
+    paths:
+    - 'operation/**'
+
+defaults:
+  run:
+    working-directory: ./operation
+jobs:
+  ansible:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Lint Ansible Playbook
+      uses: ansible/ansible-lint-action@master
+      with:
+        targets: ""
+        override-deps: |
+          ansible==2.9
+          ansible-lint==4.2.0
+        args: ""
