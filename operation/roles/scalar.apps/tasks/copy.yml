@@ -1,5 +1,4 @@
 ---
-
 - name: create folder on remote server
   file:
     path: "{{ REMOTE_MANIFESTS_FOLDER }}"

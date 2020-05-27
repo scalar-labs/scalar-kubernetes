@@ -38,6 +38,3 @@
   become: no
   roles:
   - "scalar.apps"
-
-
-
