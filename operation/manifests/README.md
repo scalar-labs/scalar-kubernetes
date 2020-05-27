@@ -85,18 +85,24 @@ service/envoy created
 check the status of the pods and services
 
 ```console
-kubectl get po,svc
-NAME                                 READY   STATUS    RESTARTS   AGE
-pod/envoy-7b58f445cc-2gzsh           1/1     Running   0          9m31s
-pod/envoy-7b58f445cc-76ct9           1/1     Running   0          9m31s
-pod/envoy-7b58f445cc-mrpf2           1/1     Running   0          9m31s
-pod/scalar-ledger-65799f75d8-rpwn5   1/1     Running   0          9m36s
-pod/scalar-ledger-65799f75d8-s9phk   1/1     Running   0          9m36s
-pod/scalar-ledger-65799f75d8-thvdk   1/1     Running   0          9m36s
+[centos@bastion-1 ~]$ kubectl get po,svc,endpoints -o wide
+NAME                                 READY   STATUS    RESTARTS   AGE     IP             NODE                               NOMINATED NODE   READINESS GATES
+pod/envoy-679ff5c767-24qgs           1/1     Running   0          4h57m   10.42.40.248   aks-scalardl-34802672-vmss000001   <none>           <none>
+pod/envoy-679ff5c767-2th4k           1/1     Running   0          4h57m   10.42.40.122   aks-scalardl-34802672-vmss000000   <none>           <none>
+pod/envoy-679ff5c767-zw9zx           1/1     Running   0          4h57m   10.42.40.125   aks-scalardl-34802672-vmss000000   <none>           <none>
+pod/scalar-ledger-5596d7646d-9rtlx   1/1     Running   0          5h14m   10.42.40.234   aks-scalardl-34802672-vmss000001   <none>           <none>
+pod/scalar-ledger-5596d7646d-jw792   1/1     Running   0          5h14m   10.42.40.134   aks-scalardl-34802672-vmss000000   <none>           <none>
+pod/scalar-ledger-5596d7646d-ln6m6   1/1     Running   0          5h14m   10.42.40.232   aks-scalardl-34802672-vmss000001   <none>           <none>
 
-NAME                             TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)                           AGE
-service/envoy                    LoadBalancer   10.102.7.83   <pending>     50051:30165/TCP,50052:30067/TCP   9m31s
-service/scalar-ledger-headless   ClusterIP      None          <none>        50051/TCP,50052/TCP               9m36s
+NAME                             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)                           AGE     SELECTOR
+service/envoy                    LoadBalancer   10.42.51.34   52.186.98.155   50051:30093/TCP,50052:32101/TCP   4h57m   app.kubernetes.io/name=envoy,app.kubernetes.io/version=v1
+service/kubernetes               ClusterIP      10.42.48.1    <none>          443/TCP                           6h32m   <none>
+service/scalar-ledger-headless   ClusterIP      None          <none>          <none>                            30m     app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v1
+
+NAME                               ENDPOINTS                                                              AGE
+endpoints/envoy                    10.42.40.122:50052,10.42.40.125:50052,10.42.40.248:50052 + 3 more...   4h57m
+endpoints/kubernetes               10.42.40.4:443                                                         6h32m
+endpoints/scalar-ledger-headless   10.42.40.134,10.42.40.232,10.42.40.234                                 30m
 ```
 
 now you can run kelpie or scalar-samples project to try out.
