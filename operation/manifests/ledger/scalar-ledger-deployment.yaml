@@ -81,7 +81,7 @@ spec:
       terminationGracePeriodSeconds: 60
       volumes:
       - configMap:
-          defaultMode: 493
+          defaultMode: 256
           name: scalar-ledger
         name: scalar-ledger-config
       affinity:

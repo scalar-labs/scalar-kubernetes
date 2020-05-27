@@ -69,7 +69,7 @@ spec:
       terminationGracePeriodSeconds: 60
       volumes:
       - configMap:
-          defaultMode: 493
+          defaultMode: 256
           name: envoy
         name: envoy-config
       affinity:
