@@ -46,7 +46,21 @@ kubectl create secret docker-registry reg-docker-secrets \
   --docker-password=<your-pword> \
 ```
 
-you need to adapt this to your need
+you need to adapt with the username and password (can be a token as well)
+
+#### Create configuration files
+
+for envoy
+
+```console
+kubectl create cm envoy --from-file=configuration/envoy.yaml
+```
+
+for scalar-ledger
+
+```console
+kubectl create cm scalar-ledger --from-file=configuration/init.cql
+```
 
 #### deploy Scalar-Ledger
 
@@ -56,7 +70,6 @@ to deploy scalar-ledger app with kubectl
 
 ```console
 kubectl create -f ledger/
-configmap/scalar-ledger created
 deployment.extensions/scalar-ledger created
 service/scalar-ledger-headless created
 ```
@@ -65,7 +78,6 @@ to deploy envoy proxy with kubectl
 
 ```console
 kubectl create -f envoy/
-configmap/envoy created
 deployment.extensions/envoy created
 service/envoy created
 ```
