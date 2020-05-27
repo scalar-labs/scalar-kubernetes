@@ -11,10 +11,6 @@ on:
       - master
     paths:
     - 'operation/**'
-
-defaults:
-  run:
-    working-directory: ./operation
 jobs:
   ansible:
     runs-on: ubuntu-latest
@@ -24,5 +20,5 @@ jobs:
     - name: Lint Ansible Playbook
       uses: ansible/ansible-lint-action@master
       with:
-        targets: ""
-        args: "--exclude=.github --exclude=operation/manifests --exclude=operation/config"
+        targets: "./operation"
+        args: "--exclude=./operation/manifests --exclude=./operation/config"
