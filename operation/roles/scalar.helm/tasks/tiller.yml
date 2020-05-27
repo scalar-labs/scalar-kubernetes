@@ -1,4 +1,14 @@
 ---
-- name: install or upgrade tiller
+- name: check if tiller is already installed
   become: no
-  shell: "helm init --service-account tiller --upgrade --wait"
+  k8s_info:
+    api_version: extensions/v1beta1
+    kind: Deployment
+    name: tiller-deploy
+    namespace: kube-system
+  register: tiller
+
+- name: install tiller
+  command: "{{ HELM_PATH }} init --service-account tiller --wait"
+  become: no
+  when: tiller.resources | length == 0

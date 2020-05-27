@@ -13,5 +13,11 @@
     dest: "/home/{{ ansible_user }}/.kube/config"
     mode: '0644'
 
+- name: check if bash kubectl completion exists
+  stat:
+    path: /etc/bash_completion.d/kubectl
+  register: stat_bash_kubectl_result
+
 - name: install kubectl completion
   shell: "{{ KUBECTL_PATH }} completion bash > /etc/bash_completion.d/kubectl"
+  when: not stat_bash_kubectl_result.stat.exists

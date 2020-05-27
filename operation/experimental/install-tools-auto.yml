@@ -8,13 +8,14 @@
     DEBUG: yes
   tasks:
   - name: load network tfstate file
-    shell: cat ../../examples/azure/network/terraform.tfstate
-    register: network_json
+    include_vars:
+      file: ../../examples/azure/network/terraform.tfstate
+      name: tf_network_json
 
   - name: retrieve bastion_ip and user_name from network tfstate
     set_fact:
-      bastion_ip: "{{ (network_json.stdout | from_json).outputs.bastion_ip.value }}"
-      user_name: "{{ (network_json.stdout | from_json).outputs.user_name.value }}"
+      bastion_ip: "{{ tf_network_json.outputs.bastion_ip.value }}"
+      user_name: "{{ tf_network_json.outputs.user_name.value }}"
 
   - debug:
       var: bastion_ip
@@ -32,12 +33,13 @@
       groups: bastion
 
   - name: load kubernetes tfstate file
-    shell: cat ../../examples/azure/kubernetes/terraform.tfstate
-    register: kubernetes_json
+    include_vars:
+      file: ../../examples/azure/kubernetes/terraform.tfstate
+      name: tf_kubernetes_json
 
   - name: retrieve kube_config from network tfstate
     set_fact:
-      kube_config: "{{ (kubernetes_json.stdout | from_json).outputs.kube_config.value }}"
+      kube_config: "{{ tf_kubernetes_json.outputs.kube_config.value }}"
 
   - debug:
       var: kube_config
