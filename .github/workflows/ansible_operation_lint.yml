@@ -25,7 +25,4 @@ jobs:
       uses: ansible/ansible-lint-action@master
       with:
         targets: ""
-        override-deps: |
-          ansible==2.9
-          ansible-lint==4.2.0
-        args: ""
+        args: "--exclude=.github --exclude=operation/manifests --exclude=operation/config"
