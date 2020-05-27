@@ -1,0 +1,16 @@
+
+---
+- name: Get files on remote machine for scalar ledger
+  find:
+    paths: "{{ REMOTE_MANIFESTS_FOLDER }}/ledger/"
+    patterns: '*.yaml'
+  register: find_yaml_ledger
+
+- name: deploy scalar ledger
+  k8s:
+    state: present
+    src: "{{ item.path }}"
+    namespace: "{{ NAMESPACE }}"
+  with_items: "{{ find_yaml_ledger.files }}"
+  loop_control:
+    label: "{{ item.path }}"

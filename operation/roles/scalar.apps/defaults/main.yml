@@ -1,0 +1,3 @@
+NAMESPACE: default
+LOCAL_MANIFESTS_FOLDER: ../../../manifests/
+REMOTE_MANIFESTS_FOLDER: /home/{{ ansible_user }}/manifests/
