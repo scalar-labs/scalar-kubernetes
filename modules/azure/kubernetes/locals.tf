@@ -67,13 +67,13 @@ locals {
 # K8s additional node pools (scalardl dedicated)
 locals {
   additional_node_pools = {
-    name                           = "scalarapps"
+    name                           = "scalardlpool"
     node_count                     = "3"
     vm_size                        = "Standard_D2s_v3"
     max_pods                       = "100"
     os_disk_size_gb                = "64"
     node_os                        = "Linux"
-    taints                         = "kubernetes.io/app=scalarapps:NoSchedule"
+    taints                         = "kubernetes.io/app=scalardlpool:NoSchedule"
     cluster_auto_scaling           = "true"
     cluster_auto_scaling_min_count = "3"
     cluster_auto_scaling_max_count = "6"
