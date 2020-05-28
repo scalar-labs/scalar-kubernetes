@@ -23,12 +23,12 @@ kubernetes_default_node_pool = {
 }
 
 kubernetes_additional_node_pools = {
-  # name                           = "scalar-apps"
+  # name                           = "scalarapps"
   # node_count                     = "3"
   # vm_size                        = "Standard_D2s_v3"
   # max_pods                       = "100"
   # os_disk_size_gb                = "64"
-  # taints                         = "kubernetes.io/app=scalar-apps:NoSchedule"
+  # taints                         = "kubernetes.io/app=scalarapps:NoSchedule"
   # cluster_auto_scaling           = "true"
   # cluster_auto_scaling_min_count = "3"
   # cluster_auto_scaling_max_count = "6"
