@@ -1,9 +1,9 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/name: envoy
-    app.kubernetes.io/version: v1
+    app.kubernetes.io/version: v1.12.2
   name: envoy
 spec:
   minReadySeconds: 120
@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: envoy
-      app.kubernetes.io/version: v1
+      app.kubernetes.io/version: v1.12.2
   strategy:
     rollingUpdate:
       maxSurge: 0
@@ -19,13 +19,9 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        prometheus.io.port: "9901"
-        prometheus.io/path: /stats/prometheus
-        prometheus.io/scrape: "true"
       labels:
         app.kubernetes.io/name: envoy
-        app.kubernetes.io/version: v1
+        app.kubernetes.io/version: v1.12.2
     spec:
       containers:
       - command:
