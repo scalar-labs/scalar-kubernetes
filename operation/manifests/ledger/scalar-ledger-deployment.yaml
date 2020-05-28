@@ -92,7 +92,7 @@ spec:
               - key: agentpool
                 operator: In
                 values:
-                - scalar-apps-pool
+                - scalarapps
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - podAffinityTerm:
@@ -108,4 +108,4 @@ spec:
         - effect: NoSchedule
           key: kubernetes.io/app
           operator: Equal
-          value: scalar-apps-pool
+          value: scalarapps
