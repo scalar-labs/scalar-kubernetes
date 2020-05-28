@@ -7,16 +7,16 @@ spec:
     spec:
       containers:
       - name: cassandra
-        image: cassandra:latest
+        image: cassandra:3.11
         imagePullPolicy: IfNotPresent
         command:
         - /bin/bash 
         - -c 
-        - "echo loading cassandra keyspace && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /init.cql"
+        - "echo applying Scalar DL schema && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /init.cql"
         volumeMounts:
-        - mountPath: /init.cql
+        - mountPath: /create_schema.cql
           name: scalar-ledger-config
-          subPath: init.cql
+          subPath: create_schema.cql
           readOnly: true
         env:
         - name: SCALAR_DB_CONTACT_POINTS
