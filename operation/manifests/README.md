@@ -56,10 +56,25 @@ for envoy
 kubectl create cm envoy --from-file=configuration/envoy.yaml
 ```
 
-for scalar-ledger
+for scalardl-schema
 
 ```console
-kubectl create cm scalar-ledger --from-file=configuration/init.cql
+kubectl create cm scalardl-schema --from-file=configuration/create_schema.cql
+```
+
+#### Deploy the scalar schema
+
+```console
+kubectl create -f schema/scalardl-schema.yaml
+job.batch/scalardl-schema created
+```
+
+you must wait until the job is completed as below.
+
+```console
+kubectl get po -w
+NAME                    READY   STATUS      RESTARTS   AGE
+scalardl-schema-6fp95   0/1     Completed   0          34s
 ```
 
 #### deploy Scalar-Ledger
