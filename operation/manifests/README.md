@@ -1,4 +1,4 @@
-# Scalar Ledger
+# A Guide on How to Deploy Scalar DL Manually with kubectl
 
 ## Requirements
 
@@ -6,7 +6,7 @@
 * Helm version 2.16.3
 * Docker Engine (with access to `scalarlabs/scalar-ledger` docker registry)
   * `scalar-ledger` is available to only our partners and customers at the moment.
-* deploy terraform k8s from this repository
+Note that Kubernetes cluster needs to be set up properly in advance. This can be easily done with [the terraform module]().
 
 ### kubectl
 
@@ -33,9 +33,9 @@ Client Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.7", GitCom
 Server Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.10", GitCommit:"059c666b8d0cce7219d2958e6ecc3198072de9bc", GitTreeState:"clean", BuildDate:"2020-04-03T15:17:29Z", GoVersion:"go1.12.12", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
-### Start Scalar-Ledger
+### Preparation
 
-#### docker registry setting up
+#### Create a secret for DockerHub
 
 setup the docker registry on kubernetes
 
@@ -48,7 +48,7 @@ kubectl create secret docker-registry reg-docker-secrets \
 
 you need to adapt with the username and password (can be a token as well)
 
-#### Create configuration files
+#### Create ConfigMaps
 
 for envoy
 
@@ -77,11 +77,11 @@ NAME                    READY   STATUS      RESTARTS   AGE
 scalardl-schema-6fp95   0/1     Completed   0          34s
 ```
 
-#### deploy Scalar-Ledger
+#### Deploy Scalar DL
 
-it is time to deploy our scalar-ledger
+It is now ready to deploy Scalar DL to the k8s cluster. To deploy Scalar DL, you need to deploy `scalar-ledger` containers and `envoy` containers in this order.
 
-to deploy scalar-ledger app with kubectl
+First, deploy `scalar-ledger` containers as follows.
 
 ```console
 kubectl create -f ledger/
@@ -89,7 +89,7 @@ deployment.extensions/scalar-ledger created
 service/scalar-ledger-headless created
 ```
 
-to deploy envoy proxy with kubectl
+Next, deploy `envoy proxy` container as follows.
 
 ```console
 kubectl create -f envoy/
@@ -97,7 +97,7 @@ deployment.extensions/envoy created
 service/envoy created
 ```
 
-check the status of the pods and services
+You can check if the pods and the services are properly deployed as follows.
 
 ```console
 [centos@bastion-1 ~]$ kubectl get po,svc,endpoints -o wide
