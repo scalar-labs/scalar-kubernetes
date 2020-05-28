@@ -2,53 +2,25 @@
 
 ## Requirements
 
-* kubectl version 1.5.10
-* Helm version 2.16.3
+* kubectl version 1.5.10, instructions can be found [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * Docker Engine (with access to `scalarlabs/scalar-ledger` docker registry)
   * `scalar-ledger` is available to only our partners and customers at the moment.
 Note that Kubernetes cluster needs to be set up properly in advance. This can be easily done with [the terraform module]().
 
-### kubectl
+## Preparation
 
-Kubectl tool install instructions can be found [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+### Create a secret for DockerHub
 
-#### Install kubectl
-
-```console
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.7/bin/linux/amd64/kubectl
-mv kubectl $PATH/kubectl
-chmod +x $PATH/kubectl
-```
-
-#### Verify kubectl
-
-```console
-kubectl version
-```
-
-you should get:
-
-```console
-Client Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.7", GitCommit:"6c143d35bb11d74970e7bc0b6c45b6bfdffc0bd4", GitTreeState:"clean", BuildDate:"2019-12-11T12:42:56Z", GoVersion:"go1.12.12", Compiler:"gc", Platform:"linux/amd64"}
-Server Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.10", GitCommit:"059c666b8d0cce7219d2958e6ecc3198072de9bc", GitTreeState:"clean", BuildDate:"2020-04-03T15:17:29Z", GoVersion:"go1.12.12", Compiler:"gc", Platform:"linux/amd64"}
-```
-
-### Preparation
-
-#### Create a secret for DockerHub
-
-setup the docker registry on kubernetes
+setup the docker registry secret to let kubernetes access to scalar-ledger image
 
 ```console
 kubectl create secret docker-registry reg-docker-secrets \
   --docker-server=https://index.docker.io/v2/ \
-  --docker-username=<your-name> \
-  --docker-password=<your-pword> \
+  --docker-username={{ DOCKERHUB_USER }} \
+  --docker-password={{ DOCKERHUB_ACCESS_TOKEN }}
 ```
 
-you need to adapt with the username and password (can be a token as well)
-
-#### Create ConfigMaps
+### Create ConfigMaps
 
 for envoy
 
@@ -62,7 +34,7 @@ for scalardl-schema
 kubectl create cm scalardl-schema --from-file=configuration/create_schema.cql
 ```
 
-#### Deploy the scalar schema
+### Deploy the Scalar schema to Cassandra cluster
 
 ```console
 kubectl create -f schema/scalardl-schema.yaml
@@ -77,9 +49,11 @@ NAME                    READY   STATUS      RESTARTS   AGE
 scalardl-schema-6fp95   0/1     Completed   0          34s
 ```
 
-#### Deploy Scalar DL
+## Deploy Scalar DL
 
 It is now ready to deploy Scalar DL to the k8s cluster. To deploy Scalar DL, you need to deploy `scalar-ledger` containers and `envoy` containers in this order.
+
+### Deploy Scalar Ledger
 
 First, deploy `scalar-ledger` containers as follows.
 
@@ -100,24 +74,31 @@ service/envoy created
 You can check if the pods and the services are properly deployed as follows.
 
 ```console
-[centos@bastion-1 ~]$ kubectl get po,svc,endpoints -o wide
-NAME                                 READY   STATUS    RESTARTS   AGE     IP             NODE                               NOMINATED NODE   READINESS GATES
-pod/envoy-679ff5c767-24qgs           1/1     Running   0          4h57m   10.42.40.248   aks-scalardl-34802672-vmss000001   <none>           <none>
-pod/envoy-679ff5c767-2th4k           1/1     Running   0          4h57m   10.42.40.122   aks-scalardl-34802672-vmss000000   <none>           <none>
-pod/envoy-679ff5c767-zw9zx           1/1     Running   0          4h57m   10.42.40.125   aks-scalardl-34802672-vmss000000   <none>           <none>
-pod/scalar-ledger-5596d7646d-9rtlx   1/1     Running   0          5h14m   10.42.40.234   aks-scalardl-34802672-vmss000001   <none>           <none>
-pod/scalar-ledger-5596d7646d-jw792   1/1     Running   0          5h14m   10.42.40.134   aks-scalardl-34802672-vmss000000   <none>           <none>
-pod/scalar-ledger-5596d7646d-ln6m6   1/1     Running   0          5h14m   10.42.40.232   aks-scalardl-34802672-vmss000001   <none>           <none>
+kubectl get po,svc,endpoints -o wide
+NAME                                 READY   STATUS      RESTARTS   AGE   IP             NODE                                 NOMINATED NODE   READINESS GATES
+pod/envoy-5f9c8cb97-c8cfx            1/1     Running     0          57m   10.42.40.176   aks-scalarapps-34802672-vmss000000   <none>           <none>
+pod/envoy-5f9c8cb97-fwqzn            1/1     Running     0          57m   10.42.40.212   aks-scalarapps-34802672-vmss000001   <none>           <none>
+pod/envoy-5f9c8cb97-xrxnc            1/1     Running     0          57m   10.42.40.180   aks-scalarapps-34802672-vmss000000   <none>           <none>
+pod/scalar-ledger-545dc596f8-v6jqz   1/1     Running     0          61m   10.42.41.37    aks-scalarapps-34802672-vmss000001   <none>           <none>
+pod/scalar-ledger-545dc596f8-z94qz   1/1     Running     0          61m   10.42.41.13    aks-scalarapps-34802672-vmss000001   <none>           <none>
+pod/scalar-ledger-545dc596f8-zg8kl   1/1     Running     0          61m   10.42.40.146   aks-scalarapps-34802672-vmss000000   <none>           <none>
+pod/scalardl-schema-6fp95            0/1     Completed   0          63m   10.42.40.27    aks-default-34802672-vmss000000      <none>           <none>
 
-NAME                             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)                           AGE     SELECTOR
-service/envoy                    LoadBalancer   10.42.51.34   52.186.98.155   50051:30093/TCP,50052:32101/TCP   4h57m   app.kubernetes.io/name=envoy,app.kubernetes.io/version=v1
-service/kubernetes               ClusterIP      10.42.48.1    <none>          443/TCP                           6h32m   <none>
-service/scalar-ledger-headless   ClusterIP      None          <none>          <none>                            30m     app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v1
+NAME                             TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)                           AGE    SELECTOR
+service/envoy                    LoadBalancer   10.42.51.58   20.185.12.160   50051:32170/TCP,50052:31373/TCP   57m    app.kubernetes.io/name=envoy,app.kubernetes.io/version=v1.12.2
+service/kubernetes               ClusterIP      10.42.48.1    <none>          443/TCP                           6h7m   <none>
+service/scalar-ledger-headless   ClusterIP      None          <none>          <none>                            61m    app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v2.0.5
 
 NAME                               ENDPOINTS                                                              AGE
-endpoints/envoy                    10.42.40.122:50052,10.42.40.125:50052,10.42.40.248:50052 + 3 more...   4h57m
-endpoints/kubernetes               10.42.40.4:443                                                         6h32m
-endpoints/scalar-ledger-headless   10.42.40.134,10.42.40.232,10.42.40.234                                 30m
+endpoints/envoy                    10.42.40.176:50052,10.42.40.180:50052,10.42.40.212:50052 + 3 more...   57m
+endpoints/kubernetes               10.42.40.4:443                                                         6h7m
+endpoints/scalar-ledger-headless   10.42.40.146,10.42.41.13,10.42.41.37                                   61m
 ```
 
-now you can run kelpie or scalar-samples project to try out.
+You can have access with the following public IP on port 50051 and 50052
+
+```console
+kubectl get svc envoy
+NAME    TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)                           AGE
+envoy   LoadBalancer   10.42.51.58   20.185.12.160   50051:32170/TCP,50052:31373/TCP   63m
+```
