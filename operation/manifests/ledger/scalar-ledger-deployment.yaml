@@ -23,28 +23,6 @@ spec:
         app.kubernetes.io/name: scalar-ledger
         app.kubernetes.io/version: v2.0.5
     spec:
-      initContainers:
-      - name: cassandra-load-keyspace
-        image: cassandra:latest
-        imagePullPolicy: IfNotPresent
-        volumeMounts:
-        - mountPath: /init.cql
-          name: scalar-ledger-config
-          subPath: init.cql
-          readOnly: true
-        env:
-        - name: SCALAR_DB_CONTACT_POINTS
-          value: cassandra-lb.internal.scalar-labs.com
-        - name: SCALAR_DB_CONTACT_PORT
-          value: "9042"
-        - name: SCALAR_DB_USERNAME
-          value: cassandra
-        - name: SCALAR_DB_PASSWORD
-          value: cassandra
-        command:
-        - /bin/bash 
-        - -c 
-        - "sleep 20 && echo loading cassandra keyspace && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /init.cql"
       containers:
       - name: ledger
         image: scalarlabs/scalar-ledger:2.0.5
@@ -79,11 +57,6 @@ spec:
       - name: reg-docker-secrets
       restartPolicy: Always
       terminationGracePeriodSeconds: 60
-      volumes:
-      - configMap:
-          defaultMode: 256
-          name: scalar-ledger
-        name: scalar-ledger-config
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

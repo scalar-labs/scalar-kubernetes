@@ -12,10 +12,10 @@ spec:
         command:
         - /bin/bash 
         - -c 
-        - "echo applying Scalar DL schema && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /init.cql"
+        - "echo applying Scalar DL schema && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /create_schema.cql"
         volumeMounts:
         - mountPath: /create_schema.cql
-          name: scalar-ledger-config
+          name: scalardl-schema-config
           subPath: create_schema.cql
           readOnly: true
         env:
@@ -31,6 +31,6 @@ spec:
       volumes:
       - configMap:
           defaultMode: 256
-          name: scalar-ledger
-        name: scalar-ledger-config
-backoffLimit: 0
+          name: scalardl-schema
+        name: scalardl-schema-config
+  backoffLimit: 0
