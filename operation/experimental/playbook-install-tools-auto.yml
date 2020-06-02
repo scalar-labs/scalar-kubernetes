@@ -1,66 +1,71 @@
 ---
-- name: read tf modules
+- name: Read Terraform modules and set Ansible vars
   hosts: localhost
   connection: local
   gather_facts: no
   become: no
   vars:
-    DEBUG: yes
+    DEBUG: no
   tasks:
-  - name: load network tfstate file
+  - name: Load network tfstate file
     include_vars:
       file: ../../examples/azure/network/terraform.tfstate
       name: tf_network_json
 
-  - name: retrieve bastion_ip and user_name from network tfstate
+  - name: Retrieve bastion_ip and user_name from network tfstate
     set_fact:
       bastion_ip: "{{ tf_network_json.outputs.bastion_ip.value }}"
       user_name: "{{ tf_network_json.outputs.user_name.value }}"
 
-  - debug:
+  - name: View value bastion_ip
+    debug:
       var: bastion_ip
     when: DEBUG
 
-  - debug:
+  - name: View value user_name
+    debug:
       var: user_name
     when: DEBUG
 
-  - name: add bastion ip to host group
+  - name: Add bastion ip to Ansible inventory
     add_host:
       hostname: bastion
       ansible_ssh_host: "{{ bastion_ip }}"
       ansible_user: "{{ user_name }}"
       groups: bastion
 
-  - name: load kubernetes tfstate file
+  - name: Load kubernetes tfstate file
     include_vars:
       file: ../../examples/azure/kubernetes/terraform.tfstate
       name: tf_kubernetes_json
 
-  - name: retrieve kube_config from network tfstate
+  - name: Retrieve kube_config from network tfstate
     set_fact:
       kube_config: "{{ tf_kubernetes_json.outputs.kube_config.value }}"
 
-  - debug:
+  - name: View value kube_config
+    debug:
       var: kube_config
     when: DEBUG
 
-  - name: copy the kube_config into tmp
+  - name: Copy the kube_config into tmp
     copy:
       content: "{{ kube_config }}"
       dest: ../tmp/kube_config
 
-- name: install necessary kubernetes binary on bastion
+- name: Install necessary kubernetes binary on bastion
   hosts: bastion
   gather_facts: no
   become: yes
   vars:
     KUBE_CONFIG: ../tmp/kube_config
   pre_tasks:
+  # ansible require to use python3 as the python2 is end of support
+  # need to view with team
   - name: Switch Ansible's Python interpreter to Python 2
     set_fact:
       ansible_python_interpreter: "/usr/bin/python"
-  - name: ensure libselinux-python3 is installed
+  - name: Ensure libselinux-python3 is installed (to use copy in ansible)
     package:
       name: libselinux-python3
       state: present
@@ -73,13 +78,13 @@
   tags:
   - kubernetes tool
 
-- name: cleanup
+- name: Cleanup
   hosts: localhost
   connection: local
   gather_facts: no
   become: no
   tasks:
-  - name: cleanup tmp kube_config
+  - name: Cleanup file (kube_config) in tmp directory
     file:
       path: ../tmp/kube_config
       state: absent

@@ -1,5 +1,5 @@
 ---
-- name: deploy tf modules
+- name: Deploy Terraform modules
   hosts: localhost
   connection: local
   gather_facts: no
@@ -7,7 +7,7 @@
   vars:
    TF_variables_file: example-us.tfvars
   tasks:
-  - name: start terraform network
+  - name: Start Terraform network
     terraform:
       project_path: ../../examples/azure/network/
       variables_file: "{{ TF_variables_file }}"
@@ -16,15 +16,17 @@
     tags:
     - network
 
-  - debug: msg={{ tf_run_network.outputs.bastion_ip.value }}
+  - debug: 
+      msg: {{ tf_run_network.outputs.bastion_ip.value }}
     tags:
     - network
 
-  - debug: msg={{ tf_run_network.outputs.user_name.value }}
+  - debug: 
+      msg: {{ tf_run_network.outputs.user_name.value }}
     tags:
     - network
 
-  - name: start terraform kubernetes
+  - name: Start Terraform kubernetes
     terraform:
       project_path: ../../examples/azure/kubernetes/
       variables_file: "{{ TF_variables_file }}"
@@ -33,11 +35,12 @@
     tags:
     - kubernetes
 
-  - debug: msg={{ tf_run_kubernetes.outputs.kube_config.value }}
+  - debug: 
+      msg: {{ tf_run_kubernetes.outputs.kube_config.value }}
     tags:
     - kubernetes
 
-  - name: start terraform cassandra
+  - name: Start Terraform cassandra
     terraform:
       project_path: ../../examples/azure/cassandra/
       variables_file: "{{ TF_variables_file }}"
