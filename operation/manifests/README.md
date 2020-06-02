@@ -11,7 +11,7 @@ Note that Kubernetes cluster needs to be set up properly in advance. This can be
 
 ### Create a secret for DockerHub
 
-setup the docker registry secret to let kubernetes access to scalar-ledger image
+Create a docker registry secret to let kubernetes access to scalar-ledger image
 
 ```console
 kubectl create secret docker-registry reg-docker-secrets \
