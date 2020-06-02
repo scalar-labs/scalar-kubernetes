@@ -1,4 +1,4 @@
-CREATE KEYSPACE IF NOT EXISTS scalar WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1':3 };
+CREATE KEYSPACE IF NOT EXISTS scalar WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': 3 };
 CREATE KEYSPACE IF NOT EXISTS coordinator WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': 3 };
 ALTER KEYSPACE system_auth WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': 3 };
 CREATE TABLE IF NOT EXISTS scalar.asset (
