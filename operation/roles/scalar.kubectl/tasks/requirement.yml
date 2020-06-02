@@ -1,4 +1,4 @@
 ---
-- name: install pip requirements for k8s
+- name: Install python library requirements for kubernetes
   pip:
     name: ['kubernetes', 'openshift', 'kubernetes-validate']

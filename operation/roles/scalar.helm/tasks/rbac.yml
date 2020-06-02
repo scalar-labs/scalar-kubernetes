@@ -1,5 +1,5 @@
 ---
-- name: deploy ServiceAccount for helm
+- name: Deploy ServiceAccount for helm tiller
   become: no
   k8s:
     state: present
@@ -10,7 +10,7 @@
         name: tiller
         namespace: kube-system
 
-- name: deploy ClusterRoleBinding for helm
+- name: Deploy ClusterRoleBinding for helm tiller
   become: no
   k8s:
     state: present

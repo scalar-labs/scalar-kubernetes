@@ -1,18 +1,18 @@
 ---
-- name: download and install binary
+- name: Download and install helm binary on admin server
   unarchive:
     src: "https://get.helm.sh/helm-{{ VERSION }}-linux-amd64.tar.gz"
     dest: /tmp
     copy: no
 
-- name: copy helm binary
+- name: Copy helm binary to $PATH
   copy:
     src: /tmp/linux-amd64/helm
     dest: "{{ HELM_PATH }}"
     mode: "0755"
     remote_src: yes
 
-- name: Set permissions for helm
+- name: Set permissions for helm binary
   file:
     path: "{{ HELM_PATH }}"
     mode: "0755"
