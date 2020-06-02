@@ -28,7 +28,7 @@ spec:
         - /usr/local/bin/envoy
         - -c
         - /etc/envoy/envoy.yaml
-        image: envoyproxy/envoy:v1.12.2
+        image: envoyproxy/envoy:v1.12.2 # Envoy will be updated in another PR to match the version from the scalar-terraform.
         imagePullPolicy: IfNotPresent
         name: envoy
         ports:
