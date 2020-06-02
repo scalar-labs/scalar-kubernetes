@@ -6,10 +6,12 @@
   vars:
     KUBE_CONFIG: tmp/kube_config
   pre_tasks:
+  # ansible require to use python3 as the python2 is end of support
+  # need to view with team
   - name: Switch Ansible's Python interpreter to Python 2
     set_fact:
       ansible_python_interpreter: "/usr/bin/python"
-  - name: ensure libselinux-python3 is installed
+  - name: ensure libselinux-python3 is installed (to use copy in ansible)
     package:
       name: libselinux-python3
       state: present
