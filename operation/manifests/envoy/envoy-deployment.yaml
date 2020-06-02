@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: envoy
+    app.kubernetes.io/version: v1.12.2
+  name: envoy
+spec:
+  minReadySeconds: 120
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: envoy
+      app.kubernetes.io/version: v1.12.2
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: envoy
+        app.kubernetes.io/version: v1.12.2
+    spec:
+      containers:
+      - command:
+        - /usr/local/bin/envoy
+        - -c
+        - /etc/envoy/envoy.yaml
+        image: envoyproxy/envoy:v1.12.2 # Envoy will be updated in another PR to match the version from the scalar-terraform.
+        imagePullPolicy: IfNotPresent
+        name: envoy
+        ports:
+        - containerPort: 50051
+        - containerPort: 50052
+        - containerPort: 9901
+        livenessProbe:
+          httpGet:
+            path: /ready
+            port: 9901
+          failureThreshold: 3
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 9901
+          failureThreshold: 3
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/envoy/envoy.yaml
+          name: envoy-config
+          subPath: envoy.yaml
+          readOnly: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - configMap:
+          defaultMode: 256
+          name: envoy
+        name: envoy-config
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                - scalardlpool
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - envoy
+              topologyKey: kubernetes.io/hostname
+            weight: 50
+      tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/app
+          operator: Equal
+          value: scalardlpool
