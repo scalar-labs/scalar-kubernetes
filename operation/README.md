@@ -6,10 +6,9 @@ to install the scalar-k8s solution
 
 * roles directory: hold ansible roles
 * tmp directory: for Temporary files from ansible
-* [experimental directory](experimental/README.md): for automatic, use it at your own risk
-* in this directory, you will find playbook-*.yml
+* in this directory, you will find playbook-*.yml (other ansible playbook will be added)
 
-## Ansible playbook-install-tools.yml 
+## Ansible playbook-install-tools.yml
 
 The goal is to install any dependency on the admin server, e.g: kubectl helm, etc...
 
@@ -64,4 +63,3 @@ result
 PLAY RECAP ***********************************************************************************************************************************************************************************************************************************************************
 bastion1                   : ok=0   changed=16    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
 ```
-
