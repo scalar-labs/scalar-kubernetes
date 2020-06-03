@@ -7,7 +7,7 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 ## Prerequisites
 
 * Terraform >= 0.12.x
-* Ansible >= 2.8.x
+* Ansible >= 2.9.x
 * Azure CLI
 * ssh-agent with a private key
 
