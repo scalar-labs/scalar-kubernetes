@@ -1,8 +1,8 @@
-# Prepare Bastion Tool - Install Kubernetes CLI and Helm
+# Prepare bastion tool - Install Kubernetes CLI and Helm
 
 The goal is to install Kubernetes CLI, Helm dependency on the bastion.
 
-## Prepare ansible configuration
+## Prepare Ansible configuration
 
 First, you need to retrieve the public DNS for the bastion and user. Add it to the inventory.ini with Terraform output in network directory:
 
@@ -72,7 +72,7 @@ PLAY RECAP *********************************************************************
 bastion                    : ok=14   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-## Check
+## Check installation
 
 Go on the bastion and execute the following command to ensure you can interact with the Kubernetes cluster.
 
