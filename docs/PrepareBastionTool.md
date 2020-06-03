@@ -1,6 +1,6 @@
-# Install kubectl and helm on the bastion
+# Prepare Bastion Tool - Install Kubernetes CLI and Helm
 
-The goal is to install kubectl, helm dependency on the bastion.
+The goal is to install Kubernetes CLI, Helm dependency on the bastion.
 
 ## Prepare ansible configuration
 

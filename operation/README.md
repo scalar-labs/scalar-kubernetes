@@ -1,6 +1,6 @@
 # Operation
 
-In this directory, you will find many Ansible playbooks to install or deploy an application on Kubernetes cluster.
+In this directory, you will find mainly Ansible playbooks to install or deploy an application on Kubernetes cluster.
 
 ## Structure
 
