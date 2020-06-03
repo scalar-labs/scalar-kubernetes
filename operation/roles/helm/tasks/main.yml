@@ -1,5 +1,4 @@
 ---
 # roles scalar.helm entry-point
 - include: install.yml
-- include: rbac.yml
-- include: tiller.yml
+- include: repo.yml
