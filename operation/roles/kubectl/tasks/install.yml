@@ -1,7 +1,7 @@
 ---
 - name: Download and install binary on the admin server
   get_url:
-    url: "https://storage.googleapis.com/kubernetes-release/release/{{ KUBECTL_VERSION }}/bin/linux/amd64/kubectl"
+    url: "{{ KUBECTL_URL }}"
     dest: "{{ KUBECTL_PATH }}"
 
 - name: Set permissions for kubectl

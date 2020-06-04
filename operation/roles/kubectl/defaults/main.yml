@@ -1,3 +1,4 @@
 KUBECTL_VERSION: v1.15.10
 KUBECTL_PATH: /usr/local/bin/kubectl
 KUBECTL_CONFIG: tmp/kube_config
+KUBECTL_URL: "https://storage.googleapis.com/kubernetes-release/release/{{ KUBECTL_VERSION }}/bin/linux/amd64/kubectl"

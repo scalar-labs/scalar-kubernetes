@@ -1,7 +1,7 @@
 ---
 - name: Download and install helm binary on admin server
   unarchive:
-    src: "https://get.helm.sh/helm-{{ HELM_VERSION }}-linux-amd64.tar.gz"
+    src: "{{ HELM_URL }}"
     dest: /tmp
     copy: no
 
