@@ -10,4 +10,4 @@ In this directory, you will find mainly Ansible playbooks to install or deploy a
 
 ## Playbook collection
 
-* Ansible playbook-install-tools.yml: The goal is to install kubectl, helm dependency on the admin server. the complete guide is located [here](../docs/PrepareBastionTool.md)
+* Ansible playbook-install-tools.yml: The goal is to install kubectl and Helm on the admin server. the complete guide is located [here](../docs/PrepareBastionTool.md)
