@@ -1,3 +1,4 @@
+
 ---
 - name: Get files on remote machine for scalar ledger
   find:
@@ -5,7 +6,7 @@
     patterns: '*.yaml'
   register: find_yaml_ledger
 
-- name: deploy scalar ledger
+- name: Deploy scalar ledger
   k8s:
     state: present
     src: "{{ item.path }}"

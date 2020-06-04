@@ -1,0 +1,7 @@
+---
+- name: deploy scalar ledger and envoy in kubernetes
+  hosts: bastion
+  gather_facts: no
+  become: no
+  roles:
+  - "scalarledger"

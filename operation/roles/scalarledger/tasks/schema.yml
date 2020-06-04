@@ -1,0 +1,19 @@
+---
+- name: Get files on remote machine for scalar schema
+  find:
+    paths: "{{ REMOTE_MANIFESTS_FOLDER }}/schema/"
+    patterns: '*.yaml'
+  register: find_yaml_schema
+
+- name: Deploy scalar schema
+  k8s:
+    state: present
+    src: "{{ item.path }}"
+    namespace: "{{ NAMESPACE }}"
+  with_items: "{{ find_yaml_schema.files }}"
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Wait until completion
+  pause:
+    minutes: 1

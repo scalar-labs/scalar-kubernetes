@@ -5,7 +5,7 @@
     patterns: '*.yaml'
   register: find_yaml_envoy
 
-- name: deploy envoy
+- name: Deploy envoy
   k8s:
     state: present
     src: "{{ item.path }}"

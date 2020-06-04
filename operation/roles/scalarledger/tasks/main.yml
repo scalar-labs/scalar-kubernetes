@@ -1,4 +1,6 @@
 ---
 - include: copy.yml
+- include: configuration.yml
+- include: schema.yml
 - include: envoy.yml
 - include: ledger.yml

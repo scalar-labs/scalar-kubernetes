@@ -1,0 +1,11 @@
+
+---
+- name: Add docker-registry secrets in Kubernetes
+  command: "kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username={{ DOCKER_USERNAME }} --docker-password={{ DOCKER_PASSWORD }}"
+
+- name: Add configmap for envoy
+  command: "kubectl create cm envoy --from-file={{ REMOTE_MANIFESTS_FOLDER }}/configuration/envoy.yaml"
+
+- name: Add config for schema for cassandra and ledger
+  command: "kubectl create cm scalardl-schema --from-file={{ REMOTE_MANIFESTS_FOLDER }}/configuration/create_schema.cql"
+

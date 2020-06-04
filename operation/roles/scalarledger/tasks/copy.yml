@@ -1,11 +1,12 @@
 ---
-- name: create folder on remote server
+
+- name: Create folder on remote server
   file:
     path: "{{ REMOTE_MANIFESTS_FOLDER }}"
     state: directory
     mode: '0755'
 
-- name: copy manifests
+- name: Copy manifests
   copy:
     src: "{{ LOCAL_MANIFESTS_FOLDER }}"
     dest: "{{ REMOTE_MANIFESTS_FOLDER }}"
