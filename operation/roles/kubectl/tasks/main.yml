@@ -1,5 +1,5 @@
 ---
-# roles scalar.kubectl entry-point
+# roles kubectl entry-point
 - include: install.yml
 - include: setup.yml
 - include: requirement.yml

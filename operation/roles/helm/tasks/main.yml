@@ -1,4 +1,4 @@
 ---
-# roles scalar.helm entry-point
+# roles helm entry-point
 - include: install.yml
 - include: repo.yml
