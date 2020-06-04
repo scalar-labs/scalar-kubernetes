@@ -30,8 +30,7 @@ Secondly, you need to retrieve the kubernetes access file and save in the tmp fo
 In `examples/azure/kubernetes/` directory
 
 ```console
-terraform output kube_config > kube_config
-cp kube_config ../../../operation/tmp/kube_config
+terraform output kube_config > ../../../operation/tmp/kube_config
 ```
 
 And open file `kube_config` in the `tmp` directory with your preferred editor. It should look like below.
