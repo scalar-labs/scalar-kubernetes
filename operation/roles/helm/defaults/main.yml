@@ -1,2 +1,2 @@
-VERSION: v3.2.1
+HELM_VERSION: v3.2.1
 HELM_PATH: /usr/local/bin/helm
