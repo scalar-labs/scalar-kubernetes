@@ -5,7 +5,7 @@
 * kubectl version 1.5.10, instructions can be found [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * Docker Engine (with access to `scalarlabs/scalar-ledger` docker registry)
   * `scalar-ledger` is available to only our partners and customers at the moment.
-Note that Kubernetes cluster needs to be set up properly in advance. This can be easily done with [the terraform module](). 
+Note that Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [terraform module](../../docs/README.md)
 
 ## Preparation
 
@@ -65,7 +65,7 @@ deployment.extensions/scalar-ledger created
 service/scalar-ledger-headless created
 ```
 
-Next, deploy `envoy proxy` container as follows. Note that we are using v1.12.2, it will be updated soon to version 1.14.2
+Next, deploy `envoy proxy` container as follows. Note that we are using v1.14.1
 
 ```console
 kubectl create -f envoy/
@@ -87,7 +87,7 @@ pod/scalar-ledger-866c4bd6bb-t528x   1/1     Running     0          84m   10.42.
 pod/scalardl-schema-j29f9            0/1     Completed   0          32m   10.42.40.36    aks-default-34802672-vmss000000        <none>           <none>
 
 NAME                             TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                           AGE    SELECTOR
-service/envoy                    LoadBalancer   10.42.51.13   52.224.20.56   50051:31707/TCP,50052:30733/TCP   80m    app.kubernetes.io/name=envoy,app.kubernetes.io/version=v1.12.2
+service/envoy                    LoadBalancer   10.42.51.13   52.224.20.56   50051:31707/TCP,50052:30733/TCP   80m    app.kubernetes.io/name=envoy,app.kubernetes.io/version=v1.14.1
 service/kubernetes               ClusterIP      10.42.48.1    <none>         443/TCP                           3h3m   <none>
 service/scalar-ledger-headless   ClusterIP      None          <none>         <none>                            84m    app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v2.0.5
 
