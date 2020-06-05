@@ -92,11 +92,11 @@ terraform apply -var-file example.tfvars
 
 ### Create Scalar DL resources
 
-TODO:
+TODO: docs will be added by pr11
 
 ### Create Envoy resources
 
-TODO:
+TODO: docs will be added by pr11
 
 ### Create Monitor resources
 
