@@ -1,5 +1,5 @@
 ---
-- name: Install necessary kubernetes binary on bastion
+- name: Prepare bastion tool - Install Kubernetes CLI and Helm
   hosts: bastion
   gather_facts: no
   become: yes
