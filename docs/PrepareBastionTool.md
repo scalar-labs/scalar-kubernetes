@@ -61,6 +61,8 @@ users:
 
 When the requirements are completed, you can run the following command to install the tools in the server that will proceed to the installation.
 
+In `operation` directory
+
 ```console
 ansible-playbook -i inventory.ini playbook-install-tools.yml
 
