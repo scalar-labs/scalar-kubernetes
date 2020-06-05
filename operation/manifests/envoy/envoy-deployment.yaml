@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/name: envoy
-    app.kubernetes.io/version: v1.12.2
+    app.kubernetes.io/version: v1.14.1
   name: envoy
 spec:
   minReadySeconds: 120
@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: envoy
-      app.kubernetes.io/version: v1.12.2
+      app.kubernetes.io/version: v1.14.1
   strategy:
     rollingUpdate:
       maxSurge: 0
@@ -21,24 +21,24 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: envoy
-        app.kubernetes.io/version: v1.12.2
+        app.kubernetes.io/version: v1.14.1
     spec:
       containers:
       - command:
         - /usr/local/bin/envoy
         - -c
         - /etc/envoy/envoy.yaml
-        image: envoyproxy/envoy:v1.12.2 # Envoy will be updated in another PR to match the version from the scalar-terraform.
+        image: envoyproxy/envoy:v1.14.1
         imagePullPolicy: IfNotPresent
         name: envoy
         ports:
         - containerPort: 50051
         - containerPort: 50052
-        - containerPort: 9901
+        - containerPort: 9001
         livenessProbe:
           httpGet:
             path: /ready
-            port: 9901
+            port: 9001
           failureThreshold: 3
           initialDelaySeconds: 60
           periodSeconds: 10
@@ -47,7 +47,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /ready
-            port: 9901
+            port: 9001
           failureThreshold: 3
           initialDelaySeconds: 20
           periodSeconds: 10
