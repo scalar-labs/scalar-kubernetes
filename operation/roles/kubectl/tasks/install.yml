@@ -3,6 +3,7 @@
   get_url:
     url: "{{ KUBECTL_URL }}"
     dest: "{{ KUBECTL_PATH }}"
+    checksum: "sha256:{{KUBECTL_URL_CHECKSUM_SHA256}}"
 
 - name: Set permissions for kubectl
   file:
