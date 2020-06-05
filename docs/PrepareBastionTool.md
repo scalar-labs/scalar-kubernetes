@@ -72,7 +72,7 @@ TASK [helm : Add stable charts repository from helm] ***************************
 changed: [bastion-paul-k8s-azure-p5rzic.eastus.cloudapp.azure.com]
 
 PLAY RECAP ***********************************************************************************************************************************************************************************************************************************************************
-bastion-paul-k8s-azure-p5rzic.eastus.cloudapp.azure.com : ok=13   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+bastion-paul-k8s-azure-p5rzic.eastus.cloudapp.azure.com : ok=15   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 ```
 
 ## Check installation
