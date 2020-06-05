@@ -1,3 +1,11 @@
 NAMESPACE: default
-LOCAL_MANIFESTS_FOLDER: ../../../manifests/
-REMOTE_MANIFESTS_FOLDER: /home/{{ ansible_user }}/manifests/
+LOCAL_MANIFESTS_FOLDER: ../../../manifests
+REMOTE_MANIFESTS_FOLDER: "/home/{{ ansible_user }}/manifests"
+CASSANDRA_REPLICATION_FACTOR: 1
+DOCKER_REGISTRY: https://index.docker.io/v2/
+DOCKER_USERNAME: "{{ lookup('env','DOCKER_USERNAME') }}"
+DOCKER_PASSWORD: "{{ lookup('env','DOCKER_PASSWORD') }}"
+ADMIN_ACCESS_LOG_PATH: /dev/stdout
+NEXT_HOP_ADDRESS: scalar-ledger-headless
+INTERNAL_DOMAIN: default.svc.cluster.local
+ENVOY_TLS: false
