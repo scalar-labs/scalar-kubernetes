@@ -92,7 +92,7 @@ terraform apply -var-file example.tfvars
 
 ### Create Scalar DL and Envoy resources
 
-For more information on Cassy, please refer to [manual guide](../operation/manifests/README.md)
+For more information on Scalar and Envoy, please refer to [manual guide](../operation/manifests/README.md)
 
 ## Generate outputs
 
