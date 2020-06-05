@@ -1,10 +1,8 @@
 # Scalar Kubernetes - Cloud Native
 
+Scalar Kubernetes is a set of Terraform modules and operation scripts that can be used to orchestrate a Scalar DLT network in a cloud on top of Kubernetes. Only Azure is currently supported. Note that the current version only supports deployment of single Scalar DLT cluster; that is, it does not support multi-cluster Scalar DLT deployment where multiple ledgers are managed independently through Scalar DM.
+
 Kubernetes (K8s) is a container management platform that aims to provide automating deployment, scaling, and operations of application containers across clusters of hosts.
-
-[TODO defined]
-
-Note that the current version only supports the deployment of a single Scalar DLT cluster. That is, it does not support multi-cluster Scalar DLT deployment, where multiple ledgers are managed independently through Scalar DM.
 
 ## Requirements
 
@@ -20,8 +18,17 @@ To get started with simple deployment, please follow [the getting started guide]
 
 ## Project Overview
 
-[TODO defined]
+The repo is divided into two sections, modules, operation.
+
+### [Modules](./modules)
+
+The modules directory is where the terraform modules are located. Most of the terraform modules are related to [scalar-terraform](https://github.com/scalar-labs/scalar-terraform); only the Kubernetes module is maintained in this project.
+
+### [Operation](./operation)
+
+The operation directory is where Ansible Playbooks are located to install and deploy configuration and Pods on the Kubernetes cluster .
 
 ## Future Work
 
-[TODO defined]
+* Support other cloud providers like AWS or GKE
+* Support different type ingress controller
