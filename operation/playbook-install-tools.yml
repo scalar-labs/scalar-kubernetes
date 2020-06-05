@@ -1,5 +1,5 @@
 ---
-- name: install necessary kubernetes binary on bastion
+- name: Install necessary kubernetes binary on bastion
   hosts: bastion
   gather_facts: no
   become: yes
@@ -13,7 +13,7 @@
   - name: Switch Ansible's Python interpreter to Python 2
     set_fact:
       ansible_python_interpreter: "/usr/bin/python"
-  - name: ensure libselinux-python3 is installed (to use copy in ansible)
+  - name: Ensure libselinux-python3 is installed (to use copy in ansible)
     package:
       name: libselinux-python3
       state: present
