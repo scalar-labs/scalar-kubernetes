@@ -31,4 +31,3 @@ The operation directory is where Ansible Playbooks are located to install and de
 ## Future Work
 
 * Support other cloud providers like AWS or GKE
-* Support different type ingress controller
