@@ -92,8 +92,7 @@ terraform apply -var-file example.tfvars
 
 ### Create Scalar DL and Envoy resources
 
-[follow the manual guide](../operation/manifests/README.md)
-TODO: automate deployment docs will be added by pr11
+For more information on Cassy, please refer to [manual guide](../operation/manifests/README.md)
 
 ## Generate outputs
 
