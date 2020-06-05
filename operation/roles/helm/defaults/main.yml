@@ -1,3 +1,4 @@
 HELM_VERSION: v3.2.1
 HELM_PATH: /usr/local/bin/helm
 HELM_URL: "https://get.helm.sh/helm-{{ HELM_VERSION }}-linux-amd64.tar.gz"
+HELM_CHARTS_REPO: https://kubernetes-charts.storage.googleapis.com/

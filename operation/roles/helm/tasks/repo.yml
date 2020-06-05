@@ -1,4 +1,4 @@
 ---
 - name: Add stable charts repository from helm
-  command: "{{ HELM_PATH }} repo add stable https://kubernetes-charts.storage.googleapis.com/"
+  command: "{{ HELM_PATH }} repo add stable {{ HELM_CHARTS_REPO }}"
   become: no

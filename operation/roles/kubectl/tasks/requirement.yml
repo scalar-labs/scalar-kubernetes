@@ -1,4 +1,4 @@
 ---
 - name: Install python library requirements for kubernetes
   pip:
-    name: ['kubernetes', 'openshift', 'kubernetes-validate']
+    name: "{{ PYTHON_PACKAGE }}"
