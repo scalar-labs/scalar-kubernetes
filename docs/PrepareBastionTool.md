@@ -6,13 +6,13 @@ This document explains how to install Kubernetes CLI (kubectl) and Helm on the b
 
 First, you need to retrieve the public DNS for the bastion and username to generate the Ansible inventory file.
 
-In `examples/azure/network/` directory
+In `examples/azure/network/` directory, execute the following command
 
 ```console
 terraform output inventory_ini > ../../../operation/inventory.ini
 ```
 
-You can see the Ansible inventory file.
+You can see the Ansible inventory file in `operation/`.
 
 ```console
 terraform output inventory_ini
@@ -26,13 +26,13 @@ ansible_python_interpreter=/usr/bin/python3
 
 Secondly, you need to retrieve the kubernetes access file and save in the tmp folder as `kube_config` from the Terraform output command in Kubernetes modules.
 
-In `examples/azure/kubernetes/` directory
+In `examples/azure/kubernetes/` directory, execute the following command
 
 ```console
 terraform output kube_config > ../../../operation/tmp/kube_config
 ```
 
-And open file `kube_config` in the `tmp` directory with your preferred editor. It should look like below.
+And open file `kube_config` in the `operation/tmp` directory with your preferred editor. It should look like below.
 
 ```yml
 apiVersion: v1
@@ -61,7 +61,7 @@ users:
 
 When the requirements are completed, you can run the following command to install the tools in the server that will proceed to the installation.
 
-In `operation` directory
+In `operation` directory, execute the following command
 
 ```console
 ansible-playbook -i inventory.ini playbook-install-tools.yml
