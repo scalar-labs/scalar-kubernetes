@@ -15,8 +15,8 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 
 * An Azure VPC with Resource Group
 * An AKS cluster with two node pools
-* 3 Envoy Kubernetes Pod with a network load balancer (public)
-* 3 Scalar DL Kubernetes Pod
+* 3 Envoy Kubernetes Pods with a network load balancer (public)
+* 3 Scalar DL Kubernetes Pods
 * DNS Zone for internal host lookup
 * 3 Cassandra instances
 * 1 Cassy instance
@@ -90,22 +90,10 @@ terraform init
 terraform apply -var-file example.tfvars
 ```
 
-### Create Scalar DL resources
+### Create Scalar DL and Envoy resources
 
-TODO: docs will be added by pr11
-
-### Create Envoy resources
-
-TODO: docs will be added by pr11
-
-### Create Monitor resources
-
-```console
-cd examples/azure/monitor
-
-terraform init
-terraform apply -var-file example.tfvars
-```
+[follow the manual guide](../operation/manifests/README.md)
+TODO: automate deployment docs will be added by pr11
 
 ## Generate outputs
 
