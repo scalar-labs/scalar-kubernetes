@@ -22,3 +22,10 @@ example_key*
 
 # SSH cfg
 *.cfg
+
+
+# vscode
+.vscode
+
+# env
+.env
