@@ -1,10 +1,10 @@
-# Prepare bastion tool - Install Kubernetes CLI and Helm
+# How to install Kubernetes CLI and Helm on the bastion
 
-This document explains how to install Kubernetes CLI (kubectl) and Helm on the bastion.
+This document explains how to install Kubernetes CLI (kubectl) and Helm on the bastion. After following the doc, you will be able to do operations to the Kubernetes cluster on the bastion node.
 
-## Prepare Ansible configuration
+## Prepare Ansible inventory
 
-First, you need to retrieve the public DNS for the bastion and username to generate the Ansible inventory file.
+First, you create an Ansible inventory file that contains the hostname and the username of the bastion as follows.
 
 In `examples/azure/network/` directory, execute the following command
 
@@ -12,7 +12,7 @@ In `examples/azure/network/` directory, execute the following command
 terraform output inventory_ini > ../../../operation/inventory.ini
 ```
 
-You can see the Ansible inventory file in `operation/`.
+The inventory file should look like below.
 
 ```console
 terraform output inventory_ini
@@ -24,7 +24,7 @@ ansible_user=centos
 ansible_python_interpreter=/usr/bin/python3
 ```
 
-Secondly, you need to retrieve the kubernetes access file and save in the tmp folder as `kube_config` from the Terraform output command in Kubernetes modules.
+Secondly, you create a kubeconfig file that contains information required to access the kubernetes cluster as follows.
 
 In `examples/azure/kubernetes/` directory, execute the following command
 
@@ -32,7 +32,7 @@ In `examples/azure/kubernetes/` directory, execute the following command
 terraform output kube_config > ../../../operation/tmp/kube_config
 ```
 
-And open file `kube_config` in the `operation/tmp` directory with your preferred editor. It should look like below.
+The kubeconfig file should look like below.
 
 ```yml
 apiVersion: v1
@@ -57,9 +57,9 @@ users:
     token: 48fdda...
 ```
 
-## Install and configure bastion server
+## Install tools in the bastion
 
-When the requirements are completed, you can run the following command to install the tools in the server that will proceed to the installation.
+Now let's install the tools in the bastion as follows.
 
 In `operation` directory, execute the following command
 
@@ -79,7 +79,7 @@ bastion-paul-k8s-azure-p5rzic.eastus.cloudapp.azure.com : ok=15   changed=4    u
 
 ## Check installation
 
-Go on the bastion and execute the following command to ensure you can interact with the Kubernetes cluster.
+You can login to the bastion and check if the installation worked well as follows.
 
 ```console
 [centos@bastion-1 ~]$ kubectl get node
