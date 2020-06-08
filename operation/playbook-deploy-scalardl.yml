@@ -1,5 +1,5 @@
 ---
-- name: Deploy scalar ledger and envoy in kubernetes
+- name: Deploy Scalar ledger and Envoy in kubernetes
   hosts: bastion
   gather_facts: no
   become: no
@@ -13,7 +13,7 @@
   #   docker_password: "{{ lookup('env','DOCKER_PASSWORD') }}"
   #   admin_access_log_path: /dev/stdout
   #   next_hop_address: scalar-ledger-headless
-  #   internal_domain: default.svc.cluster.local
+  #   internal_domain: "{{default_kubernetes_namespace}}.svc.cluster.local"
   #   envoy_tls: false
   roles:
   - "scalarledger"

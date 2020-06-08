@@ -1,4 +1,3 @@
-
 ---
 - name: Get files on remote machine for scalar ledger
   find:
