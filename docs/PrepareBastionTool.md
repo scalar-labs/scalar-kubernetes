@@ -6,8 +6,6 @@ This document explains how to install Kubernetes CLI (kubectl) and Helm on the b
 
 First, you create an Ansible inventory file that contains the hostname and the username of the bastion as follows.
 
-In `examples/azure/network/` directory, execute the following command
-
 ```console
 cd ${SCALAR_K8S_HOME}/examples/azure/network
 terraform output inventory_ini > ${SCALAR_K8S_HOME}/operation/inventory.ini
@@ -25,9 +23,9 @@ ansible_user=centos
 ansible_python_interpreter=/usr/bin/python3
 ```
 
-Secondly, you create a kubeconfig file that contains information required to access the kubernetes cluster as follows.
+## Prepare kubeconfig file
 
-In `examples/azure/kubernetes/` directory, execute the following command
+Secondly, you create a kubeconfig file that contains information required to access the kubernetes cluster as follows.
 
 ```console
 cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
@@ -63,10 +61,8 @@ users:
 
 Now let's install the tools in the bastion as follows.
 
-In `operation` directory, execute the following command
-
 ```console
-cd ${SCALAR_K8S_HOME}
+cd ${SCALAR_K8S_HOME}/operation
 ansible-playbook -i inventory.ini playbook-install-tools.yml
 
 PLAY [Install necessary kubernetes binary on bastion] ****************************************************************************************************************************************************************************************************************
