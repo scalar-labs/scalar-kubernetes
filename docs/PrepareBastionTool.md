@@ -9,7 +9,8 @@ First, you create an Ansible inventory file that contains the hostname and the u
 In `examples/azure/network/` directory, execute the following command
 
 ```console
-terraform output inventory_ini > ../../../operation/inventory.ini
+cd ${SCALAR_K8S_HOME}/examples/azure/network
+terraform output inventory_ini > ${SCALAR_K8S_HOME}/operation/inventory.ini
 ```
 
 The inventory file should look like below.
@@ -29,7 +30,8 @@ Secondly, you create a kubeconfig file that contains information required to acc
 In `examples/azure/kubernetes/` directory, execute the following command
 
 ```console
-terraform output kube_config > ../../../operation/tmp/kube_config
+cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
+terraform output kube_config > ${SCALAR_K8S_HOME}/operation/tmp/kube_config
 ```
 
 The kubeconfig file should look like below.
@@ -64,6 +66,7 @@ Now let's install the tools in the bastion as follows.
 In `operation` directory, execute the following command
 
 ```console
+cd ${SCALAR_K8S_HOME}
 ansible-playbook -i inventory.ini playbook-install-tools.yml
 
 PLAY [Install necessary kubernetes binary on bastion] ****************************************************************************************************************************************************************************************************************
