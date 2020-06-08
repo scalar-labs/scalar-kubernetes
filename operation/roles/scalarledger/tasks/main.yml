@@ -1,6 +1,7 @@
 ---
-- include: copy.yml
-- include: configuration.yml
-- include: schema.yml
-- include: envoy.yml
-- include: ledger.yml
+# roles scalarledger entry-point
+- import_tasks: copy.yml
+- import_tasks: configuration.yml
+- import_tasks: schema.yml
+- import_tasks: ledger.yml
+- import_tasks: envoy.yml
