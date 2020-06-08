@@ -1,7 +1,7 @@
 ---
 - name: Get files on remote machine for scalar schema
   find:
-    paths: "{{ REMOTE_MANIFESTS_FOLDER }}/schema/"
+    paths: "{{ remote_manifests_folder }}/schema/"
     patterns: '*.yaml'
   register: find_yaml_schema
 
@@ -9,11 +9,22 @@
   k8s:
     state: present
     src: "{{ item.path }}"
-    namespace: "{{ NAMESPACE }}"
+    namespace: "{{ default_kubernetes_namespace }}"
   with_items: "{{ find_yaml_schema.files }}"
   loop_control:
     label: "{{ item.path }}"
 
 - name: Wait until completion
-  pause:
-    minutes: 1
+  k8s_info:
+    api_version: batch/v1
+    kind: Job
+    label_selectors:
+      - app.kubernetes.io/name = scalardl-schema
+      - app.kubernetes.io/version = v2.0.5
+    namespace: "{{ default_kubernetes_namespace }}"
+  register: deployment_list
+  until: deployment_list | json_query('status.succeeded') == 1
+  retries: 50
+  delay: 5
+  # pause:
+  #   minutes: 1

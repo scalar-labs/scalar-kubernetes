@@ -1,13 +1,13 @@
 admin:
-  access_log_path: {{ ADMIN_ACCESS_LOG_PATH | default("/etc/envoy/admin_access.log", true) }}
+  access_log_path: {{ admin_access_log_path | default("/etc/envoy/admin_access.log", true) }}
   profile_path: /etc/envoy/envoy.prof
   address:
     socket_address: { address: 0.0.0.0, port_value: 9001 }
 
-{% set ENVOY_LISTENERS = {'scalar-service': 50051, 'scalar-privileged': 50052} -%}
+{% set envoy_listeners = {'scalar-service': 50051, 'scalar-privileged': 50052} -%}
 static_resources:
   listeners:
-  {%- for key, value in ENVOY_LISTENERS.items() %}
+  {%- for key, value in envoy_listeners.items() %}
   
     - name: {{ key|e }}
       address:
@@ -59,7 +59,7 @@ static_resources:
                       max_age: "1728000"
                       expose_headers: grpc-status,grpc-message,rpc.status-bin
         
-        {%- if ENVOY_TLS is defined and ENVOY_TLS == "true" %}
+        {%- if envoy_tls is defined and envoy_tls == "true" %}
           transport_socket:
             name: envoy.transport_sockets.tls
             typed_config:
@@ -75,7 +75,7 @@ static_resources:
   {%- endfor %}
   
   clusters:
-  {%- for key, value in ENVOY_LISTENERS.items() %}
+  {%- for key, value in envoy_listeners.items() %}
   
     - name: {{ key|e }}
       connect_timeout: 0.25s
@@ -100,6 +100,6 @@ static_resources:
             - endpoint:
                 address:
                   socket_address:
-                    address: {{ NEXT_HOP_ADDRESS| default("scalardl", true) }}.{{ INTERNAL_DOMAIN }}
+                    address: {{ next_hop_address | default("scalardl", true) }}.{{ internal_domain }}
                     port_value: {{ value|e }}
   {%- endfor -%}

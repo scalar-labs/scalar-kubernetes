@@ -5,46 +5,45 @@
     api_version: v1
     kind: Secret
     name:  reg-docker-secrets
-    namespace: "{{NAMESPACE}}"
+    namespace: "{{default_kubernetes_namespace}}"
   register: docker_registry
 
 - name: Add docker-registry secrets in Kubernetes
-  command: "kubectl create secret docker-registry reg-docker-secrets --docker-server={{ DOCKER_REGISTRY }} --docker-username={{ DOCKER_USERNAME }} --docker-password={{ DOCKER_PASSWORD }}"
+  command: "kubectl create secret docker-registry reg-docker-secrets --docker-server={{ docker_registry }} --docker-username={{ docker_username }} --docker-password={{ docker_password }}"
   when: not docker_registry.resources | length > 0
 
-- name: check if exist configmap for envoy
+- name: Check if configmap exist for envoy
   k8s_info:
     api_version: v1
     kind: ConfigMap
     name: envoy
-    namespace: "{{NAMESPACE}}"
+    namespace: "{{default_kubernetes_namespace}}"
   register: configmap_envoy
 
-- name: Template Configmap for envoy
+- name: Template configmap for envoy
   template:
     src: template/envoy.yaml.j2
-    dest: "{{ REMOTE_MANIFESTS_FOLDER }}/configuration/envoy.yaml"
+    dest: "{{ remote_manifests_folder }}/configuration/envoy.yaml"
   when: not configmap_envoy.resources | length > 0
 
 - name: Add configmap for envoy
-  command: "kubectl create cm envoy --from-file={{ REMOTE_MANIFESTS_FOLDER }}/configuration/envoy.yaml"
+  command: "kubectl create cm envoy --from-file={{ remote_manifests_folder }}/configuration/envoy.yaml"
   when: not configmap_envoy.resources | length > 0
 
-- name: check if exist schema for cassandra and ledger
+- name: Check if schema exist for cassandra and ledger
   k8s_info:
     api_version: v1
     kind: ConfigMap
     name: scalardl-schema
-    namespace: "{{NAMESPACE}}"
+    namespace: "{{default_kubernetes_namespace}}"
   register: configmap_schema
 
-- name: Template Configmap for schema for cassandra and ledger
+- name: Template configmap for schema for cassandra and ledger
   template:
     src: template/create_schema.cql.j2
-    dest: "{{ REMOTE_MANIFESTS_FOLDER }}/configuration/create_schema.cql"
+    dest: "{{ remote_manifests_folder }}/configuration/create_schema.cql"
   when: not configmap_schema.resources | length > 0
 
 - name: Add config for schema for cassandra and ledger
-  command: "kubectl create cm scalardl-schema --from-file={{ REMOTE_MANIFESTS_FOLDER }}/configuration/create_schema.cql"
+  command: "kubectl create cm scalardl-schema --from-file={{ remote_manifests_folder }}/configuration/create_schema.cql"
   when: not configmap_schema.resources | length > 0
-

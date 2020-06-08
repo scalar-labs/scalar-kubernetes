@@ -2,7 +2,7 @@
 ---
 - name: Get files on remote machine for scalar ledger
   find:
-    paths: "{{ REMOTE_MANIFESTS_FOLDER }}/ledger/"
+    paths: "{{ remote_manifests_folder }}/ledger/"
     patterns: '*.yaml'
   register: find_yaml_ledger
 
@@ -10,7 +10,7 @@
   k8s:
     state: present
     src: "{{ item.path }}"
-    namespace: "{{ NAMESPACE }}"
+    namespace: "{{ default_kubernetes_namespace }}"
   with_items: "{{ find_yaml_ledger.files }}"
   loop_control:
     label: "{{ item.path }}"

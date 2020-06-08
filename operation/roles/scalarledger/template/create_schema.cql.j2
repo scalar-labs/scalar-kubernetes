@@ -1,6 +1,6 @@
-CREATE KEYSPACE IF NOT EXISTS scalar WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': {{ CASSANDRA_REPLICATION_FACTOR | default(3, true)}} };
-CREATE KEYSPACE IF NOT EXISTS coordinator WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': {{ CASSANDRA_REPLICATION_FACTOR | default(3, true)}} };
-ALTER KEYSPACE system_auth WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': {{ CASSANDRA_REPLICATION_FACTOR | default(3, true)}} };
+CREATE KEYSPACE IF NOT EXISTS scalar WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': {{ cassandra_replication_factor | default(3, true)}} };
+CREATE KEYSPACE IF NOT EXISTS coordinator WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': {{ cassandra_replication_factor | default(3, true)}} };
+ALTER KEYSPACE system_auth WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': {{ cassandra_replication_factor | default(3, true)}} };
 CREATE TABLE IF NOT EXISTS scalar.asset (
     id text,
     age int,

@@ -2,8 +2,15 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: scalardl-schema
+  labels:
+    app.kubernetes.io/name: scalardl-schema
+    app.kubernetes.io/version: v2.0.5
 spec:
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: scalardl-schema
+        app.kubernetes.io/version: v2.0.5
     spec:
       containers:
       - name: cassandra
@@ -33,4 +40,18 @@ spec:
           defaultMode: 256
           name: scalardl-schema
         name: scalardl-schema-config
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                - scalardlpool
+      tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/app
+          operator: Equal
+          value: scalardlpool
   backoffLimit: 0

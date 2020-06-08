@@ -1,11 +1,11 @@
-NAMESPACE: default
-LOCAL_MANIFESTS_FOLDER: ../../../manifests
-REMOTE_MANIFESTS_FOLDER: "/home/{{ ansible_user }}/manifests"
-CASSANDRA_REPLICATION_FACTOR: 1
-DOCKER_REGISTRY: https://index.docker.io/v2/
-DOCKER_USERNAME: "{{ lookup('env','DOCKER_USERNAME') }}"
-DOCKER_PASSWORD: "{{ lookup('env','DOCKER_PASSWORD') }}"
-ADMIN_ACCESS_LOG_PATH: /dev/stdout
-NEXT_HOP_ADDRESS: scalar-ledger-headless
-INTERNAL_DOMAIN: default.svc.cluster.local
-ENVOY_TLS: false
+default_kubernetes_namespace: default
+local_manifests_folder: ../../../manifests
+remote_manifests_folder: "/home/{{ ansible_user }}/manifests"
+cassandra_replication_factor: 3
+docker_registry: https://index.docker.io/v2/
+docker_username: "{{ lookup('env','DOCKER_USERNAME') }}"
+docker_password: "{{ lookup('env','DOCKER_PASSWORD') }}"
+admin_access_log_path: /dev/stdout
+next_hop_address: scalar-ledger-headless
+internal_domain: default.svc.cluster.local
+envoy_tls: false

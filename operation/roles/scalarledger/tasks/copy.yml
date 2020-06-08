@@ -5,12 +5,12 @@
     state: directory
     mode: '0755'
   with_items:
-  - "{{ REMOTE_MANIFESTS_FOLDER }}"
-  - "{{ REMOTE_MANIFESTS_FOLDER }}/configuration"
+  - "{{ remote_manifests_folder }}"
+  - "{{ remote_manifests_folder }}/configuration"
 
 - name: Copy manifests
   synchronize:
-    src: "{{ LOCAL_MANIFESTS_FOLDER }}"
-    dest: "{{ REMOTE_MANIFESTS_FOLDER }}"
+    src: "{{ local_manifests_folder }}"
+    dest: "{{ remote_manifests_folder }}"
     rsync_opts:
       - "--exclude=configuration"
