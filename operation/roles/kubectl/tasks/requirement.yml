@@ -1,0 +1,4 @@
+---
+- name: Install python library requirements for kubernetes
+  pip:
+    name: "{{ PYTHON_PACKAGE }}"

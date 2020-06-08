@@ -1,0 +1,23 @@
+---
+- name: Create kubectl config folder
+  become: no
+  file:
+    path: "/home/{{ ansible_user }}/.kube"
+    state: directory
+    mode: '0755'
+
+- name: Copy the kube_config into kubectl bastion
+  become: no
+  copy:
+    src: "{{ KUBECTL_CONFIG }}"
+    dest: "/home/{{ ansible_user }}/.kube/config"
+    mode: '0644'
+
+- name: Check if kubectl completion exists on admin server
+  stat:
+    path: /etc/bash_completion.d/kubectl
+  register: stat_bash_kubectl_result
+
+- name: Install kubectl completion
+  shell: "{{ KUBECTL_PATH }} completion bash > /etc/bash_completion.d/kubectl"
+  when: not stat_bash_kubectl_result.stat.exists
