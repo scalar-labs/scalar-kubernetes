@@ -4,10 +4,10 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 
 ## Requirements
 
+* Have install tool into the bastion [More information can be found here](./PrepareBastionTool.md)
 * Docker Engine (with access to `scalarlabs/scalar-ledger` docker registry)
   * `scalar-ledger` is available to only our partners and customers at the moment.
 Note that Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [terraform module](../../docs/README.md)
-* have install tool into the [bastion](./PrepareBastionTool.md)
 
 ## Preparation
 

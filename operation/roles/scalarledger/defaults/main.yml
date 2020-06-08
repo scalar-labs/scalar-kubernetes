@@ -3,8 +3,8 @@ local_manifests_folder: ../../../manifests/
 remote_manifests_folder: "/home/{{ ansible_user }}/manifests"
 cassandra_replication_factor: 3
 docker_registry: https://index.docker.io/v2/
-docker_username: "{{ lookup('env','DOCKER_USERNAME') }}"
-docker_password: "{{ lookup('env','DOCKER_PASSWORD') }}"
+docker_username: "{{ lookup('env','DOCKERHUB_USER') }}"
+docker_password: "{{ lookup('env','DOCKERHUB_ACCESS_TOKEN') }}"
 admin_access_log_path: /dev/stdout
 next_hop_address: scalar-ledger-headless
 internal_domain: default.svc.cluster.local
