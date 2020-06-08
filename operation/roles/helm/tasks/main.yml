@@ -1,4 +1,4 @@
 ---
 # roles helm entry-point
-- include: install.yml
-- include: repo.yml
+- import_tasks: install.yml
+- import_tasks: repo.yml

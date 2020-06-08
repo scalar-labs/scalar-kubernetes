@@ -9,7 +9,6 @@
     # HELM_VERSION: v3.2.1
   pre_tasks:
   # ansible requires python3 as python2 is end of support
-  # need to view with team
   - name: Switch Ansible's Python interpreter to Python 2
     set_fact:
       ansible_python_interpreter: "/usr/bin/python"
@@ -24,4 +23,4 @@
     - "kubectl"
     - "helm"
   tags:
-  - kubernetes tool
+  - tools

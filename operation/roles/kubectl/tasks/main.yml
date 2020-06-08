@@ -1,5 +1,5 @@
 ---
 # roles kubectl entry-point
-- include: install.yml
-- include: setup.yml
-- include: requirement.yml
+- import_tasks: install.yml
+- import_tasks: setup.yml
+- import_tasks: requirement.yml
