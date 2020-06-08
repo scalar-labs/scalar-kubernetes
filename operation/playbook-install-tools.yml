@@ -1,0 +1,26 @@
+---
+- name: Prepare bastion tool - Install Kubernetes CLI and Helm
+  hosts: bastion
+  gather_facts: no
+  become: yes
+  # vars:
+    # KUBECTL_CONFIG: tmp/kube_config
+    # KUBECTL_VERSION: v1.15.10
+    # HELM_VERSION: v3.2.1
+  pre_tasks:
+  # ansible requires python3 as python2 is end of support
+  - name: Switch Ansible's Python interpreter to Python 2
+    set_fact:
+      ansible_python_interpreter: "/usr/bin/python"
+  - name: Ensure libselinux-python3 is installed (to use copy in ansible)
+    package:
+      name: libselinux-python3
+      state: present
+  - name: Switch Ansible's Python interpreter to Python 3
+    set_fact:
+      ansible_python_interpreter: "/usr/bin/python3"
+  roles:
+    - "kubectl"
+    - "helm"
+  tags:
+  - tools
