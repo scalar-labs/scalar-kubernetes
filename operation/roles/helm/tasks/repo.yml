@@ -1,0 +1,4 @@
+---
+- name: Add stable charts repository from helm
+  command: "{{ HELM_PATH }} repo add stable {{ HELM_CHARTS_REPO }}"
+  become: no

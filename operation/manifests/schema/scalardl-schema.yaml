@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: scalardl-schema
+spec:
+  template:
+    spec:
+      containers:
+      - name: cassandra
+        image: cassandra:3.11
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/bash 
+        - -c 
+        - "echo applying Scalar DL schema && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /create_schema.cql"
+        volumeMounts:
+        - mountPath: /create_schema.cql
+          name: scalardl-schema-config
+          subPath: create_schema.cql
+          readOnly: true
+        env:
+        - name: SCALAR_DB_CONTACT_POINTS
+          value: cassandra-lb.internal.scalar-labs.com
+        - name: SCALAR_DB_CONTACT_PORT
+          value: "9042"
+        - name: SCALAR_DB_USERNAME
+          value: cassandra
+        - name: SCALAR_DB_PASSWORD
+          value: cassandra
+      restartPolicy: Never
+      volumes:
+      - configMap:
+          defaultMode: 256
+          name: scalardl-schema
+        name: scalardl-schema-config
+  backoffLimit: 0
