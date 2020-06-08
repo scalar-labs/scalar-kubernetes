@@ -1,5 +1,5 @@
 default_kubernetes_namespace: default
-local_manifests_folder: ../../../manifests
+local_manifests_folder: ../../../manifests/
 remote_manifests_folder: "/home/{{ ansible_user }}/manifests"
 cassandra_replication_factor: 3
 docker_registry: https://index.docker.io/v2/

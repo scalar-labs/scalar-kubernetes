@@ -23,8 +23,6 @@
       - app.kubernetes.io/version = v2.0.5
     namespace: "{{ default_kubernetes_namespace }}"
   register: deployment_list
-  until: deployment_list | json_query('status.succeeded') == 1
+  until: deployment_list | json_query('resources[*].status.conditions[?type==`Complete`].status[]') | unique == ["True"]
   retries: 50
   delay: 5
-  # pause:
-  #   minutes: 1
