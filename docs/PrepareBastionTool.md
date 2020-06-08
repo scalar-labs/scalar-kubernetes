@@ -11,6 +11,8 @@ cd ${SCALAR_K8S_HOME}/examples/azure/network
 terraform output inventory_ini > ${SCALAR_K8S_HOME}/operation/inventory.ini
 ```
 
+Note: SCALAR_K8S_HOME refer to the root directory of the project for example: `/Users/paul/Project/scalar-k8s`
+
 The inventory file should look like below.
 
 ```console
