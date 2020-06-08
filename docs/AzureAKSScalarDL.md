@@ -92,7 +92,7 @@ terraform apply -var-file example.tfvars
 
 ### Create Scalar DL and Envoy resources
 
-For more information on Scalar and Envoy, please refer to [manual guide](../operation/manifests/README.md)
+Please refer to [manual guide](../operation/manifests/README.md)
 
 ## Generate outputs
 
@@ -102,35 +102,35 @@ Terraform can output some useful information about your deployment, such as a ba
 
 ```console
 $ terraform output
-bastion_ip = bastion-exemple-k8s-azure-fpjzfyk.eastus.cloudapp.azure.com
+bastion_ip = bastion-example-k8s-azure-fpjzfyk.eastus.cloudapp.azure.com
 bastion_provision_id = 2467232388962733384
 dns_zone_id = internal.scalar-labs.com
 image_id = CentOS
 internal_domain = internal.scalar-labs.com
 location = East US
 network_cidr = 10.42.0.0/16
-network_id = /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/exemple-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/exemple-k8s-azure-fpjzfyk
-network_name = exemple-k8s-azure-fpjzfyk
-private_key_path = /Users/paul/Project/scalar-k8s/examples/azure/network/example_key
-public_key_path = /Users/paul/Project/scalar-k8s/examples/azure/network/example_key.pub
+network_id = /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk
+network_name = example-k8s-azure-fpjzfyk
+private_key_path = /path/to/local-repository/scalar-k8s/examples/azure/network/example_key
+public_key_path = /path/to/local-repository/scalar-k8s/examples/azure/network/example_key.pub
 ssh_config = Host *
 User centos
 UserKnownHostsFile /dev/null
 StrictHostKeyChecking no
 
 Host bastion
-HostName bastion-exemple-k8s-azure-fpjzfyk.eastus.cloudapp.azure.com
+HostName bastion-example-k8s-azure-fpjzfyk.eastus.cloudapp.azure.com
 LocalForward 8000 monitor.internal.scalar-labs.com:80
 
 Host *.internal.scalar-labs.com
 ProxyCommand ssh -F ssh.cfg bastion -W %h:%p
 
 subnet_map = {
-  "cassandra" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/exemple-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/exemple-k8s-azure-fpjzfyk/subnets/cassandra"
-  "private" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/exemple-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/exemple-k8s-azure-fpjzfyk/subnets/private"
-  "public" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/exemple-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/exemple-k8s-azure-fpjzfyk/subnets/public"
-  "scalardl_blue" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/exemple-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/exemple-k8s-azure-fpjzfyk/subnets/scalardl_blue"
-  "scalardl_green" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/exemple-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/exemple-k8s-azure-fpjzfyk/subnets/scalardl_green"
+  "cassandra" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk/subnets/cassandra"
+  "private" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk/subnets/private"
+  "public" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk/subnets/public"
+  "scalardl_blue" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk/subnets/scalardl_blue"
+  "scalardl_green" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk/subnets/scalardl_green"
 }
 user_name = centos
 ```
