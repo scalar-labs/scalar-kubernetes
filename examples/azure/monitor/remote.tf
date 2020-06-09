@@ -14,10 +14,3 @@ data "terraform_remote_state" "cassandra" {
   }
 }
 
-data "terraform_remote_state" "scalardl" {
-  backend = "local"
-
-  config = {
-    path = "../scalardl/terraform.tfstate"
-  }
-}

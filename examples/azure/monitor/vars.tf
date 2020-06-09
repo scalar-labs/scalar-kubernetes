@@ -12,3 +12,8 @@ variable "monitor" {
 variable "slack_webhook_url" {
   default = ""
 }
+
+variable "scalardl" {
+  type    = map
+  default = {}
+}
