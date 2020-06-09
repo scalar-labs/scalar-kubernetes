@@ -175,13 +175,13 @@ clusters:
 contexts:
 - context:
     cluster: scalar-kubernetes
-    user: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
+    user: clusterUser_example-k8s-azure-znmhbo_scalar-kubernetes
   name: scalar-kubernetes
 current-context: scalar-kubernetes
 kind: Config
 preferences: {}
 users:
-- name: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
+- name: clusterUser_example-k8s-azure-znmhbo_scalar-kubernetes
   user:
     client-certificate-data: LS0tLS1C....
     client-key-data: LS0tLS...
