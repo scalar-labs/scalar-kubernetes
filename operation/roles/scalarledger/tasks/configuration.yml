@@ -4,12 +4,12 @@
   k8s_info:
     api_version: v1
     kind: Secret
-    name:  reg-docker-secrets
+    name: "{{kubernetes_registry_secret_name}}"
     namespace: "{{default_kubernetes_namespace}}"
   register: docker_registry
 
 - name: Add docker-registry secrets in Kubernetes
-  command: "kubectl create secret docker-registry reg-docker-secrets --docker-server={{ docker_registry }} --docker-username={{ docker_username }} --docker-password={{ docker_password }}"
+  command: "kubectl create secret docker-registry {{kubernetes_registry_secret_name}} --docker-server={{ docker_registry }} --docker-username={{ docker_username }} --docker-password={{ docker_password }}"
   when: not docker_registry.resources | length > 0
 
 - name: Check if configmap exist for envoy
