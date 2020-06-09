@@ -90,9 +90,22 @@ terraform init
 terraform apply -var-file example.tfvars
 ```
 
+### Create Kubernetes cluster
+
+```console
+cd examples/azure/kubernetes
+
+terraform init
+terraform apply -var-file example.tfvars
+```
+
+### Setup bastion for Kubernetes
+
+Please refer to [Prepare bastion tooling](./PrepareBastionTool.md)
+
 ### Create Scalar DL and Envoy resources
 
-Please refer to [manual guide](../operation/manifests/README.md)
+Please refer to [Manual guide](../operation/manifests/README.md)
 
 ## Generate outputs
 
@@ -146,6 +159,33 @@ cassandra_provision_ids = [
 ]
 cassandra_resource_count = 3
 cassandra_start_on_initial_boot = false
+```
+
+### Kubernetes
+
+Kubernetes credential can be found with `terraform output kube_config`, see below.
+
+```yml
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1...
+    server: https://scalar-k8s-c1eae570.fdc2c430-cd60-4952-b269-28d1c1583ca7.privatelink.eastus.azmk8s.io:443
+  name: scalar-kubernetes
+contexts:
+- context:
+    cluster: scalar-kubernetes
+    user: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
+  name: scalar-kubernetes
+current-context: scalar-kubernetes
+kind: Config
+preferences: {}
+users:
+- name: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
+  user:
+    client-certificate-data: LS0tLS1C....
+    client-key-data: LS0tLS...
+    token: 48fdda...
 ```
 
 ## How to destroy
