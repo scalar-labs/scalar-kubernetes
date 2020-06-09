@@ -13,4 +13,3 @@ data "terraform_remote_state" "cassandra" {
     path = "../cassandra/terraform.tfstate"
   }
 }
-
