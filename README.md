@@ -26,7 +26,7 @@ The modules directory is where the terraform modules are located. Most of the te
 
 ### [Operation](./operation)
 
-The operation directory is where Ansible Playbooks are located to install and deploy configuration and Pods on the Kubernetes cluster .
+The operation directory is where Ansible Playbooks are located to install and deploy configuration plus Pods on the Kubernetes cluster.
 
 ## Future Work
 
