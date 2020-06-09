@@ -1,23 +1,21 @@
-name: Terraform test for Kubernetes module of Azure Example
+name: Terraform test for Monitor module of Azure Example
 on:
   pull_request:
     branches:
       - master
     paths:
-      - 'modules/azure/kubernetes/**'
-      - 'examples/azure/kubernetes/**'
+      - examples/azure/monitor/**
   push:
     branches:
       - master
     paths:
-      - 'modules/azure/kubernetes/**'
-      - 'examples/azure/kubernetes/**'
+      - examples/azure/monitor/**
 defaults:
   run:
-    working-directory: ./examples/azure/kubernetes
+    working-directory: ./examples/azure/monitor
 jobs:
   terraform:
-    name: 'Terraform'
+    name: Terraform
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -27,13 +25,14 @@ jobs:
       TF_VERSION: 0.12.25
 
     steps:
-      - name: 'Checkout'
-        uses: actions/checkout@master
-      
-      - uses: hashicorp/setup-terraform@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: ${{ env.TF_VERSION }}
-      
+
       - name: Terraform Format
         run: terraform fmt -check
 
