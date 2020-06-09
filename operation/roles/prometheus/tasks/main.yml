@@ -1,0 +1,6 @@
+---
+- name: Deploy prometheus with helm 
+  command: 
+    "helm upgrade --install prometheus --namespace {{ NAMESPACE }} -f {{ item }} stable/prometheus-operator --version {{ VERSION }}"
+  with_fileglob:
+    - 'files/custom-values.yaml'

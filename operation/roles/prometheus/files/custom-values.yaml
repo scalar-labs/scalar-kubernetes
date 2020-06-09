@@ -1,0 +1,211 @@
+defaultRules:
+  create: true
+  rules:
+    alertmanager: true
+    etcd: true
+    general: true
+    k8s: true
+    kubeApiserver: true
+    kubePrometheusNodeAlerting: true
+    kubePrometheusNodeRecording: true
+    kubernetesAbsent: true
+    kubernetesApps: true
+    kubernetesResources: true
+    kubernetesStorage: true
+    kubernetesSystem: true
+    kubeScheduler: true
+    network: true
+    node: true
+    prometheus: true
+    prometheusOperator: true
+    time: true
+
+alertmanager:
+  config:
+    global:
+      resolve_timeout: 5m
+    route:
+      group_by: ["job"]
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      receiver: "null"
+      routes:
+        - match:
+            alertname: Watchdog
+          receiver: "null"
+        - match:
+            alertname: KubeAPILatencyHigh
+          receiver: "null"
+        - match:
+            alertname: CPUThrottlingHigh
+          receiver: "null"
+    receivers:
+      - name: "null"
+  alertmanagerSpec:
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 20m
+      linits:
+        memory: 150Mi
+        cpu: 40m
+
+grafana:
+  enabled: true
+  resources:
+    limits:
+      cpu: 50m
+      memory: 128Mi
+    requests:
+      cpu: 40m
+      memory: 128Mi
+
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+    datasources:
+      enabled: true
+      defaultDatasourceEnabled: true
+      label: grafana_datasource
+
+  grafana.ini:
+    auth.basic:
+      enabled: false
+    auth.anonymous:
+      enabled: true
+      org_name: Main Org.
+      org_role: Admin
+    auth:
+      disable_login_form: false
+      # oauth_auto_login: true
+      disable_signout_menu: false
+    users:
+      allow_sign_up: false
+      auto_assign_org: true
+      auto_assign_org_role: Admin
+
+  persistence:
+    enabled: false
+    storageClassName: default
+    accessModes: ["ReadWriteOnce"]
+    size: 2Gi
+
+kubeStateMetrics:
+  enabled: true
+  resources:
+    limits:
+      cpu: 25m
+      memory: 128Mi
+    requests:
+      cpu: 15m
+      memory: 64Mi
+
+nodeExporter:
+  enabled: true
+  resources:
+    limits:
+      cpu: 15m
+      memory: 50Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+
+coreDns:
+  enabled: true
+
+kubeControllerManager:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+kubelet:
+  enabled: true
+  serviceMonitor:
+    https: false
+
+prometheus:
+  prometheusSpec:
+    resources: {}
+    # requests:
+    #   memory: 2200Mi
+    #   cpu: 400m
+    # limits:
+    #   memory: 3000Mi
+    #   cpu: 500m
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: default
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
+        selector: {}
+
+    additionalScrapeConfigs:
+      - job_name: "kubernetes-pods"
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels:
+              [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels:
+              [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+          - action: labelmap
+            regex: __meta_kubernetes_pod_label_(.+)
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: kubernetes_namespace
+          - source_labels: [__meta_kubernetes_pod_name]
+            action: replace
+            target_label: kubernetes_pod_name
+      - job_name: "kubernetes-service"
+        kubernetes_sd_configs:
+          - role: service
+        relabel_configs:
+          - source_labels:
+              [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels:
+              [__meta_kubernetes_service_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels:
+              [
+                __address__,
+                __meta_kubernetes_service_annotation_prometheus_io_port,
+              ]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+          - action: labelmap
+            regex: __meta_kubernetes_service_label_(.+)
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: kubernetes_namespace
+          - source_labels: [__meta_kubernetes_service_name]
+            action: replace
+            target_label: kubernetes_service_name
