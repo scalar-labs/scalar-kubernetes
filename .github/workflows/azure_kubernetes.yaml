@@ -4,20 +4,20 @@ on:
     branches:
       - master
     paths:
-      - 'modules/azure/kubernetes/**'
-      - 'test/modules/azuredeploy/kubernetes/**'
+      - modules/azure/kubernetes/**
+      - test/modules/azuredeploy/kubernetes/**
   push:
     branches:
       - master
     paths:
-      - 'modules/azure/kubernetes/**'
-      - 'test/modules/azuredeploy/kubernetes/**'
+      - modules/azure/kubernetes/**
+      - test/modules/azuredeploy/kubernetes/**
 defaults:
   run:
     working-directory: ./test/modules/azuredeploy/kubernetes
 jobs:
   terraform:
-    name: 'Terraform'
+    name: Terraform
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -27,14 +27,15 @@ jobs:
       TF_VERSION: 0.12.25
 
     steps:
-      - name: 'Checkout'
+      - name: Checkout
         uses: actions/checkout@master
       
-      - uses: hashicorp/setup-terraform@v1
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: ${{ env.TF_VERSION }}
         
-      - name: 'Set up to using dummy local variables'
+      - name: Set up to using dummy local variables
         run: |
           rm -f remote.tf locals.tf
           mv locals.tf.dummy locals.tf
@@ -48,5 +49,5 @@ jobs:
       - name: Terraform Validate
         run: terraform validate -no-color
 
-      - name: 'Terraform Plan'
+      - name: Terraform Plan
         run: terraform plan --var-file=terraform.tfvars

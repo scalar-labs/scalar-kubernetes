@@ -4,20 +4,20 @@ on:
     branches:
       - master
     paths:
-      - 'modules/azure/kubernetes/**'
-      - 'examples/azure/kubernetes/**'
+      - modules/azure/kubernetes/**
+      - examples/azure/kubernetes/**
   push:
     branches:
       - master
     paths:
-      - 'modules/azure/kubernetes/**'
-      - 'examples/azure/kubernetes/**'
+      - modules/azure/kubernetes/**
+      - examples/azure/kubernetes/**
 defaults:
   run:
     working-directory: ./examples/azure/kubernetes
 jobs:
   terraform:
-    name: 'Terraform'
+    name: Terraform
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -27,10 +27,11 @@ jobs:
       TF_VERSION: 0.12.25
 
     steps:
-      - name: 'Checkout'
+      - name: Checkout
         uses: actions/checkout@master
       
-      - uses: hashicorp/setup-terraform@v1
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: ${{ env.TF_VERSION }}
       
