@@ -101,11 +101,11 @@ terraform apply -var-file example.tfvars
 
 ### Setup bastion for Kubernetes
 
-Please refer to [Prepare bastion tooling](./PrepareBastionTool.md)
+Please refer to [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
 
 ### Create Scalar DL and Envoy resources
 
-Please refer to [Manual guide](../operation/manifests/README.md)
+Please refer to [A Guide on How to Deploy Scalar DL Manually with kubectl](../operation/manifests/README.md)
 
 ## Generate outputs
 
