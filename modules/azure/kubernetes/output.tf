@@ -11,7 +11,7 @@ Host *
 
 Host bastion
   HostName ${var.network.bastion_ip}
-  User ${var.network.bastion_user_name}
+  User ${var.network.user_name}
   LocalForward 8000 monitor.${var.network.internal_domain}:80
   LocalForward 7000 ${replace(azurerm_kubernetes_cluster.aks_cluster.kube_config.0.host, "https://", "")}
 
