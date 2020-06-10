@@ -161,7 +161,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_node_pool" {
   enable_auto_scaling   = local.kubernetes_additional_node_pools.cluster_auto_scaling
   min_count             = local.kubernetes_additional_node_pools.cluster_auto_scaling_min_count
   max_count             = local.kubernetes_additional_node_pools.cluster_auto_scaling_max_count
-  
+
   lifecycle {
     ignore_changes = [
       node_count
