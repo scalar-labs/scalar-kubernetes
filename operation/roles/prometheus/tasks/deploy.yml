@@ -1,0 +1,23 @@
+---
+- name: Create namespace for Prometheus
+  k8s:
+    name: "{{ namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Deploy Prometheus CRDs
+  shell:
+    #!/bin/bash
+    kubectl apply -f {{ item }}
+  loop: "{{ prometheus_crds }}" 
+
+# follow https://github.com/helm/charts/blob/master/stable/prometheus-operator/README.md#helm-fails-to-create-crds
+- name: wait Prometheus CRDS install in Kubernetes cluster
+  pause:
+    seconds: 30
+
+- name: Deploy prometheus with helm 
+  shell:
+    #!/bin/bash 
+    helm upgrade --install prometheus stable/prometheus-operator --namespace {{ namespace }} --version {{ prometheus_version }}

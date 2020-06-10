@@ -1,6 +1,4 @@
 ---
-- name: Deploy prometheus with helm 
-  command: 
-    "helm upgrade --install prometheus --namespace {{ NAMESPACE }} -f {{ item }} stable/prometheus-operator --version {{ VERSION }}"
-  with_fileglob:
-    - 'files/custom-values.yaml'
+# roles kubectl entry-point
+- import_tasks: copy.yml
+- import_tasks: deploy.yml
