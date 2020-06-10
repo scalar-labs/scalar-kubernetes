@@ -22,5 +22,5 @@ Host 10.*
   User ${local.kubernetes_cluster.admin_username}
   ProxyCommand ssh -F ssh.cfg bastion -W %h:%p
 EOF
-  description = "The configuration file for SSH access."
+  description = "The configuration file for SSH access for Kubernetes."
 }

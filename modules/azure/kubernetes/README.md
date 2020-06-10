@@ -62,4 +62,5 @@ The Azure Kubernetes Module creates a subnet for k8s, service principal, set per
 
 | Name | Description |
 |------|-------------|
+| k8s_ssh_config | The configuration file for SSH access for Kubernetes. |
 | kube_config | kubectl configuration e.g: ~/.kube/config |
