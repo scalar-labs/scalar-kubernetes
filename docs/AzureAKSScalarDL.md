@@ -33,62 +33,11 @@ az login
 
 ### Create network resources
 
-```console
-cd examples/azure/network
-
-# Generate a test key-pair
-ssh-keygen -b 2048 -t rsa -f ./example_key -q -N ""
-chmod 400 example_key
-
-# You need to pass the key to your ssh-agent
-# If needed start ssh-agent using: eval $(ssh-agent -s)
-ssh-add example_key
-
-# Optionally, you may want to create a file named `additional_public_keys` that contains multiple ssh public keys (one key per line) to allow other admins to access nodes created by the following `terraform apply`.
-# the file should look like below
-# cat examples/azure/network/additional_public_keys
-# ssh-rsa AAAAB3Nza..... admin1
-# ssh-rsa...... admin2
-
-
-# Create an environment
-terraform init
-terraform apply -var-file example.tfvars
-```
+please refer to [README](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-network-resources)
 
 ### Create Cassandra resources
 
-Before creating Cassandra resources with `terraform apply`, you probably need to configure for Cassy to manage backups of Cassandra data.
-
-For Cassy, the first thing you need to do is create a storage account in the same resource group as the network resource created in the previous section and create a blob type container in the storage account.
-
-Then, update `example.tfvars` with the container URL as follows.
-
-```console
-cassy = {
-  storage_base_uri     = "https://yourstorageaccountname.blob.core.windows.net/your-container-name"
-  storage_type         = "azure_blob"
-}
-```
-
-If you don't need Cassy, you can disable it by setting its `resource_count` to zero.
-
-```console
-cassy = {
-  resource_count = 0
-}
-```
-
-For more information on Cassy, please refer to [CassySetup](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/CassySetup.md).
-
-Now it's ready to run the terraform commands:
-
-```console
-cd examples/azure/cassandra
-
-terraform init
-terraform apply -var-file example.tfvars
-```
+please refer to [README](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-cassandra-resources)
 
 ### Create Kubernetes cluster
 

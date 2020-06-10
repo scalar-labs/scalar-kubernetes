@@ -3,8 +3,6 @@
 Scalar Kubernetes is a set of Terraform modules, Kubernetes manifest files and Ansible scripts that can be used to orchestrate a Scalar DLT network in a cloud environment. The Terraform modules are mainly used to create Cassandra nodes and a Kubernetes cluster. The manifest files are used to deploy stateless Scalar DL containers such as scalar-ledger and envoy on the Kubernetes cluster. The Ansible scripts are used to install required tools such as kubectl on bastion to manage the Kubernetes applications.
 Note that the current version only supports deployment of single Scalar DLT cluster in Azure; that is, it does not support multi-cluster Scalar DLT deployment where multiple ledgers are managed independently through Scalar DM and other cloud providers.
 
-Kubernetes (K8s) is a container management platform that aims to provide automating deployment, scaling, and operations of application containers across clusters of hosts.
-
 ## Requirements
 
 * [Terraform >= 0.12.x](https://www.terraform.io/downloads.html)
