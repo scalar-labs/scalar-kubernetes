@@ -1,7 +1,4 @@
 ## configuration files from https://raw.githubusercontent.com/helm/charts/master/stable/prometheus-operator/values.yaml
-
-## Create default rules for monitoring the cluster
-##
 defaultRules:
   create: true
   rules:
@@ -65,7 +62,6 @@ grafana:
       org_role: Admin
     auth:
       disable_login_form: false
-      # oauth_auto_login: true
       disable_signout_menu: false
     users:
       allow_sign_up: false
@@ -121,13 +117,6 @@ kubelet:
 prometheus:
   prometheusSpec:
     resources: {}
-    # requests:
-    #   memory: 2200Mi
-    #   cpu: 400m
-    # limits:
-    #   memory: 3000Mi
-    #   cpu: 500m
-
     storageSpec:
       volumeClaimTemplate:
         spec:
