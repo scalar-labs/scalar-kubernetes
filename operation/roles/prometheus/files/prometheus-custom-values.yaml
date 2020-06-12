@@ -127,6 +127,5 @@ prometheus:
             requests:
               storage: 10Gi
 
-
 prometheusOperator:
   createCustomResource: false
