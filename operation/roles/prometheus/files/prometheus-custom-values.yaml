@@ -117,6 +117,7 @@ kubelet:
 prometheus:
   prometheusSpec:
     resources: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
     storageSpec:
       volumeClaimTemplate:
         spec:
@@ -125,6 +126,7 @@ prometheus:
           resources:
             requests:
               storage: 10Gi
+
 
 prometheusOperator:
   createCustomResource: false
