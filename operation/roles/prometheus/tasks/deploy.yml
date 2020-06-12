@@ -20,4 +20,4 @@
 - name: Deploy prometheus with helm 
   shell:
     #!/bin/bash 
-    helm upgrade --install prometheus stable/prometheus-operator --namespace {{ namespace }} --version {{ prometheus_version }} -f {{ remote_helm_folder }}/helm/prometheus-custom-values.yaml
+    helm upgrade --install prometheus stable/prometheus-operator --namespace {{ namespace }} --version {{ prometheus_version }} -f {{ remote_helm_folder }}/prometheus-custom-values.yaml
