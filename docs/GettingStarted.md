@@ -2,7 +2,7 @@
 
 This document refers to the necessary tool to install in your local machine, and the next steps.
 
-## Install the Requirements
+## Requirements
 
 | Name | Version | Mandatory | link |
 |:------|:-------|:----------|:------|
