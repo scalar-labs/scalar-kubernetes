@@ -1,6 +1,6 @@
 
 ---
-- name: check if exist docker-registry secrets in Kubernetes
+- name: Check if docker-registry secrets exists in Kubernetes
   k8s_info:
     api_version: v1
     kind: Secret
