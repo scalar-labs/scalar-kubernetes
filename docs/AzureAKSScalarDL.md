@@ -13,8 +13,8 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 
 ## What is created
 
-* An Azure VPC with Resource Group
-* An AKS cluster with two node pools
+* An Azure VPC associated with Resource Group
+* An AKS cluster with two Kubernetes node pools
 * 3 Envoy Kubernetes Pods with a network load balancer (public)
 * 3 Scalar DL Kubernetes Pods
 * DNS Zone for internal host lookup
@@ -22,6 +22,7 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 * 1 Cassy instance
 * 1 Reaper instance
 * 1 Bastion instance with a public IP
+* 1 Monitor instance to collect metrics and logs
 
 ## How to deploy
 
@@ -33,11 +34,11 @@ az login
 
 ### Create network resources
 
-please refer to [README](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-network-resources)
+Please refer to [README](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-network-resources)
 
 ### Create Cassandra resources
 
-please refer to [README](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-cassandra-resources)
+Please refer to [README](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-cassandra-resources)
 
 ### Create Kubernetes cluster
 
@@ -47,6 +48,10 @@ cd examples/azure/kubernetes
 terraform init
 terraform apply -var-file example.tfvars
 ```
+
+### Create Monitor resources
+
+Please refer to [README](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-monitor-resources)
 
 ### Setup bastion for Kubernetes
 
@@ -58,7 +63,7 @@ Please refer to [A Guide on How to Deploy Scalar DL Manually with kubectl](../op
 
 ## Generate outputs
 
-Terraform can output some useful information about your deployment, such as a bastion public, internal IP addresses, and ssh config that you can use to access instances. The ssh config assumes that the private key for an environment is added to your ssh-agent.
+Terraform can output some useful information about your deployments, such as a bastion public, internal IP addresses, and ssh config that you can use to access instances. The ssh config assumes that the private key for an environment is added to your ssh-agent.
 
 ### Network
 
@@ -139,11 +144,6 @@ users:
 
 ## How to destroy
 
-```console
-# Make sure to do this after used !!!
-terraform destroy --var-file example.tfvars
-```
-
-Note: Don't forget to `terraform destroy` to the environment you created after used.
+Don't forget to delete the entire environment with `terraform destroy` when you finished
 
 Please check out [Scalar DL Getting Started](https://scalardl.readthedocs.io/en/latest/getting-started/) to understand how to interact with the environment.

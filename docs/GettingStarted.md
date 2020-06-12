@@ -1,74 +1,21 @@
 # Getting Started
 
-This guide will cover how to use the Scalar DL Orchestration tools to build an environment.
+This document refers to the necessary tool to install in your local machine, and the next steps.
 
 ## Install the Requirements
 
-### Terraform
-
-Terraform install instructions can be found [here](https://www.terraform.io/downloads.html)
-
-* Please use Terraform 0.12.x
-
-#### Apple system
-
-* brew
-
-```console
-brew install terraform
-```
-
-* [tfenv](https://github.com/tfutils/tfenv)
-
-```console
-brew install tfenv
-tfenv install 0.12.x
-```
-
-NOTE: Please replace `x` with the version you would like to use.
-
-#### Linux
-
-```console
-wget https://releases.hashicorp.com/terraform/0.12.8/terraform_0.12.8_linux_amd64.zip
-unzip terraform_0.12.8_linux_amd64.zip
-sudo cp terraform /usr/local/bin/
-```
-
-### Ansible
-
-* Ansible install instructions can be found [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-
-#### PIP Install
-
-```console
-pip install --user ansible
-```
-
-### Docker
-
-* Docker install instructions can be found [here](https://docs.docker.com/install/)
-
-#### Post Install Steps (Make sure you connect to DockerHub)
-
-```console
-docker login
-```
-
-### Azure CLI (If using Azure)
-
-* Azure CLI install instructions can be found [here](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
-
-#### Post Install Steps
-
-```console
-az login
-```
-
-## Setting up your workspace
-
-### [Azure Scalar DL Example](./AzureAKSScalarDL.md)
+| Name | Version | Mandatory | link |
+|:------|:-------|:----------|:------|
+| Ansible | 2.9.0 | yes | https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html |
+| Terraform | 0.12.x | yes | https://learn.hashicorp.com/terraform/getting-started/install |
+| tfenv | 0.12.x | yes | https://github.com/tfutils/tfenv |
+| Docker | latest | yes | https://docs.docker.com/install/ |
+| Azure CLI | latest | yes | https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest |
+| Kubectl | 1.15.10 | yes | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
+| Helm | 3.2.1 or latest | no | https://helm.sh/docs/intro/install/ |
+| Minikube | latest | no | https://kubernetes.io/docs/setup/learning-environment/minikube/ |
 
 ## Next Steps
 
+* How to deploy [Kubernetes Scalar DL Example](./AzureAKSScalarDL.md)
 * How to operate a [Cassandra Cluster](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/CassandraOperation.md)
