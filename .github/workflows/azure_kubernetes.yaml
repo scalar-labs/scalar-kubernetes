@@ -29,12 +29,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: ${{ env.TF_VERSION }}
-        
+
       - name: Set up to using dummy local variables
         run: |
           rm -f remote.tf locals.tf
