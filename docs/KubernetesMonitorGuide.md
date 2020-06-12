@@ -15,6 +15,8 @@ cd ${SCALAR_K8S_HOME}/example/azure/network
 ssh-add example_key.pem
 ```
 
+add follow the section [prepare ansible inventory](https://github.com/scalar-labs/scalar-k8s/blob/master/docs/PrepareBastionTool.md#prepare-ansible-inventory)
+
 ### Generate SSH Config
 
 The following command will generate a `ssh.cfg` with `LocalForward` to access the Kubernetes API from your local machine.
@@ -77,7 +79,29 @@ users:
     token: 48fdda...
 ```
 
-## Port-forward
+## Deploy Prometheus
+
+Now let's deploy to Prometheus component inside Kubernetes
+
+```console
+cd ${SCALAR_K8S_HOME}/operation
+➜  operation git:(add-prometheus) ✗ ansible-playbook -i inventory.ini playbook-deploy-prometheus.yaml
+
+PLAY [Deploy Prometheus in Kubernetes] ************************************************************************************************************************************************************************
+
+TASK [prometheus : Create folder on remote server] ************************************************************************************************************************************************************
+ok: [bastion-paul-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
+
+[OMIT]
+
+TASK [prometheus : Deploy prometheus with helm] ***************************************************************************************************************************************************************
+changed: [bastion-paul-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
+
+PLAY RECAP ****************************************************************************************************************************************************************************************************
+bastion-paul-k8s-azure-by2-ot4.eastus.cloudapp.azure.com : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+## How to access
 
 Now let's access to Prometheus component on your local machine. Open the ssh port-forward to the bastion, and let it open.
 
