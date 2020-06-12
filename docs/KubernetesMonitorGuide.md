@@ -1,16 +1,26 @@
 # Kubernetes Monitor Guide
 
-The Scalar Kubernetes deployment tools include a Prometheus operator.
+This document explains how to deploy Prometheus operator on Kubernetes with Ansible. After following the doc, you will be able to use Grafana, Alertmanager, and Prometheus inside Kubernetes.
 
-## How to access
+## Prepare
 
-See the document [SSH Guide](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/SSHGuide.md) for more information
+When you deploy a Scalar environment, you need to provide a public/private key-pair. This key-pair will be used to tunnel a connection to the monitoring system.
 
-## Kubernetes helpers
-
-the following command will generate a `ssh.cfg` with kubernetes `LocalForward` to access easily to the Kubernetes API
+It is assumed that the private key is loaded into an ssh-agent.
 
 ```console
+# Please update `/path/to/local-repository` before running the command.
+export SCALAR_K8S_HOME=/path/to/local-repository
+cd ${SCALAR_K8S_HOME}/example/azure/network
+ssh-add example_key.pem
+```
+
+### Generate SSH Config
+
+The following command will generate a `ssh.cfg` with `LocalForward` to access the Kubernetes API from your local machine.
+
+```console
+cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
 terraform output k8s_ssh_config
 Host *
   UserKnownHostsFile /dev/null
@@ -31,10 +41,18 @@ Host 10.*
 ```
 
 ```console
+cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
 terraform output k8s_ssh_config > ssh.cfg
 ```
 
-## How to setup your kubeconfig to access Prometheus
+## How to write your `kubeconfig` to access Prometheus from your local machine
+
+```console
+cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+terraform output kube_config
+```
+
+You need to rewrite `server` line with `https://localhost:7000` and copy the file to ~/.kube/config
 
 ```yml
 apiVersion: v1
@@ -59,11 +77,9 @@ users:
     token: 48fdda...
 ```
 
-you need to rewrite `server` line with `https://localhost:7000`
+## Port-forward
 
-Copy the file to ~/.kube/config
-
-### Port-forward
+Now let's access to Prometheus component on your local machine. Open the ssh port-forward to the bastion, and let it open.
 
 ```console
 ssh -F ssh.cfg bastion
@@ -72,7 +88,7 @@ Last login: Wed Jun 10 08:17:24 2020 from softbank060115074058.bbtec.net
 [centos@bastion-1 ~]$
 ```
 
-on your local machine
+Let's have a look at Kubernetes service in the `monitoring` namespace where Prometheus has been installed.
 
 ```console
 ➜  kubernetes git:(add-prometheus) ✗ kubectl get svc -n monitoring
@@ -87,7 +103,7 @@ prometheus-prometheus-oper-operator       ClusterIP   10.42.50.156   <none>     
 prometheus-prometheus-oper-prometheus     ClusterIP   10.42.48.154   <none>        9090/TCP                     3h44m
 ```
 
-Port-forward for grafana on port 8080
+### For Grafana on port 8080
 
 ```console
 ➜  kubernetes git:(add-prometheus) ✗ kubectl port-forward -n monitoring svc/prometheus-grafana 8080:80
@@ -98,6 +114,8 @@ Handling connection for 8080
 Handling connection for 8080
 ```
 
+### For Alert-manager on port 9093
+
 Port-forward for alert-manager on port 9093
 
 ```console
@@ -107,7 +125,7 @@ Forwarding from [::1]:9093 -> 9093
 Handling connection for 9093
 ```
 
-Port-forward for prometheus on port 9090
+### For Prometheus on port 9093
 
 ```console
 kubectl port-forward -n monitoring svc/prometheus-prometheus-oper-prometheus 9090
@@ -115,3 +133,4 @@ Forwarding from 127.0.0.1:9090 -> 9090
 Forwarding from [::1]:9090 -> 9090
 Handling connection for 9090
 ```
+[req] scalar-terraform works the same as before with scalar-envoy
