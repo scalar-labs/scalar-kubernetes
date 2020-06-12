@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scalardl-schema
+data:
+  create_schema.cql: |
+{% filter indent(width=4) %}
+    {% include "create_schema.cql.j2" %}
+{% endfilter %}
