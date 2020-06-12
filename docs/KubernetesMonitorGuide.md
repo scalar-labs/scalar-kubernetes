@@ -2,10 +2,10 @@
 
 This document explains how to deploy Prometheus operator on Kubernetes with Ansible. After following the doc, you will be able to use Grafana, Alertmanager, and Prometheus inside Kubernetes.
 
-## Prepare
+## Prepare SSH tunnel
 
-When you deploy a Scalar environment, you need to provide a public/private key-pair. This key-pair will be used to tunnel a connection to the monitoring system.
-
+When you deploy a Scalar environment in terraform network, you need to provide a public/private key-pair.
+This key-pair will be used to tunnel a connection to the monitoring system.
 It is assumed that the private key is loaded into an ssh-agent.
 
 ```console
@@ -47,38 +47,6 @@ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
 terraform output k8s_ssh_config > ssh.cfg
 ```
 
-## How to write your `kubeconfig` to access Prometheus from your local machine
-
-```console
-cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-terraform output kube_config
-```
-
-You need to rewrite `server` line with `https://localhost:7000` and copy the file to ~/.kube/config
-
-```yml
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: LS0tLS1...
-    server: https://scalar-k8s-c1eae570.fdc2c430-cd60-4952-b269-28d1c1583ca7.privatelink.eastus.azmk8s.io:443
-  name: scalar-kubernetes
-contexts:
-- context:
-    cluster: scalar-kubernetes
-    user: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
-  name: scalar-kubernetes
-current-context: scalar-kubernetes
-kind: Config
-preferences: {}
-users:
-- name: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
-  user:
-    client-certificate-data: LS0tLS1C....
-    client-key-data: LS0tLS...
-    token: 48fdda...
-```
-
 ## Deploy Prometheus
 
 Now let's deploy to Prometheus component inside Kubernetes
@@ -99,6 +67,35 @@ changed: [bastion-paul-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
 
 PLAY RECAP ****************************************************************************************************************************************************************************************************
 bastion-paul-k8s-azure-by2-ot4.eastus.cloudapp.azure.com : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+## How to setup your `kubeconfig` to access Prometheus
+
+You need to export the `kube_config` from terraform and after find `server` line and replace with `https://localhost:7000` . finally copy to ~/.kube/config
+
+```console
+cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+terraform output kube_config
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1...
+    server: https://scalar-k8s-c1eae570.fdc2c43xxxx.xxxxxx.xxxxx.xxxxxxxx.privatelink.japaneast.azmk8s.io:443
+  name: scalar-kubernetes
+contexts:
+- context:
+    cluster: scalar-kubernetes
+    user: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
+  name: scalar-kubernetes
+current-context: scalar-kubernetes
+kind: Config
+preferences: {}
+users:
+- name: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
+  user:
+    client-certificate-data: LS0tLS1C....
+    client-key-data: LS0tLS...
+    token: 48fdda...
 ```
 
 ## How to access
@@ -157,4 +154,3 @@ Forwarding from 127.0.0.1:9090 -> 9090
 Forwarding from [::1]:9090 -> 9090
 Handling connection for 9090
 ```
-[req] scalar-terraform works the same as before with scalar-envoy
