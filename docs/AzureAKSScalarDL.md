@@ -1,4 +1,4 @@
-# Azure Scalar DL Example
+# How to Deploy Scalar DL on Azure AKS
 
 This example will deploy a simple Scalar DL environment in the Japaneast region with your Azure account. If you want to use another region or store the tfstate on Azure you need to update `backend.tf`, `examples.tfvars` and `remote.tf` of each module.
 
@@ -144,6 +144,6 @@ users:
 
 ## How to destroy
 
-Don't forget to delete the entire environment with `terraform destroy` when you finished
+Don't forget to delete the entire environment with `terraform destroy` when you are finished.
 
 Please check out [Scalar DL Getting Started](https://scalardl.readthedocs.io/en/latest/getting-started/) to understand how to interact with the environment.
