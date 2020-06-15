@@ -16,6 +16,7 @@ Host bastion
   LocalForward 7000 ${replace(azurerm_kubernetes_cluster.aks_cluster.kube_config.0.host, "https://", "")}
 
 Host *.${var.network.internal_domain}
+  User ${var.network.user_name}
   ProxyCommand ssh -F ssh.cfg bastion -W %h:%p
 
 Host 10.*
