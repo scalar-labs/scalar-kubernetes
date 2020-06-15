@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fluent-bit-logging-metrics
+  namespace: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+    - logging
+  selector:
+    matchLabels:
+      k8s-app: fluent-bit-logging
+      version: v1
+      kubernetes.io/cluster-service: "true"
+  endpoints:
+  - port: metrics
+    path: /api/v1/metrics/prometheus
