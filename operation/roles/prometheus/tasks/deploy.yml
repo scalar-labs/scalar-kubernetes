@@ -12,7 +12,6 @@
     kubectl apply -f {{ item }}
   loop: "{{ prometheus_crds }}" 
 
-# follow https://github.com/helm/charts/blob/master/stable/prometheus-operator/README.md#helm-fails-to-create-crds
 - name: wait Prometheus CRDS install in Kubernetes cluster
   pause:
     seconds: 30
