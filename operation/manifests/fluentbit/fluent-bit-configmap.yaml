@@ -6,8 +6,6 @@ metadata:
   labels:
     k8s-app: fluent-bit
 data:
-  # Configuration files: server, input, filters and output
-  # ======================================================
   fluent-bit.conf: |
     [SERVICE]
         Flush      5
