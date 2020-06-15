@@ -15,7 +15,9 @@ cd ${SCALAR_K8S_HOME}/example/azure/network
 ssh-add example_key.pem
 ```
 
-add follow the section [prepare ansible inventory](https://github.com/scalar-labs/scalar-k8s/blob/master/docs/PrepareBastionTool.md#prepare-ansible-inventory)
+## Prepare Ansible inventory
+
+Please refer to [prepare ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory)
 
 ### Generate SSH Config
 
