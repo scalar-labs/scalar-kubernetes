@@ -17,5 +17,5 @@ This document refers to the necessary tool to install in your local machine, and
 
 ## Next Steps
 
-* [How to Deploy Scalar DL on Azure AKS](./AzureAKSScalarDL.md)
+* [How to Deploy Scalar DL on Azure AKS](./ScalarDLonAzureAKS.md)
 * How to operate a [Cassandra Cluster](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/CassandraOperation.md)
