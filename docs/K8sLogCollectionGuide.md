@@ -18,11 +18,11 @@ Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md)
 
 #### Setup Prometheus Metrics
 
-By default, the Prometheus servicemonitor is created, you can disabled it by setting `fluent_activate_metrics` to `no` in vars
+By default, the Prometheus service monitor is created, you can disable it by setting `fluent_activate_metrics` to `no` in vars.
 
 ## Deploy Prometheus
 
-Now let's deploy to Fluentbit component inside Kubernetes
+Now let's deploy to Fluentbit component inside Kubernetes.
 
 ```console
 cd ${SCALAR_K8S_HOME}/operation
@@ -51,7 +51,7 @@ Connect on the monitor server, please refer to [SSH Guide](https://github.com/sc
 ssh -F ssh.cfg monitor.internal.scalar-labs.com
 ```
 
-the kubernetes log are located under `/log/kubernetes/` directory.
+The Kubernetes log are located under `/log/kubernetes/` directory.
 
 ```console
 [centos@monitor-1 kubernetes]$ tree
