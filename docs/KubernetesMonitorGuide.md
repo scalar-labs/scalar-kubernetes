@@ -58,15 +58,15 @@ cd ${SCALAR_K8S_HOME}/operation
 PLAY [Deploy Prometheus in Kubernetes] ************************************************************************************************************************************************************************
 
 TASK [prometheus : Create folder on remote server] ************************************************************************************************************************************************************
-ok: [bastion-paul-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
+ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
 
 [OMIT]
 
 TASK [prometheus : Deploy prometheus with helm] ***************************************************************************************************************************************************************
-changed: [bastion-paul-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
+changed: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
 
 PLAY RECAP ****************************************************************************************************************************************************************************************************
-bastion-paul-k8s-azure-by2-ot4.eastus.cloudapp.azure.com : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
 ## How to setup your `kubeconfig` to access Prometheus
@@ -104,8 +104,7 @@ Now let's access to Prometheus component on your local machine. Open the ssh por
 
 ```console
 ssh -F ssh.cfg bastion
-Warning: Permanently added 'bastion-paul-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
-Last login: Wed Jun 10 08:17:24 2020 from softbank060115074058.bbtec.net
+Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 [centos@bastion-1 ~]$
 ```
 
@@ -136,8 +135,6 @@ Handling connection for 8080
 ```
 
 ### For Alert-manager on port 9093
-
-Port-forward for alert-manager on port 9093
 
 ```console
 ➜  kubernetes git:(add-prometheus) ✗ kubectl port-forward -n monitoring svc/prometheus-prometheus-oper-alertmanager 9093:9093
