@@ -35,10 +35,11 @@ spec:
         - containerPort: 50051
         - containerPort: 50052
         - containerPort: 9001
+          name: admin
         livenessProbe:
           httpGet:
             path: /ready
-            port: 9001
+            port: admin
           failureThreshold: 3
           initialDelaySeconds: 60
           periodSeconds: 10
@@ -47,7 +48,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /ready
-            port: 9001
+            port: admin
           failureThreshold: 3
           initialDelaySeconds: 20
           periodSeconds: 10
