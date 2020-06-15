@@ -24,9 +24,9 @@ spec:
             name: metrics
         env:
         - name: FLUENT_MONITOR_HOST
-          value: "monitor.internal.scalar-labs.com"
+          value: "{{ fluent_monitor_host }}"
         - name: FLUENT_MONITOR_PORT
-          value: "24224"
+          value: "{{ fluent_monitor_port }}"
         volumeMounts:
         - name: varlog
           mountPath: /var/log

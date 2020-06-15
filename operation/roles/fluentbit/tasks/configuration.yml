@@ -1,0 +1,12 @@
+
+---
+- name: Template Fluentbit daemon set
+  template:
+    src: templates/fluent-bit-ds.yaml.j2
+    dest: "{{ remote_manifests_folder }}/fluentbit/fluent-bit-ds.yaml"
+
+- name: Template Fluentbit service monitor
+  template:
+    src: templates/fluent-bit-service-monitor.yaml.j2
+    dest: "{{ remote_manifests_folder }}/fluentbit/fluent-bit-service-monitor.yaml"
+  when: fluent_activate_metrics

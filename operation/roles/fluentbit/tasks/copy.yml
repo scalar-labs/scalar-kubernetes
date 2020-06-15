@@ -1,0 +1,14 @@
+---
+- name: Create folder on remote server
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+  - "{{ remote_manifests_folder }}"
+  - "{{ remote_manifests_folder }}/fluentbit"
+
+- name: Copy manifests
+  synchronize:
+    src: "../files/"
+    dest: "{{ remote_manifests_folder }}/fluentbit"

@@ -2,11 +2,11 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: fluent-bit-logging-metrics
-  namespace: monitoring
+  namespace: {{ monitoring_kubernetes_namespace }}
 spec:
   namespaceSelector:
     matchNames:
-    - logging
+    - {{ default_kubernetes_namespace }}
   selector:
     matchLabels:
       k8s-app: fluent-bit-logging
