@@ -1,6 +1,6 @@
-# Kubernetes Log Collection Guide
+# How to collect logs from Kubernetes applications
 
-This document explains how to deploy Fluentbit on Kubernetes with Ansible. After following the doc, you will be able to use collect the Kubernetes logs and view it from the monitor server.
+`scalar-k8s` uses Fluent Bit to collect logs from the applications of kubernetes cluster. This document explains how to deploy Fluent Bit on Kubernetes with Ansible. After following the doc, you will be able to see collected logs in the monitor server.
 
 ## Requirements
 
