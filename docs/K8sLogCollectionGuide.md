@@ -6,24 +6,24 @@
 
 ### Prepare Ansible inventory
 
-Please refer to [prepare ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory)
+Setting up Ansible inventory is required to install Fluent Bit with Ansible. Please refer to [prepare ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory) for how to set up an ansible inventory.
 
-### Monitor server
+### Set up Monitor server
 
-In order to collect the Monitor server must be running before continuing this document,
-please refer to [Monitor server](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-monitor-resources)
+Monitor server must be up and running before start collecting logs.
+please refer to [Monitor server](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-monitor-resources) for how to set up Monitor server.
 
-### Setup Fluent Bit Metrics for Prometheus
+### Set up Fluent Bit Metrics for Prometheus
 
-Fluent Bit comes with a built-in HTTP Server that can be used to query internal information and monitor metrics of each running plugin. More information about this feature can be found on the [official website](https://docs.fluentbit.io/manual/administration/monitoring)
+Fluent Bit comes with a built-in HTTP server that can be used to monitor the internal information and the metrics of each running plugin. More information about this feature can be found on the [official website](https://docs.fluentbit.io/manual/administration/monitoring)
 
-Before you also need to have setup the Prometheus operator, please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md)
+Please also make sure monitor resources are created with [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md).
 
 By default, the Prometheus service monitor is created, you can deactivate it by setting `fluent_activate_metrics` to `no` in vars.
 
 ## Deploy Fluent Bit
 
-Now let's deploy to the Fluent Bit component inside Kubernetes.
+Now let's deploy Fluent Bit to Kubernetes.
 
 ```console
 cd ${SCALAR_K8S_HOME}/operation
