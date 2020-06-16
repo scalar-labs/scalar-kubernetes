@@ -20,7 +20,7 @@ Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md)
 
 By default, the Prometheus service monitor is created, you can disable it by setting `fluent_activate_metrics` to `no` in vars.
 
-## Deploy Prometheus
+## Deploy Fluentbit
 
 Now let's deploy to Fluentbit component inside Kubernetes.
 
