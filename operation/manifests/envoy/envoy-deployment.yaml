@@ -29,6 +29,15 @@ spec:
       - image: scalarlabs/scalar-envoy:latest
         imagePullPolicy: Always
         name: envoy
+        env:
+        - name: admin_access_log_path
+          value: "/dev/stdout"
+        - name: internal_domain
+          value: default.svc.cluster.local
+        - name: scalardl_endpoint_address
+          value: scalar-ledger-headless
+        - name: envoy_tls
+          value: "false"
         ports:
         - containerPort: 50051
         - containerPort: 50052
