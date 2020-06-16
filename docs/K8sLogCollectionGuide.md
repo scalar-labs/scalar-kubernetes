@@ -1,6 +1,6 @@
 # How to collect logs from Kubernetes applications
 
-`scalar-k8s` uses Fluent Bit to collect logs from the applications of kubernetes cluster. This document explains how to deploy Fluent Bit on Kubernetes with Ansible. After following the doc, you will be able to see collected logs in the monitor server.
+`scalar-k8s` uses Fluent Bit to collect logs from the applications of Kubernetes cluster. This document explains how to deploy Fluent Bit on Kubernetes with Ansible. After following the doc, you will be able to see collected logs in the monitor server.
 
 ## Requirements
 
@@ -23,7 +23,7 @@ By default, the Prometheus service monitor is created, you can deactivate it by 
 
 ## Deploy Fluent Bit
 
-Now let's deploy to Fluent Bit component inside Kubernetes.
+Now let's deploy to the Fluent Bit component inside Kubernetes.
 
 ```console
 cd ${SCALAR_K8S_HOME}/operation
