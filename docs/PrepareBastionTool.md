@@ -18,7 +18,7 @@ The inventory file should look like below.
 ```console
 terraform output inventory_ini
 [bastion]
-bastion-paul-k8s-azure-p5rzic.eastus.cloudapp.azure.com
+bastion-example-k8s-azure-p5rzic.eastus.cloudapp.azure.com
 
 [bastion:vars]
 ansible_user=centos
@@ -72,10 +72,10 @@ PLAY [Install necessary kubernetes binary on bastion] **************************
 [OMIT]
 
 TASK [helm : Add stable charts repository from helm] *****************************************************************************************************************************************************************************************************************
-changed: [bastion-paul-k8s-azure-p5rzic.eastus.cloudapp.azure.com]
+changed: [bastion-example-k8s-azure-p5rzic.eastus.cloudapp.azure.com]
 
 PLAY RECAP ***********************************************************************************************************************************************************************************************************************************************************
-bastion-paul-k8s-azure-p5rzic.eastus.cloudapp.azure.com : ok=15   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+bastion-example-k8s-azure-p5rzic.eastus.cloudapp.azure.com : ok=15   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 ```
 
 ## Check installation
