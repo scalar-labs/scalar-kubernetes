@@ -10,19 +10,20 @@ Please refer to [prepare ansible inventory](./PrepareBastionTool.md#prepare-ansi
 
 ### Monitor server
 
-Please refer to [Monitor server](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-monitor-resources)
+In order to collect the Monitor server must be running before continuing this document,
+please refer to [Monitor server](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-monitor-resources)
 
-### Prometheus Operator
+### Setup Fluent Bit Metrics for Prometheus
 
-Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md)
+Fluent Bit comes with a built-in HTTP Server that can be used to query internal information and monitor metrics of each running plugin. More information about this feature can be found on the [official website](https://docs.fluentbit.io/manual/administration/monitoring)
 
-#### Setup Prometheus Metrics
+Before you also need to have setup the Prometheus operator, please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md)
 
-By default, the Prometheus service monitor is created, you can disable it by setting `fluent_activate_metrics` to `no` in vars.
+By default, the Prometheus service monitor is created, you can deactivate it by setting `fluent_activate_metrics` to `no` in vars.
 
-## Deploy Fluentbit
+## Deploy Fluent Bit
 
-Now let's deploy to Fluentbit component inside Kubernetes.
+Now let's deploy to Fluent Bit component inside Kubernetes.
 
 ```console
 cd ${SCALAR_K8S_HOME}/operation
