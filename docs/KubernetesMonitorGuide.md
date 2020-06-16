@@ -2,7 +2,9 @@
 
 This document explains how to deploy Prometheus operator on Kubernetes with Ansible. After following the doc, you will be able to use Grafana, Alertmanager, and Prometheus inside Kubernetes.
 
-## Prepare SSH tunnel
+## Prerequisite
+
+### Prepare SSH key
 
 When you deploy a Scalar environment in terraform network, you need to provide a public/private key-pair.
 This key-pair will be used to tunnel a connection to the monitoring system.
@@ -12,10 +14,10 @@ It is assumed that the private key is loaded into an ssh-agent.
 # Please update `/path/to/local-repository` before running the command.
 export SCALAR_K8S_HOME=/path/to/local-repository
 cd ${SCALAR_K8S_HOME}/example/azure/network
-ssh-add example_key.pem
+ssh-add example_key # private ssh key
 ```
 
-## Prepare Ansible inventory
+### Prepare Ansible inventory
 
 Please refer to [prepare ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory)
 
@@ -51,7 +53,7 @@ terraform output k8s_ssh_config > ssh.cfg
 
 ## Deploy Prometheus
 
-Now let's deploy to Prometheus component inside Kubernetes
+Now let's deploy to Prometheus component inside Kubernetes with Ansible playbook `playbook-deploy-prometheus.yaml`
 
 ```console
 cd ${SCALAR_K8S_HOME}/operation
@@ -82,7 +84,8 @@ apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: LS0tLS1...
-    server: https://scalar-k8s-c1eae570.fdc2c43xxxx.xxxxxx.xxxxx.xxxxxxxx.privatelink.japaneast.azmk8s.io:443
+    # server: https://scalar-k8s-c1eae570.fdc2c43xxxx.xxxxxx.xxxxx.xxxxxxxx.privatelink.japaneast.azmk8s.io:443
+    server: https://localhost:7000
   name: scalar-kubernetes
 contexts:
 - context:
@@ -110,7 +113,7 @@ Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.az
 [centos@bastion-1 ~]$
 ```
 
-Let's have a look at Kubernetes service in the `monitoring` namespace where Prometheus has been installed.
+Let's have a look at Kubernetes service in the `monitoring` namespace to find the Kubernetes service name for Grafana, Prometheus and Alertmanager.
 
 ```console
 ➜  kubernetes git:(add-prometheus) ✗ kubectl get svc -n monitoring
