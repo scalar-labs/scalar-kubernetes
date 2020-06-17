@@ -13,14 +13,3 @@
     #!/bin/bash
     kubectl create secret docker-registry {{ kubernetes_registry_secret_name }} --docker-server={{docker_registry}} --docker-username={{docker_username}} --docker-password={{docker_password}}
   when: not docker_registry_secrets.resources | length > 0
-
-- name: Template configmap for schema for cassandra and ledger
-  template:
-    src: templates/k8s_create_schema.cql.j2
-    dest: "{{ remote_manifests_folder }}/configuration/create_schema.cql"
-
-- name: Add config for schema for cassandra and ledger
-  k8s:
-    state: present
-    src: "{{ remote_manifests_folder }}/configuration/create_schema.cql"
-    namespace: "{{ default_kubernetes_namespace }}"

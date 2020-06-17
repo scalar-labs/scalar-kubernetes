@@ -14,6 +14,6 @@ spec:
     targetPort: 50052
   selector:
     app.kubernetes.io/name: envoy
-    app.kubernetes.io/version: v1.14.1
+    app.kubernetes.io/version: v1.0.0
   sessionAffinity: None
   type: LoadBalancer

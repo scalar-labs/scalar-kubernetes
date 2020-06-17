@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: envoy
-    app.kubernetes.io/version: v1.14.1
+    app.kubernetes.io/name: scalar-envoy
+    app.kubernetes.io/version: v1.0.0
   name: envoy
 spec:
   minReadySeconds: 120
   replicas: 3
   selector:
     matchLabels:
-      app.kubernetes.io/name: envoy
-      app.kubernetes.io/version: v1.14.1
+      app.kubernetes.io/name: scalar-envoy
+      app.kubernetes.io/version: v1.0.0
   strategy:
     rollingUpdate:
       maxSurge: 0
@@ -20,13 +20,13 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: envoy
-        app.kubernetes.io/version: v1.14.1
+        app.kubernetes.io/name: scalar-envoy
+        app.kubernetes.io/version: v1.0.0
     spec:
       imagePullSecrets:
       - name: reg-docker-secrets
       containers:
-      - image: scalarlabs/scalar-envoy:latest
+      - image: scalarlabs/scalar-envoy:1.0.0
         imagePullPolicy: Always
         name: envoy
         env:

@@ -20,7 +20,7 @@
     kind: Job
     label_selectors:
       - app.kubernetes.io/name = scalardl-schema
-      - app.kubernetes.io/version = v2.0.5
+      - app.kubernetes.io/version = v2.0.6
     namespace: "{{ default_kubernetes_namespace }}"
   register: deployment_list
   until: deployment_list | json_query('resources[*].status.conditions[?type==`Complete`].status[]') | unique == ["True"]
