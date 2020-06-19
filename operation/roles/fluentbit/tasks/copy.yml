@@ -5,10 +5,10 @@
     state: directory
     mode: '0755'
   with_items:
-  - "{{ remote_manifests_folder }}"
-  - "{{ remote_manifests_folder }}/fluentbit"
+  - "{{ remote_manifests_directory }}"
+  - "{{ remote_manifests_directory }}/fluentbit"
 
 - name: Copy manifests
   synchronize:
     src: "../files/"
-    dest: "{{ remote_manifests_folder }}/fluentbit"
+    dest: "{{ remote_manifests_directory }}/fluentbit"

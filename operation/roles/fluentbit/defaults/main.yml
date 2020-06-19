@@ -1,6 +1,6 @@
 default_kubernetes_namespace: logging
 monitoring_kubernetes_namespace: monitoring
-remote_manifests_folder: "/home/{{ ansible_user }}/manifests"
+remote_manifests_directory: "/home/{{ ansible_user }}/manifests"
 fluent_monitor_host: monitor.internal.scalar-labs.com
 fluent_monitor_port: 24224
 fluent_activate_metrics: yes

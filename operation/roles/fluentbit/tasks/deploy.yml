@@ -12,14 +12,15 @@
     src: "{{ item }}"
     namespace: "{{ default_kubernetes_namespace }}"
   with_items:
-  - "{{ remote_manifests_folder }}/fluentbit/fluent-bit-configmap.yaml"
-  - "{{ remote_manifests_folder }}/fluentbit/fluent-bit-role-binding.yaml"
-  - "{{ remote_manifests_folder }}/fluentbit/fluent-bit-role.yaml"
-  - "{{ remote_manifests_folder }}/fluentbit/fluent-bit-service-account.yaml"
-  - "{{ remote_manifests_folder }}/fluentbit/fluent-bit-service.yaml"
-  - "{{ remote_manifests_folder }}/fluentbit/fluent-bit-ds.yaml"
+  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-configmap.yaml"
+  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-role-binding.yaml"
+  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-role.yaml"
+  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-service-account.yaml"
+  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-service.yaml"
+  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-ds.yaml"
 
 - name: Deploy service monitor for Fluentbit
   k8s:
     state: present
-    src: "{{ remote_manifests_folder }}/fluentbit/fluent-bit-ds.yaml"
+    src: "{{ remote_manifests_directory }}/fluentbit/fluent-bit-service-monitor.yaml"
+  when: fluent_activate_metrics
