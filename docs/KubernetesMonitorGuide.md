@@ -148,7 +148,7 @@ Forwarding from [::1]:9093 -> 9093
 Handling connection for 9093
 ```
 
-### For Prometheus on port 9093
+### For Prometheus on port 9090
 
 ```console
 $ kubectl port-forward -n monitoring svc/prometheus-prometheus-oper-prometheus 9090
