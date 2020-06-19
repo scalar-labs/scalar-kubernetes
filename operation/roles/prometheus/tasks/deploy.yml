@@ -14,7 +14,7 @@
 
 - name: wait Prometheus CRDS install in Kubernetes cluster
   pause:
-    seconds: 30
+    seconds: "30"
 
 - name: Deploy prometheus with helm 
   shell:

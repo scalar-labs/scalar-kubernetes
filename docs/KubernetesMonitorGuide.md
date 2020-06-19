@@ -12,9 +12,9 @@ It is assumed that the private key is loaded into an ssh-agent.
 
 ```console
 # Please update `/path/to/local-repository` before running the command.
-export SCALAR_K8S_HOME=/path/to/local-repository
-cd ${SCALAR_K8S_HOME}/example/azure/network
-ssh-add example_key # private ssh key
+$ export SCALAR_K8S_HOME=/path/to/local-repository
+$ cd ${SCALAR_K8S_HOME}/example/azure/network
+$ ssh-add example_key # private ssh key
 ```
 
 ### Prepare Ansible inventory
@@ -26,8 +26,8 @@ Please refer to [prepare ansible inventory](./PrepareBastionTool.md#prepare-ansi
 The following command will generate a `ssh.cfg` with `LocalForward` to access the Kubernetes API from your local machine.
 
 ```console
-cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-terraform output k8s_ssh_config
+$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ terraform output k8s_ssh_config
 Host *
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
@@ -47,8 +47,8 @@ Host 10.*
 ```
 
 ```console
-cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-terraform output k8s_ssh_config > ssh.cfg
+$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ terraform output k8s_ssh_config > ssh.cfg
 ```
 
 ## Deploy Prometheus
@@ -56,8 +56,8 @@ terraform output k8s_ssh_config > ssh.cfg
 Now let's deploy to Prometheus component inside Kubernetes with Ansible playbook `playbook-deploy-prometheus.yaml`
 
 ```console
-cd ${SCALAR_K8S_HOME}/operation
-➜  operation git:(add-prometheus) ✗ ansible-playbook -i inventory.ini playbook-deploy-prometheus.yaml
+$ cd ${SCALAR_K8S_HOME}/operation
+$ ansible-playbook -i inventory.ini playbook-deploy-prometheus.yml
 
 PLAY [Deploy Prometheus in Kubernetes] ************************************************************************************************************************************************************************
 
@@ -78,8 +78,8 @@ bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com : ok=6    changed=2 
 You need to export the `kube_config` from terraform and after find `server` line and replace with `https://localhost:7000` . finally copy to ~/.kube/config
 
 ```console
-cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-terraform output kube_config
+$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ terraform output kube_config
 apiVersion: v1
 clusters:
 - cluster:
@@ -108,7 +108,7 @@ users:
 Now let's access to Prometheus component on your local machine. Open the ssh port-forward to the bastion, and let it open.
 
 ```console
-ssh -F ssh.cfg bastion
+$ ssh -F ssh.cfg bastion
 Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 [centos@bastion-1 ~]$
 ```
@@ -116,7 +116,7 @@ Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.az
 Let's have a look at Kubernetes service in the `monitoring` namespace to find the Kubernetes service name for Grafana, Prometheus and Alertmanager.
 
 ```console
-➜  kubernetes git:(add-prometheus) ✗ kubectl get svc -n monitoring
+$ kubectl get svc -n monitoring
 NAME                                      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
 alertmanager-operated                     ClusterIP   None           <none>        9093/TCP,9094/TCP,9094/UDP   3h44m
 prometheus-grafana                        ClusterIP   10.42.50.121   <none>        80/TCP                       3h44m
@@ -131,7 +131,7 @@ prometheus-prometheus-oper-prometheus     ClusterIP   10.42.48.154   <none>     
 ### For Grafana on port 8080
 
 ```console
-➜  kubernetes git:(add-prometheus) ✗ kubectl port-forward -n monitoring svc/prometheus-grafana 8080:80
+$ kubectl port-forward -n monitoring svc/prometheus-grafana 8080:80
 Forwarding from 127.0.0.1:8080 -> 3000
 Forwarding from [::1]:8080 -> 3000
 Handling connection for 8080
@@ -142,7 +142,7 @@ Handling connection for 8080
 ### For Alert-manager on port 9093
 
 ```console
-➜  kubernetes git:(add-prometheus) ✗ kubectl port-forward -n monitoring svc/prometheus-prometheus-oper-alertmanager 9093:9093
+$ kubectl port-forward -n monitoring svc/prometheus-prometheus-oper-alertmanager 9093:9093
 Forwarding from 127.0.0.1:9093 -> 9093
 Forwarding from [::1]:9093 -> 9093
 Handling connection for 9093
@@ -151,7 +151,7 @@ Handling connection for 9093
 ### For Prometheus on port 9093
 
 ```console
-kubectl port-forward -n monitoring svc/prometheus-prometheus-oper-prometheus 9090
+$ kubectl port-forward -n monitoring svc/prometheus-prometheus-oper-prometheus 9090
 Forwarding from 127.0.0.1:9090 -> 9090
 Forwarding from [::1]:9090 -> 9090
 Handling connection for 9090
