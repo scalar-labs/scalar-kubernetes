@@ -27,7 +27,7 @@ Now let's deploy Fluent Bit to Kubernetes.
 
 ```console
 cd ${SCALAR_K8S_HOME}/operation
-➜  operation git:(add-prometheus) ✗ ansible-playbook -i inventory.ini playbook-deploy-fluentbit.yaml
+$ ansible-playbook -i inventory.ini playbook-deploy-fluentbit.yaml
 
 PLAY [Deploy Fluentbit in Kubernetes] *************************************************************************************************************************************************************************
 
@@ -49,13 +49,13 @@ bastion                    : ok=7    changed=3    unreachable=0    failed=0    s
 Connect on the monitor server, please refer to [SSH Guide](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/SSHGuide.md)
 
 ```console
-ssh -F ssh.cfg monitor.internal.scalar-labs.com
+$ ssh -F ssh.cfg monitor.internal.scalar-labs.com
 ```
 
 The Kubernetes log are located under `/log/kubernetes/` directory.
 
 ```console
-[centos@monitor-1 kubernetes]$ tree
+$ tree
 .
 └── 2020
     └── 06-15
