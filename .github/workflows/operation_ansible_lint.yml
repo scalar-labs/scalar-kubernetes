@@ -3,13 +3,13 @@ on:
   pull_request:
     branches:
       - master
-    # paths:
-    #   - operation/**
+    paths:
+      - operation/**
   push:
     branches:
       - master
-    # paths:
-    #   - operation/**
+    paths:
+      - operation/**
 
 jobs:
   ansible-lint:
