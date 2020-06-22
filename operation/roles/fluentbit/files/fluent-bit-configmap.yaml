@@ -5,6 +5,7 @@ metadata:
   labels:
     k8s-app: fluent-bit
 data:
+  # based on https://github.com/fluent/fluent-bit-kubernetes-logging/blob/master/output/elasticsearch/fluent-bit-configmap.yaml
   fluent-bit.conf: |
     [SERVICE]
         Flush      5
