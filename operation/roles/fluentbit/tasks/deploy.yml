@@ -11,7 +11,7 @@
     state: present
     src: "{{ item }}"
     namespace: "{{ default_kubernetes_namespace }}"
-  with_items:
+  loop:
   - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-configmap.yaml"
   - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-role-binding.yaml"
   - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-role.yaml"
