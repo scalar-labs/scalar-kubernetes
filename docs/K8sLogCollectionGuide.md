@@ -26,7 +26,7 @@ By default, the Prometheus service monitor is created, you can deactivate it by 
 Now let's deploy Fluent Bit to Kubernetes.
 
 ```console
-cd ${SCALAR_K8S_HOME}/operation
+$ cd ${SCALAR_K8S_HOME}/operation
 $ ansible-playbook -i inventory.ini playbook-deploy-fluentbit.yaml
 
 PLAY [Deploy Fluentbit in Kubernetes] *************************************************************************************************************************************************************************
