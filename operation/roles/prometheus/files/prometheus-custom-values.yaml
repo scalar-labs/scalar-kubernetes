@@ -127,6 +127,6 @@ prometheus:
             requests:
               storage: 10Gi
 
-#TODO: This should be review when fixed for helm v3 https://github.com/helm/charts/blob/master/stable/prometheus-operator/README.md#helm-fails-to-create-crds
+# TODO: This should be reviewed when fixed for helm v3 https://github.com/helm/charts/blob/master/stable/prometheus-operator/README.md#helm-fails-to-create-crds
 prometheusOperator:
   createCustomResource: false
