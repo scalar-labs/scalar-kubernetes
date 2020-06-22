@@ -1,7 +1,9 @@
 ---
 namespace: monitoring
 prometheus_version: 8.14.0
-remote_helm_folder: "/home/{{ ansible_user }}/helm"
+remote_helm_directory: "/home/{{ ansible_user }}/helm"
+helm_binary_path: /usr/local/bin/helm
+deploy_prometheus: yes
 prometheus_crds:
 - https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
 - https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
