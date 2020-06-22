@@ -20,7 +20,7 @@ jobs:
     - name: install pluto
       run: |
         mkdir -p $GITHUB_WORKSPACE/bin
-        curl https://github.com/FairwindsOps/pluto/releases/download/v3.0.1/pluto_3.0.1_linux_amd64.tar.gz
+        wget https://github.com/FairwindsOps/pluto/releases/download/v3.0.1/pluto_3.0.1_linux_amd64.tar.gz
         tar xf pluto_3.0.1_linux_amd64.tar.gz
         rm -rf pluto_3.0.1_linux_amd64.tar.gz
         mv pluto $GITHUB_WORKSPACE/bin/pluto
