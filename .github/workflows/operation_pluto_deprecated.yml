@@ -1,15 +1,15 @@
-name: Pluto detect deprecated Kubernetes APIs
+name: Detect deprecated Kubernetes APIs
 on:
   pull_request:
     branches:
       - master
-    # paths:
-    #   - operation/**
+    paths:
+      - operation/**
   push:
     branches:
       - master
-    # paths:
-    #   - operation/**
+    paths:
+      - operation/**
 
 jobs:
   pluto:
@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: install pluto
+    - name: Install pluto
       run: |
         mkdir -p $GITHUB_WORKSPACE/bin
         wget https://github.com/FairwindsOps/pluto/releases/download/v3.0.1/pluto_3.0.1_linux_amd64.tar.gz
@@ -27,5 +27,5 @@ jobs:
         echo "::add-path::$GITHUB_WORKSPACE/bin"
         chmod +x $GITHUB_WORKSPACE/bin/pluto
     
-    - name: run pluto on operation folder
+    - name: Run pluto on operation folder
       run: pluto detect-files -d operation/
