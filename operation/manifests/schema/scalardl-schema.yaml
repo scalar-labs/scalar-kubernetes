@@ -34,18 +34,4 @@ spec:
         - name: CASSANDRA_REPLICATION_FACTOR
           value: '3'
       restartPolicy: Never
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: agentpool
-                operator: In
-                values:
-                - scalardlpool
-      tolerations:
-        - effect: NoSchedule
-          key: kubernetes.io/app
-          operator: Equal
-          value: scalardlpool
   backoffLimit: 0
