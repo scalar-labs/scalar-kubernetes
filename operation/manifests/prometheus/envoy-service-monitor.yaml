@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: envoy-metrics
+  name: scalar-envoy-metrics
   namespace: monitoring
 spec:
   namespaceSelector:
