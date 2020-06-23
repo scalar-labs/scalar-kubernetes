@@ -9,7 +9,15 @@
 - name: Deploy Fluentbit
   k8s:
     state: present
-    src: "{{ item }}"
+    src: "{{ remote_manifests_directory }}/fluentbit/{{ item }}"
+    namespace: "{{ default_kubernetes_namespace }}"
+  loop:
+    - "fluent-bit-configmap.yaml"
+    - "fluent-bit-role-binding.yaml"
+    - "fluent-bit-role.yaml"
+    - "fluent-bit-service-account.yaml"
+    - "fluent-bit-service.yaml"
+    - "fluent-bit-ds.yaml"
     namespace: "{{ default_kubernetes_namespace }}"
   loop:
   - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-configmap.yaml"
