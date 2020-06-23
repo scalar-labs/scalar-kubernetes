@@ -30,12 +30,6 @@ For envoy:
 kubectl create cm envoy --from-file=configuration/envoy.yaml
 ```
 
-For scalardl schema:
-
-```console
-kubectl create cm scalardl-schema --from-file=configuration/create_schema.cql
-```
-
 ### Deploy the Scalar schema to Cassandra cluster
 
 ```console
@@ -89,7 +83,7 @@ pod/scalardl-schema-j29f9            0/1     Completed   0          32m   10.42.
 NAME                             TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                           AGE    SELECTOR
 service/envoy                    LoadBalancer   10.42.51.13   52.224.20.56   50051:31707/TCP,50052:30733/TCP   80m    app.kubernetes.io/name=envoy,app.kubernetes.io/version=v1.14.1
 service/kubernetes               ClusterIP      10.42.48.1    <none>         443/TCP                           3h3m   <none>
-service/scalar-ledger-headless   ClusterIP      None          <none>         <none>                            84m    app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v2.0.5
+service/scalar-ledger-headless   ClusterIP      None          <none>         <none>                            84m    app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v2.0.7
 
 NAME                               ENDPOINTS                               AGE
 endpoints/envoy                    10.42.40.154:50052,10.42.40.154:50051   80m
