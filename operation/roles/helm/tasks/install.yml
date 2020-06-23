@@ -3,8 +3,8 @@
   get_url:
     url: "{{ HELM_URL }}"
     dest: /tmp/helm.tar.gz
-    checksum: "sha256:{{ HELM_URL_CHECKSUM_SHA256 }}"
-
+    checksum: "sha256:{{HELM_URL_CHECKSUM_SHA256}}"
+  
 - name: Unarchive the helm tar
   unarchive:
     src: /tmp/helm.tar.gz
