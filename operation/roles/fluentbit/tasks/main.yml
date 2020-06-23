@@ -1,0 +1,5 @@
+---
+# roles scalarledger entry-point
+- import_tasks: copy.yml
+- import_tasks: configuration.yml
+- import_tasks: deploy.yml
