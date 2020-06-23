@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: envoy
-    app.kubernetes.io/version: v1.14.1
-  name: envoy
+    app.kubernetes.io/name: scalar-envoy
+    app.kubernetes.io/version: v1.0.0
+  name: scalar-envoy
 spec:
   minReadySeconds: 120
   replicas: 3
   selector:
     matchLabels:
-      app.kubernetes.io/name: envoy
-      app.kubernetes.io/version: v1.14.1
+      app.kubernetes.io/name: scalar-envoy
+      app.kubernetes.io/version: v1.0.0
   strategy:
     rollingUpdate:
       maxSurge: 0
@@ -20,21 +20,24 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: envoy
-        app.kubernetes.io/version: v1.14.1
+        app.kubernetes.io/name: scalar-envoy
+        app.kubernetes.io/version: v1.0.0
     spec:
       containers:
-      - command:
-        - /usr/local/bin/envoy
-        - -c
-        - /etc/envoy/envoy.yaml
-        image: envoyproxy/envoy:v1.14.1
+      - image: scalarlabs/scalar-envoy:1.0.0
         imagePullPolicy: IfNotPresent
-        name: envoy
+        name: scalar-envoy
         ports:
         - containerPort: 50051
         - containerPort: 50052
         - containerPort: 9001
+        env:
+        - name: admin_access_log_path
+          value: "/dev/stdout"
+        - name: scalardl_address
+          value: scalar-ledger-headless.default.svc.cluster.local
+        - name: envoy_tls
+          value: "false"
         livenessProbe:
           httpGet:
             path: /ready
@@ -54,18 +57,8 @@ spec:
           successThreshold: 1
           timeoutSeconds: 1
         resources: {}
-        volumeMounts:
-        - mountPath: /etc/envoy/envoy.yaml
-          name: envoy-config
-          subPath: envoy.yaml
-          readOnly: true
       restartPolicy: Always
       terminationGracePeriodSeconds: 60
-      volumes:
-      - configMap:
-          defaultMode: 256
-          name: envoy
-        name: envoy-config
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
