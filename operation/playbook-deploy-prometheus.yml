@@ -1,0 +1,7 @@
+---
+- name: Deploy Prometheus in Kubernetes
+  hosts: bastion
+  gather_facts: no
+  become: no
+  roles:
+  - "prometheus"

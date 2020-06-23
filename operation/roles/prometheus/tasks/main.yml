@@ -1,0 +1,4 @@
+---
+# roles prometheus entry-point
+- import_tasks: copy.yml
+- import_tasks: deploy.yml
