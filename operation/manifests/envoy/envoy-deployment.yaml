@@ -26,7 +26,7 @@ spec:
       imagePullSecrets:
       - name: reg-docker-secrets
       containers:
-      - image: scalarlabs/scalar-envoy:v1.0.0
+      - image: scalarlabs/scalar-envoy:1.0.0
         imagePullPolicy: IfNotPresent
         name: scalar-envoy
         ports:
