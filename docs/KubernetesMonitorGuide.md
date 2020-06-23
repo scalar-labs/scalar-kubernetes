@@ -156,3 +156,17 @@ Forwarding from 127.0.0.1:9090 -> 9090
 Forwarding from [::1]:9090 -> 9090
 Handling connection for 9090
 ```
+
+## Add Monitoring target  with Service Monitor CRD
+
+ServiceMonitor specifies how groups of Kubernetes services should be monitored. The Operator automatically generates Prometheus scrape configuration based on the current state of the objects in the API server.
+
+### Envoy monitoring
+
+```console
+$ cd ${SCALAR_K8S_HOME}/operation/manifests/
+$ kubectl create -f prometheus/envoy-service-monitor.yaml
+servicemonitor.monitoring.coreos.com/scalar-envoy-metrics created
+```
+
+Now, we can view the metrics in grafana

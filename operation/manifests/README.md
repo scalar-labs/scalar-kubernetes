@@ -55,6 +55,7 @@ Next, deploy `envoy proxy` container as follows. Note that we are using v1.14.1
 kubectl create -f envoy/
 deployment.extensions/scalar-envoy created
 service/scalar-envoy created
+service/scalar-envoy-metrics created
 ```
 
 You can check if the pods and the services are properly deployed as follows.
@@ -76,6 +77,7 @@ service/kubernetes               ClusterIP      10.42.48.1    <none>         443
 service/scalar-ledger-headless   ClusterIP      None          <none>         <none>                            84m    app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v2.0.7
 
 NAME                               ENDPOINTS                               AGE
+endpoints/scalar-envoy-metrics     10.42.40.154:9001,10.42.40.154:9001     80m
 endpoints/scalar-envoy             10.42.40.154:50052,10.42.40.154:50051   80m
 endpoints/kubernetes               10.42.40.4:443                          3h3m
 endpoints/scalar-ledger-headless   10.42.40.126,10.42.40.139,10.42.41.2    84m
