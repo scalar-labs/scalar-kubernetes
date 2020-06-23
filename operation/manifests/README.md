@@ -24,12 +24,6 @@ kubectl create secret docker-registry reg-docker-secrets \
 
 We need to deploy the configuration of both application.
 
-For envoy:
-
-```console
-kubectl create cm envoy --from-file=configuration/envoy.yaml
-```
-
 For scalardl schema:
 
 ```console
@@ -69,8 +63,8 @@ Next, deploy `envoy proxy` container as follows. Note that we are using v1.14.1
 
 ```console
 kubectl create -f envoy/
-deployment.extensions/envoy created
-service/envoy created
+deployment.extensions/scalar-envoy created
+service/scalar-envoy created
 ```
 
 You can check if the pods and the services are properly deployed as follows.
@@ -78,21 +72,21 @@ You can check if the pods and the services are properly deployed as follows.
 ```console
 [centos@bastion-1 manifests]$ kubectl get po,svc,endpoints -o wide
 NAME                                 READY   STATUS      RESTARTS   AGE   IP             NODE                                   NOMINATED NODE   READINESS GATES
-pod/envoy-7754bd6568-54jjx           1/1     Running     0          30s   10.42.40.227   aks-scalardlpool-34802672-vmss000001   <none>           <none>
-pod/envoy-7754bd6568-k2ggh           1/1     Running     0          30s   10.42.40.218   aks-scalardlpool-34802672-vmss000001   <none>           <none>
-pod/envoy-7754bd6568-z72tb           1/1     Running     0          16m   10.42.40.154   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/scalar-envoy-7754bd6568-54jjx    1/1     Running     0          30s   10.42.40.227   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/scalar-envoy-7754bd6568-k2ggh    1/1     Running     0          30s   10.42.40.218   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/scalar-envoy-7754bd6568-z72tb    1/1     Running     0          16m   10.42.40.154   aks-scalardlpool-34802672-vmss000000   <none>           <none>
 pod/scalar-ledger-866c4bd6bb-bnmrk   1/1     Running     0          84m   10.42.40.139   aks-scalardlpool-34802672-vmss000000   <none>           <none>
 pod/scalar-ledger-866c4bd6bb-rcwhw   1/1     Running     0          84m   10.42.41.2     aks-scalardlpool-34802672-vmss000001   <none>           <none>
 pod/scalar-ledger-866c4bd6bb-t528x   1/1     Running     0          84m   10.42.40.126   aks-scalardlpool-34802672-vmss000000   <none>           <none>
 pod/scalardl-schema-j29f9            0/1     Completed   0          32m   10.42.40.36    aks-default-34802672-vmss000000        <none>           <none>
 
 NAME                             TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                           AGE    SELECTOR
-service/envoy                    LoadBalancer   10.42.51.13   52.224.20.56   50051:31707/TCP,50052:30733/TCP   80m    app.kubernetes.io/name=envoy,app.kubernetes.io/version=v1.14.1
+service/scalar-envoy             LoadBalancer   10.42.51.13   52.224.20.56   50051:31707/TCP,50052:30733/TCP   80m    app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=v1.0.0
 service/kubernetes               ClusterIP      10.42.48.1    <none>         443/TCP                           3h3m   <none>
 service/scalar-ledger-headless   ClusterIP      None          <none>         <none>                            84m    app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v2.0.5
 
 NAME                               ENDPOINTS                               AGE
-endpoints/envoy                    10.42.40.154:50052,10.42.40.154:50051   80m
+endpoints/scalar-envoy             10.42.40.154:50052,10.42.40.154:50051   80m
 endpoints/kubernetes               10.42.40.4:443                          3h3m
 endpoints/scalar-ledger-headless   10.42.40.126,10.42.40.139,10.42.41.2    84m
 ```
@@ -101,6 +95,6 @@ You can have access with the following public IP on port 50051 and 50052 (e.g: 5
 
 ```console
 kubectl get svc envoy
-NAME    TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)                           AGE
-envoy   LoadBalancer   10.42.51.58   52.224.20.56   50051:32170/TCP,50052:31373/TCP   63m
+NAME           TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)                           AGE
+scalar-envoy   LoadBalancer   10.42.51.58   52.224.20.56   50051:32170/TCP,50052:31373/TCP   63m
 ```
