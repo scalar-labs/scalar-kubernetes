@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/name: scalar-ledger
-    app.kubernetes.io/version: v2.0.5
+    app.kubernetes.io/version: v2.0.7
   name: scalar-ledger
 spec:
   minReadySeconds: 120
@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: scalar-ledger
-      app.kubernetes.io/version: v2.0.5
+      app.kubernetes.io/version: v2.0.7
   strategy:
     rollingUpdate:
       maxSurge: 0
@@ -21,11 +21,11 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: scalar-ledger
-        app.kubernetes.io/version: v2.0.5
+        app.kubernetes.io/version: v2.0.7
     spec:
       containers:
       - name: ledger
-        image: scalarlabs/scalar-ledger:2.0.5
+        image: scalarlabs/scalar-ledger:2.0.7
         imagePullPolicy: IfNotPresent
         env:
         - name: SCALAR_DB_CONTACT_POINTS
