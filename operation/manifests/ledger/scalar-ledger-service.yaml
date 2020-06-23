@@ -6,6 +6,6 @@ spec:
   clusterIP: None
   selector:
     app.kubernetes.io/name: scalar-ledger
-    app.kubernetes.io/version: v2.0.5
+    app.kubernetes.io/version: v2.0.7
   sessionAffinity: None
   type: ClusterIP

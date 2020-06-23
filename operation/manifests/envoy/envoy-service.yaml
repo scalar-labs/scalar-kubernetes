@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: envoy
   labels:
     app.kubernetes.io/name: envoy
-    app.kubernetes.io/version: v1.14.1
+    app.kubernetes.io/version: v1.0.0
+  name: scalar-envoy
 spec:
   ports:
   - name: envoy
@@ -16,18 +16,18 @@ spec:
     protocol: TCP
     targetPort: 50052
   selector:
-    app.kubernetes.io/name: envoy
-    app.kubernetes.io/version: v1.14.1
+    app.kubernetes.io/name: scalar-envoy
+    app.kubernetes.io/version: v1.0.0
   sessionAffinity: None
   type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: envoy-metrics
+  name: scalar-envoy-metrics
   labels:
-    app.kubernetes.io/name: envoy
-    app.kubernetes.io/version: v1.14.1
+    app.kubernetes.io/name: scalar-envoy
+    app.kubernetes.io/version: v1.0.0
 spec:
   ports:
   - name: admin
@@ -35,6 +35,6 @@ spec:
     protocol: TCP
     targetPort: 9001
   selector:
-    app.kubernetes.io/name: envoy
-    app.kubernetes.io/version: v1.14.1
+    app.kubernetes.io/name: scalar-envoy
+    app.kubernetes.io/version: v1.0.0
   type: ClusterIP
