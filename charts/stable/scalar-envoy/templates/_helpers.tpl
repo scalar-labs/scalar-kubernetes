@@ -35,9 +35,8 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "scalar-envoy.labels" -}}
-app.kubernetes.io/name: {{ include "scalar-envoy.name" . }}
 helm.sh/chart: {{ include "scalar-envoy.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+{{ include "scalar-envoy.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,12 +44,10 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
 {{/*
-Create the name of the service account to use
+Selector labels
 */}}
-{{- define "scalar-envoy.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "scalar-envoy.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
-{{- end -}}
+{{- define "scalar-envoy.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "scalar-envoy.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/version: v1.0.0
 {{- end -}}
