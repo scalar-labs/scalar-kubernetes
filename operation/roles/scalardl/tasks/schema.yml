@@ -1,11 +1,11 @@
 ---
-- name: Get files on remote machine for scalar schema
+- name: Get files on remote machine for Scalar-schema
   find:
     paths: "{{ remote_manifests_folder }}/schema/"
     patterns: '*.yaml'
   register: find_yaml_schema
 
-- name: Deploy scalar schema
+- name: Deploy Scalar-schema
   k8s:
     state: present
     src: "{{ item.path }}"
@@ -24,5 +24,5 @@
     namespace: "{{ default_kubernetes_namespace }}"
   register: deployment_list
   until: deployment_list | json_query('resources[*].status.conditions[?type==`Complete`].status[]') | unique == ["True"]
-  retries: 50
+  retries: 10
   delay: 5
