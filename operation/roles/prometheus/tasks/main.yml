@@ -2,3 +2,5 @@
 # roles prometheus entry-point
 - import_tasks: copy.yml
 - import_tasks: deploy.yml
+- import_tasks: dashboard.yml
+  when: create_dashboard
