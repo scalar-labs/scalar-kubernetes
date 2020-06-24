@@ -169,4 +169,4 @@ $ kubectl create -f prometheus/envoy-service-monitor.yaml
 servicemonitor.monitoring.coreos.com/scalar-envoy-metrics created
 ```
 
-Now, we can view the metrics in grafana
+Now, we can view the metrics in Grafana/Prometheus web interface
