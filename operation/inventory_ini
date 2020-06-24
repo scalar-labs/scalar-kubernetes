@@ -1,7 +1,0 @@
-[bastion]
-bastion-paul-k8s-azure-ukkpigy.eastus.cloudapp.azure.com
-
-[bastion:vars]
-ansible_user=centos
-ansible_python_interpreter=/usr/bin/python3
-
