@@ -1,0 +1,132 @@
+## configuration files from https://raw.githubusercontent.com/helm/charts/master/stable/prometheus-operator/values.yaml
+defaultRules:
+  create: true
+  rules:
+    alertmanager: true
+    etcd: true
+    general: true
+    k8s: true
+    kubeApiserver: true
+    kubeApiserverError: true
+    kubeApiserverSlos: true
+    kubePrometheusNodeAlerting: true
+    kubePrometheusNodeRecording: true
+    kubernetesAbsent: true
+    kubernetesApps: true
+    kubernetesResources: true
+    kubernetesStorage: true
+    kubernetesSystem: true
+    kubeScheduler: true
+    network: true
+    node: true
+    prometheus: true
+    prometheusOperator: true
+    time: true
+
+global:
+  rbac:
+    create: true
+    pspEnabled: true
+
+alertmanager:
+  enabled: true
+
+  alertmanagerSpec:
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 20m
+
+grafana:
+  enabled: true
+  resources:
+    requests:
+      cpu: 40m
+      memory: 128Mi
+
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+    datasources:
+      enabled: true
+      defaultDatasourceEnabled: true
+      label: grafana_datasource
+
+  grafana.ini:
+    auth.basic:
+      enabled: false
+    auth.anonymous:
+      enabled: true
+      org_name: Main Org.
+      org_role: Admin
+    auth:
+      disable_login_form: false
+      disable_signout_menu: false
+    users:
+      allow_sign_up: false
+      auto_assign_org: true
+      auto_assign_org_role: Admin
+
+  persistence:
+    enabled: false
+    storageClassName: default
+    accessModes: ["ReadWriteOnce"]
+    size: 2Gi
+
+kubeStateMetrics:
+  enabled: true
+  resources:
+    limits:
+      cpu: 25m
+      memory: 128Mi
+    requests:
+      cpu: 15m
+      memory: 64Mi
+
+nodeExporter:
+  enabled: true
+  resources:
+    limits:
+      cpu: 15m
+      memory: 50Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+
+coreDns:
+  enabled: true
+
+kubeControllerManager:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+kubelet:
+  enabled: true
+  serviceMonitor:
+    https: false
+
+prometheus:
+  prometheusSpec:
+    resources: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: default
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
+
+# TODO: This should be reviewed when fixed for helm v3 https://github.com/helm/charts/blob/master/stable/prometheus-operator/README.md#helm-fails-to-create-crds
+prometheusOperator:
+  createCustomResource: false

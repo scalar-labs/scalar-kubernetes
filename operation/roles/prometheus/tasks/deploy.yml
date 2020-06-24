@@ -1,0 +1,30 @@
+---
+- name: Create namespace for Prometheus
+  k8s:
+    name: "{{ namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Download Custom Ressource Definition
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ remote_helm_directory }}/crds/"
+  loop: "{{ prometheus_crds_url }}"
+  register: prometheus_crds_path
+
+- name: Deploy Prometheus CRDs
+  k8s:
+    state: present
+    src: "{{ item.dest }}"
+  with_items: "{{ prometheus_crds_path.results | list }}"
+
+- name: wait Prometheus CRDS install in Kubernetes cluster
+  pause:
+    seconds: "30"
+
+- name: Deploy/Upgrade prometheus with helm
+  command: >-
+    {{ helm_binary_path }} upgrade --install prometheus stable/prometheus-operator
+    --namespace {{ namespace }} --version {{ prometheus_version }} -f {{ remote_helm_directory }}/prometheus-custom-values.yaml
+  when: deploy_prometheus

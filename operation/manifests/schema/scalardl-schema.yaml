@@ -4,24 +4,24 @@ metadata:
   name: scalardl-schema
   labels:
     app.kubernetes.io/name: scalardl-schema
-    app.kubernetes.io/version: v2.0.6
+    app.kubernetes.io/version: v2.0.7
 spec:
   template:
     metadata:
       labels:
         app.kubernetes.io/name: scalardl-schema
-        app.kubernetes.io/version: v2.0.6
+        app.kubernetes.io/version: v2.0.7
     spec:
       imagePullSecrets:
       - name: reg-docker-secrets
       containers:
       - name: schema-import
-        image: scalarlabs/scalar-ledger:2.0.6
+        image: scalarlabs/scalar-ledger:2.0.7
         imagePullPolicy: IfNotPresent
         command:
         - /bin/bash 
         - -c 
-        - "echo applying Scalar DL schema && dockerize --template create_schema.cql.tmpl:create_schema.cql && cqlsh --cqlversion=3.4.4 ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f create_schema.cql"
+        -  "echo applying Scalar DL schema && dockerize --template create_schema.cql.tmpl:create_schema.cql && cqlsh --cqlversion=3.4.4 ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f create_schema.cql"
         env:
         - name: SCALAR_DB_CONTACT_POINTS
           value: cassandra-lb.internal.scalar-labs.com
@@ -32,20 +32,6 @@ spec:
         - name: SCALAR_DB_PASSWORD
           value: cassandra
         - name: CASSANDRA_REPLICATION_FACTOR
-          value: '1'
+          value: '3'
       restartPolicy: Never
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: agentpool
-                operator: In
-                values:
-                - scalardlpool
-      tolerations:
-        - effect: NoSchedule
-          key: kubernetes.io/app
-          operator: Equal
-          value: scalardlpool
   backoffLimit: 0
