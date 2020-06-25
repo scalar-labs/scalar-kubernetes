@@ -4,5 +4,3 @@ The following files are copied from [scalar-terraform](https://github.com/scalar
 
 * envoy.json
 * scalardl_monitor.json
-
-SOURCE: https://github.com/scalar-labs/scalar-terraform/tree/master/modules/universal/monitor/provision/grafana/provisioning/dashboards
