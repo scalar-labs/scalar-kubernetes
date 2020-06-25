@@ -49,7 +49,7 @@ securityContext: {}
   # runAsUser: 1000
 service:
   # service.type -- service types in kubernetes
-  type: ClusterIP
+  type: Loadbalancer
   # service.annotations -- Service annotations, e.g: prometheus, etc.
   annotations: {}
   ports:
