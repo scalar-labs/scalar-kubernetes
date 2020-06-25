@@ -24,8 +24,8 @@
 
 - name: Deploy ConfigMap prometheus-grafana-envoy in Kubernetes
   command: >-
-    "kubectl create configmap -n {{ namespace }} prometheus-grafana-envoy
-    --from-file {{ remote_directory }}/manifests/grafana/envoy.json"
+    kubectl create configmap -n {{ namespace }} prometheus-grafana-envoy
+    --from-file {{ remote_directory }}/manifests/grafana/envoy.json
   when: not prometheus_grafana_envoy_exists.resources | length > 0
 
 - name: Add Label to ConfigMap prometheus-grafana-envoy
@@ -42,8 +42,8 @@
 
 - name: Deploy ConfigMap pprometheus-grafana-scalardl-monitor in Kubernetes
   command: >-
-    "kubectl create configmap -n {{ namespace }} prometheus-grafana-scalardl-monitor
-    --from-file {{ remote_directory }}/manifests/grafana/scalardl_monitor.json"
+    kubectl create configmap -n {{ namespace }} prometheus-grafana-scalardl-monitor
+    --from-file {{ remote_directory }}/manifests/grafana/scalardl_monitor.json
   when: not prometheus_grafana_scalardl_monitor_exists.resources | length > 0
 
 - name: Add Label to ConfigMap prometheus-grafana-scalardl-monitor
