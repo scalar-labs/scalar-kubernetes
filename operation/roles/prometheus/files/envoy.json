@@ -16,25 +16,15 @@
   "editable": true,
   "gnetId": 6693,
   "graphTooltip": 0,
-  "iteration": 1592975568228,
+  "iteration": 1589016372285,
   "links": [],
   "panels": [
     {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": true,
-      "colors": [
-        "#d44a3a",
-        "rgba(237, 129, 40, 0.89)",
-        "#299c46"
-      ],
+      "colors": ["#d44a3a", "rgba(237, 129, 40, 0.89)", "#299c46"],
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "format": "none",
       "gauge": {
         "maxValue": 3,
@@ -66,6 +56,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -111,18 +102,8 @@
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": true,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
+      "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "format": "s",
       "gauge": {
         "maxValue": 100,
@@ -154,6 +135,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -198,18 +180,8 @@
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
+      "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "format": "decbytes",
       "gauge": {
         "maxValue": 104857600,
@@ -241,6 +213,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -285,18 +258,8 @@
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
+      "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "format": "decbytes",
       "gauge": {
         "maxValue": 104857600,
@@ -328,6 +291,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -372,18 +336,8 @@
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
+      "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -415,6 +369,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -459,18 +414,8 @@
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": true,
-      "colors": [
-        "#d44a3a",
-        "rgba(237, 129, 40, 0.89)",
-        "#299c46"
-      ],
+      "colors": ["#d44a3a", "rgba(237, 129, 40, 0.89)", "#299c46"],
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -559,12 +504,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -655,12 +594,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -779,12 +712,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -875,12 +802,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -999,12 +920,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1102,12 +1017,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1205,12 +1114,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1317,7 +1220,7 @@
           "value": "scalar-service"
         },
         "datasource": "prometheus",
-        "definition": "label_values(envoy_cluster_upstream_cx_total, envoy_cluster_name)",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
@@ -1344,7 +1247,7 @@
           "value": ["$__all"]
         },
         "datasource": "prometheus",
-        "definition": "label_values(envoy_cluster_upstream_cx_total{envoy_cluster_name=\"$cluster\"}, instance)",
+        "definition": "",
         "hide": 0,
         "includeAll": true,
         "label": "Hosts",
@@ -1365,11 +1268,12 @@
     ]
   },
   "time": {
-    "from": "now-3h",
-    "to": "now"
+    "from": "2020-05-08T06:32:35.864Z",
+    "to": "2020-05-08T09:56:28.353Z"
   },
   "timepicker": {
     "refresh_intervals": [
+      "5s",
       "10s",
       "30s",
       "1m",
@@ -1380,17 +1284,7 @@
       "2h",
       "1d"
     ],
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
-    ]
+    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
   },
   "timezone": "",
   "title": "Envoy Proxy",
