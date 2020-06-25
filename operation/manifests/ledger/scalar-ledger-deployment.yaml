@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: scalar-ledger
+    app.kubernetes.io/version: v2.0.7
+  name: scalar-ledger
+spec:
+  minReadySeconds: 120
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: scalar-ledger
+      app.kubernetes.io/version: v2.0.7
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: scalar-ledger
+        app.kubernetes.io/version: v2.0.7
+    spec:
+      containers:
+      - name: ledger
+        image: scalarlabs/scalar-ledger:2.0.7
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: SCALAR_DB_CONTACT_POINTS
+          value: cassandra-lb.internal.scalar-labs.com
+        - name: SCALAR_DB_CONTACT_PORT
+          value: "9042"
+        - name: SCALAR_DB_USERNAME
+          value: cassandra
+        - name: SCALAR_DB_PASSWORD
+          value: cassandra
+        - name: SCALAR_DL_LEDGER_LOG_LEVEL
+          value: "INFO"
+        ports:
+        - containerPort: 50051
+        - containerPort: 50052
+        - containerPort: 50053
+        livenessProbe:
+          exec:
+            command:
+            - /bin/grpc_health_probe
+            - -addr=:50051
+        readinessProbe:
+          exec:
+            command:
+            - /bin/grpc_health_probe
+            - -addr=:50051
+        resources: {}
+      imagePullSecrets:
+      - name: reg-docker-secrets
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                - scalardlpool
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - scalar-ledger
+              topologyKey: kubernetes.io/hostname
+            weight: 50
+      tolerations:
+        - effect: NoSchedule
+          key: kubernetes.io/app
+          operator: Equal
+          value: scalardlpool

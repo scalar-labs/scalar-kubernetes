@@ -34,10 +34,6 @@ output "public_key_path" {
   value = module.network.public_key_path
 }
 
-output "additional_public_keys_path" {
-  value = module.network.additional_public_keys_path
-}
-
 output "location" {
   value = module.network.location
 }
@@ -56,4 +52,15 @@ output "ssh_config" {
 
 output "internal_domain" {
   value = module.network.internal_domain
+}
+
+output "inventory_ini" {
+  value = <<EOF
+[bastion]
+${module.network.bastion_ip}
+
+[bastion:vars]
+ansible_user=${module.network.user_name}
+ansible_python_interpreter=/usr/bin/python3
+EOF
 }

@@ -1,0 +1,15 @@
+locals {
+  network = {
+    name     = "example-k8s-azure"
+    dns      = "internal.scalar-labs.com"
+    id       = "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/example-azure-6qkpmqe/providers/Microsoft.Network/virtualNetworks/example-azure-6qkpmqe"
+    location = "japaneast"
+    cidr     = "10.42.0.0/16"
+
+    bastion_ip = "bastion-example-azure-6qkpmqe.japaneast.cloudapp.azure.com"
+    user_name  = "centos"
+
+    public_key_path = "../../test_key.pub"
+    internal_domain = "internal.scalar-labs.com"
+  }
+}
