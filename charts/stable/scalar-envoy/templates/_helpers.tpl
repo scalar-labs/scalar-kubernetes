@@ -37,9 +37,6 @@ Common labels
 {{- define "scalar-envoy.labels" -}}
 helm.sh/chart: {{ include "scalar-envoy.chart" . }}
 {{ include "scalar-envoy.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
@@ -49,5 +46,5 @@ Selector labels
 {{- define "scalar-envoy.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "scalar-envoy.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/version: v1.0.0
+app.kubernetes.io/version: {{  .Chart.AppVersion | quote }}
 {{- end -}}

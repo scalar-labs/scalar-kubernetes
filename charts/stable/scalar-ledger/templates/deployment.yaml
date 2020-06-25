@@ -3,14 +3,13 @@ kind: Deployment
 metadata:
   name: {{ include "scalar-ledger.fullname" . }}
   labels:
-{{ include "scalar-ledger.labels" . | indent 4 }}
+    {{- include "scalar-ledger.labels" . | nindent 4 }}
 spec:
+  minReadySeconds: 120
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "scalar-ledger.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
-      app: scalar-ledger
+      {{- include "scalar-ledger.selectorLabels" . | nindent 6 }}
   {{- with .Values.strategy }}
   strategy:
     {{- toYaml . | nindent 8 }}
@@ -18,83 +17,37 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "scalar-ledger.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
-        app: scalar-ledger
+        {{- include "scalar-ledger.selectorLabels" . | nindent 8 }}
     spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      volumes:
-      - configMap:
-          defaultMode: 493
-          name: {{ include "scalar-ledger.fullname" . }}
-        name: scalar-ledger-config
-      {{- if .Values.initContainer.enabled }}
-      initContainers:
-      - name: cassandra-load-keyspace
-        image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
-        imagePullPolicy: "{{ .Values.initContainer.image.pullPolicy }}"
-        volumeMounts:
-        - mountPath: /init.cql
-          name: scalar-ledger-config
-          subPath: init.cql
-        env:
-        - name: SCALAR_DB_CONTACT_POINTS
-          value: "{{ .Values.cassandra.host }}"
-        - name: SCALAR_DB_CONTACT_PORT
-          value: "{{ .Values.cassandra.port }}"
-        - name: SCALAR_DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "scalar-ledger.fullname" . }}
-              key: cassandra-user
-        - name: SCALAR_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "scalar-ledger.fullname" . }}
-              key: cassandra-password
-        command:
-        - /bin/bash 
-        - -c 
-        - "sleep {{ .Values.initContainer.waitCassandra }} && echo loading cassandra keyspace && cqlsh ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f /init.cql"
-      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
-          env:
-          - name: SCALAR_DB_CONTACT_POINTS
-            value: "{{ .Values.cassandra.host }}"
-          - name: SCALAR_DB_CONTACT_PORT
-            value: "{{ .Values.cassandra.port }}"
-          - name: SCALAR_DB_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "scalar-ledger.fullname" . }}
-                key: cassandra-user
-          - name: SCALAR_DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "scalar-ledger.fullname" . }}
-                key: cassandra-password
-          - name: SCALAR_DL_LEDGER_LOG_LEVEL
-            value: "INFO"
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
           - containerPort: 50051
-            name: scalar-dl
-            protocol: TCP
           - containerPort: 50052
-            name: scalar-dl-priv
-            protocol: TCP
           - containerPort: 50053
-            name: scalar-dl-admin
-            protocol: TCP
+          env:
+          - name: SCALAR_DB_CONTACT_POINTS
+            value: "{{ .Values.scalarLedgerConfiguration.cassandraHost }}"
+          - name: SCALAR_DB_CONTACT_PORT
+            value: "{{ .Values.scalarLedgerConfiguration.cassandraPort }}"
+          - name: SCALAR_DB_USERNAME
+            value: "{{ .Values.scalarLedgerConfiguration.cassandraUsername }}"
+          - name: SCALAR_DB_PASSWORD
+            value: "{{ .Values.scalarLedgerConfiguration.cassandraPassword }}"
+          - name: SCALAR_DL_LEDGER_LOG_LEVEL
+            value: "{{ .Values.scalarLedgerConfiguration.ledgerLogLevel }}"
           livenessProbe:
             exec:
               command:

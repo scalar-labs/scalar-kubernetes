@@ -10,11 +10,10 @@ spec:
   selector:
     matchLabels:
       {{- include "scalar-envoy.selectorLabels" . | nindent 6 }}
+  {{- with .Values.strategy }}
   strategy:
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
-    type: RollingUpdate
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
   template:
     metadata:
       labels:
@@ -40,9 +39,9 @@ spec:
           - containerPort: 9001
           env:
           - name: admin_access_log_path
-            value: "{{ .Values.envoyConfiguration.admin_access_log_path }}"
+            value: "{{ .Values.envoyConfiguration.adminAccessLogPath }}"
           - name: scalardl_address
-            value: "{{ .Values.envoyConfiguration.scalardl_address }}"
+            value: "{{ .Values.envoyConfiguration.scalardlAddress }}"
           livenessProbe:
             httpGet:
               path: /ready

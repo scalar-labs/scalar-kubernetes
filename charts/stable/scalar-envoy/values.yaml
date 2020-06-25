@@ -6,14 +6,14 @@
 replicaCount: 3
 
 envoyConfiguration:
-  admin_access_log_path: /dev/stdout
-  scalardl_address: scalar-ledger-headless.default.svc.cluster.local
+  # envoyConfiguration.adminAccessLogPath -- admin log path
+  adminAccessLogPath: /dev/stdout
+  # envoyConfiguration.scalardlAddress -- scalardl endpoint
+  scalardlAddress: scalar-ledger-headless.default.svc.cluster.local
 
 image:
   # image.repository -- Docker image
   repository: scalarlabs/scalar-envoy
-  # image.tag -- Docker image tag, e.g: latest or specific version
-  tag: v1.0.0
   # image.pullPolicy -- Specify a imagePullPolicy
   pullPolicy: IfNotPresent
 

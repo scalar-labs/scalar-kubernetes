@@ -35,22 +35,16 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "scalar-ledger.labels" -}}
-app.kubernetes.io/name: {{ include "scalar-ledger.name" . }}
 helm.sh/chart: {{ include "scalar-ledger.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+{{ include "scalar-ledger.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
 {{/*
-Create the name of the service account to use
+Selector labels
 */}}
-{{- define "scalar-ledger.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "scalar-ledger.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
-{{- end -}}
+{{- define "scalar-ledger.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "scalar-ledger.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/version: {{  .Chart.AppVersion | quote }}
 {{- end -}}
