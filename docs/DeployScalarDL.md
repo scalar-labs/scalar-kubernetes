@@ -18,7 +18,6 @@ $ export DOCKERHUB_USER=<user>
 $ export DOCKERHUB_ACCESS_TOKEN=<token>
 ```
 
-Note: You can confirmed the env are correctly set with `export` command
 
 ## Deploy Scalar DL
 
