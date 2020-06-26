@@ -19,7 +19,7 @@
     api_version: batch/v1
     kind: Job
     label_selectors:
-      - "app.kubernetes.io/name = {{ job_scalardl_schema_version }}"
+      - "app.kubernetes.io/name = {{ job_scalardl_schema_name }}"
       - "app.kubernetes.io/version = {{ job_scalardl_schema_version }}"
     namespace: "{{ default_kubernetes_namespace }}"
   register: deployment_list
