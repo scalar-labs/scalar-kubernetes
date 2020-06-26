@@ -1,13 +1,14 @@
-# How to deploy Scalar DL on kubernetes with Ansible
+# How to deploy Scalar DL on Kubernetes with Ansible
 
-This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with Ansible. After following the doc, you will be able to use Scalar Ledger inside Kubernetes
+This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with Ansible. After following the doc, you will be able to use Scalar Ledger inside Kubernetes.
 
 ## Requirements
 
-* Have install tool into the bastion [More information can be found here](./PrepareBastionTool.md)
-* Docker Engine (with access to `scalarlabs/scalar-ledger` docker registry)
+* Have completed the [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
+* An authority to pull `scalarlabs/scalar-ledger` docker repository.
   * `scalar-ledger` is available to only our partners and customers at the moment.
-Note that Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [terraform module](../../docs/README.md)
+
+Note that the Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [Terraform module](../../docs/README.md)
 
 ## Preparation
 
@@ -17,8 +18,6 @@ You need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the val
 $ export DOCKERHUB_USER=<user>
 $ export DOCKERHUB_ACCESS_TOKEN=<token>
 ```
-
-
 ## Deploy Scalar DL
 
 It is now ready to deploy Scalar DL to the k8s cluster.
