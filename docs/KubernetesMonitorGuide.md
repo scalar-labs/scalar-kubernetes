@@ -157,7 +157,7 @@ Forwarding from [::1]:9090 -> 9090
 Handling connection for 9090
 ```
 
-## Add Monitoring target  with Service Monitor CRD
+## Add monitoring target with ServiceMonitor CRD
 
 ServiceMonitor specifies how groups of Kubernetes services should be monitored. The Operator automatically generates Prometheus scrape configuration based on the current state of the objects in the API server.
 
