@@ -19,8 +19,8 @@
     api_version: batch/v1
     kind: Job
     label_selectors:
-      - app.kubernetes.io/name = scalardl-schema
-      - app.kubernetes.io/version = v2.0.7
+      - "app.kubernetes.io/name = {{ job_scalardl_schema_version }}"
+      - "app.kubernetes.io/version = {{ job_scalardl_schema_version }}"
     namespace: "{{ default_kubernetes_namespace }}"
   register: deployment_list
   until: deployment_list | json_query('resources[*].status.conditions[?type==`Complete`].status[]') | unique == ["True"]
