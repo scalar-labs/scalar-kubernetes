@@ -4,8 +4,8 @@ on:
     branches:
       - master
     paths:
-    - operation/*.yml
-    - operation/roles/**
+      - operation/*.yml
+      - operation/roles/**
   push:
     branches:
       - master
