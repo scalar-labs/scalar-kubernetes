@@ -1,5 +1,5 @@
 # Optional
-# kubernetes_cluster_availability_zones = []
+# kubernetes_cluster_availability_zones = ["1", "2", "3"]
 
 kubernetes_cluster = {
   # name                            = "scalar-kubernetes"
