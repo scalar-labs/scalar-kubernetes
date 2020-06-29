@@ -12,6 +12,7 @@ variable "kubernetes_cluster" {
 
 variable "kubernetes_cluster_availability_zones" {
   type        = list(string)
+  default     = []
   description = "Select the available zone for the kubernetes cluster"
 }
 
