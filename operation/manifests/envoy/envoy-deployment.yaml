@@ -76,7 +76,7 @@ spec:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                  - envoy
+                  - scalar-envoy
               topologyKey: kubernetes.io/hostname
             weight: 50
       tolerations:
