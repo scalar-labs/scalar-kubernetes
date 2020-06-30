@@ -1,12 +1,9 @@
 ---
 - name: Create folder on remote server
   file:
-    path: "{{ item }}"
+    path: "{{ remote_manifests_folder }}/configuration"
     state: directory
     mode: '0755'
-  with_items:
-  - "{{ remote_manifests_folder }}"
-  - "{{ remote_manifests_folder }}/configuration"
 
 - name: Copy manifests
   synchronize:
