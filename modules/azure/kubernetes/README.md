@@ -15,7 +15,7 @@ The Azure Kubernetes Module creates a subnet for k8s, service principal, set per
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | kubernetes_additional_node_pools | Custom definition kubernetes additional node pools, same as default_node_pool but for multiple dedicated node pools | `map` | `{}` | no |
-| kubernetes_cluster_availability_zones | Select the available zone for the kubernetes cluster | `list(string)` | n/a | yes |
+| kubernetes_cluster_availability_zones | Select the available zone for the kubernetes cluster or leave empty if the datacenter does not support AZs | `list(string)` | `[]` | no |
 | kubernetes_cluster | Custom definition kubernetes properties that include name of the cluster, kubernetes version, etc.. | `map` | `{}` | no |
 | kubernetes_default_node_pool | Custom definition kubernetes default node pool that include number of node, node size, autoscaling, etc.. | `map` | `{}` | no |
 | network | Custom definition for network and bastion | `map` | `{}` | no |

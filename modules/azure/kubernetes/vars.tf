@@ -12,7 +12,8 @@ variable "kubernetes_cluster" {
 
 variable "kubernetes_cluster_availability_zones" {
   type        = list(string)
-  description = "Select the available zone for the kubernetes cluster"
+  default     = []
+  description = "Select the available zone for the kubernetes cluster or leave empty if the datacenter does not support AZs"
 }
 
 variable "kubernetes_default_node_pool" {
