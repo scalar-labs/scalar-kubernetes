@@ -1,11 +1,10 @@
-# Required
-kubernetes_cluster_availability_zones = ["1", "2", "3"]
-
 # Optional
+# kubernetes_cluster_availability_zones = ["1", "2", "3"]
+
 kubernetes_cluster = {
   # name                            = "scalar-kubernetes"
   # dns_prefix                      = "scalar-kubernetes"
-  # kubernetes_version              = "1.15.10"
+  # kubernetes_version              = "1.15.11"
   # admin_username                  = "azureuser"
   # role_based_access_control       = true
   # kube_dashboard                  = true

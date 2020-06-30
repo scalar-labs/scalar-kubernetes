@@ -1,0 +1,26 @@
+name: Ansible Lint
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - operation/*.yml
+      - operation/roles/**
+  push:
+    branches:
+      - master
+    paths:
+      - operation/*.yml
+      - operation/roles/**
+
+jobs:
+  ansible-lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Lint Ansible Playbook
+      uses: ansible/ansible-lint-action@master
+      with:
+        targets: "operation/*.yml"
+        args: ""

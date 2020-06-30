@@ -18,14 +18,6 @@
     - "fluent-bit-service-account.yaml"
     - "fluent-bit-service.yaml"
     - "fluent-bit-ds.yaml"
-    namespace: "{{ default_kubernetes_namespace }}"
-  loop:
-  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-configmap.yaml"
-  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-role-binding.yaml"
-  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-role.yaml"
-  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-service-account.yaml"
-  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-service.yaml"
-  - "{{ remote_manifests_directory }}/fluentbit/fluent-bit-ds.yaml"
 
 - name: Deploy service monitor for Fluentbit
   k8s:
