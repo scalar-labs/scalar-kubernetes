@@ -1,13 +1,13 @@
 ---
-- name: Create folder on remote server
+- name: Create directory on remote server
   file:
-    path: "{{ remote_manifests_folder }}/configuration"
+    path: "{{ remote_manifests_directory }}/configuration"
     state: directory
     mode: '0755'
 
 - name: Copy manifests
   synchronize:
-    src: "{{ local_manifests_folder }}"
-    dest: "{{ remote_manifests_folder }}"
+    src: "{{ local_manifests_directory }}"
+    dest: "{{ remote_manifests_directory }}"
     rsync_opts:
       - "--exclude=configuration"

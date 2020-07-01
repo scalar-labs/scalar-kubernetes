@@ -1,6 +1,6 @@
 default_kubernetes_namespace: default
-local_manifests_folder: ../../../manifests/
-remote_manifests_folder: "/home/{{ ansible_user }}/manifests"
+local_manifests_directory: ../../../manifests/
+remote_manifests_directory: "/home/{{ ansible_user }}/manifests"
 docker_registry: "https://index.docker.io/v2/"
 docker_username: "{{ lookup('env','DOCKERHUB_USER') }}"
 docker_password: "{{ lookup('env','DOCKERHUB_ACCESS_TOKEN') }}"

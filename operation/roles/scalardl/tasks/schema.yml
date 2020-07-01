@@ -1,7 +1,7 @@
 ---
 - name: Get files on remote machine for Scalar-schema
   find:
-    paths: "{{ remote_manifests_folder }}/schema/"
+    paths: "{{ remote_manifests_directory }}/schema/"
     patterns: '*.yaml'
   register: find_yaml_schema
 
