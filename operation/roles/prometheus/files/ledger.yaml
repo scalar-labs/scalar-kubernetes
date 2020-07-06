@@ -2,9 +2,10 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   labels:
-    prometheus: example
-    role: alert-rules
-  name: prometheus-ledger-alerts-rules
+    app: prometheus-operator
+    release: prometheus
+  name: prometheus-prometheus-ledger-alerts-rules
+  namespace: monitoring
 spec:
   groups:
   - name: Ledger Alerts
