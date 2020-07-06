@@ -58,30 +58,34 @@ service/scalar-envoy created
 service/scalar-envoy-metrics created
 ```
 
-You can check if the pods and the services are properly deployed as follows.
+You can check if the pods and the services are properly deployed as follows:
+
+* Check the Pods are in the Status `Running` or `Completed` for jobs
+* Check the Pods `envoy` and `ledger` are well distributed on the k8s node pool e.g: `aks-scalardlpool-*`
+* Check the `scalar-envoy` Service has a public IP in `EXTERNAL-IP` (take about 30s to 1min to setup)
 
 ```console
 $ kubectl get po,svc,endpoints -o wide
 NAME                                 READY   STATUS      RESTARTS   AGE     IP             NODE                                   NOMINATED NODE   READINESS GATES
-pod/scalar-envoy-56c9cc4598-dwkvl    1/1     Running     0          2m14s   10.42.41.4     aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalar-envoy-56c9cc4598-dz6mr    1/1     Running     0          7m24s   10.42.41.37    aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalar-envoy-56c9cc4598-z6szw    1/1     Running     0          4m39s   10.42.40.245   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalar-ledger-6f895669bb-c5567   1/1     Running     0          25m     10.42.41.8     aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalar-ledger-6f895669bb-hzp4p   1/1     Running     0          25m     10.42.41.33    aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalar-ledger-6f895669bb-wqn27   1/1     Running     0          25m     10.42.40.215   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalardl-schema-bt7zx            0/1     Completed   0          25m     10.42.40.221   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/scalar-envoy-7dc48c76bb-cbxlg    1/1     Running     0          4m6s    10.42.40.125   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/scalar-envoy-7dc48c76bb-gpmbh    1/1     Running     0          4m6s    10.42.41.76    aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/scalar-envoy-7dc48c76bb-qw2bj    1/1     Running     0          4m6s    10.42.40.215   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/scalar-ledger-6db6689f86-8kkbf   1/1     Running     0          8m55s   10.42.41.33    aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/scalar-ledger-6db6689f86-9j7ql   1/1     Running     0          8m55s   10.42.41.147   aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/scalar-ledger-6db6689f86-m9hg9   1/1     Running     0          8m55s   10.42.40.138   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/scalardl-schema-58rpq            0/1     Completed   0          9m26s   10.42.40.18    aks-default-34802672-vmss000000        <none>           <none>
 
-NAME                             TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                           AGE     SELECTOR
-service/kubernetes               ClusterIP      10.42.48.1     <none>          443/TCP                           89m     <none>
-service/scalar-envoy             LoadBalancer   10.42.49.207   52.142.18.158   50051:32102/TCP,50052:32723/TCP   24m     app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=v1.0.0
-service/scalar-envoy-metrics     ClusterIP      10.42.49.217   <none>          9001/TCP                          4m26s   app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=v1.0.0
-service/scalar-ledger-headless   ClusterIP      None           <none>          <none>                            24m     app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v2.0.7
+NAME                             TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)                           AGE     SELECTOR
+service/kubernetes               ClusterIP      10.42.48.1    <none>        443/TCP                           6h55m   <none>
+service/scalar-envoy             LoadBalancer   10.42.48.93   40.81.9.127   50051:31582/TCP,50052:32741/TCP   4m6s    app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=v1.0.0
+service/scalar-envoy-metrics     ClusterIP      10.42.48.87   <none>        9001/TCP                          4m6s    app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=v1.0.0
+service/scalar-ledger-headless   ClusterIP      None          <none>        <none>                            8m55s   app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v2.0.7
 
-NAME                               ENDPOINTS                                                           AGE
-endpoints/kubernetes               10.42.40.4:443                                                      89m
-endpoints/scalar-envoy             10.42.40.245:50052,10.42.41.37:50052,10.42.41.4:50052 + 3 more...   24m
-endpoints/scalar-envoy-metrics     10.42.40.245:9001,10.42.41.37:9001,10.42.41.4:9001                  4m26s
-endpoints/scalar-ledger-headless   10.42.40.215,10.42.41.33,10.42.41.8                                 24m
+NAME                               ENDPOINTS                                                              AGE
+endpoints/kubernetes               10.42.40.4:443                                                         6h55m
+endpoints/scalar-envoy             10.42.40.125:50052,10.42.40.215:50052,10.42.41.76:50052 + 3 more...    4m6s
+endpoints/scalar-envoy-metrics     10.42.40.125:9001,10.42.40.215:9001,10.42.41.76:9001                   4m6s
+endpoints/scalar-ledger-headless   10.42.40.138,10.42.41.147,10.42.41.33                                  8m55s
 ```
 
 You can have access with the following public IP on port 50051 and 50052 (e.g: 52.224.20.56)
