@@ -70,7 +70,6 @@ alertmanager:
         memory: 100Mi
         cpu: 20m
 
-
 grafana:
   enabled: true
   resources:
@@ -152,6 +151,7 @@ prometheus:
   prometheusSpec:
     resources: {}
     serviceMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
     storageSpec:
       volumeClaimTemplate:
         spec:
