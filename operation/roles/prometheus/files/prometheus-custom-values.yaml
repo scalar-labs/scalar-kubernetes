@@ -53,27 +53,23 @@ alertmanager:
       - send_resolved: true
         channel: ""
         api_url: ""
-        title: '{{ template "slack.scalar.title" . }}'
-        text: '{{ template "slack.scalar.text" . }}'
-        title_link: '{{ template "slack.scalar.link" . }}'
-  
-  templateFiles:
-    alert.tmpl: |-
-      {{ define "slack.scalar.title" }}[{{ .CommonLabels.environment }}][{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.SortedPairs.Values | join " " }} {{ .CommonLabels.severity }}{{ end }}
-      {{ define "slack.scalar.text" }}
-      ```
-      {{- range .Alerts }}
-      {{ .Labels.instance }} - {{ .Status  }}{{ if eq .Status "firing" }} - {{ .Annotations.value }}{{ end }}
-      {{-  end }}
-      ```
-      {{ end }}
-      {{ define "slack.scalar.link"}}https://github.com/scalar-labs/scalar-terraform/wiki/{{ .GroupLabels.alertname }}{{ end }}
+        title: '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]'
+        text: >-
+          {{ range .Alerts }}
+            *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+            *Description:* {{ .Annotations.description }}
+            *Details:*
+            {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+            {{ end }}
+          {{ end }}
+        title_link: 'https://github.com/scalar-labs/scalar-terraform/wiki/{{ .GroupLabels.alertname }}'
 
   alertmanagerSpec:
     resources:
       requests:
         memory: 100Mi
         cpu: 20m
+
 
 grafana:
   enabled: true
