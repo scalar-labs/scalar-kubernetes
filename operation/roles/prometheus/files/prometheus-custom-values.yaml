@@ -30,6 +30,44 @@ global:
 
 alertmanager:
   enabled: true
+  config:
+    global:
+      resolve_timeout: 5m
+    route:
+      group_by: ['cluster', 'alertname']
+      group_wait: 15s
+      group_interval: 1m
+      repeat_interval: 30m
+      # receiver: 'null'
+      routes:
+      - match:
+          alertname: Watchdog
+        receiver: 'null'
+      - match:
+        receiver: 'team-slack'
+        continue: true
+    receivers:
+    - name: 'null'
+    - name: 'team-slack'
+      slack_configs:
+      - send_resolved: true
+        channel: ""
+        api_url: ""
+        title: '{{ template "slack.scalar.title" . }}'
+        text: '{{ template "slack.scalar.text" . }}'
+        title_link: '{{ template "slack.scalar.link" . }}'
+  
+  templateFiles:
+    alert.tmpl: |-
+      {{ define "slack.scalar.title" }}[{{ .CommonLabels.environment }}][{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.SortedPairs.Values | join " " }} {{ .CommonLabels.severity }}{{ end }}
+      {{ define "slack.scalar.text" }}
+      ```
+      {{- range .Alerts }}
+      {{ .Labels.instance }} - {{ .Status  }}{{ if eq .Status "firing" }} - {{ .Annotations.value }}{{ end }}
+      {{-  end }}
+      ```
+      {{ end }}
+      {{ define "slack.scalar.link"}}https://github.com/scalar-labs/scalar-terraform/wiki/{{ .GroupLabels.alertname }}{{ end }}
 
   alertmanagerSpec:
     resources:
