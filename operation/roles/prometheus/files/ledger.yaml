@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    prometheus: example
+    role: alert-rules
+  name: prometheus-ledger-alerts-rules
+spec:
+  groups:
+  - name: Ledger Alerts
+    rules:
+    - alert: Ledger Pods errors
+      expr: kube_pod_status_phase{namespace="default", pod=~"^scalar-ledger-.*", phase!="Running"} > 0
+      labels:
+        severity: warning
+      annotations:
+        summary: "one or many Ledger pods are in errors"
+        description: "The Ledger container on {{ $labels.pod }} have an error."
