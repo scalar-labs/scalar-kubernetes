@@ -9,7 +9,7 @@
 - name: Download Custom Ressource Definition
   get_url:
     url: "{{ item }}"
-    dest: "{{ remote_helm_directory }}/crds/"
+    dest: "{{ remote_directory }}/helm/crds/"
   loop: "{{ prometheus_crds_url }}"
   register: prometheus_crds_path
 
@@ -26,5 +26,5 @@
 - name: Deploy/Upgrade prometheus with helm
   command: >-
     {{ helm_binary_path }} upgrade --install prometheus stable/prometheus-operator
-    --namespace {{ namespace }} --version {{ prometheus_version }} -f {{ remote_helm_directory }}/prometheus-custom-values.yaml
+    --namespace {{ namespace }} --version {{ prometheus_version }} -f {{ remote_directory }}/helm/prometheus-custom-values.yaml
   when: deploy_prometheus
