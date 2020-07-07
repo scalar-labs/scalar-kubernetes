@@ -1,0 +1,15 @@
+---
+- name: Get files on remote machine for Scalar-ledger
+  find:
+    paths: "{{ remote_manifests_directory }}/ledger/"
+    patterns: '*.yaml'
+  register: find_yaml_ledger
+
+- name: Deploy Scalar-ledger
+  k8s:
+    state: present
+    src: "{{ item.path }}"
+    namespace: "{{ default_kubernetes_namespace }}"
+  with_items: "{{ find_yaml_ledger.files }}"
+  loop_control:
+    label: "{{ item.path }}"
