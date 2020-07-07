@@ -56,7 +56,13 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1
-        resources: {}
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 300m
+            memory: 328Mi
       restartPolicy: Always
       terminationGracePeriodSeconds: 60
       affinity:
