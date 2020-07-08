@@ -1,0 +1,15 @@
+---
+- name: Deploy Scalar Ledger and Envoy in Kubernetes
+  hosts: bastion
+  gather_facts: no
+  become: no
+  # vars:
+  #   default_kubernetes_namespace: default
+  #   local_manifests_directory: ../../../manifests/
+  #   remote_manifests_directory: "/home/{{ ansible_user }}/manifests"
+  #   docker_registry: "https://index.docker.io/v2/"
+  #   docker_username: "{{ lookup('env','DOCKERHUB_USER') }}"
+  #   docker_password: "{{ lookup('env','DOCKERHUB_ACCESS_TOKEN') }}"
+  #   kubernetes_registry_secret_name: "reg-docker-secrets"
+  roles:
+  - "scalardl"

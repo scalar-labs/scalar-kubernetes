@@ -52,7 +52,13 @@ spec:
             command:
             - /bin/grpc_health_probe
             - -addr=:50051
-        resources: {}
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 512Mi
+          limits:
+            cpu: 1500m
+            memory: 1024Mi
       imagePullSecrets:
       - name: reg-docker-secrets
       restartPolicy: Always

@@ -1,0 +1,51 @@
+---
+- name: Create folder grafana on remote server
+  file:
+    path: "{{ remote_directory }}/manifests/grafana"
+    state: directory
+    mode: '0755'
+
+- name: Copy grafana json file on remote server
+  copy:
+    src: files/{{ item }}
+    dest: "{{ remote_directory }}/manifests/grafana/{{ item }}"
+    remote_src: no
+  loop:
+  - envoy.json
+  - scalardl_monitor.json
+
+- name: Check if prometheus-grafana-envoy ConfigMap exists in Kubernetes
+  k8s_info:
+    api_version: v1
+    kind: ConfigMap
+    name: prometheus-grafana-envoy
+    namespace: "{{ namespace }}"
+  register: prometheus_grafana_envoy_exists
+
+- name: Deploy ConfigMap prometheus-grafana-envoy in Kubernetes
+  command: >-
+    kubectl create configmap -n {{ namespace }} prometheus-grafana-envoy
+    --from-file {{ remote_directory }}/manifests/grafana/envoy.json
+  when: not prometheus_grafana_envoy_exists.resources | length > 0
+
+- name: Add Label to ConfigMap prometheus-grafana-envoy
+  command: kubectl label configmap -n {{ namespace }} prometheus-grafana-envoy grafana_dashboard='1' --overwrite
+  when: not prometheus_grafana_envoy_exists.resources | length > 0
+
+- name: Check if prometheus-grafana-scalardl-monitor ConfigMap exists in Kubernetes
+  k8s_info:
+    api_version: v1
+    kind: ConfigMap
+    name: prometheus-grafana-scalardl-monitor
+    namespace: "{{ namespace }}"
+  register: prometheus_grafana_scalardl_monitor_exists
+
+- name: Deploy ConfigMap pprometheus-grafana-scalardl-monitor in Kubernetes
+  command: >-
+    kubectl create configmap -n {{ namespace }} prometheus-grafana-scalardl-monitor
+    --from-file {{ remote_directory }}/manifests/grafana/scalardl_monitor.json
+  when: not prometheus_grafana_scalardl_monitor_exists.resources | length > 0
+
+- name: Add Label to ConfigMap prometheus-grafana-scalardl-monitor
+  command: kubectl label configmap -n {{ namespace }} prometheus-grafana-scalardl-monitor grafana_dashboard='1' --overwrite
+  when: not prometheus_grafana_scalardl_monitor_exists.resources | length > 0

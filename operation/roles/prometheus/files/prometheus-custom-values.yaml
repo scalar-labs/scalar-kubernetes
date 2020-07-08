@@ -77,6 +77,16 @@ grafana:
       cpu: 40m
       memory: 128Mi
 
+  datasources:
+   datasources.yaml:
+     apiVersion: 1
+     datasources:
+     - name: prometheus
+       type: prometheus
+       url: "http://prometheus-prometheus-oper-prometheus:9090"
+       access: proxy
+       isDefault: false
+
   sidecar:
     dashboards:
       enabled: true
