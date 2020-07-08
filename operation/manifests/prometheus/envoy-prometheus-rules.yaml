@@ -4,7 +4,7 @@ metadata:
   labels:
     app: prometheus-operator
     release: prometheus
-  name: prometheus-prometheus-envoy-alerts-rules
+  name: prometheus-envoy-alerts-rules
   namespace: monitoring
 spec:
   groups:
