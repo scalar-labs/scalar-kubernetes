@@ -10,21 +10,15 @@ spec:
   groups:
   - name: LedgerAlerts
     rules:
-    - alert: LedgerPodsError
-      expr: kube_pod_status_phase{namespace="default", pod=~"^scalar-ledger-.*", phase!="Running"} > 0
-      labels:
-        severity: warning
-      annotations:
-        summary: "one or many Ledger pods are in errors"
-        description: "The Ledger container on {{ $labels.pod }} have an error."
     - alert: LedgerDeploymentHasMissingReplicas
       expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-ledger"} > 0
-      for: 10m
+      for: 5m
       labels:
         severity: warning
       annotations:
         summary: '{{$labels.deployment}}: has insuficient replicas.'
         description: 'deployment {{$labels.deployment}} has {{$value}} replicas unavailable'
+    
     - alert: LedgerPodsPending
       expr: kube_pod_status_phase{namespace="default", pod=~"^scalar-ledger-.*", phase="Pending"} > 0
       for: 5m
@@ -33,11 +27,12 @@ spec:
       annotations:
         description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has been in pending status for more than 5 minutes'
         summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in pending status'
-    - alert: LedgerPodsErrImagePull
-      expr: kube_pod_container_status_waiting_reason{namespace="default", pod=~"^scalar-ledger-.*", reason="ErrImagePull"} > 0
+    
+    - alert: LedgerPodsError
+      expr: kube_pod_container_status_waiting_reason{namespace="default",reason!="ContainerCreating",pod=~"^scalar-ledger-.*"} > 0
       for: 1m
       labels:
         severity: warning
       annotations:
-        description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an Image pull error for more than 1 minutes'
+        description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an Error for more than 1 minutes'
         summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in error status'
