@@ -12,8 +12,6 @@ spec:
       labels:
         app.kubernetes.io/name: scalar-kelpie
     spec:
-      imagePullSecrets:
-      - name: reg-docker-secrets
       containers:
       - name: kelpie-import
         image: <user>/kelpie:latest

@@ -1,4 +1,12 @@
-# How to run kelpie inside kubernetes
+# How to run a benchmark with kelpie for Scalar DL in Kubernetes
+
+This document explains how to run a benchmark to verify the performance of Scalar DL in Kubernetes.
+
+## Requirements
+
+* Have completed:
+  * [How to install Kubernetes CLI and Helm on the bastion](../docs/PrepareBastionTool.md)
+  * [How to Deploy Scalar DL on Azure AKS](../docs/ScalarDLonAzureAKS.md)
 
 ## Docker
 
@@ -9,16 +17,14 @@ docker push  <user>/kelpie:latest
 
 ## Configuration
 
-edit in local the file `benchmark-config.toml`
-
-Create the configmap
+Edit in local the file `benchmark-config.toml` and create the configmap
 
 ```console
 $ kubectl create cm kelpie-config --from-file=benchmark-config.toml
 configmap/kelpie-config created
 ```
 
-## pre load data in cassandra
+## Pre load data in cassandra
 
 ```console
 kubectl create -f kelpie-only-pre.yaml
@@ -74,7 +80,7 @@ scalar-kelpie-run-szmm8          1/1     Running     0          8m41s   10.42.40
 look at the logs
 
 ```console
-kubetail scalar-kelpie-run
+$ kubetail scalar-kelpie-run
 Will tail 3 logs...
 scalar-kelpie-run-8m7rf
 scalar-kelpie-run-fn76n
@@ -101,7 +107,7 @@ scalar-kelpie-run-szmm8
 end test
 
 ```console
-kubectl get po
+$ kubectl get po
 NAME                             READY   STATUS      RESTARTS   AGE
 scalar-envoy-7dc48c76bb-26ndc    1/1     Running     0          41m
 scalar-envoy-7dc48c76bb-jx5nx    1/1     Running     0          41m
@@ -116,10 +122,10 @@ scalar-ledger-6db6689f86-9nvjn   1/1     Running     0          41m
 scalardl-schema-5jd5v            0/1     Completed   0          42m
 ```
 
-fetch result
+fetch result of each pod:
 
 ```console
-➜  kubernetes git:(master) kubectl logs --tail=15 scalar-kelpie-run-8m7rf
+$ kubectl logs --tail=15 scalar-kelpie-run-8m7rf
 2020-07-07 03:42:39,085 [INFO  com.scalar.kelpie.stats.Stats] Throughput: 61.0 ops  Total success: 93583  Total failure: 410
 2020-07-07 03:42:40,085 [INFO  com.scalar.kelpie.stats.Stats] Throughput: 97.0 ops  Total success: 93680  Total failure: 410
 2020-07-07 03:42:41,086 [INFO  com.scalar.kelpie.stats.Stats] Throughput: 61.9 ops  Total success: 93742  Total failure: 410
@@ -133,9 +139,8 @@ Max latency: 1815 ms
 Latency at 50 percentile: 356 ms
 Latency at 90 percentile: 596 ms
 Latency at 99 percentile: 971 ms
-
 2020-07-07 03:42:41,099 [INFO  com.scalar.kelpie.Kelpie] The job has been completed successfully
-➜  kubernetes git:(master) kubectl logs --tail=15 scalar-kelpie-run-fn76n
+$ kubectl logs --tail=15 scalar-kelpie-run-fn76n
 2020-07-07 03:43:09,047 [INFO  com.scalar.kelpie.stats.Stats] Throughput: 213.0 ops  Total success: 91144  Total failure: 432
 2020-07-07 03:43:10,048 [INFO  com.scalar.kelpie.stats.Stats] Throughput: 224.0 ops  Total success: 91368  Total failure: 433
 2020-07-07 03:43:11,048 [INFO  com.scalar.kelpie.stats.Stats] Throughput: 150.0 ops  Total success: 91518  Total failure: 434
@@ -149,9 +154,8 @@ Max latency: 1706 ms
 Latency at 50 percentile: 363 ms
 Latency at 90 percentile: 597 ms
 Latency at 99 percentile: 967 ms
-
 2020-07-07 03:43:11,069 [INFO  com.scalar.kelpie.Kelpie] The job has been completed successfully
-➜  kubernetes git:(master) kubectl logs --tail=15 scalar-kelpie-run-szmm8
+$ kubectl logs --tail=15 scalar-kelpie-run-szmm8
 2020-07-07 03:43:08,875 [INFO  com.scalar.kelpie.stats.Stats] Throughput: 220.0 ops  Total success: 91686  Total failure: 394
 2020-07-07 03:43:09,875 [INFO  com.scalar.kelpie.stats.Stats] Throughput: 219.0 ops  Total success: 91905  Total failure: 395
 2020-07-07 03:43:10,876 [INFO  com.scalar.kelpie.stats.Stats] Throughput: 131.0 ops  Total success: 92036  Total failure: 395
@@ -165,6 +169,5 @@ Max latency: 1620 ms
 Latency at 50 percentile: 361 ms
 Latency at 90 percentile: 596 ms
 Latency at 99 percentile: 958 ms
-
 2020-07-07 03:43:10,887 [INFO  com.scalar.kelpie.Kelpie] The job has been completed successfully
 ```

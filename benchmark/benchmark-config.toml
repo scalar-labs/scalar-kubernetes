@@ -28,6 +28,6 @@
   transfer_contract_path = "client-test/build/classes/java/main/contract/Transfer.class"
 
 [client_config]
-  dl_server = "13.83.248.76"
+  dl_server = "localhost"
   certificate = "client-test/sample-keys/certificate.pem"
   private_key = "client-test/sample-keys/private-key.pem"
