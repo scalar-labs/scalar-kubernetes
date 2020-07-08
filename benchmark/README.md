@@ -26,6 +26,8 @@ configmap/kelpie-config created
 
 ## Pre load data in cassandra
 
+Edit and modify the `image: <user>/kelpie:latest` and start the kubernetes job as follows
+
 ```console
 kubectl create -f kelpie-only-pre.yaml
 job.batch/scalar-kelpie created
@@ -62,6 +64,8 @@ scalardl-schema-5jd5v            0/1     Completed           0          22m
 ```
 
 ## Run test
+
+Edit and modify the `image: <user>/kelpie:latest` and start the kubernetes job as follows
 
 ```console
 $ kubectl create -f kelpie-run.yaml
