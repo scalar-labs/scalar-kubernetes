@@ -1,5 +1,7 @@
 name: Terraform test for Monitor module of Azure Example
 on:
+  schedule:
+    - cron: 0 15 * * *
   pull_request:
     branches:
       - master
