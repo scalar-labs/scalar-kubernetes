@@ -1,7 +1,0 @@
-# EnvoyAlerts
-
-## EnvoyDeploymentHasMissingReplicas
-
-## EnvoyPodsPending
-
-## EnvoyPodsError
