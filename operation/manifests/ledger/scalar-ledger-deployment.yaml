@@ -55,10 +55,10 @@ spec:
         resources:
           requests:
             cpu: 1000m
-            memory: 512Mi
+            memory: 2Gi
           limits:
             cpu: 1500m
-            memory: 1024Mi
+            memory: 3Gi
       imagePullSecrets:
       - name: reg-docker-secrets
       restartPolicy: Always
