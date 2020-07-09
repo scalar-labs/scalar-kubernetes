@@ -1,0 +1,38 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: prometheus-operator
+    release: prometheus
+  name: prometheus-envoy-alerts-rules
+  namespace: monitoring
+spec:
+  groups:
+  - name: EnvoyAlerts
+    rules:
+    - alert: EnvoyDeploymentHasMissingReplicas
+      expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-envoy"} > 0
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: '{{$labels.deployment}}: has insuficient replicas.'
+        description: 'deployment {{$labels.deployment}} has {{$value}} replicas unavailable'
+    
+    - alert: EnvoyPodsPending
+      expr: kube_pod_status_phase{namespace="default", pod=~"^scalar-envoy-.*", phase="Pending"} > 0
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has been in pending status for more than 5 minutes'
+        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in pending status'
+    
+    - alert: EnvoyPodsError
+      expr: kube_pod_container_status_waiting_reason{namespace="default",reason!="ContainerCreating",pod=~"^scalar-envoy-.*"} > 0
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an Error for more than 1 minutes'
+        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in error status'
