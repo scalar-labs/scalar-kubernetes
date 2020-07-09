@@ -1,0 +1,53 @@
+name: Integration-test-with-terratest-for-Azure
+
+on:
+  # schedule:
+  #   - cron: 0 15 * * *
+  pull_request:
+    branches:
+      - master
+jobs:
+  terratest:
+    name: Terratest
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set export
+        run: |
+          export DOCKERHUB_USER=scalartest
+          export DOCKERHUB_ACCESS_TOKEN=${DOCKER_PASSWORD}
+
+      - name: Set up GO
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13.5
+        id: go
+
+      - name: Create ssh key
+        run: |
+          ssh-keygen -N "" -t rsa -f test_key <<<y
+          chmod 600 test_key
+        working-directory: ./test/modules
+
+      - name: Install terratest modules and run terratest
+        run: |
+          export GOPATH=$(pwd)
+          export GOBIN=${GOPATH}/bin
+          export PATH=${PATH}:${GOBIN}
+          eval `ssh-agent`
+          ssh-add ./modules/test_key
+          mkdir -p ${GOBIN}
+          curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+          cd ${GITHUB_WORKSPACE}/test/src/modules && dep ensure
+          cd ${GITHUB_WORKSPACE}/test/src/integration && dep ensure
+          go test -run TestEndToEnd -timeout 120m -args -directory="../../modules/azuredeploy/"
+        working-directory: ./test
