@@ -8,13 +8,6 @@ The following needs to be completed.
 * [How to install Kubernetes CLI and Helm on the bastion](../docs/PrepareBastionTool.md)
 * [How to Deploy Scalar DL on Azure AKS](../docs/ScalarDLonAzureAKS.md)
 
-## Docker
-
-```console
-docker build -t <user>/kelpie:latest ../docker/
-docker push  <user>/kelpie:latest
-```
-
 ## Configuration
 
 Edit in local the file `benchmark-config.toml` and create the configmap
@@ -26,7 +19,7 @@ configmap/kelpie-config created
 
 ## Pre load data in cassandra
 
-Edit and modify the `image: <user>/kelpie:latest` and start the kubernetes job as follows
+Start the kubernetes job as follows
 
 ```console
 kubectl create -f kelpie-only-pre.yaml
@@ -65,7 +58,7 @@ scalardl-schema-5jd5v            0/1     Completed           0          22m
 
 ## Run test
 
-Edit and modify the `image: <user>/kelpie:latest` and start the kubernetes job as follows
+Start the kubernetes job as follows
 
 ```console
 $ kubectl create -f kelpie-run.yaml

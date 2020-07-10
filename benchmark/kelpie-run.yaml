@@ -5,8 +5,8 @@ metadata:
     app.kubernetes.io/name: scalar-kelpie
   name: scalar-kelpie-run
 spec:
-  completions: 24
-  parallelism: 24
+  completions: 12
+  parallelism: 12
   template:
     metadata:
       labels:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: kelpie-import
-        image: <user>/kelpie:latest
+        image: scalarlabs/kelpie:latest
         imagePullPolicy: IfNotPresent
         command:
         - /bin/bash 
