@@ -1,5 +1,7 @@
 # Envoy Alerts
 
+## EnvoyDeploymentHasNoReplicas
+
 ## EnvoyDeploymentHasMissingReplicas
 
 ## EnvoyPodsPending

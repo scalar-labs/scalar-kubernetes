@@ -10,6 +10,15 @@ spec:
   groups:
   - name: LedgerAlerts
     rules:
+    - alert: LedgerDeploymentHasNoReplicas
+      expr: kube_deployment_spec_replicas{deployment="scalar-ledger"} == 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: '{{$labels.deployment}}: has no replicas.'
+        description: 'deployment {{$labels.deployment}} has {{$value}} replicas'
+        
     - alert: LedgerDeploymentHasMissingReplicas
       expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-ledger"} > 0
       for: 5m

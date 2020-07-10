@@ -1,5 +1,7 @@
 # Ledger Alerts
 
+## LedgerDeploymentHasNoReplicas
+
 ## LedgerDeploymentHasMissingReplicas
 
 ## LedgerPodsPending
