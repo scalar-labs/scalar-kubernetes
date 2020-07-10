@@ -4,9 +4,9 @@ This document explains how to run a benchmark to verify the performance of Scala
 
 ## Requirements
 
-* Have completed:
-  * [How to install Kubernetes CLI and Helm on the bastion](../docs/PrepareBastionTool.md)
-  * [How to Deploy Scalar DL on Azure AKS](../docs/ScalarDLonAzureAKS.md)
+The following needs to be completed.
+* [How to install Kubernetes CLI and Helm on the bastion](../docs/PrepareBastionTool.md)
+* [How to Deploy Scalar DL on Azure AKS](../docs/ScalarDLonAzureAKS.md)
 
 ## Docker
 
