@@ -26,14 +26,6 @@
 - name: Deploy/Upgrade prometheus with helm
   command: >-
     {{ helm_binary_path }} upgrade --install prometheus stable/prometheus-operator
-    --namespace {{ namespace }} --version {{ prometheus_version }} -f {{ remote_directory }}/helm/prometheus-custom-values.yaml
-  when: deploy_prometheus and not alertmanager_notification_activated
-
-- name: Deploy/Upgrade prometheus with helm with alertmanager slack set
-  command: >-
-    {{ helm_binary_path }} upgrade --install prometheus stable/prometheus-operator
-    --namespace {{ namespace }} --version {{ prometheus_version }}
+    --namespace {{ namespace }} --version {{ prometheus_version }} 
     -f {{ remote_directory }}/helm/prometheus-custom-values.yaml
-    -f {{ remote_directory }}/helm/prometheus-custom-values-alertmanager.yaml
-    --set alertmanager.config.global.slack_api_url={{ slack_webhook_url }}
-  when: deploy_prometheus and alertmanager_notification_activated and slack_webhook_url is defined
+  when: deploy_prometheus
