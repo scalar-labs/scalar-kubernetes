@@ -47,7 +47,7 @@ deployment.extensions/scalar-envoy scaled
 
 ## EnvoyDeploymentHasMissingReplicas
 
-This alert let you know if the kubernetes cluster cannot start the envoy pod, this mean that the cluster does not have the enough resource.
+This alert let you know if the kubernetes cluster cannot start the envoy pod, this mean that the cluster does not have the enough resource or lost of one or many kubernetes nodes to run the deployment.
 
 ### Example Alert
 
@@ -75,8 +75,10 @@ Alert: scalar-envoy: has insuficient replicas. - warning
 
 ### Action Needed
 
-* Check the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
+* Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
 * Check the kubernetes deployment with `kubectl describe deployments`
+* Check the nodes status with `kubectl get node -o wide`
+* Check the cloud provider to see if there are any known issues in the deployed location https://status.azure.com/en-us/status
 
 ## EnvoyPodsPending
 
@@ -108,18 +110,20 @@ Alert: Pod scalar-envoy-xxxx-yyyy in namespace default in pending status - warni
 
 ### Action Needed
 
+* Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
 * Check the kubernetes deployment with `kubectl describe pod scalar-envoy-xxxx-yyyy`
 * Check the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
 
 ## EnvoyPodsError
 
 This alert let you know if the kubernetes cluster cannot start the envoy pod for many errors:
-- CrashLoopBackOff: application problem is generals
-- CreateContainerConfigError: manifests or helm template have error in configmap or secrets
-- CreateContainerError: kubernetes problem
-- ErrImagePull: docker image not found
-- ImagePullBackOff: tells us that Kubernetes was not able to find the image
-- InvalidImageName: tag image contain only number not strings
+
+* CrashLoopBackOff: application problem.
+* CreateContainerConfigError: manifests or helm template have error in configmap or secrets.
+* CreateContainerError: kubernetes problem.
+* ErrImagePull: docker image not found.
+* ImagePullBackOff: tells us that Kubernetes was not able to find the image.
+* InvalidImageName: tag image contain only number not strings.
 
 ### Example Alert
 
@@ -148,3 +152,4 @@ Alert: Pod scalar-envoy-xxxx-yyyy in namespace default has an error status - war
 ### Action Needed
 
 * Check the kubernetes deployment with `kubectl describe pod scalar-envoy-xxxx-yyyy`
+* Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
