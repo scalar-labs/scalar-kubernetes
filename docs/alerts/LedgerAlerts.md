@@ -17,6 +17,8 @@ Alert: scalar-ledger: has no replicas. - critical
   • deployment: scalar-ledger
 ```
 
+#### Resolved
+
 ```console
 [RESOLVED]
 Alert: scalar-ledger: has no replicas. - critical
@@ -43,6 +45,32 @@ deployment.extensions/scalar-ledger scaled
 
 ## LedgerDeploymentHasMissingReplicas
 
+### Example Alert
+
+
+
+#### Firing
+
+#### Resolved
+
+### Action Needed
+
 ## LedgerPodsPending
 
+### Example Alert
+
+#### Firing
+
+#### Resolved
+
+### Action Needed
+
 ## LedgerPodsError
+
+### Example Alert
+
+#### Firing
+
+#### Resolved
+
+### Action Needed
