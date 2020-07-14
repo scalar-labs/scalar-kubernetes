@@ -1,6 +1,6 @@
 # Scalar Alerts
 
-Here you can find the basic information about each alert.
+This section covers the types of alerts and what actions need to be taken.
 
 * [Envoy Alerts](./EnvoyAlerts.md)
 * [Envoy Ledger](./EnvoyLedger.md)
