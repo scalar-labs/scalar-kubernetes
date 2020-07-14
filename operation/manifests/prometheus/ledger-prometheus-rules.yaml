@@ -12,7 +12,7 @@ spec:
     rules:
     - alert: LedgerDeploymentHasNoReplicas
       expr: kube_deployment_spec_replicas{deployment="scalar-ledger"} == 0
-      for: 5m
+      for: 1m
       labels:
         severity: critical
       annotations:
@@ -21,7 +21,7 @@ spec:
         
     - alert: LedgerDeploymentHasMissingReplicas
       expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-ledger"} > 0
-      for: 5m
+      for: 1m
       labels:
         severity: warning
       annotations:
@@ -30,7 +30,7 @@ spec:
     
     - alert: LedgerPodsPending
       expr: kube_pod_status_phase{namespace="default", pod=~"^scalar-ledger-.*", phase="Pending"} > 0
-      for: 5m
+      for: 1m
       labels:
         severity: warning
       annotations:
