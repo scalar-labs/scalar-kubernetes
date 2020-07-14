@@ -26,5 +26,6 @@
 - name: Deploy/Upgrade prometheus with helm
   command: >-
     {{ helm_binary_path }} upgrade --install prometheus stable/prometheus-operator
-    --namespace {{ namespace }} --version {{ prometheus_version }} -f {{ remote_directory }}/helm/prometheus-custom-values.yaml
+    --namespace {{ namespace }} --version {{ prometheus_version }}
+    -f {{ remote_directory }}/helm/prometheus-custom-values.yaml
   when: deploy_prometheus

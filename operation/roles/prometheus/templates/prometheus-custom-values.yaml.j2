@@ -30,6 +30,42 @@ global:
 
 alertmanager:
   enabled: true
+{% if alertmanager_notification_activated is defined and alertmanager_notification_activated == true %}
+  config:
+    global:
+      resolve_timeout: 5m
+      slack_api_url: {{ slack_webhook_url }}
+    route:
+      group_by: ['cluster', 'alertname']
+      group_wait: 15s
+      group_interval: 1m
+      repeat_interval: 30m
+      # receiver: 'null'
+      routes:
+      - match:
+          alertname: Watchdog
+        receiver: 'null'
+      - match:
+        receiver: 'team-slack'
+        continue: true
+    receivers:
+    - name: 'null'
+    - name: 'team-slack'
+      slack_configs:
+      - send_resolved: true
+        title: {% raw %}'[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]'{% endraw %}
+
+        text: >-
+          {% raw %}{{ range .Alerts }}
+            *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+            *Description:* {{ .Annotations.description }}
+            *Details:*
+            {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+            {{ end }}
+          {{ end }}{% endraw %}
+        
+        title_link: 'https://github.com/scalar-labs/scalar-k8s/tree/master/docs/alerts/{% raw %}{{ .GroupLabels.alertname }}{% endraw %}.md'
+{% endif %}
 
   alertmanagerSpec:
     resources:

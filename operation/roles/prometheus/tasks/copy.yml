@@ -5,8 +5,8 @@
     state: directory
     mode: '0755'
 
-- name: Copy file on remote server
-  copy:
-    src: files/prometheus-custom-values.yaml
+- name: Template file on remote server
+  template:
+    src: prometheus-custom-values.yaml.j2
     dest: "{{ remote_directory }}/helm/prometheus-custom-values.yaml"
     remote_src: no
