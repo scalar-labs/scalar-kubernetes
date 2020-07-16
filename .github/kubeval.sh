@@ -6,13 +6,13 @@ set -o errexit
 set -o pipefail
 
 CHART_DIRS="$(git diff --find-renames --name-only "$(git rev-parse --abbrev-ref HEAD)" remotes/origin/master -- charts charts/stable | grep '[cC]hart.yaml' | sed -e 's#/[Cc]hart.yaml##g')"
-HELM_VERSION="v2.16.7"
+HELM_VERSION="v3.2.4"
 
 # install helm
 curl --silent --show-error --fail --location --output get_helm.sh https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
 chmod 700 get_helm.sh
 ./get_helm.sh --version "${HELM_VERSION}"
-helm init --client-only
+helm init
 
 # install kubeval plugins to helm
 helm plugin install https://github.com/instrumenta/helm-kubeval

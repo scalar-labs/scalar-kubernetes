@@ -3,13 +3,13 @@ on:
   pull_request:
     branches:
       - master
-    paths:
-      - 'charts/stable/**'
+    # paths:
+    #   - 'charts/stable/**'
   push:
     branches:
       - master
-    paths:
-      - 'charts/stable/**'
+    # paths:
+    #   - 'charts/stable/**'
 jobs:
   lint-chart:
     runs-on: ubuntu-latest
