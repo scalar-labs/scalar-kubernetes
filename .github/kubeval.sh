@@ -5,7 +5,7 @@
 set -o errexit
 set -o pipefail
 
-CHART_DIRS="$(git diff --find-renames --name-only "$(git rev-parse --abbrev-ref HEAD)" remotes/origin/master -- charts charts/stable | grep '[cC]hart.yaml' | sed -e 's#/[Cc]hart.yaml##g')"
+CHART_DIRS="$(ls charts/stable)"
 HELM_VERSION="v3.2.4"
 
 # install helm
@@ -19,6 +19,6 @@ helm plugin install https://github.com/instrumenta/helm-kubeval
 
 # validate charts
 for CHART_DIR in ${CHART_DIRS};do
-  echo "kubeval(idating) ${CHART_DIR##charts/} chart..."
-  helm kubeval "${CHART_DIR}" -v "${KUBERNETES_VERSION#v}" --strict
+  echo "kubeval(idating) charts/stable/${CHART_DIR} chart..."
+  helm kubeval "charts/stable/${CHART_DIR}" -v "${KUBERNETES_VERSION#v}" 
 done
