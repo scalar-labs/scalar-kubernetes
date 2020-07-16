@@ -1,0 +1,33 @@
+[modules]
+  [modules.preprocessor]
+    name = "client.transfer.TransferPreparer"
+    path = "client-test/build/libs/client-test-all.jar"
+  [modules.processor]
+    name = "client.transfer.TransferProcessor"
+    path = "client-test/build/libs/client-test-all.jar"
+  [modules.postprocessor]
+    name = "client.transfer.TransferReporter"
+    path = "client-test/build/libs/client-test-all.jar"
+
+[common]
+  concurrency = 60
+  run_for_sec = 600
+  ramp_for_sec = 10
+
+[stats]
+  realtime_report_enabled = true
+
+[test_config]
+  num_accounts = 100000
+  population_concurrency = 32
+
+[contract]
+  population_contract_name = "contract.BatchCreate"
+  population_contract_path = "client-test/build/classes/java/main/contract/BatchCreate.class"
+  transfer_contract_name = "contract.Transfer"
+  transfer_contract_path = "client-test/build/classes/java/main/contract/Transfer.class"
+
+[client_config]
+  dl_server = "localhost"
+  certificate = "client-test/sample-keys/certificate.pem"
+  private_key = "client-test/sample-keys/private-key.pem"
