@@ -35,7 +35,7 @@ spec:
         severity: warning
       annotations:
         description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has been in pending status for more than 1 minute.'
-        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in pending status'
+        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in pending status.'
     
     - alert: EnvoyPodsError
       expr: kube_pod_container_status_waiting_reason{namespace="default",reason!="ContainerCreating",pod=~"^scalar-envoy-.*"} > 0
@@ -44,4 +44,4 @@ spec:
         severity: warning
       annotations:
         description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error for more than 1 minute.'
-        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error status'
+        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error status.'
