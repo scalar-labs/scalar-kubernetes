@@ -6,7 +6,7 @@
 replicaCount: 3
 
 scalarLedgerConfiguration:
-  cassandraHost: cassandra-lb.internal.scalar-labs.com
+  cassandraHost: cassandra
   cassandraPort: 9042
   cassandraUsername: cassandra
   cassandraPassword: cassandra
