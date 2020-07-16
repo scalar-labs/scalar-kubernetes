@@ -1,0 +1,178 @@
+## configuration files from https://raw.githubusercontent.com/helm/charts/master/stable/prometheus-operator/values.yaml
+defaultRules:
+  create: true
+  rules:
+    alertmanager: true
+    etcd: true
+    general: true
+    k8s: true
+    kubeApiserver: true
+    kubeApiserverError: true
+    kubeApiserverSlos: true
+    kubePrometheusNodeAlerting: true
+    kubePrometheusNodeRecording: true
+    kubernetesAbsent: true
+    kubernetesApps: true
+    kubernetesResources: true
+    kubernetesStorage: true
+    kubernetesSystem: true
+    kubeScheduler: true
+    network: true
+    node: true
+    prometheus: true
+    prometheusOperator: true
+    time: true
+
+global:
+  rbac:
+    create: true
+    pspEnabled: true
+
+alertmanager:
+  enabled: true
+{% if alertmanager_notification_activated is defined and alertmanager_notification_activated == true %}
+  config:
+    global:
+      resolve_timeout: 5m
+      slack_api_url: {{ slack_webhook_url }}
+    route:
+      group_by: ['cluster', 'alertname']
+      group_wait: 15s
+      group_interval: 1m
+      repeat_interval: 30m
+      # receiver: 'null'
+      routes:
+      - match:
+          alertname: Watchdog
+        receiver: 'null'
+      - match:
+        receiver: 'team-slack'
+        continue: true
+    receivers:
+    - name: 'null'
+    - name: 'team-slack'
+      slack_configs:
+      - send_resolved: true
+        title: {% raw %}'[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]'{% endraw %}
+
+        text: >-
+          {% raw %}{{ range .Alerts }}
+            *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+            *Description:* {{ .Annotations.description }}
+            *Details:*
+            {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+            {{ end }}
+          {{ end }}{% endraw %}
+        
+        title_link: 'https://github.com/scalar-labs/scalar-k8s/tree/master/docs/alerts/{% raw %}{{ .GroupLabels.alertname }}{% endraw %}.md'
+{% endif %}
+
+  alertmanagerSpec:
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 20m
+
+grafana:
+  enabled: true
+  resources:
+    requests:
+      cpu: 40m
+      memory: 128Mi
+
+  datasources:
+   datasources.yaml:
+     apiVersion: 1
+     datasources:
+     - name: prometheus
+       type: prometheus
+       url: "http://prometheus-prometheus-oper-prometheus:9090"
+       access: proxy
+       isDefault: false
+
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+    datasources:
+      enabled: true
+      defaultDatasourceEnabled: true
+      label: grafana_datasource
+
+  grafana.ini:
+    auth.basic:
+      enabled: false
+    auth.anonymous:
+      enabled: true
+      org_name: Main Org.
+      org_role: Admin
+    auth:
+      disable_login_form: false
+      disable_signout_menu: false
+    users:
+      allow_sign_up: false
+      auto_assign_org: true
+      auto_assign_org_role: Admin
+
+  persistence:
+    enabled: false
+    storageClassName: default
+    accessModes: ["ReadWriteOnce"]
+    size: 2Gi
+
+kubeStateMetrics:
+  enabled: true
+  resources:
+    limits:
+      cpu: 25m
+      memory: 128Mi
+    requests:
+      cpu: 15m
+      memory: 64Mi
+
+nodeExporter:
+  enabled: true
+  resources:
+    limits:
+      cpu: 15m
+      memory: 50Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+
+coreDns:
+  enabled: true
+
+kubeControllerManager:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+kubelet:
+  enabled: true
+  serviceMonitor:
+    https: false
+
+prometheus:
+  prometheusSpec:
+    resources: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: default
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
+
+# TODO: This should be reviewed when fixed for helm v3 https://github.com/helm/charts/blob/master/stable/prometheus-operator/README.md#helm-fails-to-create-crds
+prometheusOperator:
+  createCustomResource: false

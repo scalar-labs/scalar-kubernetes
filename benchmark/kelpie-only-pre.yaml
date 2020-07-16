@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app.kubernetes.io/name: scalar-kelpie-import
+  name: scalar-kelpie-import
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: scalar-kelpie-import
+    spec:
+      containers:
+      - name: kelpie-import
+        image: scalarlabs/kelpie-test-client:1.0.0
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/bash 
+        - -c 
+        - "kelpie --only-pre --config client-test/benchmark-config.toml"
+        volumeMounts:
+        - mountPath: /home/gradle/kelpie-test/client-test/benchmark-config.toml
+          name: kelpie-config
+          subPath: benchmark-config.toml
+          readOnly: true
+      volumes:
+      - configMap:
+          defaultMode: 256
+          name: kelpie-config
+        name: kelpie-config
+      restartPolicy: Never
+  backoffLimit: 0

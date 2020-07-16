@@ -1,0 +1,15 @@
+---
+- name: Get files on remote machine for envoy
+  find:
+    paths: "{{ remote_manifests_directory }}/envoy/"
+    patterns: '*.yaml'
+  register: find_yaml_envoy
+
+- name: Deploy envoy
+  k8s:
+    state: present
+    src: "{{ item.path }}"
+    namespace: "{{ default_kubernetes_namespace }}"
+  with_items: "{{ find_yaml_envoy.files }}"
+  loop_control:
+    label: "{{ item.path }}"
