@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: kelpie-import
-        image: scalarlabs/kelpie:latest
+        image: scalarlabs/kelpie-test-client:1.0.0
         imagePullPolicy: IfNotPresent
         command:
         - /bin/bash 
