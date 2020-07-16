@@ -12,7 +12,9 @@ HELM_VERSION="v3.2.4"
 curl --silent --show-error --fail --location --output get_helm.sh https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
 chmod 700 get_helm.sh
 ./get_helm.sh --version "${HELM_VERSION}"
-helm init
+
+# add helm repos to resolve dependencies
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
 # install kubeval plugins to helm
 helm plugin install https://github.com/instrumenta/helm-kubeval
