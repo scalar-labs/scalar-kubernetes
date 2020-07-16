@@ -32,7 +32,7 @@ Alert: scalar-ledger: has no replicas. - critical
 
 * Check the number of replicas set `kubectl get deployments. scalar-ledger`
 
-```
+```console
 $ kubectl get deployments. scalar-ledger
 NAME            READY   UP-TO-DATE   AVAILABLE   AGE
 scalar-ledger   0/0     0            0           167m
@@ -40,7 +40,7 @@ scalar-ledger   0/0     0            0           167m
 
 if zero replica, increase the number with:
 
-```
+```console
 $ kubectl scale deployment  scalar-ledger --replicas 3
 deployment.extensions/scalar-ledger scaled
 ```

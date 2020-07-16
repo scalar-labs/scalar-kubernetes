@@ -32,7 +32,7 @@ Alert: scalar-envoy: has no replicas. - critical
 
 * Check the number of replicas set `kubectl get deployments. scalar-envoy`
 
-```
+```console
 $ kubectl get deployments. scalar-envoy
 NAME            READY   UP-TO-DATE   AVAILABLE   AGE
 scalar-envoy   0/0     0            0           167m
@@ -40,7 +40,7 @@ scalar-envoy   0/0     0            0           167m
 
 if zero replica, increase the number with:
 
-```
+```console
 $ kubectl scale deployment  scalar-envoy --replicas 3
 deployment.extensions/scalar-envoy scaled
 ```
