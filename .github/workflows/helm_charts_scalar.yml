@@ -65,7 +65,7 @@ jobs:
           config: .github/kind-cluster.yaml
           node_image: kindest/node:${{ matrix.k8s }}
 
-      - name: Install reg docker secret
+      - name: Setup kubernetes (Kind) with registry, cassandra and schema
         run: |
           kubectl cluster-info
           kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=${{ secrets.DOCKERHUB_USER }} --docker-password=${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
