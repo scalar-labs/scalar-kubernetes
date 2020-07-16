@@ -91,7 +91,7 @@ This alert let you know if the kubernetes cluster cannot start the envoy pod, th
 ```
 [FIRING:1]
 Alert: Pod scalar-envoy-xxxx-yyyy in namespace default in pending status - warning
- Description: Pod scalar-envoy-xxxx-yyyy in namespace default has been in pending status for more than 5 minutes.
+ Description: Pod scalar-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
  Details:
   • alertname: EnvoyPodsPending
   • deployment: scalar-envoy
@@ -102,7 +102,7 @@ Alert: Pod scalar-envoy-xxxx-yyyy in namespace default in pending status - warni
 ```
 [RESOLVED:1]
 Alert: Pod scalar-envoy-xxxx-yyyy in namespace default in pending status - warning
- Description: Pod scalar-envoy-xxxx-yyyy in namespace default has been in pending status for more than 5 minutes.
+ Description: Pod scalar-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
  Details:
   • alertname: EnvoyPodsPending
   • deployment: scalar-envoy

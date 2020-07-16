@@ -91,7 +91,7 @@ This alert let you know if the kubernetes cluster cannot start the ledger pod, t
 ```
 [FIRING:1]
 Alert: Pod scalar-ledger-xxxx-yyyy in namespace default in pending status - warning
- Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 5 minutes.
+ Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
  Details:
   • alertname: LedgerPodsPending
   • deployment: scalar-ledger
@@ -102,7 +102,7 @@ Alert: Pod scalar-ledger-xxxx-yyyy in namespace default in pending status - warn
 ```
 [RESOLVED:1]
 Alert: Pod scalar-ledger-xxxx-yyyy in namespace default in pending status - warning
- Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 5 minutes.
+ Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
  Details:
   • alertname: LedgerPodsPending
   • deployment: scalar-ledger

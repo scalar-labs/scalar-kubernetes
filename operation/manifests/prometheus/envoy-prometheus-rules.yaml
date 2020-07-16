@@ -34,7 +34,7 @@ spec:
       labels:
         severity: warning
       annotations:
-        description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has been in pending status for more than 5 minutes.'
+        description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has been in pending status for more than 1 minute.'
         summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in pending status'
     
     - alert: EnvoyPodsError
