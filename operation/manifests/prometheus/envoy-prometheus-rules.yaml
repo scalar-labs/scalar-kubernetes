@@ -43,5 +43,5 @@ spec:
       labels:
         severity: warning
       annotations:
-        description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an Error for more than 1 minutes.'
+        description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error for more than 1 minute.'
         summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error status'
