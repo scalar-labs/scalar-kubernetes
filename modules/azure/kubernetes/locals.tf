@@ -21,7 +21,7 @@ locals {
     resource_group_name       = var.network.name
     location                  = var.network.location
     dns_prefix                = "scalar-kubernetes"
-    kubernetes_version        = "1.15.10"
+    kubernetes_version        = "1.15.11"
     admin_username            = "azureuser"
     public_ssh_key_path       = var.network.public_key_path
     role_based_access_control = true
@@ -67,13 +67,13 @@ locals {
 # K8s additional node pools (scalardl dedicated)
 locals {
   additional_node_pools = {
-    name                           = "scalardl"
+    name                           = "scalardlpool"
     node_count                     = "3"
     vm_size                        = "Standard_D2s_v3"
     max_pods                       = "100"
     os_disk_size_gb                = "64"
     node_os                        = "Linux"
-    taints                         = "kubernetes.io/app=scalardl:NoSchedule"
+    taints                         = "kubernetes.io/app=scalardlpool:NoSchedule"
     cluster_auto_scaling           = "true"
     cluster_auto_scaling_min_count = "3"
     cluster_auto_scaling_max_count = "6"

@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: scalar-envoy
+spec:
+  ports:
+  - name: envoy
+    port: 50051
+    protocol: TCP
+    targetPort: 50051
+  - name: envoy-privileged
+    port: 50052
+    protocol: TCP
+    targetPort: 50052
+  selector:
+    app.kubernetes.io/name: scalar-envoy
+    app.kubernetes.io/version: v1.0.0
+  sessionAffinity: None
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scalar-envoy-metrics
+  labels:
+    app.kubernetes.io/name: scalar-envoy
+    app.kubernetes.io/version: v1.0.0
+spec:
+  ports:
+  - name: admin
+    port: 9001
+    protocol: TCP
+    targetPort: 9001
+  selector:
+    app.kubernetes.io/name: scalar-envoy
+    app.kubernetes.io/version: v1.0.0
+  type: ClusterIP

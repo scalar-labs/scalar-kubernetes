@@ -1,0 +1,26 @@
+---
+- name: Create Namespace
+  k8s:
+    name: "{{ default_kubernetes_namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Deploy Fluentbit
+  k8s:
+    state: present
+    src: "{{ remote_manifests_directory }}/fluentbit/{{ item }}"
+    namespace: "{{ default_kubernetes_namespace }}"
+  loop:
+    - "fluent-bit-configmap.yaml"
+    - "fluent-bit-role-binding.yaml"
+    - "fluent-bit-role.yaml"
+    - "fluent-bit-service-account.yaml"
+    - "fluent-bit-service.yaml"
+    - "fluent-bit-ds.yaml"
+
+- name: Deploy service monitor for Fluentbit
+  k8s:
+    state: present
+    src: "{{ remote_manifests_directory }}/fluentbit/fluent-bit-service-monitor.yaml"
+  when: fluent_activate_metrics

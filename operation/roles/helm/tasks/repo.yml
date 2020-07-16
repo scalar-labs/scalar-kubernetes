@@ -1,0 +1,10 @@
+---
+- name: Check if helm repository is setup
+  stat:
+    path: "{{ REMOTE_HOME_USER }}/.config/helm/repositories.yaml"
+  register: helm_repository_check
+
+- name: Add stable charts repository from helm
+  command: "{{ HELM_PATH }} repo add stable {{ HELM_CHARTS_REPO }}"
+  become: no
+  when: not helm_repository_check.stat.exists
