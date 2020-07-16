@@ -8,7 +8,7 @@ This is the most critical alert and indicates that the Ledger cluster is not abl
 
 #### Firing
 
-```console
+```
 [FIRING:1]
 Alert: scalar-ledger: has no replicas. - critical
  Description: deployment scalar-ledger has 0 replicas
@@ -19,7 +19,7 @@ Alert: scalar-ledger: has no replicas. - critical
 
 #### Resolved
 
-```console
+```
 [RESOLVED]
 Alert: scalar-ledger: has no replicas. - critical
  Description: deployment scalar-ledger has 0 replicas
@@ -32,7 +32,7 @@ Alert: scalar-ledger: has no replicas. - critical
 
 * Check the number of replicas set `kubectl get deployments. scalar-ledger`
 
-```console
+```
 $ kubectl get deployments. scalar-ledger
 NAME            READY   UP-TO-DATE   AVAILABLE   AGE
 scalar-ledger   0/0     0            0           167m
@@ -40,7 +40,7 @@ scalar-ledger   0/0     0            0           167m
 
 if zero replica, increase the number with:
 
-```console
+```
 $ kubectl scale deployment  scalar-ledger --replicas 3
 deployment.extensions/scalar-ledger scaled
 ```
@@ -53,7 +53,7 @@ This alert let you know if the kubernetes cluster cannot start the ledger pod, t
 
 #### Firing
 
-```console
+```
 [FIRING:1]
 Alert: scalar-ledger: has insuficient replicas. - warning
  Description: deployment scalar-ledger has 1 replica(s) unavailable.
@@ -64,7 +64,7 @@ Alert: scalar-ledger: has insuficient replicas. - warning
 
 #### Resolved
 
-```console
+```
 [RESOLVED:1]
 Alert: scalar-ledger: has insuficient replicas. - warning
  Description: deployment scalar-ledger has 1 replica(s) unavailable.
@@ -88,7 +88,7 @@ This alert let you know if the kubernetes cluster cannot start the ledger pod, t
 
 #### Firing
 
-```console
+```
 [FIRING:1]
 Alert: Pod scalar-ledger-xxxx-yyyy in namespace default in pending status - warning
  Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 5 minutes.
@@ -99,7 +99,7 @@ Alert: Pod scalar-ledger-xxxx-yyyy in namespace default in pending status - warn
 
 #### Resolved
 
-```console
+```
 [RESOLVED:1]
 Alert: Pod scalar-ledger-xxxx-yyyy in namespace default in pending status - warning
  Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 5 minutes.
@@ -129,7 +129,7 @@ This alert let you know if the kubernetes cluster cannot start the ledger pod fo
 
 #### Firing
 
-```console
+```
 [FIRING:1]
 Alert: Pod scalar-ledger-xxxx-yyyy in namespace default has an error status - warning
  Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
@@ -140,7 +140,7 @@ Alert: Pod scalar-ledger-xxxx-yyyy in namespace default has an error status - wa
 
 #### Resolved
 
-```console
+```
 [RESOLVED:1]
 Alert: Pod scalar-ledger-xxxx-yyyy in namespace default has an error status - warning
  Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
