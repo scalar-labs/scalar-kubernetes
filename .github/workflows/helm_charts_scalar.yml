@@ -69,16 +69,15 @@ jobs:
         run: |
           kubectl cluster-info
           kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=${{ secrets.DOCKERHUB_USER }} --docker-password=${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-          helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo update
           kubectl create -f .github/cassandra.yaml
           echo "Wait until cassandra is running" && sleep 100
           kubectl create -f .github/scalardl-schema.yaml
           echo "Wait until scalardl schema is completed" && sleep 60
           kubectl get po,svc,node -o wide
+          kubectl logs job/scalardl-schema
 
       - name: Run chart-testing (install)
         uses: helm/chart-testing-action@v1.0.0-rc.2
         with:
-          command: "install --all"
+          command: "install"
           config: .github/ct.yaml
