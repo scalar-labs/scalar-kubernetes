@@ -29,6 +29,16 @@ spec:
       annotations:
         summary: '{{$labels.deployment}}: has insuficient replicas.'
         description: 'deployment {{$labels.deployment}} has {{$value}} replica(s) unavailable'
+
+    - alert: EnvoyMultiplePodsPending
+      expr: sum(kube_pod_status_phase{namespace="default", pod=~"^scalar-envoy-.*", phase!="Pending"}) by (phase) >= 2
+      for: 1m
+      labels:
+        severity: critical
+        app: Envoy
+      annotations:
+        description: 'Multiple scalar-envoy pods has been in pending status for more than 1 minute.'
+        summary: 'Multiple scalar-envoy pods in pending status.'
     
     - alert: EnvoyPodsPending
       expr: kube_pod_status_phase{namespace="default", pod=~"^scalar-envoy-.*", phase="Pending"} > 0
