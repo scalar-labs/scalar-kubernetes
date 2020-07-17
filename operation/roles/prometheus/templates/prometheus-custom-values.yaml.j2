@@ -53,7 +53,7 @@ alertmanager:
     - name: 'team-slack'
       slack_configs:
       - send_resolved: true
-        title: {% raw %}'[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]'{% endraw %}
+        title: {% raw %}'[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.alertname }} - {{ .CommonLabels.severity }}'{% endraw %}
 
         text: >-
           {% raw %}{{ range .Alerts }}
