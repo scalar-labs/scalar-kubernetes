@@ -68,6 +68,12 @@ service:
       # service.ports.envoy-priv.protocol -- envoy protocol
       protocol: TCP
 
+## ServiceMonitor consumed by prometheus-operator
+serviceMonitor:
+  enabled: true
+  interval: "15s"
+  namespace: monitoring
+
 # resources -- resources allowed to the pod
 resources: {}
   # limits:
