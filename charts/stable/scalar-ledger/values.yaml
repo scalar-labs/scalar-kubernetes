@@ -14,6 +14,7 @@ scalarLedgerConfiguration:
   replicationFactor: 3
 
 schemaImport:
+  # schemaImport.enabled -- Enabled the Cassandra keyspace job
   enabled: true
 
 image:

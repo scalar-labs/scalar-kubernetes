@@ -22,6 +22,8 @@ Current chart version is `1.0.0`
 | scalarLedgerConfiguration.cassandraPort | int | `9042` |  |
 | scalarLedgerConfiguration.cassandraUsername | string | `"cassandra"` |  |
 | scalarLedgerConfiguration.ledgerLogLevel | string | `"INFO"` |  |
+| scalarLedgerConfiguration.replicationFactor | int | `3` |  |
+| schemaImport.enabled | bool | `true` | Enabled the Cassandra keyspace job |
 | securityContext | object | `{}` | Setting security context at the pod applies those settings to all containers in the pod |
 | service.type | string | `"ClusterIP"` | service types in kubernetes |
 | strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |
