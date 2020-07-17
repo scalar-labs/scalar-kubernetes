@@ -31,19 +31,9 @@ Alert: scalar-envoy: has no replicas. - critical
 ### Action Needed
 
 * Check the number of replicas set `kubectl get deployments. scalar-envoy`
-
-```console
-$ kubectl get deployments. scalar-envoy
-NAME            READY   UP-TO-DATE   AVAILABLE   AGE
-scalar-envoy   0/0     0            0           167m
-```
-
-if zero replica, increase the number with:
-
-```console
-$ kubectl scale deployment  scalar-envoy --replicas 3
-deployment.extensions/scalar-envoy scaled
-```
+* Check the number of replicas set `kubectl describe deployments. scalar-envoy`
+* Check nodes statuses with `kubectl get node -o wide`
+* Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
 
 ## EnvoyDeploymentHasMissingReplicas
 
@@ -118,12 +108,12 @@ Alert: Pod scalar-envoy-xxxx-yyyy in namespace default in pending status - warni
 
 This alert lets you know if a kubernetes cluster cannot start envoy pods for one of the following reasons.
 
-* CrashLoopBackOff: application problem.
-* CreateContainerConfigError: manifests or helm template have error in configmap or secrets.
-* CreateContainerError: kubernetes problem.
-* ErrImagePull: docker image not found.
-* ImagePullBackOff: tells us that Kubernetes was not able to find the image.
-* InvalidImageName: tag image contain only number not strings.
+* CrashLoopBackOff:
+* CreateContainerConfigError:
+* CreateContainerError:
+* ErrImagePull:
+* ImagePullBackOff:
+* InvalidImageName:
 
 ### Example Alert
 
