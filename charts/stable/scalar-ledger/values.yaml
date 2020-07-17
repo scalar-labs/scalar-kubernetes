@@ -14,7 +14,7 @@ scalarLedgerConfiguration:
   replicationFactor: 3
 
 schemaImport:
-  enable: true
+  enabled: true
 
 image:
   # image.repository -- Docker image
