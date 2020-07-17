@@ -36,7 +36,7 @@ alertmanager:
       resolve_timeout: 5m
       slack_api_url: {{ slack_webhook_url }}
     route:
-      group_by: ['cluster', 'alertname']
+      group_by: ['app', 'alertname']
       group_wait: 15s
       group_interval: 1m
       repeat_interval: 30m
@@ -64,7 +64,7 @@ alertmanager:
             {{ end }}
           {{ end }}{% endraw %}
         
-        title_link: 'https://github.com/scalar-labs/scalar-k8s/tree/master/docs/alerts/{% raw %}{{ .GroupLabels.alertname }}{% endraw %}.md'
+        title_link: 'https://github.com/scalar-labs/scalar-k8s/tree/master/docs/alerts/{% raw %}{{ .GroupLabels.app }}.md#{{ .GroupLabels.alertname }}{% endraw %}'
 {% endif %}
 
   alertmanagerSpec:
