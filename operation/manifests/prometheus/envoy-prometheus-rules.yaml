@@ -15,6 +15,7 @@ spec:
       for: 1m
       labels:
         severity: critical
+        app: Envoy
       annotations:
         summary: '{{$labels.deployment}}: has no replicas.'
         description: 'deployment {{$labels.deployment}} has {{$value}} replicas'
@@ -24,6 +25,7 @@ spec:
       for: 1m
       labels:
         severity: warning
+        app: Envoy
       annotations:
         summary: '{{$labels.deployment}}: has insuficient replicas.'
         description: 'deployment {{$labels.deployment}} has {{$value}} replica(s) unavailable'
@@ -33,6 +35,7 @@ spec:
       for: 1m
       labels:
         severity: warning
+        app: Envoy
       annotations:
         description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has been in pending status for more than 1 minute.'
         summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in pending status.'
@@ -42,6 +45,7 @@ spec:
       for: 1m
       labels:
         severity: warning
+        app: Envoy
       annotations:
         description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error for more than 1 minute.'
         summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error status.'
