@@ -30,12 +30,12 @@ spec:
         summary: '{{$labels.deployment}}: has insuficient replicas.'
         description: 'deployment {{$labels.deployment}} has {{$value}} replica(s) unavailable.'
 
-    - alert: EnvoyMultiplePodsPending
+    - alert: LedgerMultiplePodsPending
       expr: sum(kube_pod_status_phase{namespace="default", pod=~"^scalar-ledger-.*", phase!="Pending"}) by (phase) >= 2
       for: 1m
       labels:
         severity: critical
-        app: Envoy
+        app: Ledger
       annotations:
         description: 'Multiple scalar-ledger pods has been in pending status for more than 1 minute.'
         summary: 'Multiple scalar-ledger pods in pending status.'
