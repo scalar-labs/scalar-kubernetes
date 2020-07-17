@@ -2,7 +2,7 @@
 
 ## LedgerDeploymentHasNoReplicas
 
-This is the most critical alert and indicates that the Ledger cluster is not able to process requests. This alert should be handled with the highest priority.
+This is the most critical alert and indicates that a Ledger cluster is not able to process requests. This alert should be handled with the highest priority.
 
 ### Example Alert
 

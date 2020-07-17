@@ -2,7 +2,7 @@
 
 ## EnvoyDeploymentHasNoReplicas
 
-This is the most critical alert and indicates that the Envoy cluster is not able to process requests. This alert should be handled with the highest priority.
+This is the most critical alert and indicates that an Envoy cluster is not able to process requests. This alert should be handled with the highest priority.
 
 ### Example Alert
 
@@ -47,7 +47,7 @@ deployment.extensions/scalar-envoy scaled
 
 ## EnvoyDeploymentHasMissingReplicas
 
-This alert let you know if the kubernetes cluster cannot start the envoy pod, this mean that the cluster does not have the enough resource or lost of one or many kubernetes nodes to run the deployment.
+This alert lets you know if a kubernetes cluster cannot start envoy pods, which means that the cluster does not have enough resource or lost of one or many kubernetes nodes to run the deployment.
 
 ### Example Alert
 
@@ -75,14 +75,14 @@ Alert: scalar-envoy: has insuficient replicas. - warning
 
 ### Action Needed
 
-* Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
-* Check the kubernetes deployment with `kubectl describe deployments`
-* Check the nodes status with `kubectl get node -o wide`
-* Check the cloud provider to see if there are any known issues in the deployed location https://status.azure.com/en-us/status
+* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kube/<date>/*.log`
+* Check kubernetes deployment with `kubectl describe deployments`
+* Check nodes statuses with `kubectl get node -o wide`
+* Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
 
 ## EnvoyPodsPending
 
-This alert let you know if the kubernetes cluster cannot start the envoy pod, this mean that the cluster does not have the enough resource.
+This alert lets you know if a kubernetes cluster cannot start envoy pods, which means that the cluster does not have the enough resource.
 
 ### Example Alert
 
@@ -110,13 +110,13 @@ Alert: Pod scalar-envoy-xxxx-yyyy in namespace default in pending status - warni
 
 ### Action Needed
 
-* Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
-* Check the kubernetes deployment with `kubectl describe pod scalar-envoy-xxxx-yyyy`
-* Check the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
+* Check log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kube/<date>/*.log`
+* Check a kubernetes deployment with `kubectl describe pod scalar-envoy-xxxx-yyyy`
+* Check kubernetes logs on the monitor server `/log/kube/<date>/*.log`
 
 ## EnvoyPodsError
 
-This alert let you know if the kubernetes cluster cannot start the envoy pod for many errors:
+This alert lets you know if a kubernetes cluster cannot start envoy pods for one of the following reasons.
 
 * CrashLoopBackOff: application problem.
 * CreateContainerConfigError: manifests or helm template have error in configmap or secrets.
@@ -151,5 +151,5 @@ Alert: Pod scalar-envoy-xxxx-yyyy in namespace default has an error status - war
 
 ### Action Needed
 
-* Check the kubernetes deployment with `kubectl describe pod scalar-envoy-xxxx-yyyy`
-* Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
+* Check a kubernetes deployment with `kubectl describe pod scalar-envoy-xxxx-yyyy`
+* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kube/<date>/*.log`
