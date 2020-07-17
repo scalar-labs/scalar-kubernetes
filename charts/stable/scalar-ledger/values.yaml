@@ -11,6 +11,10 @@ scalarLedgerConfiguration:
   cassandraUsername: cassandra
   cassandraPassword: cassandra
   ledgerLogLevel: INFO
+  replicationFactor: 3
+
+schemaImport:
+  enable: true
 
 image:
   # image.repository -- Docker image
