@@ -5,6 +5,8 @@ remote_directory: "/home/{{ ansible_user }}"
 helm_binary_path: /usr/local/bin/helm
 deploy_prometheus: yes
 create_dashboard: yes
+alertmanager_notification_activated: false
+# slack_webhook_url: "https://hooks.slack.com/services/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx" 
 prometheus_crds_url:
 - https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
 - https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
