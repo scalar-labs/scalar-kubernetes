@@ -22,7 +22,7 @@ spec:
 
     - alert: EnvoyDeploymentHasMissingReplicas
       expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-envoy"} > 0
-      for: 1m
+      for: 5m
       labels:
         severity: warning
         app: Envoy

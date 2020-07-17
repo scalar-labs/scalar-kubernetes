@@ -22,7 +22,7 @@ spec:
         
     - alert: LedgerDeploymentHasMissingReplicas
       expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-ledger"} > 0
-      for: 1m
+      for: 5m
       labels:
         severity: warning
         app: Ledger
