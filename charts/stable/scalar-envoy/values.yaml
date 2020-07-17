@@ -68,10 +68,12 @@ service:
       # service.ports.envoy-priv.protocol -- envoy protocol
       protocol: TCP
 
-## ServiceMonitor consumed by prometheus-operator
 serviceMonitor:
+  # serviceMonitor.enabled -- enable metrics collect with prometheus
   enabled: true
+  # serviceMonitor.interval -- custom interval to retrieve the metrics
   interval: "15s"
+  # serviceMonitor.namespace -- which namespace prometheus is located. by default monitoring
   namespace: monitoring
 
 # resources -- resources allowed to the pod

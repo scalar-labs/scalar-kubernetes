@@ -28,6 +28,9 @@ Current chart version is `1.0.0`
 | service.ports.envoy.protocol | string | `"TCP"` | envoy protocol |
 | service.ports.envoy.targetPort | int | `50051` | envoy k8s internal name |
 | service.type | string | `"LoadBalancer"` | service types in kubernetes |
+| serviceMonitor.enabled | bool | `true` | enable metrics collect with prometheus |
+| serviceMonitor.interval | string | `"15s"` | custom interval to retrieve the metrics |
+| serviceMonitor.namespace | string | `"monitoring"` | which namespace prometheus is located. by default monitoring |
 | strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |
 | strategy.type | string | `"RollingUpdate"` | New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate |
 | tolerations | list | `[]` | Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints. |
