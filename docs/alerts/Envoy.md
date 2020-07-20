@@ -1,6 +1,6 @@
 # Envoy Alerts
 
-## EnvoyDeploymentHasNoReplicas
+## EnvoyClusterDown
 
 This is the most critical alert and indicates that an Envoy cluster is not able to process requests. This alert should be handled with the highest priority.
 
@@ -9,22 +9,22 @@ This is the most critical alert and indicates that an Envoy cluster is not able 
 #### Firing
 
 ```
-[FIRING:1] EnvoyDeploymentHasNoReplicas - critical
-Alert: scalar-envoy: has no replicas. - critical
- Description: deployment scalar-envoy has 0 replicas
+[FIRING:1] EnvoyClusterDown - critical
+Alert: Envoy cluster is down - critical
+ Description: Envoy cluster is down, no resquest can be process
  Details:
-  • alertname: EnvoyDeploymentHasNoReplicas
+  • alertname: EnvoyClusterDown
   • deployment: scalar-envoy
 ```
 
 #### Resolved
 
 ```
-[RESOLVED] EnvoyDeploymentHasNoReplicas - critical
-Alert: scalar-envoy: has no replicas. - critical
- Description: deployment scalar-envoy has 0 replicas
+[RESOLVED] EnvoyClusterDown - critical
+Alert: Envoy cluster is down - critical
+ Description: Envoy cluster is down, no resquest can be process
  Details:
-  • alertname: EnvoyDeploymentHasNoReplicas
+  • alertname: EnvoyClusterDown
   • deployment: scalar-envoy
 ```
 
@@ -35,7 +35,7 @@ Alert: scalar-envoy: has no replicas. - critical
 * Check nodes statuses with `kubectl get node -o wide`
 * Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
 
-## EnvoyDeploymentHasMissingReplicas
+## EnvoyClusterDegraded
 
 This alert lets you know if a kubernetes cluster cannot start envoy pods, which means that the cluster does not have enough resource or lost of one or many kubernetes nodes to run the deployment.
 
@@ -44,22 +44,22 @@ This alert lets you know if a kubernetes cluster cannot start envoy pods, which 
 #### Firing
 
 ```
-[FIRING:1] EnvoyDeploymentHasMissingReplicas - warning
-Alert: scalar-envoy: has insuficient replicas. - warning
- Description: deployment scalar-envoy has 1 replica(s) unavailable.
+[FIRING:1] EnvoyClusterDegraded - warning
+Alert: Envoy cluster is running in a degraded mode - warning
+ Description: Envoy cluster is running in a degraded mode, some of the Envoy pods are not healthy
  Details:
-  • alertname: EnvoyDeploymentHasMissingReplicas
+  • alertname: EnvoyClusterDegraded
   • deployment: scalar-envoy
 ```
 
 #### Resolved
 
 ```
-[RESOLVED:1] EnvoyDeploymentHasMissingReplicas - warning
-Alert: scalar-envoy: has insuficient replicas. - warning
- Description: deployment scalar-envoy has 1 replica(s) unavailable.
+[RESOLVED] EnvoyClusterDegraded - warning
+Alert: Envoy cluster is running in a degraded mode - warning
+ Description: Envoy cluster is running in a degraded mode, some of the Envoy pods are not healthy
  Details:
-  • alertname: EnvoyDeploymentHasMissingReplicas
+  • alertname: EnvoyClusterDegraded
   • deployment: scalar-envoy
 ```
 
@@ -70,40 +70,6 @@ Alert: scalar-envoy: has insuficient replicas. - warning
 * Check replica set with `kubectl get replicasets.apps`
 * Check nodes statuses with `kubectl get node -o wide`
 * Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
-
-## EnvoyMultiplePodsPending
-
-This is critical alert and indicates that an Envoy cluster is not able to process requests. This alert should be handled with the highest priority.
-
-### Example Alert
-
-#### Firing
-
-```
-[FIRING:1] EnvoyMultiplePodsPending - warning
-Alert: scalar-envoy: has insuficient replicas. - warning
- Description: deployment scalar-envoy has 1 replica(s) unavailable.
- Details:
-  • alertname: EnvoyMultiplePodsPending
-  • deployment: scalar-envoy
-```
-
-#### Resolved
-
-```
-[RESOLVED:1] EnvoyMultiplePodsPending - warning
-Alert: Multiple scalar-envoy pods in pending status. - warning
- Description: Multiple scalar-envoy pods has been in pending status for more than 1 minute.
- Details:
-  • alertname: EnvoyMultiplePodsPending
-  • deployment: scalar-envoy
-```
-
-### Action Needed
-
-* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kube/<date>/*.log` or `kubectl logs scalar-envoy-xxxx-yyyy`
-* Check kubernetes deployment with `kubectl describe deployments scalar-envoy`
-* Check kubernetes pod with `kubeclt describe po scalar-envoy-xxxx-yyyy`
 
 ## EnvoyPodsPending
 
@@ -141,14 +107,14 @@ Alert: Pod scalar-envoy-xxxx-yyyy in namespace default in pending status - warni
 
 ## EnvoyPodsError
 
-This alert lets you know if a kubernetes cluster cannot start envoy pods for one of the following reasons.
+This alert lets you know if a kubernetes cluster cannot start envoy pods for one of the following reasons:
 
-* CrashLoopBackOff:
-* CreateContainerConfigError:
-* CreateContainerError:
-* ErrImagePull:
-* ImagePullBackOff:
-* InvalidImageName:
+* CrashLoopBackOff
+* CreateContainerConfigError
+* CreateContainerError
+* ErrImagePull
+* ImagePullBackOff
+* InvalidImageName
 
 ### Example Alert
 

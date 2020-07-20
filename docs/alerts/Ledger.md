@@ -1,6 +1,6 @@
 # Ledger Alerts
 
-## LedgerDeploymentHasNoReplicas
+## LedgerClusterDown
 
 This is the most critical alert and indicates that an Ledger cluster is not able to process requests. This alert should be handled with the highest priority.
 
@@ -9,22 +9,22 @@ This is the most critical alert and indicates that an Ledger cluster is not able
 #### Firing
 
 ```
-[FIRING:1] LedgerDeploymentHasNoReplicas - critical
-Alert: scalar-ledger: has no replicas. - critical
- Description: deployment scalar-ledger has 0 replicas
+[FIRING:1] LedgerClusterDown - critical
+Alert: Ledger cluster is down - critical
+ Description: Ledger cluster is down, no resquest can be process.
  Details:
-  • alertname: LedgerDeploymentHasNoReplicas
+  • alertname: LedgerClusterDown
   • deployment: scalar-ledger
 ```
 
 #### Resolved
 
 ```
-[RESOLVED] LedgerDeploymentHasNoReplicas - critical
-Alert: scalar-ledger: has no replicas. - critical
- Description: deployment scalar-ledger has 0 replicas
+[RESOLVED] LedgerClusterDown - critical
+Alert: Ledger cluster is down - critical
+ Description: Ledger cluster is down, no resquest can be process.
  Details:
-  • alertname: LedgerDeploymentHasNoReplicas
+  • alertname: LedgerClusterDown
   • deployment: scalar-ledger
 ```
 
@@ -35,7 +35,7 @@ Alert: scalar-ledger: has no replicas. - critical
 * Check nodes statuses with `kubectl get node -o wide`
 * Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
 
-## LedgerDeploymentHasMissingReplicas
+## LedgerClusterDegraded
 
 This alert lets you know if a kubernetes cluster cannot start ledger pods, which means that the cluster does not have enough resource or lost of one or many kubernetes nodes to run the deployment.
 
@@ -44,22 +44,22 @@ This alert lets you know if a kubernetes cluster cannot start ledger pods, which
 #### Firing
 
 ```
-[FIRING:1] LedgerDeploymentHasMissingReplicas - warning
-Alert: scalar-ledger: has insuficient replicas. - warning
- Description: deployment scalar-ledger has 1 replica(s) unavailable.
+[FIRING:1] LedgerClusterDegraded - warning
+Alert: Ledger cluster is running in a degraded mode - warning
+ Description: Ledger cluster is running in a degraded mode, some of the Ledger pods are not healthy.
  Details:
-  • alertname: LedgerDeploymentHasMissingReplicas
+  • alertname: LedgerClusterDegraded
   • deployment: scalar-ledger
 ```
 
 #### Resolved
 
 ```
-[RESOLVED:1] LedgerDeploymentHasMissingReplicas - warning
-Alert: scalar-ledger: has insuficient replicas. - warning
- Description: deployment scalar-ledger has 1 replica(s) unavailable.
+[RESOLVED] LedgerClusterDegraded - warning
+Alert: Ledger cluster is running in a degraded mode - warning
+ Description: Ledger cluster is running in a degraded mode, some of the Ledger pods are not healthy.
  Details:
-  • alertname: LedgerDeploymentHasMissingReplicas
+  • alertname: LedgerClusterDegraded
   • deployment: scalar-ledger
 ```
 
@@ -141,14 +141,14 @@ Alert: Pod scalar-ledger-xxxx-yyyy in namespace default in pending status - warn
 
 ## LedgerPodsError
 
-This alert lets you know if a kubernetes cluster cannot start ledger pods for one of the following reasons.
+This alert lets you know if a kubernetes cluster cannot start ledger pods for one of the following reasons:
 
-* CrashLoopBackOff:
-* CreateContainerConfigError:
-* CreateContainerError:
-* ErrImagePull:
-* ImagePullBackOff:
-* InvalidImageName:
+* CrashLoopBackOff
+* CreateContainerConfigError
+* CreateContainerError
+* ErrImagePull
+* ImagePullBackOff
+* InvalidImageName
 
 ### Example Alert
 

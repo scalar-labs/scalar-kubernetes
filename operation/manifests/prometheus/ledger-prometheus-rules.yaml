@@ -10,35 +10,25 @@ spec:
   groups:
   - name: LedgerAlerts
     rules:
-    - alert: LedgerDeploymentHasNoReplicas
-      expr: kube_deployment_spec_replicas{deployment="scalar-ledger"} == 0
+    - alert: LedgerClusterDown
+      expr: kube_deployment_spec_replicas{deployment="scalar-ledger"} - kube_deployment_status_replicas_unavailable{deployment="scalar-ledger"} == 0
       for: 1m
       labels:
         severity: critical
         app: Ledger
       annotations:
-        summary: '{{$labels.deployment}}: has no replicas.'
-        description: 'deployment {{$labels.deployment}} has {{$value}} replicas.'
-        
-    - alert: LedgerDeploymentHasMissingReplicas
-      expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-ledger"} > 0
-      for: 5m
+        summary: 'Ledger cluster is down'
+        description: 'Ledger cluster is down, no resquest can be process'
+
+    - alert: LedgerClusterDegraded
+      expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-ledger"} >= 1
+      for: 1m
       labels:
         severity: warning
         app: Ledger
       annotations:
-        summary: '{{$labels.deployment}}: has insuficient replicas.'
-        description: 'deployment {{$labels.deployment}} has {{$value}} replica(s) unavailable.'
-
-    - alert: LedgerMultiplePodsPending
-      expr: sum(kube_pod_status_phase{namespace="default", pod=~"^scalar-ledger-.*", phase!="Pending"}) by (phase) >= 2
-      for: 1m
-      labels:
-        severity: critical
-        app: Ledger
-      annotations:
-        description: 'Multiple scalar-ledger pods has been in pending status for more than 1 minute.'
-        summary: 'Multiple scalar-ledger pods in pending status.'
+        summary: 'Ledger cluster is running in a degraded mode'
+        description: 'Ledger cluster is running in a degraded mode, some of the Ledger pods are not healthy'
 
     - alert: LedgerPodsPending
       expr: kube_pod_status_phase{namespace="default", pod=~"^scalar-ledger-.*", phase="Pending"} > 0

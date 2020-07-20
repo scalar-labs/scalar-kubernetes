@@ -10,36 +10,26 @@ spec:
   groups:
   - name: EnvoyAlerts
     rules:
-    - alert: EnvoyDeploymentHasNoReplicas
-      expr: kube_deployment_spec_replicas{deployment="scalar-envoy"} == 0
+    - alert: EnvoyClusterDown
+      expr: kube_deployment_spec_replicas{deployment="scalar-envoy"} - kube_deployment_status_replicas_unavailable{deployment="scalar-envoy"} == 0
       for: 1m
       labels:
         severity: critical
         app: Envoy
       annotations:
-        summary: '{{$labels.deployment}}: has no replicas.'
-        description: 'deployment {{$labels.deployment}} has {{$value}} replicas'
+        summary: 'Envoy cluster is down'
+        description: 'Envoy cluster is down, no resquest can be process.'
 
-    - alert: EnvoyDeploymentHasMissingReplicas
-      expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-envoy"} > 0
-      for: 5m
+    - alert: EnvoyClusterDegraded
+      expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-envoy"} >= 1
+      for: 1m
       labels:
         severity: warning
         app: Envoy
       annotations:
-        summary: '{{$labels.deployment}}: has insuficient replicas.'
-        description: 'deployment {{$labels.deployment}} has {{$value}} replica(s) unavailable'
+        summary: 'Envoy cluster is running in a degraded mode'
+        description: 'Envoy cluster is running in a degraded mode, some of the Envoy pods are not healthy.'
 
-    - alert: EnvoyMultiplePodsPending
-      expr: sum(kube_pod_status_phase{namespace="default", pod=~"^scalar-envoy-.*", phase!="Pending"}) by (phase) >= 2
-      for: 1m
-      labels:
-        severity: critical
-        app: Envoy
-      annotations:
-        description: 'Multiple scalar-envoy pods has been in pending status for more than 1 minute.'
-        summary: 'Multiple scalar-envoy pods in pending status.'
-    
     - alert: EnvoyPodsPending
       expr: kube_pod_status_phase{namespace="default", pod=~"^scalar-envoy-.*", phase="Pending"} > 0
       for: 1m
@@ -48,7 +38,7 @@ spec:
         app: Envoy
       annotations:
         description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has been in pending status for more than 1 minute.'
-        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in pending status.'
+        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in pending status'
     
     - alert: EnvoyPodsError
       expr: kube_pod_container_status_waiting_reason{namespace="default",reason!="ContainerCreating",pod=~"^scalar-envoy-.*"} > 0
@@ -58,4 +48,5 @@ spec:
         app: Envoy
       annotations:
         description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error for more than 1 minute.'
-        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error status.'
+        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error status'
+

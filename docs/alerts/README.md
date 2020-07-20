@@ -2,5 +2,5 @@
 
 This section covers the types of alerts and what actions need to be taken.
 
-* [Envoy Alerts](./EnvoyAlerts.md)
-* [Ledger Alerts](./LedgerAlerts.md)
+* [Envoy Alerts](./Envoy.md)
+* [Ledger Alerts](./Ledger.md)
