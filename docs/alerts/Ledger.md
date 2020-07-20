@@ -71,40 +71,6 @@ Alert: Ledger cluster is running in a degraded mode - warning
 * Check nodes statuses with `kubectl get node -o wide`
 * Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
 
-## LedgerMultiplePodsPending
-
-This is critical alert and indicates that an Ledger cluster is not able to process requests. This alert should be handled with the highest priority.
-
-### Example Alert
-
-#### Firing
-
-```
-[FIRING:1] LedgerMultiplePodsPending - warning
-Alert: scalar-ledger: has insuficient replicas. - warning
- Description: deployment scalar-ledger has 1 replica(s) unavailable.
- Details:
-  • alertname: LedgerMultiplePodsPending
-  • deployment: scalar-ledger
-```
-
-#### Resolved
-
-```
-[RESOLVED:1] LedgerMultiplePodsPending - warning
-Alert: Multiple scalar-ledger pods in pending status. - warning
- Description: Multiple scalar-ledger pods has been in pending status for more than 1 minute.
- Details:
-  • alertname: LedgerMultiplePodsPending
-  • deployment: scalar-ledger
-```
-
-### Action Needed
-
-* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kube/<date>/*.log` or `kubectl logs scalar-ledger-xxxx-yyyy`
-* Check kubernetes deployment with `kubectl describe deployments scalar-ledger`
-* Check kubernetes pod with `kubeclt describe po scalar-ledger-xxxx-yyyy`
-
 ## LedgerPodsPending
 
 This alert lets you know if a kubernetes cluster cannot start ledger pods, which means that the cluster does not have the enough resource.
