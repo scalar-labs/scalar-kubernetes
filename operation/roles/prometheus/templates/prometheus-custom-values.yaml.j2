@@ -36,7 +36,7 @@ alertmanager:
       resolve_timeout: 5m
       slack_api_url: {{ slack_webhook_url }}
     route:
-      group_by: ['app', 'alertname']
+      group_by: ['cluster', 'alertname']
       group_wait: 15s
       group_interval: 1m
       repeat_interval: 30m
@@ -53,7 +53,7 @@ alertmanager:
     - name: 'team-slack'
       slack_configs:
       - send_resolved: true
-        title: {% raw %}'[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.alertname }} - {{ .CommonLabels.severity }}'{% endraw %}
+        title: {% raw %}'[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]'{% endraw %}
 
         text: >-
           {% raw %}{{ range .Alerts }}
@@ -64,7 +64,7 @@ alertmanager:
             {{ end }}
           {{ end }}{% endraw %}
         
-        title_link: 'https://github.com/scalar-labs/scalar-k8s/tree/master/docs/alerts/{% raw %}{{ .GroupLabels.app }}.md#{{ .GroupLabels.alertname }}{% endraw %}'
+        title_link: 'https://github.com/scalar-labs/scalar-k8s/tree/master/docs/alerts/{% raw %}{{ .GroupLabels.alertname }}{% endraw %}.md'
 {% endif %}
 
   alertmanagerSpec:
