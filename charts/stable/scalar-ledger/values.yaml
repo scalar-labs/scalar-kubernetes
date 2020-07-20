@@ -24,7 +24,7 @@ image:
   pullPolicy: IfNotPresent
 
 # imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
-imagePullSecrets: [ name: reg-docker-secrets ]
+imagePullSecrets: [name: reg-docker-secrets]
 
 # nameOverride -- String to partially override scalar-envoy.fullname template (will maintain the release name)
 nameOverride: ""
