@@ -4,18 +4,18 @@ on:
     branches:
       - master
     paths:
-      - 'charts/stable/**'
+      - "charts/stable/**"
   push:
     branches:
       - master
     paths:
-      - 'charts/stable/**'
+      - "charts/stable/**"
 jobs:
   lint-chart:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      
+
       - name: Run chart-testing (lint)
         id: lint
         uses: helm/chart-testing-action@v1.0.0-rc.2
@@ -33,10 +33,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Fetch history for chart testing
         run: git fetch --prune --unshallow
-      
+
       - name: Run kubeval
         env:
           KUBERNETES_VERSION: ${{ matrix.k8s }}
@@ -71,10 +71,6 @@ jobs:
           kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=${{ secrets.DOCKERHUB_USER }} --docker-password=${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           kubectl create -f .github/cassandra.yaml
           echo "Wait until cassandra is running" && sleep 100
-          kubectl create -f .github/scalardl-schema.yaml
-          echo "Wait until scalardl schema is completed" && sleep 60
-          kubectl get po,svc,node -o wide
-          kubectl logs job/scalardl-schema
 
       - name: Run chart-testing (install)
         uses: helm/chart-testing-action@v1.0.0-rc.2
