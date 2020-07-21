@@ -18,6 +18,7 @@ You need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the val
 $ export DOCKERHUB_USER=<user>
 $ export DOCKERHUB_ACCESS_TOKEN=<token>
 ```
+
 ## Deploy Scalar DL
 
 It is now ready to deploy Scalar DL to the k8s cluster.

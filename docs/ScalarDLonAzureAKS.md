@@ -2,14 +2,16 @@
 
 This example will deploy a simple Scalar DL environment in the Japaneast region with your Azure account. If you want to use another region or store the tfstate on Azure you need to update `backend.tf`, `examples.tfvars` and `remote.tf` of each module.
 
-* This document is for internal use of Scalar DL Terraform modules for Azure. If you are interested in the modules, please take a look at [here](../../modules/azure)
-
 ## Prerequisites
 
 * Terraform >= 0.12.x
 * Ansible >= 2.9.x
 * Azure CLI
 * ssh-agent with a private key
+
+## Diagram
+
+![image](images/aks.png)
 
 ## What is created
 
@@ -34,32 +36,117 @@ az login
 
 ### Create network resources
 
-Please refer to [README](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-network-resources)
+```console
+# Please update `/path/to/local-repository` before running the command.
+$ export SCALAR_K8S_HOME=/path/to/local-repository
+$ cd ${SCALAR_K8S_HOME}/examples/azure/network
+
+# Generate a test key-pair
+$ ssh-keygen -b 2048 -t rsa -f ./example_key -q -N ""
+$ chmod 400 example_key
+
+# Create an environment and bastion server
+$ terraform init
+$ terraform apply -var-file example.tfvars
+```
+
+Please refer to [network section](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-network-resources)
 
 ### Create Cassandra resources
 
-Please refer to [README](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-cassandra-resources)
+```console
+$ cd ${SCALAR_K8S_HOME}/examples/azure/cassandra
+
+# Create the cassandra cluster
+$ terraform init
+$ terraform apply -var-file example.tfvars
+```
+
+Please refer to [cassandra section](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-cassandra-resources)
 
 ### Create Kubernetes cluster
 
 ```console
-cd examples/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes
 
-terraform init
-terraform apply -var-file example.tfvars
+# Create the Kubernetes cluster
+$ terraform init
+$ terraform apply -var-file example.tfvars
 ```
+
+For more information about the variable in `example.tfvars`, please refer to [readme](../modules/azure/kubernetes/README.md)
 
 ### Create Monitor resources
 
-Please refer to [README](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-monitor-resources)
+```console
+$ cd ${SCALAR_K8S_HOME}/examples/azure/monitor
+
+# Create the monitor server for cassandra modules and log collection
+$ terraform init
+$ terraform apply -var-file example.tfvars
+```
+
+Please refer to [monitor section](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-monitor-resources)
 
 ### Setup bastion for Kubernetes
 
-Please refer to [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
+```console
+# Create inventory for ansible
+$ cd ${SCALAR_K8S_HOME}/examples/azure/network
+$ terraform output inventory_ini > ${SCALAR_K8S_HOME}/operation/inventory.ini
+
+# Retrieve kube_config for setup kubectl
+$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
+$ terraform output kube_config > ${SCALAR_K8S_HOME}/operation/tmp/kube_config
+
+# Setup bastion for Kubernetes
+$ cd ${SCALAR_K8S_HOME}/operation
+$ ansible-playbook -i inventory.ini playbook-install-tools.yml
+```
+
+Please refer to [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) for more information.
+
+### Deploy Prometheus for Kubernetes resources
+
+```console
+$ cd ${SCALAR_K8S_HOME}/operation
+
+# Deploy prometheus operator in Kubernetes
+$ ansible-playbook -i inventory.ini playbook-deploy-prometheus.yml
+```
+
+Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more information.
+
+### Deploy log collection for Kubernetes resources
+
+```console
+$ cd ${SCALAR_K8S_HOME}/operation
+
+# Deploy fluentbit to collect log from Kubernetes
+$ ansible-playbook -i inventory.ini playbook-deploy-fluentbit.yaml
+```
+
+Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for more information.
 
 ### Create Scalar DL and Envoy resources
 
-Please refer to [A Guide on How to Deploy Scalar DL Manually with kubectl](../operation/manifests/README.md)
+You need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the values directly in the `${SCALAR_K8S_HOME}/operation/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
+
+```console
+$ cd ${SCALAR_K8S_HOME}/operation
+
+# export docker secrets for ansible
+$ export DOCKERHUB_USER=<user>
+$ export DOCKERHUB_ACCESS_TOKEN=<token>
+
+# Deploy Scalar DL and Envoy resources
+$ ansible-playbook -i inventory.ini playbook-deploy-scalardl.yml
+```
+
+Please refer to two followings guides for more informations:
+
+* [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDL.md)
+* [A Guide on How to Deploy Scalar DL Manually with kubectl](../operation/manifests/README.md)
 
 ## Generate outputs
 
@@ -96,8 +183,6 @@ subnet_map = {
   "cassandra" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk/subnets/cassandra"
   "private" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk/subnets/private"
   "public" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk/subnets/public"
-  "scalardl_blue" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk/subnets/scalardl_blue"
-  "scalardl_green" = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk/subnets/scalardl_green"
 }
 user_name = centos
 ```
@@ -117,7 +202,9 @@ cassandra_start_on_initial_boot = false
 
 ### Kubernetes
 
-Kubernetes credential can be found with `terraform output kube_config`, see below.
+#### Kubernetes Credential
+
+You need to export the `kube_config` from terraform and after find `server` line and replace with `https://localhost:7000` . finally copy into ~/.kube/config
 
 ```yml
 apiVersion: v1
@@ -142,8 +229,72 @@ users:
     token: 48fdda...
 ```
 
-## How to destroy
+#### Generate SSH Config
 
-Don't forget to delete the entire environment with `terraform destroy` when you are finished.
+The following command will generate a `ssh.cfg` with `LocalForward` to access the Kubernetes API from your local machine.
+
+```console
+$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ terraform output k8s_ssh_config
+Host *
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+
+Host bastion
+  HostName bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com
+  User centos
+  LocalForward 8000 monitor.internal.scalar-labs.com:80
+  LocalForward 7000 scalar-k8s-72b7f3f4.15539fa5-307a-46e3-aec3-d0e625c5cf8e.privatelink.eastus.azmk8s.io:443
+
+Host *.internal.scalar-labs.com
+  ProxyCommand ssh -F ssh.cfg bastion -W %h:%p
+
+Host 10.*
+  User azureuser
+  ProxyCommand ssh -F ssh.cfg bastion -W %h:%p
+```
+
+```console
+$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ terraform output k8s_ssh_config > ssh.cfg
+```
+
+#### How to access
+
+Now let's access to Prometheus component on your local machine. Open the ssh port-forward to the bastion, and let it open.
+
+```console
+$ ssh -F ssh.cfg bastion
+Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
+[centos@bastion-1 ~]$
+```
+
+```console
+$ kubectl get po,svc,endpoints -o wide
+NAME                                    READY   STATUS      RESTARTS   AGE     IP             NODE                                   NOMINATED NODE   READINESS GATES
+pod/se-scalar-envoy-7ddff6fdc5-2ml94    1/1     Running     0          141m    10.42.40.209   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/se-scalar-envoy-7ddff6fdc5-z92p6    1/1     Running     0          144m    10.42.40.140   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/sl-scalar-ledger-846d69ddf5-wptsk   1/1     Running     0          144m    10.42.41.102   aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/sl-scalar-ledger-846d69ddf5-wt6rg   1/1     Running     0          142m    10.42.40.223   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/sl-scalar-ledger-schema-5zlng       0/1     Completed   0          4h28m   10.42.40.62    aks-default-34802672-vmss000000        <none>           <none>
+
+NAME                                TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                           AGE     SELECTOR
+service/kubernetes                  ClusterIP      10.42.48.1     <none>          443/TCP                           6h48m   <none>
+service/se-scalar-envoy             LoadBalancer   10.42.49.250   13.87.152.190   50051:31788/TCP,50052:30498/TCP   4h28m   app.kubernetes.io/instance=se,app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=1.0.0
+service/se-scalar-envoy-metrics     ClusterIP      10.42.49.123   <none>          9001/TCP                          4h28m   app.kubernetes.io/instance=se,app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=1.0.0
+service/sl-scalar-ledger-headless   ClusterIP      None           <none>          <none>                            4h28m   app.kubernetes.io/instance=sl,app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=2.0.7
+
+NAME                                  ENDPOINTS                                                              AGE
+endpoints/kubernetes                  10.42.40.4:443                                                         6h48m
+endpoints/se-scalar-envoy             10.42.40.140:50052,10.42.40.209:50052,10.42.40.140:50051 + 1 more...   4h28m
+endpoints/se-scalar-envoy-metrics     10.42.40.140:9001,10.42.40.209:9001                                    4h28m
+endpoints/sl-scalar-ledger-headless   10.42.40.223,10.42.41.102                                              4h28m
+```
+
+the public endpoint is 13.87.152.190 on port 50051 and 50052
 
 Please check out [Scalar DL Getting Started](https://scalardl.readthedocs.io/en/latest/getting-started/) to understand how to interact with the environment.
+
+## How to destroy
+
+Don't forget to delete the entire environment with `terraform destroy` for each modules when you are finished.
