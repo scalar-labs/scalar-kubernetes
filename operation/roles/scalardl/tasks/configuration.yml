@@ -4,7 +4,7 @@
     api_version: v1
     kind: Secret
     name: "{{ kubernetes_registry_secret_name }}"
-    namespace: "{{ default_kubernetes_namespace }}"
+    namespace: "{{ kubernetes_namespace }}"
   register: docker_registry_secrets
 
 - name: Add docker-registry secrets in Kubernetes
@@ -12,3 +12,12 @@
     kubectl create secret docker-registry {{ kubernetes_registry_secret_name }} --docker-server={{ docker_registry }}
     --docker-username={{ docker_username }} --docker-password={{ docker_password }}
   when: not docker_registry_secrets.resources | length > 0
+
+- name: Template Helm values on remote server
+  template:
+    src: "{{ item }}-custom-values.yaml.j2"
+    dest: "{{ remote_directory }}/helm/charts/config/{{ item }}-custom-values.yaml"
+    remote_src: no
+  loop:
+  - envoy
+  - ledger

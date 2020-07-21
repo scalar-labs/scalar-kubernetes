@@ -1,9 +1,14 @@
-default_kubernetes_namespace: default
-local_manifests_directory: ../../../manifests/
-remote_manifests_directory: "/home/{{ ansible_user }}/manifests"
+local_helm_charts_directory: ../../../../charts/stable
+remote_directory: "/home/{{ ansible_user }}"
 docker_registry: "https://index.docker.io/v2/"
 docker_username: "{{ lookup('env','DOCKERHUB_USER') }}"
 docker_password: "{{ lookup('env','DOCKERHUB_ACCESS_TOKEN') }}"
 kubernetes_registry_secret_name: "reg-docker-secrets"
-job_scalardl_schema_name: scalardl-schema
-job_scalardl_schema_version: v2.0.7
+helm_binary_path: /usr/local/bin/helm
+deploy_scalar_ledger: yes
+deploy_scalar_envoy: yes
+kubernetes_namespace: default
+ledger_helm_release_name: sl
+envoy_helm_release_name: se
+ledger_helm_replicas: 3
+envoy_helm_replicas: 3
