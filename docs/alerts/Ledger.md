@@ -33,6 +33,7 @@ Alert: Ledger cluster is down - critical
 * Check the number of replicas set `kubectl get deployments. scalar-ledger`
 * Check the number of replicas set `kubectl describe deployments. scalar-ledger`
 * Check nodes statuses with `kubectl get node -o wide`
+* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`
 * Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
 
 ## LedgerClusterDegraded
@@ -65,7 +66,7 @@ Alert: Ledger cluster is running in a degraded mode - warning
 
 ### Action Needed
 
-* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kube/<date>/*.log`
+* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`
 * Check kubernetes deployment with `kubectl describe deployments scalar-ledger`
 * Check replica set with `kubectl get replicasets.apps`
 * Check nodes statuses with `kubectl get node -o wide`
@@ -101,9 +102,8 @@ Alert: Pod scalar-ledger-xxxx-yyyy in namespace default in pending status - warn
 
 ### Action Needed
 
-* Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
+* Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`
 * Check the kubernetes deployment with `kubectl describe pod scalar-ledger-xxxx-yyyy`
-* Check the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
 
 ## LedgerPodsError
 
@@ -143,4 +143,4 @@ Alert: Pod scalar-ledger-xxxx-yyyy in namespace default has an error status - wa
 ### Action Needed
 
 * Check the kubernetes deployment with `kubectl describe pod scalar-ledger-xxxx-yyyy`
-* Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kube/<date>/*.log`
+* Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`

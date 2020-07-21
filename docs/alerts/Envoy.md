@@ -33,6 +33,7 @@ Alert: Envoy cluster is down - critical
 * Check the number of replicas set `kubectl get deployments. scalar-envoy`
 * Check the number of replicas set `kubectl describe deployments. scalar-envoy`
 * Check nodes statuses with `kubectl get node -o wide`
+* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`
 * Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
 
 ## EnvoyClusterDegraded
@@ -65,7 +66,7 @@ Alert: Envoy cluster is running in a degraded mode - warning
 
 ### Action Needed
 
-* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kube/<date>/*.log` or `kubectl logs scalar-envoy-xxxx-yyyy`
+* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log` or `kubectl logs scalar-envoy-xxxx-yyyy`
 * Check kubernetes deployment with `kubectl describe deployments scalar-envoy`
 * Check replica set with `kubectl get replicasets.apps`
 * Check nodes statuses with `kubectl get node -o wide`
@@ -103,7 +104,6 @@ Alert: Pod scalar-envoy-xxxx-yyyy in namespace default in pending status - warni
 
 * Check log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kube/<date>/*.log`
 * Check a kubernetes deployment with `kubectl describe pod scalar-envoy-xxxx-yyyy`
-* Check kubernetes logs on the monitor server `/log/kube/<date>/*.log`
 
 ## EnvoyPodsError
 
@@ -143,4 +143,4 @@ Alert: Pod scalar-envoy-xxxx-yyyy in namespace default has an error status - war
 ### Action Needed
 
 * Check a kubernetes deployment with `kubectl describe pod scalar-envoy-xxxx-yyyy`
-* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kube/<date>/*.log`
+* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`
