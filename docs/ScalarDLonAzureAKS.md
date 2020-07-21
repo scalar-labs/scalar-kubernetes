@@ -200,6 +200,24 @@ cassandra_resource_count = 3
 cassandra_start_on_initial_boot = false
 ```
 
+### How to access instances
+
+```console
+$ cd ${SCALAR_K8S_HOME}/example/azure/network
+
+# Generate SSH config to make it easy to access backend resources
+$ terraform output ssh_config > ssh.cfg
+
+# How to connect
+$ ssh -F ssh.cfg cassandra-1.internal.scalar-labs.com
+$ ssh -F ssh.cfg cassandra-2.internal.scalar-labs.com
+$ ssh -F ssh.cfg cassandra-3.internal.scalar-labs.com
+
+$ ssh -F ssh.cfg cassy-1.internal.scalar-labs.com
+$ ssh -F ssh.cfg reaper-1.internal.scalar-labs.com
+$ ssh -F ssh.cfg monitor-1.internal.scalar-labs.com
+```
+
 ### Kubernetes
 
 #### Kubernetes Credential
@@ -259,9 +277,9 @@ $ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
 $ terraform output k8s_ssh_config > ssh.cfg
 ```
 
-#### How to access
+#### How to access to kubernetes from your local machine
 
-Now let's access to Prometheus component on your local machine. Open the ssh port-forward to the bastion, and let it open.
+Now let's access to kubernetes from your local machine. Open the ssh port-forward to the bastion, and let it open.
 
 ```console
 $ ssh -F ssh.cfg bastion
@@ -269,8 +287,10 @@ Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.az
 [centos@bastion-1 ~]$
 ```
 
+Open a new terminal or tab.
+
 ```console
-$ kubectl get po,svc,endpoints -o wide
+$ kubectl get po,svc,endpoints,nodes -o wide
 NAME                                    READY   STATUS      RESTARTS   AGE     IP             NODE                                   NOMINATED NODE   READINESS GATES
 pod/se-scalar-envoy-7ddff6fdc5-2ml94    1/1     Running     0          141m    10.42.40.209   aks-scalardlpool-34802672-vmss000001   <none>           <none>
 pod/se-scalar-envoy-7ddff6fdc5-z92p6    1/1     Running     0          144m    10.42.40.140   aks-scalardlpool-34802672-vmss000000   <none>           <none>
@@ -289,6 +309,18 @@ endpoints/kubernetes                  10.42.40.4:443                            
 endpoints/se-scalar-envoy             10.42.40.140:50052,10.42.40.209:50052,10.42.40.140:50051 + 1 more...   4h28m
 endpoints/se-scalar-envoy-metrics     10.42.40.140:9001,10.42.40.209:9001                                    4h28m
 endpoints/sl-scalar-ledger-headless   10.42.40.223,10.42.41.102                                              4h28m
+
+NAME                                        STATUS   ROLES   AGE     VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+node/aks-default-34802672-vmss000000        Ready    agent   7h12m   v1.15.11   10.42.40.5     <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000000   Ready    agent   7h7m    v1.15.11   10.42.40.106   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000001   Ready    agent   7h7m    v1.15.11   10.42.40.207   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000002   Ready    agent   7h7m    v1.15.11   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+```
+
+To access to kubernetes node, look at the `INTERNAL-IP` from `kubectl get nodes -o wide`
+
+```console
+$ ssh -F ssh.cfg 10.42.40.5
 ```
 
 the public endpoint is 13.87.152.190 on port 50051 and 50052
