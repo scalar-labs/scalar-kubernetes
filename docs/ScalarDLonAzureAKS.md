@@ -45,6 +45,9 @@ $ cd ${SCALAR_K8S_HOME}/examples/azure/network
 $ ssh-keygen -b 2048 -t rsa -f ./example_key -q -N ""
 $ chmod 400 example_key
 
+# You need to add the key to your ssh agent
+$ ssh-add example_key
+
 # Create an environment and bastion server
 $ terraform init
 $ terraform apply -var-file example.tfvars
