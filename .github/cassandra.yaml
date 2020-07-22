@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: cassandra
+  name: cassandra
+spec:
+  serviceName: cassandra-headless
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cassandra
+  template:
+    metadata:
+      labels:
+        app: cassandra
+    spec:
+      containers:
+        - image: cassandra:3.11
+          name: cassandra
+          env:
+            - name: CASSANDRA_SEEDS
+              value: "cassandra-0.cassandra-headless.default.svc.cluster.local"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cassandra
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: cql-port
+      protocol: TCP
+      port: 9042
+      targetPort: 9042
+  selector:
+    app: cassandra
