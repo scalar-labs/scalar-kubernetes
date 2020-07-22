@@ -76,6 +76,12 @@ serviceMonitor:
   # serviceMonitor.namespace -- which namespace prometheus is located. by default monitoring
   namespace: monitoring
 
+prometheusRule:
+  # prometheusRule.enabled -- enable rules for prometheus
+  enabled: true
+  # prometheusRule.namespace -- which namespace prometheus is located. by default monitoring
+  namespace: monitoring
+
 # resources -- resources allowed to the pod
 resources: {}
   # limits:
