@@ -62,11 +62,11 @@ endpoints/scalar-envoy-metrics     10.42.40.245:9001,10.42.41.37:9001,10.42.41.4
 endpoints/scalar-ledger-headless   10.42.40.215,10.42.41.33,10.42.41.8                                 24m
 ```
 
-## Customize helm value for scalar-ledger and scalar-envoy charts
+## Customize values for scalar-ledger and scalar-envoy charts
 
 In `${SCALAR_K8S_HOME}/operation/config` contain the helm custom values use for deploying the application in Kubernetes.
 
-The default helm value are describe in here:
+The default values are describe in here:
 
 * [scalar-envoy](../charts/stable/scalar-envoy/README.md)
 * [scalar-ledger](../charts/stable/scalar-ledger/README.md)
@@ -101,7 +101,7 @@ resources:
     memory: 328Mi
 ```
 
-More information can be found on [official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
+More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
 
 ### How to increase the number of Ledger Pod
 
@@ -131,4 +131,4 @@ resources:
     memory: 4Gi
 ```
 
-More information can be found on [official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
+More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
