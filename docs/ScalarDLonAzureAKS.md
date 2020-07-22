@@ -159,7 +159,7 @@ Terraform can output some useful information about your deployments, such as a b
 
 ```console
 $ terraform output
-bastion_ip = bastion-example-k8s-azure-fpjzfyk.eastus.cloudapp.azure.com
+bastion_ip = bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com
 bastion_provision_id = 2467232388962733384
 dns_zone_id = internal.scalar-labs.com
 image_id = CentOS
@@ -176,7 +176,7 @@ UserKnownHostsFile /dev/null
 StrictHostKeyChecking no
 
 Host bastion
-HostName bastion-example-k8s-azure-fpjzfyk.eastus.cloudapp.azure.com
+HostName bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com
 LocalForward 8000 monitor.internal.scalar-labs.com:80
 
 Host *.internal.scalar-labs.com
@@ -335,7 +335,7 @@ To access to kubernetes node, look at the `INTERNAL-IP` from `kubectl get nodes 
 
 ```console
 $ ssh -F ssh.cfg 10.42.40.5
-Warning: Permanently added 'bastion-paul-k8s-azure-iexejy4.westus.cloudapp.azure.com,104.210.62.65' (ECDSA) to the list of known hosts.
+Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 Warning: Permanently added '10.42.40.5' (ECDSA) to the list of known hosts.
 azureuser@aks-default-34802672-vmss000000:~$
 ```
