@@ -1,14 +1,13 @@
 local_helm_charts_directory: ../../../../charts/stable
+local_helm_charts_values_directory: ../../../config
 remote_directory: "/home/{{ ansible_user }}"
 docker_registry: "https://index.docker.io/v2/"
 docker_username: "{{ lookup('env','DOCKERHUB_USER') }}"
 docker_password: "{{ lookup('env','DOCKERHUB_ACCESS_TOKEN') }}"
 kubernetes_registry_secret_name: "reg-docker-secrets"
 helm_binary_path: /usr/local/bin/helm
-deploy_scalar_ledger: yes
-deploy_scalar_envoy: yes
 kubernetes_namespace: default
+deploy_scalar_ledger: yes
 ledger_helm_release_name: sl
+deploy_scalar_envoy: yes
 envoy_helm_release_name: se
-ledger_helm_replicas: 3
-envoy_helm_replicas: 3

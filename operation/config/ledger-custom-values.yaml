@@ -1,7 +1,9 @@
-replicaCount: {{ envoy_helm_replicas }}
+replicaCount: 3
 
-envoyConfiguration:
-  scalardlAddress: {{ ledger_helm_release_name }}-scalar-ledger-headless
+imagePullSecrets:
+  - name: reg-docker-secrets
+
+nodeSelector: {}
 
 tolerations:
 - effect: NoSchedule
@@ -32,8 +34,8 @@ affinity:
 
 resources:
   requests:
-    cpu: 200m
-    memory: 256Mi
+    cpu: 1000m
+    memory: 2Gi
   limits:
-    cpu: 300m
-    memory: 328Mi
+    cpu: 1500m
+    memory: 3Gi
