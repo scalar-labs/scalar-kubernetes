@@ -225,14 +225,18 @@ $ ssh -F ssh.cfg monitor-1.internal.scalar-labs.com
 
 #### Kubernetes Credential
 
-You need to export the `kube_config` from terraform and after find `server` line and replace with `https://localhost:7000` . finally copy into ~/.kube/config
+You need to export the `kube_config` from terraform and after find `server` line and replace with `https://localhost:7000` . finally copy into `~/.kube/config`
+
+```console
+$ terraform output kube_config
+```
 
 ```yml
 apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: LS0tLS1...
-    server: https://scalar-k8s-c1eae570.fdc2c430-cd60-4952-b269-28d1c1583ca7.privatelink.eastus.azmk8s.io:443
+    server: https://localhost:7000 # https://scalar-k8s-c1eae570.fdc2c430-cd60-4952-b269-28d1c1583ca7.privatelink.eastus.azmk8s.io:443
   name: scalar-kubernetes
 contexts:
 - context:
@@ -277,7 +281,7 @@ Host 10.*
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-$ terraform output k8s_ssh_config > ssh.cfg
+$ terraform output k8s_ssh_config > ${SCALAR_K8S_HOME}/operation/ssh.cfg
 ```
 
 #### How to access to kubernetes from your local machine
@@ -285,6 +289,7 @@ $ terraform output k8s_ssh_config > ssh.cfg
 Now let's access to kubernetes from your local machine. Open the ssh port-forward to the bastion, and let it open.
 
 ```console
+$ cd ${SCALAR_K8S_HOME}/operation
 $ ssh -F ssh.cfg bastion
 Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 [centos@bastion-1 ~]$
@@ -320,15 +325,20 @@ node/aks-scalardlpool-34802672-vmss000001   Ready    agent   7h7m    v1.15.11   
 node/aks-scalardlpool-34802672-vmss000002   Ready    agent   7h7m    v1.15.11   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
 ```
 
+The public endpoint is 13.87.152.190 on port 50051 and 50052
+
+Please check out [Scalar DL Getting Started](https://scalardl.readthedocs.io/en/latest/getting-started/) to understand how to interact with the environment.
+
+#### How to ssh to kubernetes nodes
+
 To access to kubernetes node, look at the `INTERNAL-IP` from `kubectl get nodes -o wide`
 
 ```console
 $ ssh -F ssh.cfg 10.42.40.5
+Warning: Permanently added 'bastion-paul-k8s-azure-iexejy4.westus.cloudapp.azure.com,104.210.62.65' (ECDSA) to the list of known hosts.
+Warning: Permanently added '10.42.40.5' (ECDSA) to the list of known hosts.
+azureuser@aks-default-34802672-vmss000000:~$
 ```
-
-the public endpoint is 13.87.152.190 on port 50051 and 50052
-
-Please check out [Scalar DL Getting Started](https://scalardl.readthedocs.io/en/latest/getting-started/) to understand how to interact with the environment.
 
 ## How to destroy
 
