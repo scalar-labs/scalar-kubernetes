@@ -22,5 +22,5 @@ helm plugin install https://github.com/instrumenta/helm-kubeval
 # validate charts
 for CHART_DIR in ${CHART_DIRS};do
   echo "kubeval(idating) charts/stable/${CHART_DIR} chart..."
-  helm kubeval "charts/stable/${CHART_DIR}" -v "${KUBERNETES_VERSION#v}" 
+  helm kubeval "charts/stable/${CHART_DIR}" -v "${KUBERNETES_VERSION#v}"
 done
