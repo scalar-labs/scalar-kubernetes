@@ -133,6 +133,8 @@ Please refer to [How to collect logs from Kubernetes applications](./K8sLogColle
 
 ### Create Scalar DL and Envoy resources
 
+* An authority to pull `scalarlabs/scalar-ledger` docker repository. `scalar-ledger` is available to only our partners and customers at the moment.
+
 You need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the values directly in the `${SCALAR_K8S_HOME}/operation/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
 ```console
