@@ -1,13 +1,19 @@
 ---
 - name: Create directory on remote server
   file:
-    path: "{{ remote_manifests_directory }}/configuration"
+    path: "{{ remote_directory }}/helm/charts/config"
     state: directory
     mode: '0755'
 
-- name: Copy manifests
+- name: Copy helm charts
   synchronize:
-    src: "{{ local_manifests_directory }}"
-    dest: "{{ remote_manifests_directory }}"
-    rsync_opts:
-      - "--exclude=configuration"
+    src: "{{ local_helm_charts_directory }}"
+    dest: "{{ remote_directory }}/helm/charts"
+
+- name: Copy helm charts custom values
+  copy:
+    src: "{{ local_helm_charts_values_directory }}/{{ item }}-custom-values.yaml"
+    dest: "{{ remote_directory }}/helm/charts/config/{{ item }}-custom-values.yaml"
+  loop:
+  - envoy
+  - ledger

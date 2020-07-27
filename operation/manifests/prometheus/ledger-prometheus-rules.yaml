@@ -1,0 +1,51 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: prometheus-operator
+    release: prometheus
+  name: prometheus-ledger-alerts-rules
+  namespace: monitoring
+spec:
+  groups:
+  - name: LedgerAlerts
+    rules:
+    - alert: LedgerClusterDown
+      expr: kube_deployment_spec_replicas{deployment="scalar-ledger"} - kube_deployment_status_replicas_unavailable{deployment="scalar-ledger"} == 0
+      for: 1m
+      labels:
+        severity: critical
+        app: Ledger
+      annotations:
+        summary: 'Ledger cluster is down'
+        description: 'Ledger cluster is down, no resquest can be process'
+
+    - alert: LedgerClusterDegraded
+      expr: kube_deployment_status_replicas_unavailable{namespace="default", deployment="scalar-ledger"} >= 1
+      for: 1m
+      labels:
+        severity: warning
+        app: Ledger
+      annotations:
+        summary: 'Ledger cluster is running in a degraded mode'
+        description: 'Ledger cluster is running in a degraded mode, some of the Ledger pods are not healthy'
+
+    - alert: LedgerPodsPending
+      expr: kube_pod_status_phase{namespace="default", pod=~"^scalar-ledger-.*", phase="Pending"} > 0
+      for: 1m
+      labels:
+        severity: warning
+        app: Ledger
+      annotations:
+        description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has been in pending status for more than 1 minute.'
+        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in pending status.'
+    
+    - alert: LedgerPodsError
+      expr: kube_pod_container_status_waiting_reason{namespace="default",reason!="ContainerCreating",pod=~"^scalar-ledger-.*"} > 0
+      for: 1m
+      labels:
+        severity: warning
+        app: Ledger
+      annotations:
+        description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error for more than 1 minute.'
+        summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an error status.'
