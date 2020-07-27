@@ -5,7 +5,7 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 ## Prerequisites
 
 * Terraform >= 0.12.x
-* Ansible >= 2.9.x
+* Ansible >= 2.9
 * Azure CLI
 * ssh-agent with a private key
 
@@ -36,7 +36,7 @@ az login
 
 ### Create network resources
 
-```console
+```
 # Please update `/path/to/local-repository` before running the command.
 $ export SCALAR_K8S_HOME=/path/to/local-repository
 $ cd ${SCALAR_K8S_HOME}/examples/azure/network
@@ -57,7 +57,7 @@ Note that the current version uses [the network module](https://github.com/scala
 
 ### Create Cassandra resources
 
-```console
+```
 $ cd ${SCALAR_K8S_HOME}/examples/azure/cassandra
 
 # Create the cassandra cluster
@@ -69,7 +69,7 @@ Note that the current version uses [the cassandra module](https://github.com/sca
 
 ### Create Kubernetes cluster
 
-```console
+```
 $ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes
 
 # Create the Kubernetes cluster
@@ -81,7 +81,7 @@ For more information about the variable in `example.tfvars`, please refer to [re
 
 ### Create Monitor resources
 
-```console
+```
 $ cd ${SCALAR_K8S_HOME}/examples/azure/monitor
 
 # Create the monitor server for cassandra modules and log collection
@@ -93,7 +93,7 @@ Note that the current version uses [the monitor module](https://github.com/scala
 
 ### Setup bastion for accessing Kubernetes cluster
 
-```console
+```
 # Create inventory for ansible
 $ cd ${SCALAR_K8S_HOME}/examples/azure/network
 $ terraform output inventory_ini > ${SCALAR_K8S_HOME}/operation/inventory.ini
@@ -111,7 +111,7 @@ Please refer to [How to install Kubernetes CLI and Helm on the bastion](./Prepar
 
 ### Deploy Prometheus for Kubernetes resources
 
-```console
+```
 $ cd ${SCALAR_K8S_HOME}/operation
 
 # Deploy prometheus operator in Kubernetes
@@ -122,7 +122,7 @@ Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more
 
 ### Deploy log collection for Kubernetes resources
 
-```console
+```
 $ cd ${SCALAR_K8S_HOME}/operation
 
 # Deploy fluentbit to collect log from Kubernetes
@@ -137,7 +137,7 @@ You need an authority to pull `scalarlabs/scalar-ledger` docker repository. `sca
 
 You also need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as environment variables or set the values directly in the `${SCALAR_K8S_HOME}/operation/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
-```console
+```
 $ cd ${SCALAR_K8S_HOME}/operation
 
 # export docker secrets for ansible
@@ -160,6 +160,7 @@ Terraform can output some useful information about your deployments, such as a b
 ### Network
 
 ```console
+$ cd ${SCALAR_K8S_HOME}/example/azure/network
 $ terraform output
 bastion_ip = bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com
 bastion_provision_id = 2467232388962733384
@@ -195,7 +196,8 @@ user_name = centos
 ### Cassandra
 
 ```console
-terraform output
+$ cd ${SCALAR_K8S_HOME}/example/azure/cassandra
+$ terraform output
 cassandra_provision_ids = [
   "4019088576544490630",
   "656319024837932240",
@@ -207,7 +209,7 @@ cassandra_start_on_initial_boot = false
 
 ### How to access instances
 
-```console
+```
 $ cd ${SCALAR_K8S_HOME}/example/azure/network
 
 # Generate SSH config to make it easy to access backend resources
@@ -230,6 +232,7 @@ $ ssh -F ssh.cfg monitor-1.internal.scalar-labs.com
 You need to export the `kube_config` from terraform and after find `server` line and replace with `https://localhost:7000` . finally copy into `~/.kube/config`
 
 ```console
+$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
 $ terraform output kube_config
 ```
 

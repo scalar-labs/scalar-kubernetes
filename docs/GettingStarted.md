@@ -6,7 +6,7 @@ This document refers to the necessary tool to install in your local machine, and
 
 | Name | Version | Mandatory | link |
 |:------|:-------|:----------|:------|
-| Ansible | 2.9.0 | yes | https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html |
+| Ansible | 2.9 | yes | https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html |
 | Terraform | 0.12.x | yes | https://learn.hashicorp.com/terraform/getting-started/install |
 | tfenv | 0.12.x | yes | https://github.com/tfutils/tfenv |
 | Docker | latest | yes | https://docs.docker.com/install/ |
