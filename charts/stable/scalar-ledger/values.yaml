@@ -60,7 +60,7 @@ service:
 
 prometheusRule:
   # prometheusRule.enabled -- enable rules for prometheus
-  enabled: true
+  enabled: false
   # prometheusRule.namespace -- which namespace prometheus is located. by default monitoring
   namespace: monitoring
 

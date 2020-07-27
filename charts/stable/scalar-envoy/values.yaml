@@ -70,7 +70,7 @@ service:
 
 serviceMonitor:
   # serviceMonitor.enabled -- enable metrics collect with prometheus
-  enabled: true
+  enabled: false
   # serviceMonitor.interval -- custom interval to retrieve the metrics
   interval: "15s"
   # serviceMonitor.namespace -- which namespace prometheus is located. by default monitoring
@@ -78,7 +78,7 @@ serviceMonitor:
 
 prometheusRule:
   # prometheusRule.enabled -- enable rules for prometheus
-  enabled: true
+  enabled: false
   # prometheusRule.namespace -- which namespace prometheus is located. by default monitoring
   namespace: monitoring
 
