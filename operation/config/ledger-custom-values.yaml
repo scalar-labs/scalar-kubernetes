@@ -3,6 +3,9 @@ replicaCount: 3
 imagePullSecrets:
   - name: reg-docker-secrets
 
+prometheusRule:
+  enabled: true
+
 nodeSelector: {}
 
 tolerations:
