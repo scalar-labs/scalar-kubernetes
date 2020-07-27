@@ -91,7 +91,7 @@ $ terraform apply -var-file example.tfvars
 
 Note that the current version uses [the monitor module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/monitor) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform/). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
-### Setup bastion for Kubernetes
+### Setup bastion for accessing Kubernetes cluster
 
 ```console
 # Create inventory for ansible
