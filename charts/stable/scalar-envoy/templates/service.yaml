@@ -4,6 +4,8 @@ metadata:
   name: {{ include "scalar-envoy.fullname" . }}
   labels:
     {{- include "scalar-envoy.labels" . | nindent 4 }}
+  annotations:
+{{ toYaml .Values.service.annotations | indent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:

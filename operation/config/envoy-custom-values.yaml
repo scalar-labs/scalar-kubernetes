@@ -3,6 +3,12 @@ replicaCount: 3
 envoyConfiguration:
   scalardlAddress: sl-scalar-ledger-headless
 
+service:
+  type: LoadBalancer
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "k8s_ingress"
+
 tolerations:
 - effect: NoSchedule
   key: kubernetes.io/app
