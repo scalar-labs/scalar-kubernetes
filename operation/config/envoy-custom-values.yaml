@@ -3,6 +3,12 @@ replicaCount: 3
 envoyConfiguration:
   scalardlAddress: sl-scalar-ledger-headless
 
+serviceMonitor:
+  enabled: true
+
+service:
+  type: LoadBalancer
+
 tolerations:
 - effect: NoSchedule
   key: kubernetes.io/app
