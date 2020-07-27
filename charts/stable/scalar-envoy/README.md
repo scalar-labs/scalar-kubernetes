@@ -17,7 +17,7 @@ Current chart version is `1.0.0`
 | nameOverride | string | `""` | String to partially override scalar-envoy.fullname template (will maintain the release name) |
 | nodeSelector | object | `{}` | nodeSelector is form of node selection constraint |
 | podSecurityContext | object | `{}` | PodSecurityContext holds pod-level security attributes and common container settings |
-| prometheusRule.enabled | bool | `true` | enable rules for prometheus |
+| prometheusRule.enabled | bool | `false` | enable rules for prometheus |
 | prometheusRule.namespace | string | `"monitoring"` | which namespace prometheus is located. by default monitoring |
 | replicaCount | int | `3` | number of replicas to deploy |
 | resources | object | `{}` | resources allowed to the pod |
