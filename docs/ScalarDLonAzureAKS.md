@@ -9,9 +9,9 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 * Azure CLI
 * ssh-agent with a private key
 
-## Diagram
+## Architecture
 
-![image](images/aks.png)
+![image](images/architecture-aks.png)
 
 ## What is created
 
@@ -53,7 +53,7 @@ $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-Please refer to [network section](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-network-resources)
+Note that the current version uses [the network module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/network) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform).  It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
 ### Create Cassandra resources
 
@@ -65,7 +65,7 @@ $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-Please refer to [cassandra section](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-cassandra-resources)
+Note that the current version uses [the cassandra module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cassandra) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
 ### Create Kubernetes cluster
 
@@ -89,7 +89,7 @@ $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-Please refer to [monitor section](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-monitor-resources)
+Note that the current version uses [the monitor module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/monitor) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform/). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
 ### Setup bastion for Kubernetes
 
@@ -126,16 +126,16 @@ Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more
 $ cd ${SCALAR_K8S_HOME}/operation
 
 # Deploy fluentbit to collect log from Kubernetes
-$ ansible-playbook -i inventory.ini playbook-deploy-fluentbit.yaml
+$ ansible-playbook -i inventory.ini playbook-deploy-fluentbit.yml
 ```
 
 Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for more information.
 
 ### Create Scalar DL and Envoy resources
 
-* An authority to pull `scalarlabs/scalar-ledger` docker repository. `scalar-ledger` is available to only our partners and customers at the moment.
+You need an authority to pull `scalarlabs/scalar-ledger` docker repository. `scalar-ledger`. (Note that it is available to only our partners and customers at the moment.)
 
-You need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the values directly in the `${SCALAR_K8S_HOME}/operation/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
+You also need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as environment variables or set the values directly in the `${SCALAR_K8S_HOME}/operation/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/operation
