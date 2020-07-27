@@ -3,6 +3,9 @@ replicaCount: 3
 imagePullSecrets:
   - name: reg-docker-secrets
 
+scalarLedgerConfiguration:
+  cassandraHost: cassandra-lb.internal.scalar-labs.com
+
 nodeSelector: {}
 
 tolerations:
