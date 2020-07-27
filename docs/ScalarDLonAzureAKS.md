@@ -148,10 +148,7 @@ $ export DOCKERHUB_ACCESS_TOKEN=<token>
 $ ansible-playbook -i inventory.ini playbook-deploy-scalardl.yml
 ```
 
-Please refer to two followings guides for more informations:
-
-* [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDL.md)
-* [A Guide on How to Deploy Scalar DL Manually with kubectl](../operation/manifests/README.md)
+Please refer to [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDL.md) for more information like: add more pod for envoy or change resource.
 
 ## Generate outputs
 
