@@ -81,6 +81,8 @@ For more information about the variable in `example.tfvars`, please refer to [re
 
 ### Create Monitor resources
 
+The Scalar deployment tools include a Prometheus metrics server, Grafana data visualization server, and Alertmanager server for cassandra cluster, cassy, and bastion server
+
 ```
 $ cd ${SCALAR_K8S_HOME}/examples/azure/monitor
 
@@ -111,6 +113,8 @@ Please refer to [How to install Kubernetes CLI and Helm on the bastion](./Prepar
 
 ### Deploy Prometheus for Kubernetes resources
 
+How to deploy Prometheus metrics server, Grafana data visualization server, and Alertmanager server for Kubernetes resource only. Normally, accessing the Grafana server is enough to see the overall system status.
+
 ```
 $ cd ${SCALAR_K8S_HOME}/operation
 
@@ -121,6 +125,7 @@ $ ansible-playbook -i inventory.ini playbook-deploy-prometheus.yml
 Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more information.
 
 ### Deploy log collection for Kubernetes resources
+
 
 ```
 $ cd ${SCALAR_K8S_HOME}/operation
