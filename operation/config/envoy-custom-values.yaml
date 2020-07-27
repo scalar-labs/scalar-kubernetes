@@ -3,14 +3,8 @@ replicaCount: 3
 envoyConfiguration:
   scalardlAddress: sl-scalar-ledger-headless
 
-serviceMonitor:
-  enabled: true
-
 prometheusRule:
   enabled: true
-
-service:
-  type: LoadBalancer
 
 tolerations:
 - effect: NoSchedule

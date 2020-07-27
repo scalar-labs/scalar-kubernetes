@@ -24,6 +24,8 @@ spec:
         - -c 
         -  "echo applying Scalar DL schema && dockerize --template create_schema.cql.tmpl:create_schema.cql && cqlsh --cqlversion=3.4.4 ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f create_schema.cql"
         env:
+        - name: SCALAR_DB_CONTACT_POINTS	
+          value: "{{ .Values.scalarLedgerConfiguration.cassandraHost }}"
         - name: SCALAR_DB_CONTACT_POINTS
           value: "{{ .Values.scalarLedgerConfiguration.cassandraHost }}"
         - name: SCALAR_DB_CONTACT_PORT
