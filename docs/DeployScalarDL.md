@@ -61,3 +61,74 @@ endpoints/scalar-envoy             10.42.40.245:50052,10.42.41.37:50052,10.42.41
 endpoints/scalar-envoy-metrics     10.42.40.245:9001,10.42.41.37:9001,10.42.41.4:9001                  4m26s
 endpoints/scalar-ledger-headless   10.42.40.215,10.42.41.33,10.42.41.8                                 24m
 ```
+
+## Customize values for scalar-ledger and scalar-envoy charts
+
+In `${SCALAR_K8S_HOME}/operation/config` contain the helm custom values use for deploying the application in Kubernetes.
+
+The default values are describe in here:
+
+* [scalar-envoy](../charts/stable/scalar-envoy/README.md)
+* [scalar-ledger](../charts/stable/scalar-ledger/README.md)
+
+Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i inventory.ini playbook-deploy-scalardl.yml`
+
+### How to increase the number of Envoy Pod
+
+In `envoy-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
+
+edit `${SCALAR_K8S_HOME}/operation/config/envoy-custom-values.yaml`
+
+```yaml
+replicaCount: 6
+```
+
+The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform
+
+### How to increase the resource of Envoy Pod
+
+In `envoy-custom-values.yaml`, you can update resource as follow
+
+edit `${SCALAR_K8S_HOME}/operation/config/envoy-custom-values.yaml`
+
+```yaml
+resources:
+  requests:
+    cpu: 400m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 328Mi
+```
+
+More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
+
+### How to increase the number of Ledger Pod
+
+In `ledger-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
+
+edit `${SCALAR_K8S_HOME}/operation/config/ledger-custom-values.yaml`
+
+```yaml
+replicaCount: 6
+```
+
+The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform
+
+### How to increase the resource of Ledger Pod
+
+In `ledger-custom-values.yaml`, you can update resource as follow
+
+edit `${SCALAR_K8S_HOME}/operation/config/ledger-custom-values.yaml`
+
+```yaml
+resources:
+  requests:
+    cpu: 1500m
+    memory: 2Gi
+  limits:
+    cpu: 1600m
+    memory: 4Gi
+```
+
+More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)

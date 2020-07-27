@@ -1,0 +1,39 @@
+replicaCount: 3
+
+envoyConfiguration:
+  scalardlAddress: sl-scalar-ledger-headless
+
+tolerations:
+- effect: NoSchedule
+  key: kubernetes.io/app
+  operator: Equal
+  value: scalardlpool
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: agentpool
+          operator: In
+          values:
+          - scalardlpool
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values:
+            - scalar-ledger
+        topologyKey: kubernetes.io/hostname
+      weight: 50
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 300m
+    memory: 328Mi
