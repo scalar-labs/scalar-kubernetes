@@ -9,6 +9,9 @@ serviceMonitor:
 prometheusRule:
   enabled: true
 
+service:
+  type: LoadBalancer
+
 tolerations:
 - effect: NoSchedule
   key: kubernetes.io/app
