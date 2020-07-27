@@ -26,6 +26,8 @@ spec:
         env:
         - name: SCALAR_DB_CONTACT_POINTS
           value: "{{ .Values.scalarLedgerConfiguration.cassandraHost }}"
+        - name: SCALAR_DB_CONTACT_POINTS
+          value: "{{ .Values.scalarLedgerConfiguration.cassandraHost }}"
         - name: SCALAR_DB_CONTACT_PORT
           value: "{{ .Values.scalarLedgerConfiguration.cassandraPort }}"
         - name: SCALAR_DB_USERNAME
