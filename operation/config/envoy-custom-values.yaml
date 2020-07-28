@@ -11,6 +11,9 @@ serviceMonitor:
 
 service:
   type: LoadBalancer
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "k8s_ingress"
 
 tolerations:
 - effect: NoSchedule
