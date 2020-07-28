@@ -1,10 +1,10 @@
 # Outputs and configurations
 
-default structure
+default configuration for operation directory
 
 ```
 outputs
-└── examples
+└── example
     ├── README.md
     ├── inventory.ini
     ├── kubectl
