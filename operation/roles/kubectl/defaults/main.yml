@@ -1,6 +1,6 @@
-KUBECTL_VERSION: v1.15.10
+KUBECTL_VERSION: v1.15.11
 KUBECTL_PATH: /usr/local/bin/kubectl
-KUBECTL_CONFIG: tmp/kube_config
+KUBECTL_CONFIG: kube_config
 KUBECTL_URL: "https://storage.googleapis.com/kubernetes-release/release/{{ KUBECTL_VERSION }}/bin/linux/amd64/kubectl"
-KUBECTL_URL_CHECKSUM_SHA256: 38a0f73464f1c39ca383fd43196f84bdbe6e553fe3e677b6e7012ef7ad5eaf2b
+KUBECTL_URL_CHECKSUM_SHA256: 4b9053d6ffd34c68a16af1d99855e68d27b7578f75382f19648d425f29f0fbc5
 PYTHON_PACKAGE: ['kubernetes', 'openshift', 'kubernetes-validate']
