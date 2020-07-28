@@ -20,7 +20,7 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 * 3 Envoy Kubernetes Pods with a network load balancer (public)
 * 3 Scalar DL Kubernetes Pods
 * 1 Prometheus operator to collect metrics inside Kubernetes
-* 1 Pod on each node to collect Kubernetes log with fluentbit
+* 1 FluentBit Pod on each node to collect Kubernetes log
 * DNS Zone for internal host lookup
 * 3 Cassandra instances
 * 1 Cassy instance
