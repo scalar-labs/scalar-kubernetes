@@ -50,6 +50,8 @@ $ ssh-add example_key
 
 # Create an environment and bastion server
 $ terraform init
+
+# Update the "name" to an unique value for your deployment inside "example.tfvars"
 $ terraform apply -var-file example.tfvars
 ```
 
@@ -77,7 +79,7 @@ $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-For more information about the variable in `example.tfvars`, please refer to [readme](../modules/azure/kubernetes/README.md)
+For more information about the variable in `example.tfvars`, please refer to [kubernetes modules](../modules/azure/kubernetes/README.md)
 
 ### Create Monitor resources
 
@@ -126,7 +128,6 @@ Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more
 
 ### Deploy log collection for Kubernetes resources
 
-
 ```
 $ cd ${SCALAR_K8S_HOME}/operation
 
@@ -157,7 +158,7 @@ Please refer to [How to deploy Scalar DL on Kubernetes with Ansible](./DeploySca
 
 ## Generate outputs
 
-Terraform can output some useful information about your deployments, such as a bastion public, internal IP addresses, and ssh config that you can use to access instances. The ssh config assumes that the private key for an environment is added to your ssh-agent.
+You can get some useful information about your deployments, such as a bastion public, internal IP addresses, and ssh config that you can use to access instances. The ssh config assumes that the private key for an environment is added to your ssh-agent.
 
 ### Network
 
@@ -305,34 +306,36 @@ Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.az
 Open a new terminal or tab.
 
 ```console
-$ kubectl get po,svc,endpoints,nodes -o wide
-NAME                                    READY   STATUS      RESTARTS   AGE     IP             NODE                                   NOMINATED NODE   READINESS GATES
-pod/se-scalar-envoy-7ddff6fdc5-2ml94    1/1     Running     0          141m    10.42.40.209   aks-scalardlpool-34802672-vmss000001   <none>           <none>
-pod/se-scalar-envoy-7ddff6fdc5-z92p6    1/1     Running     0          144m    10.42.40.140   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/sl-scalar-ledger-846d69ddf5-wptsk   1/1     Running     0          144m    10.42.41.102   aks-scalardlpool-34802672-vmss000002   <none>           <none>
-pod/sl-scalar-ledger-846d69ddf5-wt6rg   1/1     Running     0          142m    10.42.40.223   aks-scalardlpool-34802672-vmss000001   <none>           <none>
-pod/sl-scalar-ledger-schema-5zlng       0/1     Completed   0          4h28m   10.42.40.62    aks-default-34802672-vmss000000        <none>           <none>
+$ kubectl get po,svc,endpoints,node -o wide
+NAME                                    READY   STATUS      RESTARTS   AGE   IP             NODE                                   NOMINATED NODE   READINESS GATES
+pod/se-scalar-envoy-7ddff6fdc5-6zhv2    1/1     Running     0          39m   10.42.41.109   aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/se-scalar-envoy-7ddff6fdc5-82nvj    1/1     Running     0          39m   10.42.40.127   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/se-scalar-envoy-7ddff6fdc5-cwhtb    1/1     Running     0          39m   10.42.40.252   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/sl-scalar-ledger-846d69ddf5-6rcbq   1/1     Running     0          39m   10.42.40.161   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/sl-scalar-ledger-846d69ddf5-72nln   1/1     Running     0          39m   10.42.40.243   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/sl-scalar-ledger-846d69ddf5-clvwx   1/1     Running     0          39m   10.42.41.101   aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/sl-scalar-ledger-schema-fkkp5       0/1     Completed   0          39m   10.42.40.40    aks-default-34802672-vmss000000        <none>           <none>
 
-NAME                                TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                           AGE     SELECTOR
-service/kubernetes                  ClusterIP      10.42.48.1     <none>          443/TCP                           6h48m   <none>
-service/se-scalar-envoy             LoadBalancer   10.42.49.250   13.87.152.190   50051:31788/TCP,50052:30498/TCP   4h28m   app.kubernetes.io/instance=se,app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=1.0.0
-service/se-scalar-envoy-metrics     ClusterIP      10.42.49.123   <none>          9001/TCP                          4h28m   app.kubernetes.io/instance=se,app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=1.0.0
-service/sl-scalar-ledger-headless   ClusterIP      None           <none>          <none>                            4h28m   app.kubernetes.io/instance=sl,app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=2.0.7
+NAME                                TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE   SELECTOR
+service/kubernetes                  ClusterIP      10.42.48.1     <none>        443/TCP                           65m   <none>
+service/se-scalar-envoy             LoadBalancer   10.42.50.139   10.42.44.4    50051:30731/TCP,50052:32075/TCP   39m   app.kubernetes.io/instance=se,app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=1.0.0
+service/se-scalar-envoy-metrics     ClusterIP      10.42.50.195   <none>        9001/TCP                          39m   app.kubernetes.io/instance=se,app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=1.0.0
+service/sl-scalar-ledger-headless   ClusterIP      None           <none>        <none>                            39m   app.kubernetes.io/instance=sl,app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=2.0.7
 
 NAME                                  ENDPOINTS                                                              AGE
-endpoints/kubernetes                  10.42.40.4:443                                                         6h48m
-endpoints/se-scalar-envoy             10.42.40.140:50052,10.42.40.209:50052,10.42.40.140:50051 + 1 more...   4h28m
-endpoints/se-scalar-envoy-metrics     10.42.40.140:9001,10.42.40.209:9001                                    4h28m
-endpoints/sl-scalar-ledger-headless   10.42.40.223,10.42.41.102                                              4h28m
+endpoints/kubernetes                  10.42.40.4:443                                                         65m
+endpoints/se-scalar-envoy             10.42.40.127:50052,10.42.40.252:50052,10.42.41.109:50052 + 3 more...   39m
+endpoints/se-scalar-envoy-metrics     10.42.40.127:9001,10.42.40.252:9001,10.42.41.109:9001                  39m
+endpoints/sl-scalar-ledger-headless   10.42.40.161,10.42.40.243,10.42.41.101                                 39m
 
-NAME                                        STATUS   ROLES   AGE     VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
-node/aks-default-34802672-vmss000000        Ready    agent   7h12m   v1.15.11   10.42.40.5     <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-node/aks-scalardlpool-34802672-vmss000000   Ready    agent   7h7m    v1.15.11   10.42.40.106   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-node/aks-scalardlpool-34802672-vmss000001   Ready    agent   7h7m    v1.15.11   10.42.40.207   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-node/aks-scalardlpool-34802672-vmss000002   Ready    agent   7h7m    v1.15.11   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+NAME                                        STATUS   ROLES   AGE   VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+node/aks-default-34802672-vmss000000        Ready    agent   60m   v1.15.11   10.42.40.5     <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000000   Ready    agent   56m   v1.15.11   10.42.40.106   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000001   Ready    agent   56m   v1.15.11   10.42.40.207   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000002   Ready    agent   56m   v1.15.11   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
 ```
 
-The public endpoint is 13.87.152.190 on port 50051 and 50052
+The private endpoint is 10.42.44.4 on port 50051 and 50052
 
 Please check out [Scalar DL Getting Started](https://scalardl.readthedocs.io/en/latest/getting-started/) to understand how to interact with the environment.
 
