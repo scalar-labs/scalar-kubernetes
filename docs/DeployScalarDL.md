@@ -40,28 +40,30 @@ bastion-example-k8s-azure-ukkpigy.eastus.cloudapp.azure.com : ok=12   changed=0 
 You can check if the pods and the services are properly deployed as follows.
 
 ```console
-$ kubectl get po,svc,endpoints -o wide
-NAME                                 READY   STATUS      RESTARTS   AGE     IP             NODE                                   NOMINATED NODE   READINESS GATES
-pod/scalar-envoy-56c9cc4598-dwkvl    1/1     Running     0          2m14s   10.42.41.4     aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalar-envoy-56c9cc4598-dz6mr    1/1     Running     0          7m24s   10.42.41.37    aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalar-envoy-56c9cc4598-z6szw    1/1     Running     0          4m39s   10.42.40.245   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalar-ledger-6f895669bb-c5567   1/1     Running     0          25m     10.42.41.8     aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalar-ledger-6f895669bb-hzp4p   1/1     Running     0          25m     10.42.41.33    aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalar-ledger-6f895669bb-wqn27   1/1     Running     0          25m     10.42.40.215   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/scalardl-schema-bt7zx            0/1     Completed   0          25m     10.42.40.221   aks-default-34802672-vmss000000        <none>           <none>
+$ kubectl get po,svc,endpoints,node -o wide
+NAME                                    READY   STATUS      RESTARTS   AGE   IP             NODE                                   NOMINATED NODE   READINESS GATES
+pod/se-scalar-envoy-7ddff6fdc5-6zhv2    1/1     Running     0          39m   10.42.41.109   aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/se-scalar-envoy-7ddff6fdc5-82nvj    1/1     Running     0          39m   10.42.40.127   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/se-scalar-envoy-7ddff6fdc5-cwhtb    1/1     Running     0          39m   10.42.40.252   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/sl-scalar-ledger-846d69ddf5-6rcbq   1/1     Running     0          39m   10.42.40.161   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/sl-scalar-ledger-846d69ddf5-72nln   1/1     Running     0          39m   10.42.40.243   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/sl-scalar-ledger-846d69ddf5-clvwx   1/1     Running     0          39m   10.42.41.101   aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/sl-scalar-ledger-schema-fkkp5       0/1     Completed   0          39m   10.42.40.40    aks-default-34802672-vmss000000        <none>           <none>
 
-NAME                             TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                           AGE     SELECTOR
-service/kubernetes               ClusterIP      10.42.48.1     <none>          443/TCP                           89m     <none>
-service/scalar-envoy             LoadBalancer   10.42.49.207   52.142.18.158   50051:32102/TCP,50052:32723/TCP   24m     app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=v1.0.0
-service/scalar-envoy-metrics     ClusterIP      10.42.49.217   <none>          9001/TCP                          4m26s   app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=v1.0.0
-service/scalar-ledger-headless   ClusterIP      None           <none>          <none>                            24m     app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=v2.0.7
+NAME                                TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE   SELECTOR
+service/kubernetes                  ClusterIP      10.42.48.1     <none>        443/TCP                           65m   <none>
+service/se-scalar-envoy             LoadBalancer   10.42.50.139   10.42.44.4    50051:30731/TCP,50052:32075/TCP   39m   app.kubernetes.io/instance=se,app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=1.0.0
+service/se-scalar-envoy-metrics     ClusterIP      10.42.50.195   <none>        9001/TCP                          39m   app.kubernetes.io/instance=se,app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=1.0.0
+service/sl-scalar-ledger-headless   ClusterIP      None           <none>        <none>                            39m   app.kubernetes.io/instance=sl,app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=2.0.7
 
-NAME                               ENDPOINTS                                                           AGE
-endpoints/kubernetes               10.42.40.4:443                                                      89m
-endpoints/scalar-envoy             10.42.40.245:50052,10.42.41.37:50052,10.42.41.4:50052 + 3 more...   24m
-endpoints/scalar-envoy-metrics     10.42.40.245:9001,10.42.41.37:9001,10.42.41.4:9001                  4m26s
-endpoints/scalar-ledger-headless   10.42.40.215,10.42.41.33,10.42.41.8                                 24m
+NAME                                  ENDPOINTS                                                              AGE
+endpoints/kubernetes                  10.42.40.4:443                                                         65m
+endpoints/se-scalar-envoy             10.42.40.127:50052,10.42.40.252:50052,10.42.41.109:50052 + 3 more...   39m
+endpoints/se-scalar-envoy-metrics     10.42.40.127:9001,10.42.40.252:9001,10.42.41.109:9001                  39m
+endpoints/sl-scalar-ledger-headless   10.42.40.161,10.42.40.243,10.42.41.101                                 39m
 ```
+
+The private endpoint is 10.42.44.4 on port 50051 and 50052
 
 ## Customize values for scalar-ledger and scalar-envoy charts
 
@@ -80,7 +82,7 @@ In `envoy-custom-values.yaml`, you can update the number of replicaCount to the 
 
 edit `${SCALAR_K8S_HOME}/operation/config/envoy-custom-values.yaml`
 
-```yaml
+```yml
 replicaCount: 6
 ```
 
@@ -92,7 +94,7 @@ In `envoy-custom-values.yaml`, you can update resource as follow
 
 edit `${SCALAR_K8S_HOME}/operation/config/envoy-custom-values.yaml`
 
-```yaml
+```yml
 resources:
   requests:
     cpu: 400m
@@ -104,13 +106,25 @@ resources:
 
 More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
 
+### How to expose `scalar-envoy` endpoint to public
+
+In `envoy-custom-values.yaml`, you can remove `annotations` to expose `scalar-envoy`
+
+```yml
+service:
+  type: LoadBalancer
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "k8s_ingress"
+```
+
 ### How to increase the number of Ledger Pod
 
 In `ledger-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
 
 edit `${SCALAR_K8S_HOME}/operation/config/ledger-custom-values.yaml`
 
-```yaml
+```yml
 replicaCount: 6
 ```
 
@@ -122,7 +136,7 @@ In `ledger-custom-values.yaml`, you can update resource as follow
 
 edit `${SCALAR_K8S_HOME}/operation/config/ledger-custom-values.yaml`
 
-```yaml
+```yml
 resources:
   requests:
     cpu: 1500m
