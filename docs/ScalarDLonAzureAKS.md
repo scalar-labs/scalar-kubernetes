@@ -102,15 +102,16 @@ Note that the current version uses [the monitor module](https://github.com/scala
 ```
 # Create inventory for ansible
 $ cd ${SCALAR_K8S_HOME}/examples/azure/network
-$ terraform output inventory_ini > ${SCALAR_K8S_HOME}/operation/inventory.ini
+$ terraform output inventory_ini > ${SCALAR_K8S_HOME}/outputs/example/inventory.ini
 
 # Retrieve kube_config for setup kubectl
 $ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
-$ terraform output kube_config > ${SCALAR_K8S_HOME}/operation/tmp/kube_config
+$ terraform output kube_config > ${SCALAR_K8S_HOME}/outputs/example/kube_config
 
 # Setup bastion for Kubernetes
-$ cd ${SCALAR_K8S_HOME}/operation
-$ ansible-playbook -i inventory.ini playbook-install-tools.yml
+$ cd ${SCALAR_K8S_HOME}
+$ export ANSIBLE_CONFIG=${SCALAR_K8S_HOME}/operation/ansible.cfg
+$ ansible-playbook -i outputs/example/inventory.ini operation/playbook-install-tools.yml -e env_name=example
 ```
 
 Please refer to [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) for more information.
@@ -120,10 +121,10 @@ Please refer to [How to install Kubernetes CLI and Helm on the bastion](./Prepar
 How to deploy Prometheus metrics server, Grafana data visualization server, and Alertmanager server for Kubernetes resource only. Normally, accessing the Grafana server is enough to see the overall system status.
 
 ```
-$ cd ${SCALAR_K8S_HOME}/operation
+$ cd ${SCALAR_K8S_HOME}
 
 # Deploy prometheus operator in Kubernetes
-$ ansible-playbook -i inventory.ini playbook-deploy-prometheus.yml
+$ ansible-playbook -i outputs/example/inventory.ini operation/playbook-deploy-prometheus.yml
 ```
 
 Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more information.
@@ -131,10 +132,10 @@ Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more
 ### Deploy log collection for Kubernetes resources
 
 ```
-$ cd ${SCALAR_K8S_HOME}/operation
+$ cd ${SCALAR_K8S_HOME}
 
 # Deploy fluentbit to collect log from Kubernetes
-$ ansible-playbook -i inventory.ini playbook-deploy-fluentbit.yml
+$ ansible-playbook -i outputs/example/inventory.ini operation/playbook-deploy-fluentbit.yml
 ```
 
 Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for more information.
@@ -146,14 +147,14 @@ You need an authority to pull `scalarlabs/scalar-ledger` docker repository. `sca
 You also need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as environment variables or set the values directly in the `${SCALAR_K8S_HOME}/operation/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
 ```
-$ cd ${SCALAR_K8S_HOME}/operation
+$ cd ${SCALAR_K8S_HOME}
 
 # export docker secrets for ansible
 $ export DOCKERHUB_USER=<user>
 $ export DOCKERHUB_ACCESS_TOKEN=<token>
 
 # Deploy Scalar DL and Envoy resources
-$ ansible-playbook -i inventory.ini playbook-deploy-scalardl.yml
+$ ansible-playbook -i outputs/example/inventory.ini operation/playbook-deploy-scalardl.yml -e env_name=example
 ```
 
 Please refer to [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDL.md) for more information like: add more pod for envoy or change resource.
@@ -291,7 +292,7 @@ Host 10.*
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-$ terraform output k8s_ssh_config > ${SCALAR_K8S_HOME}/operation/ssh.cfg
+$ terraform output k8s_ssh_config > ${SCALAR_K8S_HOME}/outputs/example/ssh.cfg
 ```
 
 #### How to access to kubernetes from your local machine
@@ -299,8 +300,8 @@ $ terraform output k8s_ssh_config > ${SCALAR_K8S_HOME}/operation/ssh.cfg
 Now let's access to kubernetes from your local machine. Open the ssh port-forward to the bastion, and let it open.
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/operation
-$ ssh -F ssh.cfg bastion
+$ cd ${SCALAR_K8S_HOME}
+$ ssh -F outputs/example/ssh.cfg bastion
 Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 [centos@bastion-1 ~]$
 ```
@@ -346,7 +347,8 @@ Please check out [Scalar DL Getting Started](https://scalardl.readthedocs.io/en/
 To access to kubernetes node, look at the `INTERNAL-IP` from `kubectl get nodes -o wide`
 
 ```console
-$ ssh -F ssh.cfg 10.42.40.5
+$ cd ${SCALAR_K8S_HOME}
+$ ssh -F outputs/example/ssh.cfg 10.42.40.5
 Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 Warning: Permanently added '10.42.40.5' (ECDSA) to the list of known hosts.
 azureuser@aks-default-34802672-vmss000000:~$

@@ -9,7 +9,7 @@
 - name: Copy the kube_config into kubectl bastion
   become: no
   copy:
-    src: "{{ KUBECTL_CONFIG }}"
+    src: "{{ kubectl_local_config_directory }}"
     dest: "/home/{{ ansible_user }}/.kube/config"
     mode: '0644'
 
@@ -19,5 +19,5 @@
   register: stat_bash_kubectl_result
 
 - name: Install kubectl completion
-  shell: "{{ KUBECTL_PATH }} completion bash > /etc/bash_completion.d/kubectl"
+  shell: "{{ kubectl_path }} completion bash > /etc/bash_completion.d/kubectl"
   when: not stat_bash_kubectl_result.stat.exists
