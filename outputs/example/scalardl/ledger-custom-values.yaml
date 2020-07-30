@@ -5,6 +5,9 @@ imagePullSecrets:
 
 scalarLedgerConfiguration:
   cassandraHost: cassandra-lb.internal.scalar-labs.com
+  
+prometheusRule:
+  enabled: true
 
 nodeSelector: {}
 
