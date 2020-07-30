@@ -9,5 +9,6 @@ outputs
     ├── envoy-custom-values.yaml
     ├── inventory.ini
     ├── kube_config
-    └── ledger-custom-values.yaml
+    ├── ledger-custom-values.yaml
+    └── ssh.cfg
 ```
