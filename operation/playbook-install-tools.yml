@@ -5,7 +5,7 @@
   become: yes
   # vars:
     # KUBECTL_CONFIG: tmp/kube_config
-    # KUBECTL_VERSION: v1.15.10
+    # KUBECTL_VERSION: v1.16.10
     # HELM_VERSION: v3.2.1
   pre_tasks:
   # ansible requires python3 as python2 is end of support
