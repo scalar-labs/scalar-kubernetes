@@ -2,14 +2,12 @@
 
 default configuration for operation directory
 
-```
+```console
 outputs
+├── README.md
 └── example
-    ├── README.md
+    ├── envoy-custom-values.yaml
     ├── inventory.ini
-    ├── kubectl
-    │   └── kube_config
-    └── scalardl
-        ├── envoy-custom-values.yaml
-        └── ledger-custom-values.yaml
+    ├── kube_config
+    └── ledger-custom-values.yaml
 ```
