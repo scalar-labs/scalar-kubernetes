@@ -13,7 +13,6 @@ $ cd ${SCALAR_K8S_HOME}/examples/azure/network
 $ terraform output inventory_ini > ${SCALAR_K8S_HOME}/outputs/example/inventory.ini
 ```
 
-
 The inventory file should look like below.
 
 ```console
