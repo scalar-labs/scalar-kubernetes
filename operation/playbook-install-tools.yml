@@ -4,7 +4,7 @@
   gather_facts: no
   become: yes
   # vars:
-    # kubectl_version: v1.15.11
+    # kubectl_version: v1.15.10
     # env_name: example
     # HELM_VERSION: v3.2.1
   pre_tasks:
