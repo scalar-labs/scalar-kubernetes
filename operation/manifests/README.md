@@ -95,3 +95,36 @@ $ kubectl get svc scalar-envoy
 NAME           TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                           AGE
 scalar-envoy   LoadBalancer   10.42.49.207   52.142.18.158   50051:32102/TCP,50052:32723/TCP   25m
 ```
+
+## Manual Prometheus setup
+
+### Add monitoring target with ServiceMonitor CRD
+
+ServiceMonitor specifies how groups of Kubernetes services should be monitored. The Operator automatically generates Prometheus scrape configuration based on the current state of the objects in the API server.
+
+#### Envoy monitoring
+
+```console
+$ cd ${SCALAR_K8S_HOME}/operation/manifests/
+$ kubectl create -f prometheus/envoy-service-monitor.yaml
+servicemonitor.monitoring.coreos.com/scalar-envoy-metrics created
+```
+
+Now, we can view the metrics in Grafana/Prometheus web interface
+
+### Deploy Ledger and Envoy rules to Prometheus
+
+PrometheusRule defines a desired Prometheus rule file, which can be loaded by a Prometheus instance containing Prometheus alerting and/or recording rules.
+
+#### How to deploy
+
+```console
+$ cd ${SCALAR_K8S_HOME}/operation/manifests/
+$ kubectl create -f prometheus/envoy-prometheus-rules.yaml -f prometheus/ledger-prometheus-rules.yaml
+prometheusrule.monitoring.coreos.com/prometheus-ledger-alerts-rules created
+prometheusrule.monitoring.coreos.com/prometheus-envoy-alerts-rules created
+```
+
+#### How to verify
+
+You can verify by connecting to the prometheus server inside kubernetes ([see](./KubernetesMonitorGuide.md#for-prometheus-on-port-9090)) and go on the `Rules` under `Status`.

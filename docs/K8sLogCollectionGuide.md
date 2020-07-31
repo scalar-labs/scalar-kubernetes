@@ -26,8 +26,8 @@ By default, the Prometheus service monitor is created, you can deactivate it by 
 Now let's deploy Fluent Bit to Kubernetes.
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/operation
-$ ansible-playbook -i inventory.ini playbook-deploy-fluentbit.yaml
+$ cd ${SCALAR_K8S_HOME}
+$ ansible-playbook -i outputs/example/inventory.ini operation/playbook-deploy-fluentbit.yml
 
 PLAY [Deploy Fluentbit in Kubernetes] *************************************************************************************************************************************************************************
 
@@ -49,7 +49,8 @@ bastion                    : ok=7    changed=3    unreachable=0    failed=0    s
 Connect on the monitor server, please refer to [SSH Guide](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/SSHGuide.md)
 
 ```console
-$ ssh -F ssh.cfg monitor.internal.scalar-labs.com
+$ cd ${SCALAR_K8S_HOME}
+$ ssh -F outputs/example/ssh.cfg monitor.internal.scalar-labs.com
 ```
 
 The Kubernetes log are located under `/log/kubernetes/` directory.

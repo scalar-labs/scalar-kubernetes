@@ -13,5 +13,6 @@
     # ledger_helm_release_name: sl
     # deploy_scalar_envoy: yes
     # envoy_helm_release_name: se
+    # env_name: example
   roles:
   - "scalardl"

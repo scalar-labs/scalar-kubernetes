@@ -8,9 +8,9 @@ First, you create an Ansible inventory file that contains the hostname and the u
 
 ```console
 # Please update `/path/to/local-repository` before running the command.
-export SCALAR_K8S_HOME=/path/to/local-repository
-cd ${SCALAR_K8S_HOME}/examples/azure/network
-terraform output inventory_ini > ${SCALAR_K8S_HOME}/operation/inventory.ini
+$ export SCALAR_K8S_HOME=/path/to/local-repository
+$ cd ${SCALAR_K8S_HOME}/examples/azure/network
+$ terraform output inventory_ini > ${SCALAR_K8S_HOME}/outputs/example/inventory.ini
 ```
 
 The inventory file should look like below.
@@ -30,8 +30,8 @@ ansible_python_interpreter=/usr/bin/python3
 Secondly, you create a kubeconfig file that contains information required to access the kubernetes cluster as follows.
 
 ```console
-cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
-terraform output kube_config > ${SCALAR_K8S_HOME}/operation/tmp/kube_config
+$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
+$ terraform output kube_config > ${SCALAR_K8S_HOME}/outputs/example/kube_config
 ```
 
 The kubeconfig file should look like below.
@@ -64,8 +64,9 @@ users:
 Now let's install the tools in the bastion as follows.
 
 ```console
-cd ${SCALAR_K8S_HOME}/operation
-ansible-playbook -i inventory.ini playbook-install-tools.yml
+$ cd ${SCALAR_K8S_HOME}
+$ export ANSIBLE_CONFIG=${SCALAR_K8S_HOME}/operation/ansible.cfg
+$ ansible-playbook -i outputs/example/inventory.ini operation/playbook-install-tools.yml -e env_name=example
 
 PLAY [Install necessary kubernetes binary on bastion] ****************************************************************************************************************************************************************************************************************
 
@@ -83,9 +84,11 @@ bastion-example-k8s-azure-p5rzic.eastus.cloudapp.azure.com : ok=15   changed=4  
 You can login to the bastion and check if the installation worked well as follows.
 
 ```console
+$ ssh centos@bastion-example-k8s-azure-p5rzic.eastus.cloudapp.azure.com
 [centos@bastion-1 ~]$ kubectl get node
-NAME                                   STATUS     ROLES   AGE    VERSION
-aks-default-34802672-vmss000000        Ready      agent   5h5m   v1.15.10
-aks-scalardlpool-34802672-vmss000000   Ready      agent   5h     v1.15.10
-aks-scalardlpool-34802672-vmss000001   Ready      agent   5h2m   v1.15.10
+NAME                                        STATUS   ROLES   AGE   VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+aks-default-34802672-vmss000000        Ready    agent   60m   v1.15.11   10.42.40.5     <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+aks-scalardlpool-34802672-vmss000000   Ready    agent   56m   v1.15.11   10.42.40.106   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+aks-scalardlpool-34802672-vmss000001   Ready    agent   56m   v1.15.11   10.42.40.207   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+aks-scalardlpool-34802672-vmss000002   Ready    agent   56m   v1.15.11   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
 ```

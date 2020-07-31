@@ -1,16 +1,15 @@
 replicaCount: 3
 
-envoyConfiguration:
-  scalardlAddress: sl-scalar-ledger-headless
+imagePullSecrets:
+  - name: reg-docker-secrets
 
-service:
-  type: LoadBalancer
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "k8s_ingress"
-
-serviceMonitor:
+scalarLedgerConfiguration:
+  cassandraHost: cassandra-lb.internal.scalar-labs.com
+  
+prometheusRule:
   enabled: true
+
+nodeSelector: {}
 
 tolerations:
 - effect: NoSchedule
@@ -41,8 +40,8 @@ affinity:
 
 resources:
   requests:
-    cpu: 200m
-    memory: 256Mi
+    cpu: 1000m
+    memory: 2Gi
   limits:
-    cpu: 300m
-    memory: 328Mi
+    cpu: 1500m
+    memory: 3Gi

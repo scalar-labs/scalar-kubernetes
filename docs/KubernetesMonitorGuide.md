@@ -48,7 +48,7 @@ Host 10.*
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-$ terraform output k8s_ssh_config > ssh.cfg
+$ terraform output k8s_ssh_config > ${SCALAR_K8S_HOME}/outputs/example/ssh.cfg
 ```
 
 ## Deploy Prometheus
@@ -56,8 +56,8 @@ $ terraform output k8s_ssh_config > ssh.cfg
 Now let's deploy to Prometheus component inside Kubernetes with Ansible playbook `playbook-deploy-prometheus.yaml`
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/operation
-$ ansible-playbook -i inventory.ini playbook-deploy-prometheus.yml
+$ cd ${SCALAR_K8S_HOME}
+$ ansible-playbook -i outputs/example/inventory.ini operation/playbook-deploy-prometheus.yml
 
 PLAY [Deploy Prometheus in Kubernetes] ************************************************************************************************************************************************************************
 
@@ -84,8 +84,7 @@ apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: LS0tLS1...
-    # server: https://scalar-k8s-c1eae570.fdc2c43xxxx.xxxxxx.xxxxx.xxxxxxxx.privatelink.japaneast.azmk8s.io:443
-    server: https://localhost:7000
+    server: https://localhost:7000 # https://scalar-k8s-c1eae570.fdc2c430-cd60-4952-b269-28d1c1583ca7.privatelink.eastus.azmk8s.io:443
   name: scalar-kubernetes
 contexts:
 - context:
@@ -105,14 +104,6 @@ users:
 
 ## How to access
 
-Now let's access to Prometheus component on your local machine. Open the ssh port-forward to the bastion, and let it open.
-
-```console
-$ ssh -F ssh.cfg bastion
-Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
-[centos@bastion-1 ~]$
-```
-
 Let's have a look at Kubernetes service in the `monitoring` namespace to find the Kubernetes service name for Grafana, Prometheus and Alertmanager.
 
 ```console
@@ -126,6 +117,14 @@ prometheus-prometheus-node-exporter       ClusterIP   10.42.48.249   <none>     
 prometheus-prometheus-oper-alertmanager   ClusterIP   10.42.49.217   <none>        9093/TCP                     3h44m
 prometheus-prometheus-oper-operator       ClusterIP   10.42.50.156   <none>        8080/TCP,443/TCP             3h44m
 prometheus-prometheus-oper-prometheus     ClusterIP   10.42.48.154   <none>        9090/TCP                     3h44m
+```
+
+Now let's access to Prometheus component on your local machine. Open the ssh port-forward to the bastion, and let it open and follow the 3 section below to access to Grafana, Prometheus and Alertmanager.
+
+```console
+$ ssh -F ${SCALAR_K8S_HOME}/outputs/example/ssh.cfg bastion
+Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
+[centos@bastion-1 ~]$
 ```
 
 ### For Grafana on port 8080
@@ -156,34 +155,3 @@ Forwarding from 127.0.0.1:9090 -> 9090
 Forwarding from [::1]:9090 -> 9090
 Handling connection for 9090
 ```
-
-## Add monitoring target with ServiceMonitor CRD
-
-ServiceMonitor specifies how groups of Kubernetes services should be monitored. The Operator automatically generates Prometheus scrape configuration based on the current state of the objects in the API server.
-
-### Envoy monitoring
-
-```console
-$ cd ${SCALAR_K8S_HOME}/operation/manifests/
-$ kubectl create -f prometheus/envoy-service-monitor.yaml
-servicemonitor.monitoring.coreos.com/scalar-envoy-metrics created
-```
-
-Now, we can view the metrics in Grafana/Prometheus web interface
-
-## Deploy Ledger and Envoy rules to Prometheus
-
-PrometheusRule defines a desired Prometheus rule file, which can be loaded by a Prometheus instance containing Prometheus alerting and/or recording rules.
-
-### How to deploy
-
-```console
-$ cd ${SCALAR_K8S_HOME}/operation/manifests/
-$ kubectl create -f prometheus/envoy-prometheus-rules.yaml -f prometheus/ledger-prometheus-rules.yaml
-prometheusrule.monitoring.coreos.com/prometheus-ledger-alerts-rules created
-prometheusrule.monitoring.coreos.com/prometheus-envoy-alerts-rules created
-```
-
-### How to verify
-
-You can verify by connecting to the prometheus server inside kubernetes ([see](./KubernetesMonitorGuide.md#for-prometheus-on-port-9090)) and go on the `Rules` under `Status`.
