@@ -27,5 +27,5 @@
   command: >-
     {{ helm_binary_path }} upgrade --install prometheus stable/prometheus-operator
     --namespace {{ namespace }} --version {{ prometheus_version }}
-    -f {{ remote_directory }}/helm/prometheus-custom-values.yaml
+    -f {{ remote_directory }}/helm/prometheus-custom-values.yaml --timeout 120s
   when: deploy_prometheus
