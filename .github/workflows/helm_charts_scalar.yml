@@ -1,15 +1,15 @@
 name: Helm testing and validate for scalar charts
 on:
   pull_request:
-    branches:
-      - master
-    paths:
-      - "charts/stable/**"
+    # branches:
+    #   - master
+    # paths:
+    #   - "charts/stable/**"
   push:
-    branches:
-      - master
-    paths:
-      - "charts/stable/**"
+    # branches:
+    #   - master
+    # paths:
+    #   - "charts/stable/**"
 jobs:
   lint-chart:
     runs-on: ubuntu-latest
