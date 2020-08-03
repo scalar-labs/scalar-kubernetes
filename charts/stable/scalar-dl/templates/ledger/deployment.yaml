@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "scalar-dl.fullname" . }}-ledger
+  labels:
+    {{- include "scalar-dl-ledger.labels" . | nindent 4 }}
+spec:
+  minReadySeconds: 120
+  replicas: {{ .Values.ledger.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "scalar-dl-ledger.selectorLabels" . | nindent 6 }}
+  {{- with .Values.ledger.strategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- include "scalar-dl-ledger.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
+    {{- with .Values.ledger.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      securityContext:
+        {{- toYaml .Values.ledger.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-ledger
+          securityContext:
+            {{- toYaml .Values.ledger.securityContext | nindent 12 }}
+          image: "{{ .Values.ledger.image.repository }}:{{ .Values.ledger.image.version }}"
+          imagePullPolicy: {{ .Values.ledger.image.pullPolicy }}
+          ports:
+          - containerPort: 50051
+          - containerPort: 50052
+          - containerPort: 50053
+          env:
+          - name: SCALAR_DB_CONTACT_POINTS
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.cassandraHost }}"
+          - name: SCALAR_DB_CONTACT_PORT
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.cassandraPort }}"
+          - name: SCALAR_DB_USERNAME
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.cassandraUsername }}"
+          - name: SCALAR_DB_PASSWORD
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.cassandraPassword }}"
+          - name: SCALAR_DL_LEDGER_LOG_LEVEL
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.ledgerLogLevel }}"
+          livenessProbe:
+            exec:
+              command:
+              - /bin/grpc_health_probe
+              - -addr=:50051
+          readinessProbe:
+            exec:
+              command:
+              - /bin/grpc_health_probe
+              - -addr=:50051
+          resources:
+            {{- toYaml .Values.ledger.resources | nindent 12 }}
+      {{- with .Values.ledger.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.ledger.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.ledger.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

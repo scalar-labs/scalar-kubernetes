@@ -1,7 +1,0 @@
----
-- name: Deploy Scalar-Ledger
-  command: >-
-    {{ helm_binary_path }} upgrade --install {{ ledger_helm_release_name }} helm/charts/stable/scalar-ledger
-    --namespace {{ kubernetes_namespace }}
-    -f {{ remote_directory }}/helm/charts/config/ledger-custom-values.yaml
-  when: deploy_scalar_ledger

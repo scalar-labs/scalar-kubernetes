@@ -1,7 +1,0 @@
----
-- name: Deploy Scalar-Envoy
-  command: >-
-    {{ helm_binary_path }} upgrade --install {{ envoy_helm_release_name }} helm/charts/stable/scalar-envoy
-    --namespace {{ kubernetes_namespace }}
-    -f {{ remote_directory }}/helm/charts/config/envoy-custom-values.yaml
-  when: deploy_scalar_envoy
