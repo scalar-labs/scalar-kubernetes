@@ -4,7 +4,6 @@
   gather_facts: no
   become: no
   vars:
-    fluent_monitor_host: monitor.{{ internal_domain }}
   #   default_kubernetes_namespace: logging
   #   monitoring_kubernetes_namespace: monitoring
   #   remote_manifests_directory: "/home/{{ ansible_user }}/manifests"
