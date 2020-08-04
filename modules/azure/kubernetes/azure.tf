@@ -3,10 +3,10 @@ terraform {
 }
 
 provider "azurerm" {
-  version = ">=2.5.0"
+  version = ">= 2.21.0"
   features {}
 }
 
 provider "azuread" {
-  version = ">= 0.8"
+  version = ">= 0.11.0"
 }
