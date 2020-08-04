@@ -65,8 +65,8 @@ data "azurerm_subscription" "current" {
 
 # Set assignment Contributor to Service Principal
 resource "azurerm_role_assignment" "aks_service_principal_role_assignment" {
-  scope                = data.azurerm_subscription.current.id
-  role_definition_name = "Contributor"
+  scope                = "${data.azurerm_subscription.current.id}/resourceGroups/${local.network_name}"
+  role_definition_name = "Network contributor"
   principal_id         = azuread_service_principal.aks_service_principal.id
 
   # Waiting for AAD global replication - see https://github.com/Azure/AKS/issues/1206#issue-493516902
