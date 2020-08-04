@@ -102,7 +102,7 @@ envoy:
   affinity: {}
 
 ledger:
-  # replicaCount -- number of replicas to deploy
+  # ledger.replicaCount -- number of replicas to deploy
   replicaCount: 3
 
   scalarLedgerConfiguration:
@@ -114,35 +114,35 @@ ledger:
     replicationFactor: 3
 
   schemaImport:
-    # schemaImport.enabled -- Enabled the Cassandra keyspace job
+    # ledger.schemaImport.enabled -- Enabled the Cassandra keyspace job
     enabled: true
 
   image:
-    # image.repository -- Docker image
+    # ledger.image.repository -- Docker image
     repository: scalarlabs/scalar-ledger
-    # image.tag -- Docker tag
+    # ledger.image.tag -- Docker tag
     version: 2.0.7
-    # image.pullPolicy -- Specify a imagePullPolicy
+    # ledger.image.pullPolicy -- Specify a imagePullPolicy
     pullPolicy: IfNotPresent
 
 
-  # imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
+  # ledger.imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
   imagePullSecrets: [name: reg-docker-secrets]
 
   strategy:
     rollingUpdate:
-      # strategy.rollingUpdate -- The number of pods that can be created above the desired amount of pods during an update
+      # ledger.strategy.rollingUpdate -- The number of pods that can be created above the desired amount of pods during an update
       maxSurge: 0
-      # strategy.rollingUpdate -- The number of pods that can be unavailable during the update process
+      # ledger.strategy.rollingUpdate -- The number of pods that can be unavailable during the update process
       maxUnavailable: 1
-    # strategy.type -- New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate
+    # ledger.strategy.type -- New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate
     type: RollingUpdate
 
-  # podSecurityContext -- PodSecurityContext holds pod-level security attributes and common container settings
+  # ledger.podSecurityContext -- PodSecurityContext holds pod-level security attributes and common container settings
   podSecurityContext: {}
     # fsGroup: 2000
 
-  # securityContext -- Setting security context at the pod applies those settings to all containers in the pod
+  # ledger.securityContext -- Setting security context at the pod applies those settings to all containers in the pod
   securityContext: {}
     # capabilities:
     #   drop:
@@ -152,16 +152,16 @@ ledger:
     # runAsUser: 1000
 
   service:
-    # service.type -- service types in kubernetes
+    # ledger.service.type -- service types in kubernetes
     type: ClusterIP
 
   prometheusRule:
-    # prometheusRule.enabled -- enable rules for prometheus
+    # ledger.prometheusRule.enabled -- enable rules for prometheus
     enabled: false
-    # prometheusRule.namespace -- which namespace prometheus is located. by default monitoring
+    # ledger.prometheusRule.namespace -- which namespace prometheus is located. by default monitoring
     namespace: monitoring
 
-  # resources -- resources allowed to the pod
+  # ledger.resources -- resources allowed to the pod
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
@@ -174,11 +174,11 @@ ledger:
     #   cpu: 100m
     #   memory: 128Mi
 
-  # nodeSelector -- nodeSelector is form of node selection constraint
+  # ledger.nodeSelector -- nodeSelector is form of node selection constraint
   nodeSelector: {}
 
-  # tolerations -- Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
+  # ledger.tolerations -- Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
   tolerations: []
 
-  # affinity -- the affinity/anti-affinity feature, greatly expands the types of constraints you can express
+  # ledger.affinity -- the affinity/anti-affinity feature, greatly expands the types of constraints you can express
   affinity: {}

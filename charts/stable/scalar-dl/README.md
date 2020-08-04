@@ -36,28 +36,27 @@ Current chart version is `1.0.0`
 | envoy.strategy.type | string | `"RollingUpdate"` | New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate |
 | envoy.tolerations | list | `[]` | Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints. |
 | fullnameOverride | string | `""` | String to fully override scalar-dl.fullname template |
-| ledger.affinity | object | `{}` |  |
-| ledger.image.pullPolicy | string | `"IfNotPresent"` |  |
-| ledger.image.repository | string | `"scalarlabs/scalar-ledger"` |  |
+| ledger.affinity | object | `{}` | the affinity/anti-affinity feature, greatly expands the types of constraints you can express |
+| ledger.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
+| ledger.image.repository | string | `"scalarlabs/scalar-ledger"` | Docker image |
 | ledger.image.version | string | `"2.0.7"` |  |
-| ledger.imagePullSecrets[0].name | string | `"reg-docker-secrets"` |  |
-| ledger.nodeSelector | object | `{}` |  |
-| ledger.podSecurityContext | object | `{}` |  |
-| ledger.prometheusRule.enabled | bool | `false` |  |
-| ledger.prometheusRule.namespace | string | `"monitoring"` |  |
-| ledger.replicaCount | int | `3` |  |
-| ledger.resources | object | `{}` |  |
+| ledger.imagePullSecrets | list | `[{"name":"reg-docker-secrets"}]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
+| ledger.nodeSelector | object | `{}` | nodeSelector is form of node selection constraint |
+| ledger.podSecurityContext | object | `{}` | PodSecurityContext holds pod-level security attributes and common container settings |
+| ledger.prometheusRule.enabled | bool | `false` | enable rules for prometheus |
+| ledger.prometheusRule.namespace | string | `"monitoring"` | which namespace prometheus is located. by default monitoring |
+| ledger.replicaCount | int | `3` | number of replicas to deploy |
+| ledger.resources | object | `{}` | resources allowed to the pod |
 | ledger.scalarLedgerConfiguration.cassandraHost | string | `"cassandra"` |  |
 | ledger.scalarLedgerConfiguration.cassandraPassword | string | `"cassandra"` |  |
 | ledger.scalarLedgerConfiguration.cassandraPort | int | `9042` |  |
 | ledger.scalarLedgerConfiguration.cassandraUsername | string | `"cassandra"` |  |
 | ledger.scalarLedgerConfiguration.ledgerLogLevel | string | `"INFO"` |  |
 | ledger.scalarLedgerConfiguration.replicationFactor | int | `3` |  |
-| ledger.schemaImport.enabled | bool | `true` |  |
-| ledger.securityContext | object | `{}` |  |
-| ledger.service.type | string | `"ClusterIP"` |  |
-| ledger.strategy.rollingUpdate.maxSurge | int | `0` |  |
-| ledger.strategy.rollingUpdate.maxUnavailable | int | `1` |  |
-| ledger.strategy.type | string | `"RollingUpdate"` |  |
-| ledger.tolerations | list | `[]` |  |
+| ledger.schemaImport.enabled | bool | `true` | Enabled the Cassandra keyspace job |
+| ledger.securityContext | object | `{}` | Setting security context at the pod applies those settings to all containers in the pod |
+| ledger.service.type | string | `"ClusterIP"` | service types in kubernetes |
+| ledger.strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |
+| ledger.strategy.type | string | `"RollingUpdate"` | New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate |
+| ledger.tolerations | list | `[]` | Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints. |
 | nameOverride | string | `""` | String to partially override scalar-dl.fullname template (will maintain the release name) |
