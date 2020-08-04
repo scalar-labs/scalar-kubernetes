@@ -88,8 +88,8 @@ You can login to the bastion and check if the installation worked well as follow
 $ ssh centos@bastion-example-k8s-azure-p5rzic.eastus.cloudapp.azure.com
 [centos@bastion-1 ~]$ kubectl get node
 NAME                                        STATUS   ROLES   AGE   VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
-aks-default-34802672-vmss000000        Ready    agent   60m   v1.15.11   10.42.40.5     <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-aks-scalardlpool-34802672-vmss000000   Ready    agent   56m   v1.15.11   10.42.40.106   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-aks-scalardlpool-34802672-vmss000001   Ready    agent   56m   v1.15.11   10.42.40.207   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-aks-scalardlpool-34802672-vmss000002   Ready    agent   56m   v1.15.11   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+aks-default-34802672-vmss000000        Ready    agent   60m   v1.16.10   10.42.40.5     <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+aks-scalardlpool-34802672-vmss000000   Ready    agent   56m   v1.16.10   10.42.40.106   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+aks-scalardlpool-34802672-vmss000001   Ready    agent   56m   v1.16.10   10.42.40.207   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+aks-scalardlpool-34802672-vmss000002   Ready    agent   56m   v1.16.10   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
 ```

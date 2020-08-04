@@ -357,10 +357,10 @@ endpoints/se-scalar-envoy-metrics     10.42.40.127:9001,10.42.40.252:9001,10.42.
 endpoints/sl-scalar-ledger-headless   10.42.40.161,10.42.40.243,10.42.41.101                                 39m
 
 NAME                                        STATUS   ROLES   AGE   VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
-node/aks-default-34802672-vmss000000        Ready    agent   60m   v1.15.11   10.42.40.5     <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-node/aks-scalardlpool-34802672-vmss000000   Ready    agent   56m   v1.15.11   10.42.40.106   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-node/aks-scalardlpool-34802672-vmss000001   Ready    agent   56m   v1.15.11   10.42.40.207   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-node/aks-scalardlpool-34802672-vmss000002   Ready    agent   56m   v1.15.11   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-default-34802672-vmss000000        Ready    agent   60m   v1.16.10   10.42.40.5     <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000000   Ready    agent   56m   v1.16.10   10.42.40.106   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000001   Ready    agent   56m   v1.16.10   10.42.40.207   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000002   Ready    agent   56m   v1.16.10   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
 ```
 
 The private endpoint is 10.42.44.4 on port 50051 and 50052

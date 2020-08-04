@@ -142,6 +142,8 @@ nodeExporter:
 
 coreDns:
   enabled: true
+  servicemonitor:
+    https: true
 
 kubeControllerManager:
   enabled: false
@@ -158,7 +160,7 @@ kubeProxy:
 kubelet:
   enabled: true
   serviceMonitor:
-    https: false
+    https: true
 
 prometheus:
   prometheusSpec:
