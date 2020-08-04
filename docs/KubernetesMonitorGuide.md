@@ -13,6 +13,10 @@ It is assumed that the private key is loaded into an ssh-agent.
 ```console
 # Please update `/path/to/local-repository` before running the command.
 $ export SCALAR_K8S_HOME=/path/to/local-repository
+
+# Please update `/path/to/local-repository-outputs` before running the command.
+$ export SCALAR_K8S_OUTPUT_DIRECTORY=/path/to/local-repository-outputs
+
 $ cd ${SCALAR_K8S_HOME}/example/azure/network
 $ ssh-add example_key # private ssh key
 ```
@@ -48,7 +52,7 @@ Host 10.*
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-$ terraform output k8s_ssh_config > ${SCALAR_K8S_HOME}/outputs/example/ssh.cfg
+$ terraform output k8s_ssh_config > ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/ssh.cfg
 ```
 
 ## Deploy Prometheus
@@ -57,7 +61,7 @@ Now let's deploy to Prometheus component inside Kubernetes with Ansible playbook
 
 ```console
 $ cd ${SCALAR_K8S_HOME}
-$ ansible-playbook -i outputs/example/inventory.ini operation/playbook-deploy-prometheus.yml
+$ ansible-playbook -i ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/inventory.ini operation/playbook-deploy-prometheus.yml
 
 PLAY [Deploy Prometheus in Kubernetes] ************************************************************************************************************************************************************************
 
@@ -122,7 +126,8 @@ prometheus-prometheus-oper-prometheus     ClusterIP   10.42.48.154   <none>     
 Now let's access to Prometheus component on your local machine. Open the ssh port-forward to the bastion, and let it open and follow the 3 section below to access to Grafana, Prometheus and Alertmanager.
 
 ```console
-$ ssh -F ${SCALAR_K8S_HOME}/outputs/example/ssh.cfg bastion
+$ cd ${SCALAR_K8S_OUTPUT_DIRECTORY}/example
+$ ssh -F ssh.cfg bastion
 Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 [centos@bastion-1 ~]$
 ```
