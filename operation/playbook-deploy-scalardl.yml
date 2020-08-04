@@ -4,6 +4,7 @@
   gather_facts: no
   become: no
   vars:
+    base_local_directory: "{{ lookup('env','SCALAR_K8S_OUTPUT_DIRECTORY') }}"
     # docker_registry: "https://index.docker.io/v2/"
     # docker_username: "{{ lookup('env','DOCKERHUB_USER') }}"
     # docker_password: "{{ lookup('env','DOCKERHUB_ACCESS_TOKEN') }}"
@@ -15,4 +16,4 @@
     # envoy_helm_release_name: se
     # env_name: example
   roles:
-  - "scalardl"
+  - scalardl
