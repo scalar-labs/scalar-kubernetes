@@ -3,11 +3,12 @@
   hosts: bastion
   gather_facts: no
   become: no
+  vars:
+    fluent_monitor_host: monitor.{{ internal_domain }}
   # vars:
   #   default_kubernetes_namespace: logging
   #   monitoring_kubernetes_namespace: monitoring
   #   remote_manifests_directory: "/home/{{ ansible_user }}/manifests"
-  #   fluent_monitor_host: monitor.internal.scalar-labs.com
   #   fluent_monitor_port: 24224
   #   fluent_activate_metrics: yes
   roles:
