@@ -33,3 +33,7 @@ kubernetes_scalar_apps_pool = {
   cluster_auto_scaling_min_count = "3"
   cluster_auto_scaling_max_count = "6"
 }
+
+custom_tags = {
+  "environment" = "example"
+}

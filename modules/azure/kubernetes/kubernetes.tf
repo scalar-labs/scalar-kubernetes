@@ -142,9 +142,9 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   tags = merge(
     var.custom_tags,
     {
-      "Terraform" = "true"
-      "Network"   = "${local.network_name}"
-      "Role"      = "Kubernetes"
+      "terraform" = "true"
+      "network"   = "${local.network_name}"
+      "role"      = "Kubernetes"
     }
   )
 
@@ -181,9 +181,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_scalar_apps_node_po
   tags = merge(
     var.custom_tags,
     {
-      "Terraform" = "true"
-      "Network"   = "${local.network_name}"
-      "Role"      = "Kubernetes"
+      "terraform" = "true"
+      "network"   = "${local.network_name}"
+      "role"      = "Kubernetes"
     }
   )
 

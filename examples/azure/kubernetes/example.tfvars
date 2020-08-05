@@ -34,5 +34,5 @@ kubernetes_scalar_apps_pool = {
 }
 
 custom_tags = {
-  # "Environment" = "Example"
+  # "environment" = "example"
 }
