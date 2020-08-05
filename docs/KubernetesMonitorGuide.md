@@ -52,7 +52,7 @@ Host 10.*
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-$ terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/example/ssh.cfg
+$ terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/ssh.cfg
 ```
 
 ## Deploy Prometheus
@@ -61,7 +61,7 @@ Now let's deploy to Prometheus component inside Kubernetes with Ansible playbook
 
 ```console
 $ cd ${SCALAR_K8S_HOME}
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-prometheus.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-prometheus.yml
 
 PLAY [Deploy Prometheus in Kubernetes] ************************************************************************************************************************************************************************
 

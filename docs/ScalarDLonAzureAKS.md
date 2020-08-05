@@ -113,16 +113,16 @@ $ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
 ```
 # Create inventory for ansible
 $ cd ${SCALAR_K8S_HOME}/examples/azure/network
-$ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini
+$ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
 
 # Retrieve kube_config for setup kubectl
 $ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
-$ terraform output kube_config > ${SCALAR_K8S_CONFIG_DIR}/example/kube_config
+$ terraform output kube_config > ${SCALAR_K8S_CONFIG_DIR}/kube_config
 
 # Setup bastion for Kubernetes
 $ cd ${SCALAR_K8S_HOME}
 $ export ANSIBLE_CONFIG=${SCALAR_K8S_HOME}/operation/ansible.cfg
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-install-tools.yml -e env_name=example
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-install-tools.yml
 ```
 
 Please refer to [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) for more information.
@@ -135,7 +135,7 @@ How to deploy Prometheus metrics server, Grafana data visualization server, and 
 $ cd ${SCALAR_K8S_HOME}
 
 # Deploy prometheus operator in Kubernetes
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-prometheus.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-prometheus.yml
 ```
 
 Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more information.
@@ -146,7 +146,7 @@ Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more
 $ cd ${SCALAR_K8S_HOME}
 
 # Deploy fluentbit to collect log from Kubernetes
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-fluentbit.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-fluentbit.yml
 ```
 
 Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for more information.
@@ -165,7 +165,7 @@ $ export DOCKERHUB_USER=<user>
 $ export DOCKERHUB_ACCESS_TOKEN=<token>
 
 # Deploy Scalar DL and Envoy resources
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-scalardl.yml -e env_name=example
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml
 ```
 
 Please refer to [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDL.md) for more information like: add more pod for envoy or change resource.
@@ -313,7 +313,7 @@ Host 10.*
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-$ terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/example/ssh.cfg
+$ terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/ssh.cfg
 ```
 
 #### How to access to kubernetes from your local machine

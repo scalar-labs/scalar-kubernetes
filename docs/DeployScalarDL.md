@@ -31,7 +31,7 @@ $ export SCALAR_K8S_HOME=/path/to/local-repository
 $ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
 
 $ cd ${SCALAR_K8S_HOME}
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-scalardl.yml -e env_name=example
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml
 
 PLAY [Deploy scalar ledger and envoy in kubernetes] *********************************************************************************************************************************************************
 
@@ -78,13 +78,13 @@ The default values are describe in here:
 * [scalar-envoy](../charts/stable/scalar-envoy/README.md)
 * [scalar-ledger](../charts/stable/scalar-ledger/README.md)
 
-Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-scalardl.yml -e env_name=example`
+Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml`
 
 ### How to increase the number of Envoy Pod
 
 In `envoy-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
 
-edit `${SCALAR_K8S_CONFIG_DIR}/example/envoy-custom-values.yaml`
+edit `${SCALAR_K8S_CONFIG_DIR}/envoy-custom-values.yaml`
 
 ```yml
 replicaCount: 6
@@ -96,7 +96,7 @@ The number of pods is linked to the number of nodes available. You may need to i
 
 In `envoy-custom-values.yaml`, you can update resource as follow
 
-edit `${SCALAR_K8S_CONFIG_DIR}/example/envoy-custom-values.yaml`
+edit `${SCALAR_K8S_CONFIG_DIR}/envoy-custom-values.yaml`
 
 ```yml
 resources:
@@ -126,7 +126,7 @@ service:
 
 In `ledger-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
 
-edit `${SCALAR_K8S_CONFIG_DIR}/example/ledger-custom-values.yaml`
+edit `${SCALAR_K8S_CONFIG_DIR}/ledger-custom-values.yaml`
 
 ```yml
 replicaCount: 6
@@ -138,7 +138,7 @@ The number of pods is linked to the number of nodes available. You may need to i
 
 In `ledger-custom-values.yaml`, you can update resource as follow
 
-edit `${SCALAR_K8S_CONFIG_DIR}/example/ledger-custom-values.yaml`
+edit `${SCALAR_K8S_CONFIG_DIR}/ledger-custom-values.yaml`
 
 ```yml
 resources:
