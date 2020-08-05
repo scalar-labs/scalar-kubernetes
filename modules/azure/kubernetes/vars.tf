@@ -27,3 +27,9 @@ variable "kubernetes_additional_node_pools" {
   default     = {}
   description = "Custom definition kubernetes additional node pools, same as default_node_pool"
 }
+
+variable "custom_tags" {
+  type        = map
+  default     = {}
+  description = "The map of custom tags"
+}

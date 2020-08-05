@@ -139,6 +139,16 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     ]
   }
 
+  tags = merge(
+    var.custom_tags,
+    {
+      "Terraform" = "true"
+      "Network"   = "${local.network_name}"
+      "Role"      = "Kubernetes"
+    }
+  )
+
+
   depends_on = [
     azurerm_role_assignment.aks_service_principal_role_assignment,
     azuread_service_principal_password.aks_assign_service_principal_password
@@ -167,6 +177,15 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_node_pool" {
       node_count
     ]
   }
+
+  tags = merge(
+    var.custom_tags,
+    {
+      "Terraform" = "true"
+      "Network"   = "${local.network_name}"
+      "Role"      = "Kubernetes"
+    }
+  )
 
   depends_on = [
     azurerm_subnet.subnet,

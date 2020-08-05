@@ -32,3 +32,7 @@ kubernetes_additional_node_pools = {
   # cluster_auto_scaling_min_count = "3"
   # cluster_auto_scaling_max_count = "6"
 }
+
+custom_tags = {
+  # "Environment" = "Example"
+}
