@@ -126,7 +126,7 @@ prometheus-prometheus-oper-prometheus     ClusterIP   10.42.48.154   <none>     
 Now let's access to Prometheus component on your local machine. Open the ssh port-forward to the bastion, and let it open and follow the 3 section below to access to Grafana, Prometheus and Alertmanager.
 
 ```console
-$ cd ${SCALAR_K8S_CONFIG_DIR}/example
+$ cd ${SCALAR_K8S_CONFIG_DIR}
 $ ssh -F ssh.cfg bastion
 Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 [centos@bastion-1 ~]$

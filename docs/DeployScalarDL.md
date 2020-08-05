@@ -17,6 +17,18 @@ You need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the val
 ```console
 $ export DOCKERHUB_USER=<user>
 $ export DOCKERHUB_ACCESS_TOKEN=<token>
+
+# Please update `/path/to/local-repository` before running the command.
+$ export SCALAR_K8S_HOME=/path/to/local-repository
+
+# Please update `/path/to/local-repository-config-dir` before running the command.
+$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
+```
+
+Copy from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`
+
+```console
+$ cp ${SCALAR_K8S_HOME}/{envoy-custom-values.yaml,ledger-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
 ```
 
 ## Deploy Scalar DL
@@ -24,12 +36,6 @@ $ export DOCKERHUB_ACCESS_TOKEN=<token>
 It is now ready to deploy Scalar DL to the k8s cluster.
 
 ```console
-# Please update `/path/to/local-repository` before running the command.
-$ export SCALAR_K8S_HOME=/path/to/local-repository
-
-# Please update `/path/to/local-repository-config-dir` before running the command.
-$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
-
 $ cd ${SCALAR_K8S_HOME}
 $ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml
 
@@ -71,7 +77,7 @@ The private endpoint is 10.42.44.4 on port 50051 and 50052
 
 ## Customize values for scalar-ledger and scalar-envoy charts
 
-In `${SCALAR_K8S_CONFIG_DIR}/example` contain the helm custom values use for deploying the application in Kubernetes.
+In `${SCALAR_K8S_CONFIG_DIR}` contain the helm custom values use for deploying the application in Kubernetes.
 
 The default values are describe in here:
 

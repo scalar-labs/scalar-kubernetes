@@ -55,7 +55,7 @@ bastion                    : ok=7    changed=3    unreachable=0    failed=0    s
 Connect on the monitor server, please refer to [SSH Guide](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/SSHGuide.md)
 
 ```console
-$ cd ${SCALAR_K8S_CONFIG_DIR}/example
+$ cd ${SCALAR_K8S_CONFIG_DIR}/
 $ ssh -F ssh.cfg monitor.internal.scalar-labs.com
 ```
 

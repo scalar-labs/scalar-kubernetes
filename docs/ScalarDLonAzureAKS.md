@@ -321,7 +321,7 @@ $ terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/ssh.cfg
 Now let's access to kubernetes from your local machine. Open the ssh port-forward to the bastion, and let it open.
 
 ```console
-$ cd ${SCALAR_K8S_CONFIG_DIR}/example
+$ cd ${SCALAR_K8S_CONFIG_DIR}
 $ ssh -F ssh.cfg bastion
 Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 [centos@bastion-1 ~]$
@@ -368,7 +368,7 @@ Please check out [Scalar DL Getting Started](https://scalardl.readthedocs.io/en/
 To access to kubernetes node, look at the `INTERNAL-IP` from `kubectl get nodes -o wide`
 
 ```console
-$ cd ${SCALAR_K8S_CONFIG_DIR}/example
+$ cd ${SCALAR_K8S_CONFIG_DIR}
 $ ssh -F ssh.cfg 10.42.40.5
 Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 Warning: Permanently added '10.42.40.5' (ECDSA) to the list of known hosts.
