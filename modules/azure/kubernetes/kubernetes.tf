@@ -156,21 +156,21 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 }
 
 # Add one more kubernetes node pool
-resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_node_pool" {
+resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_scalar_apps_node_pool" {
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
-  name                  = substr(local.kubernetes_additional_node_pools.name, 0, 12)
-  node_count            = local.kubernetes_additional_node_pools.node_count
-  vm_size               = local.kubernetes_additional_node_pools.vm_size
+  name                  = substr(local.kubernetes_scalar_apps_pool.name, 0, 12)
+  node_count            = local.kubernetes_scalar_apps_pool.node_count
+  vm_size               = local.kubernetes_scalar_apps_pool.vm_size
   availability_zones    = var.kubernetes_cluster_availability_zones
-  max_pods              = local.kubernetes_additional_node_pools.max_pods
-  os_disk_size_gb       = local.kubernetes_additional_node_pools.os_disk_size_gb
-  os_type               = local.kubernetes_additional_node_pools.node_os
+  max_pods              = local.kubernetes_scalar_apps_pool.max_pods
+  os_disk_size_gb       = local.kubernetes_scalar_apps_pool.os_disk_size_gb
+  os_type               = local.kubernetes_scalar_apps_pool.node_os
   vnet_subnet_id        = azurerm_subnet.subnet["k8s_node_pod"].id
-  node_taints           = [local.kubernetes_additional_node_pools.taints]
+  node_taints           = [local.kubernetes_scalar_apps_pool.taints]
   enable_node_public_ip = "false"
-  enable_auto_scaling   = local.kubernetes_additional_node_pools.cluster_auto_scaling
-  min_count             = local.kubernetes_additional_node_pools.cluster_auto_scaling_min_count
-  max_count             = local.kubernetes_additional_node_pools.cluster_auto_scaling_max_count
+  enable_auto_scaling   = local.kubernetes_scalar_apps_pool.cluster_auto_scaling
+  min_count             = local.kubernetes_scalar_apps_pool.cluster_auto_scaling_min_count
+  max_count             = local.kubernetes_scalar_apps_pool.cluster_auto_scaling_max_count
 
   lifecycle {
     ignore_changes = [

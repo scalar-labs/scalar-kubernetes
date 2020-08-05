@@ -64,9 +64,9 @@ locals {
   )
 }
 
-# K8s additional node pools (scalardl dedicated)
+# K8s scalar apps node pool
 locals {
-  additional_node_pools = {
+  scalar_apps_pool = {
     name                           = "scalardlpool"
     node_count                     = "3"
     vm_size                        = "Standard_D2s_v3"
@@ -82,8 +82,8 @@ locals {
 
 ## Merge k8s additional node pools (scalardl dedicated)
 locals {
-  kubernetes_additional_node_pools = merge(
-    local.additional_node_pools,
-    var.kubernetes_additional_node_pools
+  kubernetes_scalar_apps_pool = merge(
+    local.scalar_apps_pool,
+    var.kubernetes_scalar_apps_pool
   )
 }
