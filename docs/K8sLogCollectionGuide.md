@@ -29,11 +29,11 @@ Now let's deploy Fluent Bit to Kubernetes.
 # Please update `/path/to/local-repository` before running the command.
 $ export SCALAR_K8S_HOME=/path/to/local-repository
 
-# Please update `/path/to/local-repository-outputs` before running the command.
-$ export SCALAR_K8S_OUTPUT_DIRECTORY=/path/to/local-repository-outputs
+# Please update `/path/to/local-repository-config-dir` before running the command.
+$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
 
 $ cd ${SCALAR_K8S_HOME}
-$ ansible-playbook -i ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/inventory.ini operation/playbook-deploy-fluentbit.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-fluentbit.yml
 
 PLAY [Deploy Fluentbit in Kubernetes] *************************************************************************************************************************************************************************
 
@@ -55,7 +55,7 @@ bastion                    : ok=7    changed=3    unreachable=0    failed=0    s
 Connect on the monitor server, please refer to [SSH Guide](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/SSHGuide.md)
 
 ```console
-$ cd ${SCALAR_K8S_OUTPUT_DIRECTORY}/example
+$ cd ${SCALAR_K8S_CONFIG_DIR}/example
 $ ssh -F ssh.cfg monitor.internal.scalar-labs.com
 ```
 

@@ -97,19 +97,15 @@ $ terraform apply -var-file example.tfvars
 
 Note that the current version uses [the monitor module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/monitor) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform/). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
-### Create your own outputs directory
+### Decide where to store configuration files for accessing the k8s cluster
 
-Create a directory to store your `inventory.ini`, `kube_config` and `ssh.cfg`. if you decide to not use the outputs directory you need to copy the `envoy-custom-values.yaml` and `ledger-custom-values.yaml` files into your own chosen directory. you can have a look at the [README](../outputs/README.md)
+Please decide which directory you want to use to store configuration files for accessing the k8s cluster.
+It is recommended to be set outside of the repo since it should be separately managed per project.
 
-```
-$ export SCALAR_K8S_OUTPUT_DIRECTORY=../outputs
-```
-
-If you use your own directory outside of the project
 
 ```
-# Please update `/path/to/local-repository-outputs` before running the command.
-$ export SCALAR_K8S_OUTPUT_DIRECTORY=/path/to/local-repository-outputs
+# Please update `/path/to/local-repository-config-dir` before running the command.
+$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
 ```
 
 ### Setup bastion for accessing Kubernetes cluster
@@ -117,16 +113,16 @@ $ export SCALAR_K8S_OUTPUT_DIRECTORY=/path/to/local-repository-outputs
 ```
 # Create inventory for ansible
 $ cd ${SCALAR_K8S_HOME}/examples/azure/network
-$ terraform output inventory_ini > ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/inventory.ini
+$ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini
 
 # Retrieve kube_config for setup kubectl
 $ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
-$ terraform output kube_config > ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/kube_config
+$ terraform output kube_config > ${SCALAR_K8S_CONFIG_DIR}/example/kube_config
 
 # Setup bastion for Kubernetes
 $ cd ${SCALAR_K8S_HOME}
 $ export ANSIBLE_CONFIG=${SCALAR_K8S_HOME}/operation/ansible.cfg
-$ ansible-playbook -i ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/inventory.ini operation/playbook-install-tools.yml -e env_name=example
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-install-tools.yml -e env_name=example
 ```
 
 Please refer to [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) for more information.
@@ -139,7 +135,7 @@ How to deploy Prometheus metrics server, Grafana data visualization server, and 
 $ cd ${SCALAR_K8S_HOME}
 
 # Deploy prometheus operator in Kubernetes
-$ ansible-playbook -i ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/inventory.ini operation/playbook-deploy-prometheus.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-prometheus.yml
 ```
 
 Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more information.
@@ -150,7 +146,7 @@ Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more
 $ cd ${SCALAR_K8S_HOME}
 
 # Deploy fluentbit to collect log from Kubernetes
-$ ansible-playbook -i ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/inventory.ini operation/playbook-deploy-fluentbit.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-fluentbit.yml
 ```
 
 Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for more information.
@@ -169,7 +165,7 @@ $ export DOCKERHUB_USER=<user>
 $ export DOCKERHUB_ACCESS_TOKEN=<token>
 
 # Deploy Scalar DL and Envoy resources
-$ ansible-playbook -i ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/inventory.ini operation/playbook-deploy-scalardl.yml -e env_name=example
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-scalardl.yml -e env_name=example
 ```
 
 Please refer to [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDL.md) for more information like: add more pod for envoy or change resource.
@@ -317,7 +313,7 @@ Host 10.*
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
-$ terraform output k8s_ssh_config > ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/ssh.cfg
+$ terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/example/ssh.cfg
 ```
 
 #### How to access to kubernetes from your local machine
@@ -325,7 +321,7 @@ $ terraform output k8s_ssh_config > ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/ssh.c
 Now let's access to kubernetes from your local machine. Open the ssh port-forward to the bastion, and let it open.
 
 ```console
-$ cd ${SCALAR_K8S_OUTPUT_DIRECTORY}/example
+$ cd ${SCALAR_K8S_CONFIG_DIR}/example
 $ ssh -F ssh.cfg bastion
 Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 [centos@bastion-1 ~]$
@@ -372,7 +368,7 @@ Please check out [Scalar DL Getting Started](https://scalardl.readthedocs.io/en/
 To access to kubernetes node, look at the `INTERNAL-IP` from `kubectl get nodes -o wide`
 
 ```console
-$ cd ${SCALAR_K8S_OUTPUT_DIRECTORY}/example
+$ cd ${SCALAR_K8S_CONFIG_DIR}/example
 $ ssh -F ssh.cfg 10.42.40.5
 Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com,52.188.154.226' (ECDSA) to the list of known hosts.
 Warning: Permanently added '10.42.40.5' (ECDSA) to the list of known hosts.

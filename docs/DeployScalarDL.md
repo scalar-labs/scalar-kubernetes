@@ -27,11 +27,11 @@ It is now ready to deploy Scalar DL to the k8s cluster.
 # Please update `/path/to/local-repository` before running the command.
 $ export SCALAR_K8S_HOME=/path/to/local-repository
 
-# Please update `/path/to/local-repository-outputs` before running the command.
-$ export SCALAR_K8S_OUTPUT_DIRECTORY=/path/to/local-repository-outputs
+# Please update `/path/to/local-repository-config-dir` before running the command.
+$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
 
 $ cd ${SCALAR_K8S_HOME}
-$ ansible-playbook -i ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/inventory.ini operation/playbook-deploy-scalardl.yml -e env_name=example
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-scalardl.yml -e env_name=example
 
 PLAY [Deploy scalar ledger and envoy in kubernetes] *********************************************************************************************************************************************************
 
@@ -71,20 +71,20 @@ The private endpoint is 10.42.44.4 on port 50051 and 50052
 
 ## Customize values for scalar-ledger and scalar-envoy charts
 
-In `${SCALAR_K8S_OUTPUT_DIRECTORY}/example` contain the helm custom values use for deploying the application in Kubernetes.
+In `${SCALAR_K8S_CONFIG_DIR}/example` contain the helm custom values use for deploying the application in Kubernetes.
 
 The default values are describe in here:
 
 * [scalar-envoy](../charts/stable/scalar-envoy/README.md)
 * [scalar-ledger](../charts/stable/scalar-ledger/README.md)
 
-Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_OUTPUT_DIRECTORY}/example/inventory.ini operation/playbook-deploy-scalardl.yml -e env_name=example`
+Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/example/inventory.ini operation/playbook-deploy-scalardl.yml -e env_name=example`
 
 ### How to increase the number of Envoy Pod
 
 In `envoy-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
 
-edit `${SCALAR_K8S_OUTPUT_DIRECTORY}/example/envoy-custom-values.yaml`
+edit `${SCALAR_K8S_CONFIG_DIR}/example/envoy-custom-values.yaml`
 
 ```yml
 replicaCount: 6
@@ -96,7 +96,7 @@ The number of pods is linked to the number of nodes available. You may need to i
 
 In `envoy-custom-values.yaml`, you can update resource as follow
 
-edit `${SCALAR_K8S_OUTPUT_DIRECTORY}/example/envoy-custom-values.yaml`
+edit `${SCALAR_K8S_CONFIG_DIR}/example/envoy-custom-values.yaml`
 
 ```yml
 resources:
@@ -126,7 +126,7 @@ service:
 
 In `ledger-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
 
-edit `${SCALAR_K8S_OUTPUT_DIRECTORY}/example/ledger-custom-values.yaml`
+edit `${SCALAR_K8S_CONFIG_DIR}/example/ledger-custom-values.yaml`
 
 ```yml
 replicaCount: 6
@@ -138,7 +138,7 @@ The number of pods is linked to the number of nodes available. You may need to i
 
 In `ledger-custom-values.yaml`, you can update resource as follow
 
-edit `${SCALAR_K8S_OUTPUT_DIRECTORY}/example/ledger-custom-values.yaml`
+edit `${SCALAR_K8S_CONFIG_DIR}/example/ledger-custom-values.yaml`
 
 ```yml
 resources:
