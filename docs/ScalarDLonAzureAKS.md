@@ -102,7 +102,6 @@ Note that the current version uses [the monitor module](https://github.com/scala
 Please decide which directory you want to use to store configuration files for accessing the k8s cluster.
 It is recommended to be set outside of the repo since it should be separately managed per project.
 
-
 ```
 # Please update `/path/to/local-repository-config-dir` before running the command.
 $ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
@@ -330,33 +329,33 @@ Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.az
 Open a new terminal or tab.
 
 ```console
-$ kubectl get po,svc,endpoints,node -o wide
-NAME                                    READY   STATUS      RESTARTS   AGE   IP             NODE                                   NOMINATED NODE   READINESS GATES
-pod/se-scalar-envoy-7ddff6fdc5-6zhv2    1/1     Running     0          39m   10.42.41.109   aks-scalardlpool-34802672-vmss000002   <none>           <none>
-pod/se-scalar-envoy-7ddff6fdc5-82nvj    1/1     Running     0          39m   10.42.40.127   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/se-scalar-envoy-7ddff6fdc5-cwhtb    1/1     Running     0          39m   10.42.40.252   aks-scalardlpool-34802672-vmss000001   <none>           <none>
-pod/sl-scalar-ledger-846d69ddf5-6rcbq   1/1     Running     0          39m   10.42.40.161   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/sl-scalar-ledger-846d69ddf5-72nln   1/1     Running     0          39m   10.42.40.243   aks-scalardlpool-34802672-vmss000001   <none>           <none>
-pod/sl-scalar-ledger-846d69ddf5-clvwx   1/1     Running     0          39m   10.42.41.101   aks-scalardlpool-34802672-vmss000002   <none>           <none>
-pod/sl-scalar-ledger-schema-fkkp5       0/1     Completed   0          39m   10.42.40.40    aks-default-34802672-vmss000000        <none>           <none>
+$ kubectl get po,svc,endpoints,nodes -o wide
+NAME                                         READY   STATUS      RESTARTS   AGE    IP             NODE                                   NOMINATED NODE   READINESS GATES
+pod/prod-scalar-dl-envoy-84db4dbf46-rphpx    1/1     Running     0          115s   10.42.41.56    aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/prod-scalar-dl-envoy-84db4dbf46-wx94v    1/1     Running     0          115s   10.42.40.210   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/prod-scalar-dl-envoy-84db4dbf46-zmkwl    1/1     Running     0          115s   10.42.40.160   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/prod-scalar-dl-ledger-596c77dc5b-89t4w   1/1     Running     0          115s   10.42.40.116   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/prod-scalar-dl-ledger-596c77dc5b-nvm2w   1/1     Running     0          115s   10.42.41.49    aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/prod-scalar-dl-ledger-596c77dc5b-pm4m9   1/1     Running     0          115s   10.42.41.122   aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/prod-scalar-dl-ledger-schema-d8t97       0/1     Completed   0          115s   10.42.40.82    aks-default-34802672-vmss000000        <none>           <none>
 
-NAME                                TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE   SELECTOR
-service/kubernetes                  ClusterIP      10.42.48.1     <none>        443/TCP                           65m   <none>
-service/se-scalar-envoy             LoadBalancer   10.42.50.139   10.42.44.4    50051:30731/TCP,50052:32075/TCP   39m   app.kubernetes.io/instance=se,app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=1.0.0
-service/se-scalar-envoy-metrics     ClusterIP      10.42.50.195   <none>        9001/TCP                          39m   app.kubernetes.io/instance=se,app.kubernetes.io/name=scalar-envoy,app.kubernetes.io/version=1.0.0
-service/sl-scalar-ledger-headless   ClusterIP      None           <none>        <none>                            39m   app.kubernetes.io/instance=sl,app.kubernetes.io/name=scalar-ledger,app.kubernetes.io/version=2.0.7
+NAME                                     TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE    SELECTOR
+service/kubernetes                       ClusterIP      10.42.48.1     <none>        443/TCP                           36m    <none>
+service/prod-scalar-dl-envoy             LoadBalancer   10.42.50.239   10.42.44.4    50051:30702/TCP,50052:31533/TCP   115s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=prod,app.kubernetes.io/name=scalar-dl
+service/prod-scalar-dl-envoy-metrics     ClusterIP      10.42.50.117   <none>        9001/TCP                          115s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=prod,app.kubernetes.io/name=scalar-dl
+service/prod-scalar-dl-ledger-headless   ClusterIP      None           <none>        <none>                            115s   app.kubernetes.io/app=ledger,app.kubernetes.io/instance=prod,app.kubernetes.io/name=scalar-dl
 
-NAME                                  ENDPOINTS                                                              AGE
-endpoints/kubernetes                  10.42.40.4:443                                                         65m
-endpoints/se-scalar-envoy             10.42.40.127:50052,10.42.40.252:50052,10.42.41.109:50052 + 3 more...   39m
-endpoints/se-scalar-envoy-metrics     10.42.40.127:9001,10.42.40.252:9001,10.42.41.109:9001                  39m
-endpoints/sl-scalar-ledger-headless   10.42.40.161,10.42.40.243,10.42.41.101                                 39m
+NAME                                       ENDPOINTS                                                             AGE
+endpoints/kubernetes                       10.42.40.4:443                                                        36m
+endpoints/prod-scalar-dl-envoy             10.42.40.160:50052,10.42.40.210:50052,10.42.41.56:50052 + 3 more...   115s
+endpoints/prod-scalar-dl-envoy-metrics     10.42.40.160:9001,10.42.40.210:9001,10.42.41.56:9001                  115s
+endpoints/prod-scalar-dl-ledger-headless   10.42.40.116,10.42.41.122,10.42.41.49                                 115s
 
 NAME                                        STATUS   ROLES   AGE   VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
-node/aks-default-34802672-vmss000000        Ready    agent   60m   v1.16.10   10.42.40.5     <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-node/aks-scalardlpool-34802672-vmss000000   Ready    agent   56m   v1.16.10   10.42.40.106   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-node/aks-scalardlpool-34802672-vmss000001   Ready    agent   56m   v1.16.10   10.42.40.207   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
-node/aks-scalardlpool-34802672-vmss000002   Ready    agent   56m   v1.16.10   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-default-34802672-vmss000000        Ready    agent   31m   v1.16.10   10.42.40.5     <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000000   Ready    agent   27m   v1.16.10   10.42.40.106   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000001   Ready    agent   27m   v1.16.10   10.42.40.207   <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
+node/aks-scalardlpool-34802672-vmss000002   Ready    agent   27m   v1.16.10   10.42.41.52    <none>        Ubuntu 16.04.6 LTS   4.15.0-1089-azure   docker://3.0.10+azure
 ```
 
 The private endpoint is 10.42.44.4 on port 50051 and 50052

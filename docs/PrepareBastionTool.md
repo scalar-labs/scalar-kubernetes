@@ -10,6 +10,9 @@ First, you create an Ansible inventory file that contains the hostname and the u
 # Please update `/path/to/local-repository` before running the command.
 $ export SCALAR_K8S_HOME=/path/to/local-repository
 
+# Please update `/path/to/local-repository-config-dir` before running the command.
+$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
+
 $ cd ${SCALAR_K8S_HOME}/examples/azure/network
 $ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
 ```
@@ -24,6 +27,9 @@ bastion-example-k8s-azure-p5rzic.eastus.cloudapp.azure.com
 [bastion:vars]
 ansible_user=centos
 ansible_python_interpreter=/usr/bin/python3
+
+[all:vars]
+internal_domain=internal.scalar-labs.com
 ```
 
 ## Prepare kubeconfig file
