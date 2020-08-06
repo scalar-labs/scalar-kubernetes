@@ -29,3 +29,7 @@
     --namespace {{ namespace }} --version {{ prometheus_version }}
     -f {{ remote_directory }}/helm/prometheus-custom-values.yaml --timeout 200s
   when: deploy_prometheus
+  register: result
+  retries: 2
+  delay: 30
+  until: result is not failed
