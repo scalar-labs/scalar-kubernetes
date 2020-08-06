@@ -1,6 +1,6 @@
-HELM_VERSION: v3.2.4
-HELM_PATH: /usr/local/bin/helm
-HELM_URL: "https://get.helm.sh/helm-{{ HELM_VERSION }}-linux-amd64.tar.gz"
-HELM_URL_CHECKSUM_SHA256: 8eb56cbb7d0da6b73cd8884c6607982d0be8087027b8ded01d6b2759a72e34b1
-HELM_CHARTS_REPO: https://kubernetes-charts.storage.googleapis.com/
-REMOTE_HOME_USER: "/home/{{ ansible_user }}/"
+helm_version: v3.2.4
+helm_path: /usr/local/bin/helm
+helm_url: "https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz"
+helm_url_checksum_sha256: 8eb56cbb7d0da6b73cd8884c6607982d0be8087027b8ded01d6b2759a72e34b1
+helm_charts_repo: https://kubernetes-charts.storage.googleapis.com/
+remote_home_user: "/home/{{ ansible_user }}/"
