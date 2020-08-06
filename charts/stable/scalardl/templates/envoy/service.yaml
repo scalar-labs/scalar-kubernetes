@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "scalar-dl.fullname" . }}-envoy
+  name: {{ include "scalardl.fullname" . }}-envoy
   labels:
-    {{- include "scalar-dl-envoy.labels" . | nindent 4 }}
+    {{- include "scalardl-envoy.labels" . | nindent 4 }}
   annotations:
 {{ toYaml .Values.envoy.service.annotations | indent 4 }}
 spec:
@@ -14,14 +14,14 @@ spec:
 {{ toYaml $value | indent 6 }}
   {{- end }}
   selector:
-    {{- include "scalar-dl-envoy.selectorLabels" . | nindent 4 }}
+    {{- include "scalardl-envoy.selectorLabels" . | nindent 4 }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "scalar-dl.fullname" . }}-envoy-metrics
+  name: {{ include "scalardl.fullname" . }}-envoy-metrics
   labels:
-    {{- include "scalar-dl-envoy.labels" . | nindent 4 }}
+    {{- include "scalardl-envoy.labels" . | nindent 4 }}
 spec:
   ports:
   - name: admin
@@ -29,5 +29,5 @@ spec:
     protocol: TCP
     targetPort: 9001
   selector:
-    {{- include "scalar-dl-envoy.selectorLabels" . | nindent 4 }}
+    {{- include "scalardl-envoy.selectorLabels" . | nindent 4 }}
   type: ClusterIP

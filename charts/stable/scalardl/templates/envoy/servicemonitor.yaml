@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "scalar-dl.fullname" . }}-envoy-metrics
+  name: {{ include "scalardl.fullname" . }}-envoy-metrics
 {{- if .Values.envoy.serviceMonitor.namespace }}
   namespace: {{ .Values.envoy.serviceMonitor.namespace }}
 {{- end }}
@@ -12,7 +12,7 @@ spec:
     - {{ .Release.Namespace }}
   selector:
     matchLabels:
-      {{- include "scalar-dl-envoy.selectorLabels" . | nindent 6 }}
+      {{- include "scalardl-envoy.selectorLabels" . | nindent 6 }}
   endpoints:
   - port: admin
     path: /stats/prometheus

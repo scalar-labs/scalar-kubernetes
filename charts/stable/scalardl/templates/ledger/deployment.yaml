@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "scalar-dl.fullname" . }}-ledger
+  name: {{ include "scalardl.fullname" . }}-ledger
   labels:
-    {{- include "scalar-dl-ledger.labels" . | nindent 4 }}
+    {{- include "scalardl-ledger.labels" . | nindent 4 }}
 spec:
   minReadySeconds: 120
   replicas: {{ .Values.ledger.replicaCount }}
   selector:
     matchLabels:
-      {{- include "scalar-dl-ledger.selectorLabels" . | nindent 6 }}
+      {{- include "scalardl-ledger.selectorLabels" . | nindent 6 }}
   {{- with .Values.ledger.strategy }}
   strategy:
     {{- toYaml . | nindent 4 }}
@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "scalar-dl-ledger.selectorLabels" . | nindent 8 }}
+        {{- include "scalardl-ledger.selectorLabels" . | nindent 8 }}
     spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 60

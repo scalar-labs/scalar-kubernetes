@@ -1,11 +1,11 @@
-# Default values for scalar-dl.
+# Default values for scalardl.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# nameOverride -- String to partially override scalar-dl.fullname template (will maintain the release name)
+# nameOverride -- String to partially override scalardl.fullname template (will maintain the release name)
 nameOverride: ""
 
-# fullnameOverride -- String to fully override scalar-dl.fullname template
+# fullnameOverride -- String to fully override scalardl.fullname template
 fullnameOverride: ""
 
 envoy:

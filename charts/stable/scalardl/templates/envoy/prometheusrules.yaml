@@ -5,7 +5,7 @@ metadata:
   labels:
     app: prometheus-operator
     release: prometheus
-  name: {{ include "scalar-dl.fullname" . }}-envoy-prometheus-alerts-rules
+  name: {{ include "scalardl.fullname" . }}-envoy-prometheus-alerts-rules
 {{- if .Values.envoy.prometheusRule.namespace }}
   namespace: {{ .Values.envoy.prometheusRule.namespace }}
 {{- end }}
@@ -14,7 +14,7 @@ spec:
   - name: EnvoyAlerts
     rules:
     - alert: EnvoyClusterDown
-      expr: kube_deployment_spec_replicas{deployment="{{ include "scalar-dl.fullname" . }}-envoy"} - kube_deployment_status_replicas_unavailable{deployment="{{ include "scalar-dl.fullname" . }}-envoy"} == 0
+      expr: kube_deployment_spec_replicas{deployment="{{ include "scalardl.fullname" . }}-envoy"} - kube_deployment_status_replicas_unavailable{deployment="{{ include "scalardl.fullname" . }}-envoy"} == 0
       for: 1m
       labels:
         severity: critical
@@ -24,7 +24,7 @@ spec:
         description: 'Envoy cluster is down, no resquest can be process.'
 
     - alert: EnvoyClusterDegraded
-      expr: kube_deployment_status_replicas_unavailable{namespace="{{ .Release.Namespace }}", deployment="{{ include "scalar-dl.fullname" . }}-envoy"} >= 1
+      expr: kube_deployment_status_replicas_unavailable{namespace="{{ .Release.Namespace }}", deployment="{{ include "scalardl.fullname" . }}-envoy"} >= 1
       for: 1m
       labels:
         severity: warning
@@ -34,7 +34,7 @@ spec:
         description: 'Envoy cluster is running in a degraded mode, some of the Envoy pods are not healthy.'
 
     - alert: EnvoyPodsPending
-      expr: kube_pod_status_phase{namespace="{{ .Release.Namespace }}", pod=~"^{{ include "scalar-dl.fullname" . }}-envoy-.*", phase="Pending"} > 0
+      expr: kube_pod_status_phase{namespace="{{ .Release.Namespace }}", pod=~"^{{ include "scalardl.fullname" . }}-envoy-.*", phase="Pending"} > 0
       for: 1m
       labels:
         severity: warning
@@ -44,7 +44,7 @@ spec:
         summary: 'Pod {{`{{$labels.pod}}`}} in namespace {{`{{$labels.namespace}}`}} in pending status'
     
     - alert: EnvoyPodsError
-      expr: kube_pod_container_status_waiting_reason{namespace="{{ .Release.Namespace }}",reason!="ContainerCreating",pod=~"^{{ include "scalar-dl.fullname" . }}-envoy-.*"} > 0
+      expr: kube_pod_container_status_waiting_reason{namespace="{{ .Release.Namespace }}",reason!="ContainerCreating",pod=~"^{{ include "scalardl.fullname" . }}-envoy-.*"} > 0
       for: 1m
       labels:
         severity: warning

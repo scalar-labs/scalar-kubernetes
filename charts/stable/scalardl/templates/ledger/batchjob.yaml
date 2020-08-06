@@ -2,14 +2,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "scalar-dl.fullname" . }}-ledger-schema
+  name: {{ include "scalardl.fullname" . }}-ledger-schema
   labels:
-    {{- include "scalar-dl-ledger.labels" . | nindent 4 }}
+    {{- include "scalardl-ledger.labels" . | nindent 4 }}
 spec:
   template:
     metadata:
       labels:
-        {{- include "scalar-dl-ledger.selectorLabels" . | nindent 8 }}
+        {{- include "scalardl-ledger.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.ledger.imagePullSecrets }}
       imagePullSecrets:

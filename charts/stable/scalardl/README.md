@@ -1,7 +1,7 @@
-scalar-dl
+scalardl
 =========
 
-Implementation scalar-dl.
+Implementation scalardl.
 Current chart version is `1.0.0`
 
 ## Chart Values
@@ -35,7 +35,7 @@ Current chart version is `1.0.0`
 | envoy.strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |
 | envoy.strategy.type | string | `"RollingUpdate"` | New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate |
 | envoy.tolerations | list | `[]` | Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints. |
-| fullnameOverride | string | `""` | String to fully override scalar-dl.fullname template |
+| fullnameOverride | string | `""` | String to fully override scalardl.fullname template |
 | ledger.affinity | object | `{}` | the affinity/anti-affinity feature, greatly expands the types of constraints you can express |
 | ledger.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
 | ledger.image.repository | string | `"scalarlabs/scalar-ledger"` | Docker image |
@@ -59,4 +59,4 @@ Current chart version is `1.0.0`
 | ledger.strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |
 | ledger.strategy.type | string | `"RollingUpdate"` | New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate |
 | ledger.tolerations | list | `[]` | Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints. |
-| nameOverride | string | `""` | String to partially override scalar-dl.fullname template (will maintain the release name) |
+| nameOverride | string | `""` | String to partially override scalardl.fullname template (will maintain the release name) |
