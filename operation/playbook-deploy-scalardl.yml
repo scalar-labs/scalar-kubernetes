@@ -10,10 +10,8 @@
     # docker_password: "{{ lookup('env','DOCKERHUB_ACCESS_TOKEN') }}"
     # kubernetes_registry_secret_name: "reg-docker-secrets"
     # kubernetes_namespace: default
-    # deploy_scalar_ledger: yes
-    # ledger_helm_release_name: sl
-    # deploy_scalar_envoy: yes
-    # envoy_helm_release_name: se
+    # deploy_scalardl: yes
+    # scalardl_helm_release_name: prod
     # env_name: example
   roles:
     - scalardl

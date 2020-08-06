@@ -8,5 +8,5 @@ docker_password: "{{ lookup('env','DOCKERHUB_ACCESS_TOKEN') }}"
 kubernetes_registry_secret_name: "reg-docker-secrets"
 helm_binary_path: /usr/local/bin/helm
 kubernetes_namespace: default
-deploy_scalar_dl: yes
+deploy_scalardl: yes
 scalardl_helm_release_name: prod

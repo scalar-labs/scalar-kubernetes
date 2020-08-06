@@ -4,4 +4,4 @@
     {{ helm_binary_path }} upgrade --install {{ scalardl_helm_release_name }} helm/charts/stable/scalar-dl
     --namespace {{ kubernetes_namespace }}
     -f {{ remote_directory }}/helm/charts/config/scalardl-custom-values.yaml
-  when: deploy_scalar_dl
+  when: deploy_scalardl
