@@ -1,6 +1,6 @@
 # Configurations
 
-default configuration for operation directory
+Default configuration for operation directory
 
 ## Helm configuration
 
