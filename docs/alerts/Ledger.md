@@ -14,7 +14,7 @@ Alert: Ledger cluster is down - critical
  Description: Ledger cluster is down, no resquest can be process.
  Details:
   • alertname: LedgerClusterDown
-  • deployment: scalar-ledger
+  • deployment: prod-scalar-dl-ledger
 ```
 
 #### Resolved
@@ -25,13 +25,13 @@ Alert: Ledger cluster is down - critical
  Description: Ledger cluster is down, no resquest can be process.
  Details:
   • alertname: LedgerClusterDown
-  • deployment: scalar-ledger
+  • deployment: prod-scalar-dl-ledger
 ```
 
 ### Action Needed
 
-* Check the number of replicas set `kubectl get deployments. scalar-ledger`
-* Check the number of replicas set `kubectl describe deployments. scalar-ledger`
+* Check the number of replicas set `kubectl get deployments. prod-scalar-dl-ledger`
+* Check the number of replicas set `kubectl describe deployments. prod-scalar-dl-ledger`
 * Check nodes statuses with `kubectl get node -o wide`
 * Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`
 * Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
@@ -50,7 +50,7 @@ Alert: Ledger cluster is running in a degraded mode - warning
  Description: Ledger cluster is running in a degraded mode, some of the Ledger pods are not healthy.
  Details:
   • alertname: LedgerClusterDegraded
-  • deployment: scalar-ledger
+  • deployment: prod-scalar-dl-ledger
 ```
 
 #### Resolved
@@ -61,13 +61,13 @@ Alert: Ledger cluster is running in a degraded mode - warning
  Description: Ledger cluster is running in a degraded mode, some of the Ledger pods are not healthy.
  Details:
   • alertname: LedgerClusterDegraded
-  • deployment: scalar-ledger
+  • deployment: prod-scalar-dl-ledger
 ```
 
 ### Action Needed
 
 * Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`
-* Check kubernetes deployment with `kubectl describe deployments scalar-ledger`
+* Check kubernetes deployment with `kubectl describe deployments prod-scalar-dl-ledger`
 * Check replica set with `kubectl get replicasets.apps`
 * Check nodes statuses with `kubectl get node -o wide`
 * Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
@@ -82,28 +82,28 @@ This alert lets you know if a kubernetes cluster cannot start ledger pods, which
 
 ```
 [FIRING:1] LedgerPodsPending - warning
-Alert: Pod scalar-ledger-xxxx-yyyy in namespace default in pending status - warning
- Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
+Alert: Pod prod-scalar-dl-ledger-xxxx-yyyy in namespace default in pending status - warning
+ Description: Pod prod-scalar-dl-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
  Details:
   • alertname: LedgerPodsPending
-  • deployment: scalar-ledger
+  • deployment: prod-scalar-dl-ledger
 ```
 
 #### Resolved
 
 ```
 [RESOLVED:1] LedgerPodsPending - warning
-Alert: Pod scalar-ledger-xxxx-yyyy in namespace default in pending status - warning
- Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
+Alert: Pod prod-scalar-dl-ledger-xxxx-yyyy in namespace default in pending status - warning
+ Description: Pod prod-scalar-dl-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
  Details:
   • alertname: LedgerPodsPending
-  • deployment: scalar-ledger
+  • deployment: prod-scalar-dl-ledger
 ```
 
 ### Action Needed
 
 * Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`
-* Check the kubernetes deployment with `kubectl describe pod scalar-ledger-xxxx-yyyy`
+* Check the kubernetes deployment with `kubectl describe pod prod-scalar-dl-ledger-xxxx-yyyy`
 
 ## LedgerPodsError
 
@@ -122,25 +122,25 @@ This alert lets you know if a kubernetes cluster cannot start ledger pods for on
 
 ```
 [FIRING:1] LedgerPodsError - warning
-Alert: Pod scalar-ledger-xxxx-yyyy in namespace default has an error status - warning
- Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
+Alert: Pod prod-scalar-dl-ledger-xxxx-yyyy in namespace default has an error status - warning
+ Description: Pod prod-scalar-dl-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
  Details:
   • alertname: LedgerPodsError
-  • deployment: scalar-ledger
+  • deployment: prod-scalar-dl-ledger
 ```
 
 #### Resolved
 
 ```
 [RESOLVED:1] LedgerPodsError - warning
-Alert: Pod scalar-ledger-xxxx-yyyy in namespace default has an error status - warning
- Description: Pod scalar-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
+Alert: Pod prod-scalar-dl-ledger-xxxx-yyyy in namespace default has an error status - warning
+ Description: Pod prod-scalar-dl-ledger-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
  Details:
   • alertname: LedgerPodsError
-  • deployment: scalar-ledger
+  • deployment: prod-scalar-dl-ledger
 ```
 
 ### Action Needed
 
-* Check the kubernetes deployment with `kubectl describe pod scalar-ledger-xxxx-yyyy`
+* Check the kubernetes deployment with `kubectl describe pod prod-scalar-dl-ledger-xxxx-yyyy`
 * Check log server to pinpoint root cause of failure with the kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`

@@ -14,7 +14,7 @@ Alert: Envoy cluster is down - critical
  Description: Envoy cluster is down, no resquest can be process
  Details:
   • alertname: EnvoyClusterDown
-  • deployment: scalar-envoy
+  • deployment: prod-scalar-dl-envoy
 ```
 
 #### Resolved
@@ -25,13 +25,13 @@ Alert: Envoy cluster is down - critical
  Description: Envoy cluster is down, no resquest can be process
  Details:
   • alertname: EnvoyClusterDown
-  • deployment: scalar-envoy
+  • deployment: prod-scalar-dl-envoy
 ```
 
 ### Action Needed
 
-* Check the number of replicas set `kubectl get deployments. scalar-envoy`
-* Check the number of replicas set `kubectl describe deployments. scalar-envoy`
+* Check the number of replicas set `kubectl get deployments. prod-scalar-dl-envoy`
+* Check the number of replicas set `kubectl describe deployments. prod-scalar-dl-envoy`
 * Check nodes statuses with `kubectl get node -o wide`
 * Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`
 * Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
@@ -50,7 +50,7 @@ Alert: Envoy cluster is running in a degraded mode - warning
  Description: Envoy cluster is running in a degraded mode, some of the Envoy pods are not healthy
  Details:
   • alertname: EnvoyClusterDegraded
-  • deployment: scalar-envoy
+  • deployment: prod-scalar-dl-envoy
 ```
 
 #### Resolved
@@ -61,13 +61,13 @@ Alert: Envoy cluster is running in a degraded mode - warning
  Description: Envoy cluster is running in a degraded mode, some of the Envoy pods are not healthy
  Details:
   • alertname: EnvoyClusterDegraded
-  • deployment: scalar-envoy
+  • deployment: prod-scalar-dl-envoy
 ```
 
 ### Action Needed
 
-* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log` or `kubectl logs scalar-envoy-xxxx-yyyy`
-* Check kubernetes deployment with `kubectl describe deployments scalar-envoy`
+* Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log` or `kubectl logs prod-scalar-dl-envoy-xxxx-yyyy`
+* Check kubernetes deployment with `kubectl describe deployments prod-scalar-dl-envoy`
 * Check replica set with `kubectl get replicasets.apps`
 * Check nodes statuses with `kubectl get node -o wide`
 * Check a cloud provider to see if there is any known issue. For example, you can check statues [here](https://status.azure.com/en-us/status) in Azure.
@@ -82,28 +82,28 @@ This alert lets you know if a kubernetes cluster cannot start envoy pods, which 
 
 ```
 [FIRING:1] EnvoyPodsPending - warning
-Alert: Pod scalar-envoy-xxxx-yyyy in namespace default in pending status - warning
- Description: Pod scalar-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
+Alert: Pod prod-scalar-dl-envoy-xxxx-yyyy in namespace default in pending status - warning
+ Description: Pod prod-scalar-dl-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
  Details:
   • alertname: EnvoyPodsPending
-  • deployment: scalar-envoy
+  • deployment: prod-scalar-dl-envoy
 ```
 
 #### Resolved
 
 ```
 [RESOLVED:1] EnvoyPodsPending - warning
-Alert: Pod scalar-envoy-xxxx-yyyy in namespace default in pending status - warning
- Description: Pod scalar-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
+Alert: Pod prod-scalar-dl-envoy-xxxx-yyyy in namespace default in pending status - warning
+ Description: Pod prod-scalar-dl-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minute.
  Details:
   • alertname: EnvoyPodsPending
-  • deployment: scalar-envoy
+  • deployment: prod-scalar-dl-envoy
 ```
 
 ### Action Needed
 
 * Check log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kube/<date>/*.log`
-* Check a kubernetes deployment with `kubectl describe pod scalar-envoy-xxxx-yyyy`
+* Check a kubernetes deployment with `kubectl describe pod prod-scalar-dl-envoy-xxxx-yyyy`
 
 ## EnvoyPodsError
 
@@ -122,25 +122,25 @@ This alert lets you know if a kubernetes cluster cannot start envoy pods for one
 
 ```
 [FIRING:1] EnvoyPodsError - warning
-Alert: Pod scalar-envoy-xxxx-yyyy in namespace default has an error status - warning
- Description: Pod scalar-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
+Alert: Pod prod-scalar-dl-envoy-xxxx-yyyy in namespace default has an error status - warning
+ Description: Pod prod-scalar-dl-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
  Details:
   • alertname: EnvoyPodsError
-  • deployment: scalar-envoy
+  • deployment: prod-scalar-dl-envoy
 ```
 
 #### Resolved
 
 ```
 [RESOLVED:1] EnvoyPodsError - warning
-Alert: Pod scalar-envoy-xxxx-yyyy in namespace default has an error status - warning
- Description: Pod scalar-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
+Alert: Pod prod-scalar-dl-envoy-xxxx-yyyy in namespace default has an error status - warning
+ Description: Pod prod-scalar-dl-envoy-xxxx-yyyy in namespace default has been in pending status for more than 1 minutes.
  Details:
   • alertname: EnvoyPodsError
-  • deployment: scalar-envoy
+  • deployment: prod-scalar-dl-envoy
 ```
 
 ### Action Needed
 
-* Check a kubernetes deployment with `kubectl describe pod scalar-envoy-xxxx-yyyy`
+* Check a kubernetes deployment with `kubectl describe pod prod-scalar-dl-envoy-xxxx-yyyy`
 * Check the log server to pinpoint the root cause of a failure with kubernetes logs on the monitor server `/log/kubernetes/<year>/<month>-<day>/kube.log`

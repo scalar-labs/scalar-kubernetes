@@ -117,9 +117,9 @@ envoy:
 
 More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
 
-### How to expose `scalar-envoy` endpoint to public
+### How to expose `Envoy` endpoint to public
 
-In `scalardl-custom-values.yaml`, you can remove `annotations` to expose `scalar-envoy`
+In `scalardl-custom-values.yaml`, you can remove `annotations` to expose `Envoy`
 
 ```yml
 envoy:
