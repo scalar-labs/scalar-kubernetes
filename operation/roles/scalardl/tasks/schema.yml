@@ -1,0 +1,19 @@
+---
+- name: Deploy Scalar Schema
+  command: >-
+    {{ helm_binary_path }} upgrade --install load-schema helm/charts/stable/scalar-schema-loading
+    --namespace {{ kubernetes_namespace }}
+    -f {{ remote_directory }}/helm/charts/config/scalar-schema-loading.yaml
+  when: deploy_scalar_load_schma
+
+- name: Wait until completion
+  k8s_info:
+    api_version: batch/v1
+    kind: Job
+    label_selectors:
+      - "app.kubernetes.io/name= schema-loading"
+    namespace: "{{ kubernetes_namespace }}"
+  register: batchjob_list
+  until: batchjob_list | json_query('resources[*].status.conditions[?type==`Complete`].status[]') | unique == ["True"]
+  retries: 10
+  delay: 5

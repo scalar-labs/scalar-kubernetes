@@ -1,0 +1,23 @@
+# Default values for schema-loading.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+cassandra:
+  enabled: true
+  
+  host: cassandra
+  port: 9042
+  username: cassandra
+  password: cassandra
+  replicationFactor: 3
+
+  image:
+    # cassandra.image.repository -- Docker image
+    repository: scalarlabs/scalar-ledger
+    # cassandra.image.tag -- Docker tag
+    version: 2.0.7
+    # cassandra.image.pullPolicy -- Specify a imagePullPolicy
+    pullPolicy: IfNotPresent
+
+  # cassandra.imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
+  imagePullSecrets: [name: reg-docker-secrets]

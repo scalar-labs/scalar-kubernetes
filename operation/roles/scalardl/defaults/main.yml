@@ -10,3 +10,4 @@ helm_binary_path: /usr/local/bin/helm
 kubernetes_namespace: default
 deploy_scalardl: yes
 scalardl_helm_release_name: prod
+deploy_scalar_load_schma: yes
