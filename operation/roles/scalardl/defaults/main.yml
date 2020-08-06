@@ -1,7 +1,6 @@
-base_local_directory: ../outputs
-env_name: example
+base_local_directory: ../conf
 local_helm_charts_directory: ../../../../charts/stable
-local_helm_charts_values_directory: "{{ base_local_directory }}/{{ env_name }}/"
+local_helm_charts_values_directory: "{{ base_local_directory }}/"
 remote_directory: "/home/{{ ansible_user }}"
 docker_registry: "https://index.docker.io/v2/"
 docker_username: "{{ lookup('env','DOCKERHUB_USER') }}"

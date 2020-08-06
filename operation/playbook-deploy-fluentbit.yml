@@ -11,4 +11,4 @@
   #   fluent_monitor_port: 24224
   #   fluent_activate_metrics: yes
   roles:
-    - "fluentbit"
+  - fluentbit
