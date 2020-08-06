@@ -16,4 +16,4 @@
     dest: "{{ remote_directory }}/helm/charts/config/{{ item }}"
   loop:
   - scalardl-custom-values.yaml
-  - scalar-schema-loading.yaml
+  - schema-loading-custom-values.yaml

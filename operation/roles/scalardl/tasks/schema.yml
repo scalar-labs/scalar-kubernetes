@@ -1,9 +1,9 @@
 ---
 - name: Deploy Scalar Schema
   command: >-
-    {{ helm_binary_path }} upgrade --install load-schema helm/charts/stable/scalar-schema-loading
+    {{ helm_binary_path }} upgrade --install load-schema helm/charts/stable/schema-loading
     --namespace {{ kubernetes_namespace }}
-    -f {{ remote_directory }}/helm/charts/config/scalar-schema-loading.yaml
+    -f {{ remote_directory }}/helm/charts/config/schema-loading-custom-values.yaml
   when: deploy_scalar_load_schma
 
 - name: Wait until completion
