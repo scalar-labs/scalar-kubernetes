@@ -62,5 +62,8 @@ ${module.network.bastion_ip}
 [bastion:vars]
 ansible_user=${module.network.user_name}
 ansible_python_interpreter=/usr/bin/python3
+
+[all:vars]
+internal_domain=${module.network.dns_zone_id}
 EOF
 }
