@@ -1,5 +1,5 @@
 ---
-- name: Deploy Scalar-dl
+- name: Deploy Scalar DL
   command: >-
     {{ helm_binary_path }} upgrade --install {{ scalardl_helm_release_name }} helm/charts/stable/scalar-dl
     --namespace {{ kubernetes_namespace }}
