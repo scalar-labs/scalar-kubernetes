@@ -1,14 +1,16 @@
 apiVersion: v2
-name: scalar-ledger
+name: scalardl
+description: Implementation scalardl.
 type: application
 version: 1.0.0
-appVersion: 2.0.7
+appVersion: 1.0.0
 deprecated: false
-description: A Helm chart for Kubernetes Scalar Ledger
 icon: https://scalar-labs.com/wp-content/themes/scalar/assets/img/logo_scalar.svg
 keywords:
+- envoy
+- proxy
 - ledger
-- DLT
+- dlt
 home: https://scalar-labs.com/
 source: ["https://scalardl.readthedocs.io/en/latest/"]
 maintainers:

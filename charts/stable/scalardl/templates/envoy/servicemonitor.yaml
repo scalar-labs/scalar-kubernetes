@@ -1,0 +1,20 @@
+{{- if and ( .Capabilities.APIVersions.Has "monitoring.coreos.com/v1" ) ( .Values.envoy.serviceMonitor.enabled ) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "scalardl.fullname" . }}-envoy-metrics
+{{- if .Values.envoy.serviceMonitor.namespace }}
+  namespace: {{ .Values.envoy.serviceMonitor.namespace }}
+{{- end }}
+spec:
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      {{- include "scalardl-envoy.selectorLabels" . | nindent 6 }}
+  endpoints:
+  - port: admin
+    path: /stats/prometheus
+    interval: {{ .Values.envoy.serviceMonitor.interval }}
+{{- end }}

@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "scalardl.fullname" . }}-envoy
+  labels:
+    {{- include "scalardl-envoy.labels" . | nindent 4 }}
+  annotations:
+{{ toYaml .Values.envoy.service.annotations | indent 4 }}
+spec:
+  type: {{ .Values.envoy.service.type }}
+  ports:
+  {{- range $key, $value := .Values.envoy.service.ports }}
+    - name: {{ $key }}
+{{ toYaml $value | indent 6 }}
+  {{- end }}
+  selector:
+    {{- include "scalardl-envoy.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "scalardl.fullname" . }}-envoy-metrics
+  labels:
+    {{- include "scalardl-envoy.labels" . | nindent 4 }}
+spec:
+  ports:
+  - name: admin
+    port: 9001
+    protocol: TCP
+    targetPort: 9001
+  selector:
+    {{- include "scalardl-envoy.selectorLabels" . | nindent 4 }}
+  type: ClusterIP

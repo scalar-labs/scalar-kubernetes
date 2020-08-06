@@ -1,0 +1,184 @@
+# Default values for scalardl.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# nameOverride -- String to partially override scalardl.fullname template (will maintain the release name)
+nameOverride: ""
+
+# fullnameOverride -- String to fully override scalardl.fullname template
+fullnameOverride: ""
+
+envoy:
+  # envoy.replicaCount -- number of replicas to deploy
+  replicaCount: 3
+
+  envoyConfiguration:
+    # envoy.envoyConfiguration.adminAccessLogPath -- admin log path
+    adminAccessLogPath: /dev/stdout
+
+  image:
+    # envoy.image.repository -- Docker image
+    repository: scalarlabs/scalar-envoy
+    # envoy.image.tag -- Docker tag
+    version: 1.0.0
+    # envoy.image.pullPolicy -- Specify a imagePullPolicy
+    pullPolicy: IfNotPresent
+
+  # envoy.imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
+  imagePullSecrets: []
+
+  strategy:
+    rollingUpdate:
+      # envoy.strategy.rollingUpdate -- The number of pods that can be created above the desired amount of pods during an update
+      maxSurge: 0
+      # envoy.strategy.rollingUpdate -- The number of pods that can be unavailable during the update process
+      maxUnavailable: 1
+    # envoy.strategy.type -- New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate
+    type: RollingUpdate
+
+  # envoy.podSecurityContext -- PodSecurityContext holds pod-level security attributes and common container settings
+  podSecurityContext: {}
+    # fsGroup: 2000
+
+  # envoy.securityContext -- Setting security context at the pod applies those settings to all containers in the pod
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+  service:
+    # envoy.service.type -- service types in kubernetes
+    type: ClusterIP
+    # envoy.service.annotations -- Service annotations, e.g: prometheus, etc.
+    annotations: {}
+    ports:
+      envoy:
+        # envoy.service.ports.envoy.port -- envoy public port
+        port: 50051
+        # envoy.service.ports.envoy.targetPort -- envoy k8s internal name
+        targetPort: 50051
+        # envoy.service.ports.envoy.protocol -- envoy protocol
+        protocol: TCP
+      envoy-priv:
+        # envoy.service.ports.envoy-priv.port -- nvoy public port
+        port: 50052
+        # envoy.service.ports.envoy-priv.targetPort -- envoy k8s internal name
+        targetPort: 50052
+        # envoy.service.ports.envoy-priv.protocol -- envoy protocol
+        protocol: TCP
+
+  serviceMonitor:
+    # envoy.serviceMonitor.enabled -- enable metrics collect with prometheus
+    enabled: false
+    # envoy.serviceMonitor.interval -- custom interval to retrieve the metrics
+    interval: "15s"
+    # envoy.serviceMonitor.namespace -- which namespace prometheus is located. by default monitoring
+    namespace: monitoring
+
+  prometheusRule:
+    # envoy.prometheusRule.enabled -- enable rules for prometheus
+    enabled: false
+    # envoy.prometheusRule.namespace -- which namespace prometheus is located. by default monitoring
+    namespace: monitoring
+
+  # envoy.resources -- resources allowed to the pod
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  # envoy.nodeSelector -- nodeSelector is form of node selection constraint
+  nodeSelector: {}
+
+  # envoy.tolerations -- Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
+  tolerations: []
+
+  # envoy.affinity -- the affinity/anti-affinity feature, greatly expands the types of constraints you can express
+  affinity: {}
+
+ledger:
+  # ledger.replicaCount -- number of replicas to deploy
+  replicaCount: 3
+
+  scalarLedgerConfiguration:
+    cassandraHost: cassandra
+    cassandraPort: 9042
+    cassandraUsername: cassandra
+    cassandraPassword: cassandra
+    ledgerLogLevel: INFO
+    replicationFactor: 3
+
+  schemaImport:
+    # ledger.schemaImport.enabled -- Enabled the Cassandra keyspace job
+    enabled: true
+
+  image:
+    # ledger.image.repository -- Docker image
+    repository: scalarlabs/scalar-ledger
+    # ledger.image.tag -- Docker tag
+    version: 2.0.7
+    # ledger.image.pullPolicy -- Specify a imagePullPolicy
+    pullPolicy: IfNotPresent
+
+
+  # ledger.imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
+  imagePullSecrets: [name: reg-docker-secrets]
+
+  strategy:
+    rollingUpdate:
+      # ledger.strategy.rollingUpdate -- The number of pods that can be created above the desired amount of pods during an update
+      maxSurge: 0
+      # ledger.strategy.rollingUpdate -- The number of pods that can be unavailable during the update process
+      maxUnavailable: 1
+    # ledger.strategy.type -- New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate
+    type: RollingUpdate
+
+  # ledger.podSecurityContext -- PodSecurityContext holds pod-level security attributes and common container settings
+  podSecurityContext: {}
+    # fsGroup: 2000
+
+  # ledger.securityContext -- Setting security context at the pod applies those settings to all containers in the pod
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  service:
+    # ledger.service.type -- service types in kubernetes
+    type: ClusterIP
+
+  prometheusRule:
+    # ledger.prometheusRule.enabled -- enable rules for prometheus
+    enabled: false
+    # ledger.prometheusRule.namespace -- which namespace prometheus is located. by default monitoring
+    namespace: monitoring
+
+  # ledger.resources -- resources allowed to the pod
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  # ledger.nodeSelector -- nodeSelector is form of node selection constraint
+  nodeSelector: {}
+
+  # ledger.tolerations -- Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
+  tolerations: []
+
+  # ledger.affinity -- the affinity/anti-affinity feature, greatly expands the types of constraints you can express
+  affinity: {}

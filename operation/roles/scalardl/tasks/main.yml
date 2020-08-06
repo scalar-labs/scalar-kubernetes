@@ -2,5 +2,4 @@
 # roles scalardl entry-point
 - import_tasks: copy.yml
 - import_tasks: configuration.yml
-- import_tasks: ledger.yml
-- import_tasks: envoy.yml
+- import_tasks: scalardl.yml
