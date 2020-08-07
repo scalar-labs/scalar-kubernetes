@@ -1,5 +1,5 @@
 scalardl
-=========
+========
 
 Implementation scalardl.
 Current chart version is `1.0.0`
@@ -53,7 +53,6 @@ Current chart version is `1.0.0`
 | ledger.scalarLedgerConfiguration.cassandraUsername | string | `"cassandra"` |  |
 | ledger.scalarLedgerConfiguration.ledgerLogLevel | string | `"INFO"` |  |
 | ledger.scalarLedgerConfiguration.replicationFactor | int | `3` |  |
-| ledger.schemaImport.enabled | bool | `true` | Enabled the Cassandra keyspace job |
 | ledger.securityContext | object | `{}` | Setting security context at the pod applies those settings to all containers in the pod |
 | ledger.service.type | string | `"ClusterIP"` | service types in kubernetes |
 | ledger.strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |
