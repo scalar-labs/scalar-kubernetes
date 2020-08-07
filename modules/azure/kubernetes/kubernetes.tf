@@ -1,5 +1,5 @@
 # Create network for kubernetes cluster
-resource "azurerm_subnet" "subnet" {
+resource "azurerm_subnet" "k8s_private" {
   for_each = local.kubernetes_cluster_network
 
   name                 = each.key
@@ -20,8 +20,8 @@ resource "random_id" "id" {
 }
 
 # Create application for Service Principals
-resource "azuread_application" "aks_application_name" {
-  name                       = "aks-${local.network_name}-${random_id.id.b64_url}"
+resource "azuread_application" "app" {
+  name                       = "scalar-k8s-app-${local.network_name}-${random_id.id.b64_url}"
   homepage                   = "https://aks-${local.network_name}-${random_id.id.b64_url}"
   identifier_uris            = ["https://aks-${local.network_name}-${random_id.id.b64_url}"]
   reply_urls                 = ["https://aks-${local.network_name}-${random_id.id.b64_url}"]
@@ -35,8 +35,8 @@ resource "azuread_application" "aks_application_name" {
 }
 
 # Create Service Principal
-resource "azuread_service_principal" "aks_service_principal" {
-  application_id = azuread_application.aks_application_name.application_id
+resource "azuread_service_principal" "sp" {
+  application_id = azuread_application.app.application_id
 }
 
 # Create password for Service Principal
@@ -46,15 +46,14 @@ resource "random_password" "aks_service_principal_password" {
 }
 
 # Assign Service Principal password (activation)
-resource "azuread_service_principal_password" "aks_assign_service_principal_password" {
-  service_principal_id = azuread_service_principal.aks_service_principal.id
+resource "azuread_service_principal_password" "sp_password" {
+  service_principal_id = azuread_service_principal.sp.id
   value                = random_password.aks_service_principal_password.result
   end_date             = timeadd(timestamp(), "87600h") # 10 years
 
   lifecycle {
     ignore_changes = [
       end_date,
-      value
     ]
   }
 }
@@ -64,10 +63,10 @@ data "azurerm_subscription" "current" {
 }
 
 # Set assignment Contributor to Service Principal
-resource "azurerm_role_assignment" "aks_service_principal_role_assignment" {
+resource "azurerm_role_assignment" "sp_role_assignment" {
   scope                = "${data.azurerm_subscription.current.id}/resourceGroups/${local.network_name}"
   role_definition_name = "Network contributor"
-  principal_id         = azuread_service_principal.aks_service_principal.id
+  principal_id         = azuread_service_principal.sp.id
 
   # Waiting for AAD global replication - see https://github.com/Azure/AKS/issues/1206#issue-493516902
   provisioner "local-exec" {
@@ -75,7 +74,7 @@ resource "azurerm_role_assignment" "aks_service_principal_role_assignment" {
   }
 
   depends_on = [
-    azuread_service_principal_password.aks_assign_service_principal_password
+    azuread_service_principal_password.sp_password
   ]
 }
 
@@ -103,7 +102,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     availability_zones    = var.kubernetes_cluster_availability_zones
     max_pods              = local.kubernetes_default_node_pool.max_pods
     os_disk_size_gb       = local.kubernetes_default_node_pool.os_disk_size_gb
-    vnet_subnet_id        = azurerm_subnet.subnet["k8s_node_pod"].id
+    vnet_subnet_id        = azurerm_subnet.k8s_private["k8s_node_pod"].id
     enable_node_public_ip = "false"
     enable_auto_scaling   = local.kubernetes_default_node_pool.cluster_auto_scaling
     min_count             = local.kubernetes_default_node_pool.cluster_auto_scaling_min_count
@@ -121,8 +120,8 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
   service_principal {
-    client_id     = azuread_service_principal.aks_service_principal.application_id
-    client_secret = azuread_service_principal_password.aks_assign_service_principal_password.value
+    client_id     = azuread_service_principal.sp.application_id
+    client_secret = azuread_service_principal_password.sp_password.value
   }
 
   network_profile {
@@ -150,8 +149,8 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
 
   depends_on = [
-    azurerm_role_assignment.aks_service_principal_role_assignment,
-    azuread_service_principal_password.aks_assign_service_principal_password
+    azurerm_role_assignment.sp_role_assignment,
+    azuread_service_principal_password.sp_password
   ]
 }
 
@@ -165,7 +164,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_scalar_apps_node_po
   max_pods              = local.kubernetes_scalar_apps_pool.max_pods
   os_disk_size_gb       = local.kubernetes_scalar_apps_pool.os_disk_size_gb
   os_type               = local.kubernetes_scalar_apps_pool.node_os
-  vnet_subnet_id        = azurerm_subnet.subnet["k8s_node_pod"].id
+  vnet_subnet_id        = azurerm_subnet.k8s_private["k8s_node_pod"].id
   node_taints           = [local.kubernetes_scalar_apps_pool.taints]
   enable_node_public_ip = "false"
   enable_auto_scaling   = local.kubernetes_scalar_apps_pool.cluster_auto_scaling
@@ -188,6 +187,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_scalar_apps_node_po
   )
 
   depends_on = [
-    azurerm_subnet.subnet,
+    azurerm_subnet.k8s_private,
   ]
 }
