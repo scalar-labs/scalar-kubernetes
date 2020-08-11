@@ -28,7 +28,7 @@ $ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
 Copy from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`
 
 ```console
-$ cp ${SCALAR_K8S_HOME}/{envoy-custom-values.yaml,ledger-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
+$ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
 ```
 
 ## Deploy Scalar DL
@@ -38,39 +38,62 @@ It is now ready to deploy Scalar DL to the k8s cluster.
 ```console
 $ cd ${SCALAR_K8S_HOME}
 $ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml
+PLAY [Deploy Scalar Ledger and Envoy in Kubernetes] *****************************************************************************************************************************************************************************************************
 
-PLAY [Deploy scalar ledger and envoy in kubernetes] *********************************************************************************************************************************************************
+TASK [scalardl : Create directory on remote server] *****************************************************************************************************************************************************************************************************
+ok: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com]
 
-[OMIT]
+TASK [scalardl : Copy helm charts] **********************************************************************************************************************************************************************************************************************
+ok: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com]
 
-PLAY RECAP **************************************************************************************************************************************************************************************************
-bastion-example-k8s-azure-ukkpigy.eastus.cloudapp.azure.com : ok=12   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
+TASK [scalardl : Copy helm charts custom values] ********************************************************************************************************************************************************************************************************
+ok: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com] => (item=scalardl-custom-values.yaml)
+changed: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com] => (item=schema-loading-custom-values.yaml)
+
+TASK [scalardl : Check if docker-registry secrets exists in Kubernetes] *********************************************************************************************************************************************************************************
+ok: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com]
+
+TASK [scalardl : Add docker-registry secrets in Kubernetes] *********************************************************************************************************************************************************************************************
+skipping: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com]
+
+TASK [scalardl : Deploy Scalar Schema] ******************************************************************************************************************************************************************************************************************
+changed: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com]
+
+TASK [scalardl : Wait until completion] *****************************************************************************************************************************************************************************************************************
+FAILED - RETRYING: Wait until completion (10 retries left).
+ok: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com]
+
+TASK [scalardl : Deploy Scalar DL] **********************************************************************************************************************************************************************************************************************
+changed: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com]
+
+PLAY RECAP **********************************************************************************************************************************************************************************************************************************************
+bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com : ok=7    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 ```
 
 You can check if the pods and the services are properly deployed as follows.
 
 ```console
 $ kubectl get po,svc,endpoints -o wide
-NAME                                         READY   STATUS      RESTARTS   AGE    IP             NODE                                   NOMINATED NODE   READINESS GATES
-pod/prod-scalardl-envoy-84db4dbf46-rphpx    1/1     Running     0          115s   10.42.41.56    aks-scalardlpool-34802672-vmss000002   <none>           <none>
-pod/prod-scalardl-envoy-84db4dbf46-wx94v    1/1     Running     0          115s   10.42.40.210   aks-scalardlpool-34802672-vmss000001   <none>           <none>
-pod/prod-scalardl-envoy-84db4dbf46-zmkwl    1/1     Running     0          115s   10.42.40.160   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/prod-scalardl-ledger-596c77dc5b-89t4w   1/1     Running     0          115s   10.42.40.116   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-pod/prod-scalardl-ledger-596c77dc5b-nvm2w   1/1     Running     0          115s   10.42.41.49    aks-scalardlpool-34802672-vmss000001   <none>           <none>
-pod/prod-scalardl-ledger-596c77dc5b-pm4m9   1/1     Running     0          115s   10.42.41.122   aks-scalardlpool-34802672-vmss000002   <none>           <none>
-pod/prod-scalardl-ledger-schema-d8t97       0/1     Completed   0          115s   10.42.40.82    aks-default-34802672-vmss000000        <none>           <none>
+NAME                                             READY   STATUS      RESTARTS   AGE   IP             NODE                                   NOMINATED NODE   READINESS GATES
+pod/load-schema-schema-loading-cassandra-4rq96   0/1     Completed   0          29m   10.42.40.55    aks-default-34802672-vmss000000        <none>           <none>
+pod/prod-scalardl-envoy-568f9cbff9-brrq2         1/1     Running     0          29m   10.42.40.219   aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/prod-scalardl-envoy-568f9cbff9-hhw8t         1/1     Running     0          29m   10.42.41.69    aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/prod-scalardl-envoy-568f9cbff9-mqv6t         1/1     Running     0          29m   10.42.40.137   aks-scalardlpool-34802672-vmss000000   <none>           <none>
+pod/prod-scalardl-ledger-55d96b74f8-htdk7        1/1     Running     0          29m   10.42.41.17    aks-scalardlpool-34802672-vmss000001   <none>           <none>
+pod/prod-scalardl-ledger-55d96b74f8-p4ck7        1/1     Running     0          29m   10.42.41.108   aks-scalardlpool-34802672-vmss000002   <none>           <none>
+pod/prod-scalardl-ledger-55d96b74f8-ptr4d        1/1     Running     0          29m   10.42.40.108   aks-scalardlpool-34802672-vmss000000   <none>           <none>
 
-NAME                                     TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE    SELECTOR
-service/kubernetes                       ClusterIP      10.42.48.1     <none>        443/TCP                           36m    <none>
-service/prod-scalardl-envoy             LoadBalancer   10.42.50.239   10.42.44.4    50051:30702/TCP,50052:31533/TCP   115s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=prod,app.kubernetes.io/name=scalardl
-service/prod-scalardl-envoy-metrics     ClusterIP      10.42.50.117   <none>        9001/TCP                          115s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=prod,app.kubernetes.io/name=scalardl
-service/prod-scalardl-ledger-headless   ClusterIP      None           <none>        <none>                            115s   app.kubernetes.io/app=ledger,app.kubernetes.io/instance=prod,app.kubernetes.io/name=scalardl
+NAME                                    TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE     SELECTOR
+service/kubernetes                      ClusterIP      10.42.48.1     <none>        443/TCP                           7h17m   <none>
+service/prod-scalardl-envoy             LoadBalancer   10.42.50.35    10.42.44.4    50051:30459/TCP,50052:30431/TCP   29m     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=prod,app.kubernetes.io/name=scalardl
+service/prod-scalardl-envoy-metrics     ClusterIP      10.42.50.247   <none>        9001/TCP                          29m     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=prod,app.kubernetes.io/name=scalardl
+service/prod-scalardl-ledger-headless   ClusterIP      None           <none>        <none>                            29m     app.kubernetes.io/app=ledger,app.kubernetes.io/instance=prod,app.kubernetes.io/name=scalardl
 
-NAME                                       ENDPOINTS                                                             AGE
-endpoints/kubernetes                       10.42.40.4:443                                                        36m
-endpoints/prod-scalardl-envoy             10.42.40.160:50052,10.42.40.210:50052,10.42.41.56:50052 + 3 more...   115s
-endpoints/prod-scalardl-envoy-metrics     10.42.40.160:9001,10.42.40.210:9001,10.42.41.56:9001                  115s
-endpoints/prod-scalardl-ledger-headless   10.42.40.116,10.42.41.122,10.42.41.49                                 115s
+NAME                                      ENDPOINTS                                                             AGE
+endpoints/kubernetes                      10.42.40.4:443                                                        7h17m
+endpoints/prod-scalardl-envoy             10.42.40.137:50052,10.42.40.219:50052,10.42.41.69:50052 + 3 more...   29m
+endpoints/prod-scalardl-envoy-metrics     10.42.40.137:9001,10.42.40.219:9001,10.42.41.69:9001                  29m
+endpoints/prod-scalardl-ledger-headless   10.42.40.108,10.42.41.108,10.42.41.17                                 29m
 ```
 
 The private endpoint is 10.42.44.4 on port 50051 and 50052
@@ -161,3 +184,22 @@ ledger:
 ```
 
 More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
+
+## Use a different internal domain
+
+In `scalardl-custom-values.yaml`, you can update resource as follow
+
+edit `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml`
+
+```yml
+ledger:
+  scalarLedgerConfiguration:
+    cassandraHost: cassandra-lb.internal.scalar-labs.com
+```
+
+don't forget to change the schema internal domain in `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`
+
+```yml
+cassandra:  
+  host: cassandra-lb.internal.scalar-labs.com
+```

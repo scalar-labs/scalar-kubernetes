@@ -1,0 +1,39 @@
+{{- if  .Values.cassandra.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "schema-loading.fullname" . }}-cassandra
+  labels:
+    {{- include "schema-loading.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "schema-loading.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.cassandra.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+      - name: schema-import
+        image: "{{ .Values.cassandra.image.repository }}:{{ .Values.cassandra.image.version }}"
+        imagePullPolicy: "{{ .Values.cassandra.image.pullPolicy }}"
+        command:
+        - /bin/bash 
+        - -c 
+        -  "echo applying Scalar DL schema && dockerize --template create_schema.cql.tmpl:create_schema.cql && cqlsh --cqlversion=3.4.4 ${SCALAR_DB_CONTACT_POINTS} -u ${SCALAR_DB_USERNAME} -p ${SCALAR_DB_PASSWORD} -f create_schema.cql"
+        env:
+        - name: SCALAR_DB_CONTACT_POINTS
+          value: "{{ .Values.cassandra.contactPoints }}"
+        - name: SCALAR_DB_CONTACT_PORT
+          value: "{{ .Values.cassandra.contactPort }}"
+        - name: SCALAR_DB_USERNAME
+          value: "{{ .Values.cassandra.username }}"
+        - name: SCALAR_DB_PASSWORD
+          value: "{{ .Values.cassandra.password }}"
+        - name: CASSANDRA_REPLICATION_FACTOR
+          value: "{{ .Values.cassandra.replicationFactor }}"
+      restartPolicy: Never
+  backoffLimit: 0
+{{- end }}
