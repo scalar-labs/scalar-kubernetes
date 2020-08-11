@@ -111,7 +111,7 @@ $ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
 
 ```
 # Create inventory for ansible
-$ cd ${SCALAR_K8S_HOME}/examples/azure/network
+$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
 $ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
 
 # Retrieve kube_config for setup kubectl
@@ -183,16 +183,6 @@ bastion_provision_id = 2467232388962733384
 dns_zone_id = internal.scalar-labs.com
 image_id = CentOS
 internal_domain = internal.scalar-labs.com
-inventory_ini = [bastion]
-bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com
-
-[bastion:vars]
-ansible_user=centos
-ansible_python_interpreter=/usr/bin/python3
-
-[all:vars]
-internal_domain=internal.scalar-labs.com
-
 location = East US
 network_cidr = 10.42.0.0/16
 network_id = /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk
