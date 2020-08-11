@@ -1,8 +1,8 @@
 cassandra:
   enabled: true
   
-  host: cassandra-lb.internal.scalar-labs.com
-  port: 9042
+  contactPoints: cassandra-lb.internal.scalar-labs.com
+  contactPort: 9042
   username: cassandra
   password: cassandra
   replicationFactor: 3

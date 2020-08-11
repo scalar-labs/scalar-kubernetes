@@ -5,8 +5,8 @@
 cassandra:
   enabled: true
 
-  host: cassandra
-  port: 9042
+  contactPoints: cassandra
+  contactPort: 9042
   username: cassandra
   password: cassandra
   replicationFactor: 3
