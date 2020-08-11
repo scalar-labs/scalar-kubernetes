@@ -4,7 +4,7 @@
 kubernetes_cluster = {
   # name                            = "scalar-kubernetes"
   # dns_prefix                      = "scalar-kubernetes"
-  # kubernetes_version              = "1.16.10"
+  # kubernetes_version              = "1.16.13"
   # admin_username                  = "azureuser"
   # role_based_access_control       = true
   # kube_dashboard                  = true
