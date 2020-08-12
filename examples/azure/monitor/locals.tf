@@ -19,6 +19,12 @@ locals {
   }
 
   cassandra = {
-    resource_count = data.terraform_remote_state.cassandra.outputs.cassandra_resource_count
+    resource_count = contains(var.targets, "cassandra") ? data.terraform_remote_state.cassandra[0].outputs.cassandra_resource_count : 0
+  }
+
+  scalardl = {
+    blue_resource_count  = contains(var.targets, "scalardl") ? data.terraform_remote_state.scalardl[0].outputs.scalardl_blue_resource_count : 0
+    green_resource_count = contains(var.targets, "scalardl") ? data.terraform_remote_state.scalardl[0].outputs.scalardl_green_resource_count : 0
+    replication_factor   = contains(var.targets, "scalardl") ? data.terraform_remote_state.scalardl[0].outputs.scalardl_replication_factor : 0
   }
 }

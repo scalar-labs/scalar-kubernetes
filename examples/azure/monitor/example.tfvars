@@ -16,9 +16,7 @@ monitor = {
 
 #slack_webhook_url = ""
 
-# Required
-scalardl = {
-  blue_resource_count  = 0
-  green_resource_count = 0
-  replication_factor   = 3
-}
+targets = [
+  "cassandra",
+#   "scalardl",
+]
