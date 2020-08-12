@@ -5,7 +5,7 @@
   become: yes
   vars:
     base_local_directory: "{{ lookup('env','SCALAR_K8S_CONFIG_DIR') }}"
-    # kubectl_version: v1.16.10
+    # kubectl_version: v1.16.13
     # env_name: example
     # helm_version: v3.2.1
   pre_tasks:
