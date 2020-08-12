@@ -132,26 +132,25 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     dns_service_ip     = local.kubernetes_cluster.dns_service_ip
   }
 
-  lifecycle {
-    ignore_changes = [
-      default_node_pool[0].node_count,
-    ]
-  }
-
   tags = merge(
     var.custom_tags,
     {
-      "terraform" = "true"
-      "network"   = "${local.network_name}"
-      "role"      = "kubernetes"
+      Terraform = "true"
+      Network   = "${local.network_name}"
+      Role      = "kubernetes"
     }
   )
-
 
   depends_on = [
     azurerm_role_assignment.sp_role_assignment,
     azuread_service_principal_password.sp_password
   ]
+
+  lifecycle {
+    ignore_changes = [
+      default_node_pool[0].node_count,
+    ]
+  }
 }
 
 # Add one more kubernetes node pool
@@ -171,22 +170,23 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_scalar_apps_node_po
   min_count             = local.kubernetes_scalar_apps_pool.cluster_auto_scaling_min_count
   max_count             = local.kubernetes_scalar_apps_pool.cluster_auto_scaling_max_count
 
-  lifecycle {
-    ignore_changes = [
-      node_count
-    ]
-  }
-
   tags = merge(
     var.custom_tags,
     {
-      "terraform" = "true"
-      "network"   = "${local.network_name}"
-      "role"      = "kubernetes"
+      Terraform = "true"
+      Network   = "${local.network_name}"
+      Role      = "kubernetes"
     }
   )
 
   depends_on = [
     azurerm_subnet.k8s_private,
   ]
+
+  lifecycle {
+    ignore_changes = [
+      node_count,
+      tags
+    ]
+  }
 }
