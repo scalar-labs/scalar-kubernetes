@@ -10,9 +10,7 @@ See the guide [How to access](./KubernetesMonitorGuide.md#how-to-access)
 
 the target are the endpoint which Prometheus check to collect the metrics for each components
 
-URL: http://localhost:9090/targets
-
-all the target should be green
+Available [Here](http://localhost:9090/targets)
 
 Important:
 
@@ -23,7 +21,7 @@ Important:
 
 Check if the rules for EnvoyAlerts and LedgerAlerts are in state `OK` and no error.
 
-URL: http://localhost:9090/rules
+Available [Here](http://localhost:9090/rules)
 
 ### Check the Grafana for Envoy Proxy
 
@@ -50,7 +48,7 @@ See the guide [How to access](https://github.com/scalar-labs/scalar-terraform/bl
 
 the target are the endpoint which Prometheus check to collect the metrics for each components
 
-URL: http://localhost:8000/#prometheus and go to Targets
+Available [Here](http://localhost:8000/#prometheus) and go to Targets
 
 Important
 - cassandra
@@ -59,13 +57,13 @@ Important
 
 Check if the rules for Cassandra Alerts, Docker Container Alerts and Instance Alerts are in state `OK` and no error.
 
-URL: http://localhost:8000/#prometheus and go to Rules
+Available [Here](http://localhost:8000/#prometheus) and go to Rules
 
 ### Check the Grafana for Cassandra
 
 Go on grafana and check `Casssandra` dashboard, look for any anomaly on the graph
 
-URL: http://localhost:3000/d/cassandra/cassandra?orgId=1
+Available [Here](http://localhost:3000/d/cassandra/cassandra?orgId=1) and select scalar keyspace
 
 ## Kubernetes
 
@@ -121,7 +119,7 @@ What to check:
 * Pods didn't restarted, check RESTARTS column
 * Pods are correctly distributed on the different nodes
 
-### Check Fluentbit Pods
+### Check Fluent bit Pods
 
 ```console
 $ kubectl get pod -n logging -o wide
