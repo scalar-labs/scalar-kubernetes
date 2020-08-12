@@ -17,7 +17,7 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 
 * An Azure VPC associated with Resource Group
 * An AKS cluster with two Kubernetes node pools
-* 3 Envoy Kubernetes Pods with a network load balancer (public)
+* 3 Envoy Kubernetes Pods with a network load balancer
 * 3 Scalar DL Kubernetes Pods
 * 1 Prometheus operator to collect metrics inside Kubernetes
 * 1 FluentBit Pod on each node to collect Kubernetes log
@@ -105,6 +105,12 @@ It is recommended to be set outside of the repo since it should be separately ma
 ```
 # Please update `/path/to/local-repository-config-dir` before running the command.
 $ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
+```
+
+Copy from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`
+
+```console
+$ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
 ```
 
 ### Setup bastion for accessing Kubernetes cluster

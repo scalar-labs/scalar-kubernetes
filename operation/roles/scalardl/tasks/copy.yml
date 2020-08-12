@@ -10,7 +10,10 @@
     src: "{{ local_helm_charts_directory }}"
     dest: "{{ remote_directory }}/helm/charts"
 
-- name: Copy helm charts scalardl custom values
+- name: Copy helm charts custom values
   copy:
-    src: "{{ local_helm_charts_values_directory }}/scalardl-custom-values.yaml"
-    dest: "{{ remote_directory }}/helm/charts/config/scalardl-custom-values.yaml"
+    src: "{{ local_helm_charts_values_directory }}/{{ item }}"
+    dest: "{{ remote_directory }}/helm/charts/config/{{ item }}"
+  loop:
+  - scalardl-custom-values.yaml
+  - schema-loading-custom-values.yaml
