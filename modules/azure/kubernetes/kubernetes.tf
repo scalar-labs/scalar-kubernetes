@@ -143,7 +143,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     {
       "terraform" = "true"
       "network"   = "${local.network_name}"
-      "role"      = "Kubernetes"
+      "role"      = "kubernetes"
     }
   )
 
@@ -182,7 +182,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_scalar_apps_node_po
     {
       "terraform" = "true"
       "network"   = "${local.network_name}"
-      "role"      = "Kubernetes"
+      "role"      = "kubernetes"
     }
   )
 
