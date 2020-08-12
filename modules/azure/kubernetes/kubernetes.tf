@@ -173,9 +173,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_scalar_apps_node_po
   tags = merge(
     var.custom_tags,
     {
-      Terraform = "true"
-      Network   = "${local.network_name}"
-      Role      = "kubernetes"
+      terraform = "true"
+      network   = "${local.network_name}"
+      role      = "kubernetes"
     }
   )
 
@@ -186,7 +186,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_cluster_scalar_apps_node_po
   lifecycle {
     ignore_changes = [
       node_count,
-      tags
     ]
   }
 }
