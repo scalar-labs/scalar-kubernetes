@@ -98,13 +98,14 @@ endpoints/prod-scalardl-ledger-headless   10.42.40.108,10.42.41.108,10.42.41.17 
 
 The private endpoint is 10.42.44.4 on port 50051 and 50052
 
-## Customize values for Scalar DL charts
+## Customize values for Scalar DL and Schema Loading charts
 
 In `${SCALAR_K8S_CONFIG_DIR}` contain the helm custom values use for deploying the application in Kubernetes.
 
 The default values are describe in here:
 
 * [scalardl](../charts/stable/scalardl/README.md)
+* [schema-loading](../charts/stable/schema-loading/README.md)
 
 Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml`
 
@@ -187,7 +188,7 @@ More information can be found in [the official documentation](https://kubernetes
 
 ## Use a different internal domain
 
-In `scalardl-custom-values.yaml`, you can update resource as follow
+In `scalardl-custom-values.yaml` and `schema-loading-custom-values.yaml`, you can update resource as follow
 
 edit `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml`
 
@@ -201,7 +202,7 @@ don't forget to change the schema internal domain in `${SCALAR_K8S_CONFIG_DIR}/s
 
 ```yml
 cassandra:  
-  host: cassandra-lb.internal.scalar-labs.com
+  contactPoints: cassandra-lb.internal.scalar-labs.com
 ```
 
 ## How to force restart a scalar app pods
