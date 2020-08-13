@@ -21,8 +21,13 @@ variable "kubernetes_default_node_pool" {
   description = "Custom definition kubernetes default node pool that include number of node, node size, autoscaling, etc.."
 }
 
-variable "kubernetes_additional_node_pools" {
+variable "kubernetes_scalar_apps_pool" {
   type        = map
   default     = {}
-  description = "Custom definition kubernetes additional node pools, same as default_node_pool"
+  description = "Custom definition kubernetes scalar apps pool, same as default_node_pool"
+}
+
+variable "custom_tags" {
+  type    = map
+  default = {}
 }
