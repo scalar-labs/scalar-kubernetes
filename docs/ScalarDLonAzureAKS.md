@@ -36,12 +36,23 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 az login
 ```
 
-### Create network resources
+### Clone scalar-terraform repository
+
+This repository use `scalar-terraform` project to deploy underlying infrastructure, you need to clone `scalar-terraform` repository and set the following environment var
 
 ```
 # Please update `/path/to/local-repository` before running the command.
-$ export SCALAR_K8S_HOME=/path/to/local-repository
-$ cd ${SCALAR_K8S_HOME}/examples/azure/network
+$ export SCALAR_TERRAFORM_HOME=/path/to/local-repository
+```
+
+Please refer to the [scalar-terraform docs](https://github.com/scalar-labs/scalar-terraform/tree/master/docs)
+
+### Create network resources
+
+The current version uses [the network module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/network) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform).  It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
+
+```
+$ cd ${SCALAR_TERRAFORM_HOME}/examples/azure/network
 
 # Generate a test key-pair
 $ ssh-keygen -b 2048 -t rsa -f ./example_key -q -N ""
@@ -57,45 +68,43 @@ $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-Note that the current version uses [the network module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/network) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform).  It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
-
 ### Create Cassandra resources
 
+The current version uses [the cassandra module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cassandra) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
+
 ```
-$ cd ${SCALAR_K8S_HOME}/examples/azure/cassandra
+$ cd ${SCALAR_TERRAFORM_HOME}/examples/azure/cassandra
 
 # Create the cassandra cluster
 $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-Note that the current version uses [the cassandra module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cassandra) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
-
 ### Create Kubernetes cluster
 
+The current version uses [the kubernetes module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/kubernetes) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
+
 ```
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes
+$ cd ${SCALAR_TERRAFORM_HOME}/examples/azure/kubernetes
 
 # Create the Kubernetes cluster
 $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-For more information about the variable in `example.tfvars`, please refer to [kubernetes modules](../modules/azure/kubernetes/README.md)
-
 ### Create Monitor resources
 
 The Scalar deployment tools include a Prometheus metrics server, Grafana data visualization server, and Alertmanager server for cassandra cluster, cassy, and bastion server
 
+The current version uses [the monitor module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/monitor) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform/). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
+
 ```
-$ cd ${SCALAR_K8S_HOME}/examples/azure/monitor
+$ cd ${SCALAR_TERRAFORM_HOME}/examples/azure/monitor
 
 # Create the monitor server for cassandra modules and log collection
 $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
-
-Note that the current version uses [the monitor module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/monitor) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform/). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
 ### Decide where to store configuration files for accessing the k8s cluster
 
@@ -116,6 +125,9 @@ $ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-
 ### Setup bastion for accessing Kubernetes cluster
 
 ```
+# Please update `/path/to/local-repository-dir` before running the command.
+$ export SCALAR_K8S_HOME=/path/to/local-repository-dir
+
 # Create inventory for ansible
 $ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
 $ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
@@ -124,9 +136,12 @@ $ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
 $ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
 $ terraform output kube_config > ${SCALAR_K8S_CONFIG_DIR}/kube_config
 
+# Retrieve k8s_ssh_config for access to bastion, cassandra, prometheus, etc
+$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
+$ terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/ssh.cfg
+
 # Setup bastion for Kubernetes
 $ cd ${SCALAR_K8S_HOME}
-$ export ANSIBLE_CONFIG=${SCALAR_K8S_HOME}/operation/ansible.cfg
 $ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-install-tools.yml
 ```
 
