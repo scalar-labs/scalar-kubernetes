@@ -16,5 +16,3 @@ This product uses the following open source software.
 |Kubernetes| [Apache License 2.0](APL-2.0.txt) | Copyright © 2020 The Linux Foundation | https://github.com/kubernetes/kubernetes |
 |Kubeclt| [Apache License 2.0](APL-2.0.txt) | Copyright © 2020 The Linux Foundation | https://github.com/kubernetes/kubectl |
 |Helm| [Apache License 2.0](APL-2.0.txt) | Copyright The Helm Authors. | https://github.com/helm/helm |
-
-This project use the terraform modules and software from [Scalar-terraform](https://github.com/scalar-labs/scalar-terraform). Please review the license from that repository, available [here](https://github.com/scalar-labs/scalar-terraform/tree/master/licenses)
