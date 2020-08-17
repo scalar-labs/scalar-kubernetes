@@ -8,12 +8,15 @@ variable "monitor" {
   default = {}
 }
 
+variable "targets" {
+  type = list(string)
+  default = [
+    "cassandra",
+    "scalardl",
+  ]
+}
+
 # For Alerting Add Slack Webhook
 variable "slack_webhook_url" {
   default = ""
-}
-
-variable "scalardl" {
-  type    = map
-  default = {}
 }
