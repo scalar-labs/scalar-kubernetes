@@ -4,7 +4,8 @@ This product uses the following open source software.
 
 |Name  |License  |Copyright|Link |
 |---|---|---|---|
-|Scalar DL|[Commercial License](https://scalar-labs.com/contact_us/) | © 2020 Scalar, Inc. | https://github.com/scalar-labs/scalardl |
+|Scalar DL| [Commercial License](https://scalar-labs.com/contact_us/) | © 2020 Scalar, Inc. | https://github.com/scalar-labs/scalardl |
+|Scalar Terraform| [Apache License 2.0](APL-2.0.txt) | © 2020 Scalar, Inc. | https://github.com/scalar-labs/scalar-terraform |
 |Node_exporter| [Apache License 2.0](APL-2.0.txt) | © Prometheus Authors 2014-2020 | https://github.com/prometheus/node_exporter/ |
 |Prometheus| [Apache License 2.0](APL-2.0.txt) | © Prometheus Authors 2014-2020 | https://github.com/prometheus/prometheus |
 |Alertmanager| [Apache License 2.0](APL-2.0.txt) | © Prometheus Authors 2014-2020 | https://github.com/prometheus/alertmanager |
