@@ -20,7 +20,11 @@ To get started with simple deployment, please follow [the getting started guide]
 
 ## Project Overview
 
-The repo is divided into two sections, operation. All terraform modules are in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform); only the Kubernetes module is maintained in this project.
+The repo is divided into two sections, charts and operation. All terraform modules are in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform); only the Kubernetes module is maintained in this project.
+
+### [Charts](./charts)
+
+The charts directory contains helm charts to deploy Scalar DL, Schema Loading.
 
 ### [Operation](./operation)
 
