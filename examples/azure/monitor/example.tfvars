@@ -18,5 +18,4 @@ monitor = {
 
 targets = [
   "cassandra",
-  #   "scalardl",
 ]
