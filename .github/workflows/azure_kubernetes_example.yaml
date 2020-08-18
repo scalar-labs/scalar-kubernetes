@@ -4,13 +4,11 @@ on:
     branches:
       - master
     paths:
-      - modules/azure/kubernetes/**
       - examples/azure/kubernetes/**
   push:
     branches:
       - master
     paths:
-      - modules/azure/kubernetes/**
       - examples/azure/kubernetes/**
 defaults:
   run:
