@@ -18,13 +18,13 @@ Note that the current version only supports the deployment of a single Scalar DL
 
 To get started with simple deployment, please follow [the getting started guide](docs/GettingStarted.md). This guide will cover how to build an environment with the tool.
 
-## Project Overview
+## Repository Overview
 
-The repo is divided into two sections, charts and operation. All terraform modules are in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform); only the Kubernetes module is maintained in this project.
+The repo is divided into two sections, charts and operation. All terraform modules are in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform)
 
 ### [Charts](./charts)
 
-The charts directory contains helm charts to deploy Scalar DL, Schema Loading.
+The `charts` directory contains helm charts to deploy Scalar DL, Schema Loading.
 
 ### [Operation](./operation)
 
