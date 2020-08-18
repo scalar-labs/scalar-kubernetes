@@ -1,4 +1,4 @@
-# Daily Check
+# What you might want to check on a regular basis
 
 This document explains how/what to check in a daily matter
 
