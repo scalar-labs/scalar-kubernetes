@@ -1,73 +1,10 @@
 # What you might want to check on a regular basis
 
-Most of the components deployed by scalar-k8s are self-healing with the help of the managed k8s services and k8s self-healing capability. There are also configured alerts that occur when some unexpected behavior happens. Thus, there shouldn't be so many things to do day by day for running a service with scalar-k8s. However, it is recommended to check the status of a system on a regular basis to see if everything is working fine. Here is the list of things you might want to do on a basis.```
-
-## Kubernetes Prometheus
-
-See the guide [How to access](./KubernetesMonitorGuide.md#how-to-access)
-
-### Check the Prometheus Targets
-
-the target are the endpoint which Prometheus check to collect the metrics for each components
-
-Available [Here](http://localhost:9090/targets)
-
-Important:
-
-- monitoring/prod-scalardl-envoy-metrics should be always green, otherwise It indicate a problem on the envoy pods
-- monitoring/fluent-bit-logging-metrics hould be always green, otherwise It indicate a problem on the fluentbit pods
-
-### Check the Prometheus Rules
-
-Check if the rules for EnvoyAlerts and LedgerAlerts are in state `OK` and no error.
-
-Available [Here](http://localhost:9090/rules)
-
-### Check the Grafana for Envoy Proxy
-
-Go on grafana and check `Envoy Proxy` dashboard, look for any anomaly on the graph
-
-### Check the Grafana for Scalar DLT Response
-
-Go on grafana and check `Scalar DLT Response` dashboard, look for any anomaly on the graph
-
-### Other Dashboard to check
-
-Go on grafana and check the list below dashboard, look for any anomaly on the graph
-
-* Kubernetes / Compute Resources / Cluster
-* Kubernetes / Compute Resources / Namespace (Workloads)
-* Kubernetes / Compute Resources / Pod
-* CoreDNS
-
-## Monitor server Prometheus
-
-See the guide [How to access](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/MonitorGuide.md#how-to-access)
-
-### Check the Prometheus Targets
-
-the target are the endpoint which Prometheus check to collect the metrics for each components
-
-Available [Here](http://localhost:8000/#prometheus) and go to Targets
-
-Important
-- cassandra
-
-### Check the Prometheus Rules
-
-Check if the rules for Cassandra Alerts, Docker Container Alerts and Instance Alerts are in state `OK` and no error.
-
-Available [Here](http://localhost:8000/#prometheus) and go to Rules
-
-### Check the Grafana for Cassandra
-
-Go on grafana and check `Casssandra` dashboard, look for any anomaly on the graph
-
-Available [Here](http://localhost:3000/d/cassandra/cassandra?orgId=1) and select scalar keyspace
+Most of the components deployed by scalar-k8s are self-healing with the help of the managed k8s services and k8s self-healing capability. There are also configured alerts that occur when some unexpected behavior happens. Thus, there shouldn't be so many things to do day by day for running a service with scalar-k8s. However, it is recommended to check the status of a system on a regular basis to see if everything is working fine. Here is the list of things you might want to do on a basis.
 
 ## Kubernetes
 
-### Check Scalar apps pods
+### Check Scalar DL pods
 
 ```console
 $ kubectl get po -o wide
@@ -147,3 +84,66 @@ What to check:
 $ kubectl get event -o wide --all-namespaces
 No resources found
 ```
+
+## Kubernetes Prometheus
+
+See the guide [How to access](./KubernetesMonitorGuide.md#how-to-access)
+
+### Check the Prometheus Targets
+
+the target are the endpoint which Prometheus check to collect the metrics for each components
+
+Available [Here](http://localhost:9090/targets)
+
+Important:
+
+- monitoring/prod-scalardl-envoy-metrics should be always green, otherwise It indicate a problem on the envoy pods
+- monitoring/fluent-bit-logging-metrics hould be always green, otherwise It indicate a problem on the fluentbit pods
+
+### Check the Prometheus Rules
+
+Check if the rules for EnvoyAlerts and LedgerAlerts are in state `OK` and no error.
+
+Available [Here](http://localhost:9090/rules)
+
+### Check the Grafana for Envoy Proxy
+
+Go on grafana and check `Envoy Proxy` dashboard, look for any anomaly on the graph
+
+### Check the Grafana for Scalar DLT Response
+
+Go on grafana and check `Scalar DLT Response` dashboard, look for any anomaly on the graph
+
+### Other Dashboard to check
+
+Go on grafana and check the list below dashboard, look for any anomaly on the graph
+
+* Kubernetes / Compute Resources / Cluster
+* Kubernetes / Compute Resources / Namespace (Workloads)
+* Kubernetes / Compute Resources / Pod
+* CoreDNS
+
+## Monitor Prometheus
+
+See the guide [How to access](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/MonitorGuide.md#how-to-access)
+
+### Check the Prometheus Targets
+
+the target are the endpoint which Prometheus check to collect the metrics for each components
+
+Available [Here](http://localhost:8000/#prometheus) and go to Targets
+
+Important
+- cassandra
+
+### Check the Prometheus Rules
+
+Check if the rules for Cassandra Alerts, Docker Container Alerts and Instance Alerts are in state `OK` and no error.
+
+Available [Here](http://localhost:8000/#prometheus) and go to Rules
+
+### Check the Grafana for Cassandra
+
+Go on grafana and check `Casssandra` dashboard, look for any anomaly on the graph
+
+Available [Here](http://localhost:3000/d/cassandra/cassandra?orgId=1) and select scalar keyspace
