@@ -87,38 +87,6 @@ What to check:
 * Pods didn't restarted, check RESTARTS column
 * Pods are correctly distributed on the different nodes
 
-### Check Kubernetes Pods
-
-```console
-$ kubectl get pod -n kube-system -o wide
-NAME                                         READY   STATUS    RESTARTS   AGE     IP             NODE                                   NOMINATED NODE   READINESS GATES
-azure-cni-networkmonitor-7nqcr               1/1     Running   0          5h27m   10.42.41.52    aks-scalardlpool-34802672-vmss000002   <none>           <none>
-azure-cni-networkmonitor-jzssl               1/1     Running   0          5h27m   10.42.40.207   aks-scalardlpool-34802672-vmss000001   <none>           <none>
-azure-cni-networkmonitor-k97d9               1/1     Running   0          5h27m   10.42.40.106   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-azure-cni-networkmonitor-n5t85               1/1     Running   0          5h32m   10.42.40.5     aks-default-34802672-vmss000000        <none>           <none>
-azure-ip-masq-agent-cw7cs                    1/1     Running   0          5h27m   10.42.40.106   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-azure-ip-masq-agent-hxhbb                    1/1     Running   0          5h32m   10.42.40.5     aks-default-34802672-vmss000000        <none>           <none>
-azure-ip-masq-agent-p7n5b                    1/1     Running   0          5h27m   10.42.40.207   aks-scalardlpool-34802672-vmss000001   <none>           <none>
-azure-ip-masq-agent-rttbw                    1/1     Running   0          5h27m   10.42.41.52    aks-scalardlpool-34802672-vmss000002   <none>           <none>
-coredns-869cb84759-frtsh                     1/1     Running   0          5h36m   10.42.40.74    aks-default-34802672-vmss000000        <none>           <none>
-coredns-869cb84759-w2z2t                     1/1     Running   0          5h31m   10.42.40.75    aks-default-34802672-vmss000000        <none>           <none>
-coredns-autoscaler-5b867494f-z4x8t           1/1     Running   0          5h36m   10.42.40.59    aks-default-34802672-vmss000000        <none>           <none>
-dashboard-metrics-scraper-566c858889-tq8cw   1/1     Running   0          5h36m   10.42.40.27    aks-default-34802672-vmss000000        <none>           <none>
-kube-proxy-28675                             1/1     Running   0          5h32m   10.42.40.5     aks-default-34802672-vmss000000        <none>           <none>
-kube-proxy-7lnm5                             1/1     Running   0          5h27m   10.42.40.207   aks-scalardlpool-34802672-vmss000001   <none>           <none>
-kube-proxy-9l5d7                             1/1     Running   0          5h27m   10.42.41.52    aks-scalardlpool-34802672-vmss000002   <none>           <none>
-kube-proxy-nrw2n                             1/1     Running   0          5h27m   10.42.40.106   aks-scalardlpool-34802672-vmss000000   <none>           <none>
-kubernetes-dashboard-7f7d6bbd7f-c8qwr        1/1     Running   0          5h36m   10.42.40.16    aks-default-34802672-vmss000000        <none>           <none>
-metrics-server-6cd7558856-hhs49              1/1     Running   0          5h36m   10.42.40.102   aks-default-34802672-vmss000000        <none>           <none>
-tunnelfront-7599bc65f9-zv5mc                 2/2     Running   0          5h36m   10.42.40.98    aks-default-34802672-vmss000000        <none>           <none>
-```
-
-What to check:
-
-* Pods are correctly in states of `Running` status
-* Pods didn't restarted, check RESTARTS column
-* Pods are correctly distributed on the different nodes
-
 ### Check Fluent bit Pods
 
 ```console
