@@ -1,15 +1,18 @@
-# 
+# Scalar DL Operation Guide
 
-This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with Ansible. After following the doc, you will be able to use Scalar Ledger inside Kubernetes.
+This document explains different operation for Scalar DL
 
+## How to update Scalar DL
 
-## How to update/upgrade Scalar DL
+Update the local repository `SCALAR_K8S_HOME` and re-apply the deployment
 
-Update the local repository `SCALAR_K8S_HOME` and re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml`
+```console
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml
+```
 
-More information can be found in [Here](./DeployScalarDL.md)
+More information can be found in [Here](./DeployScalarDL.md) to change settings
 
-## How to force restart a scalar app pods
+## How to force restart a Scalar DL pods
 
 Get the list of application that can be rollout
 
