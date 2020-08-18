@@ -61,7 +61,7 @@ Now let's deploy to Prometheus component inside Kubernetes with Ansible playbook
 
 ```console
 $ cd ${SCALAR_K8S_HOME}
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-prometheus.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operations/playbook-deploy-prometheus.yml
 
 PLAY [Deploy Prometheus in Kubernetes] ************************************************************************************************************************************************************************
 

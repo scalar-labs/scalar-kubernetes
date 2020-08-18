@@ -1,5 +1,5 @@
 module "kubernetes" {
-  source = "../../../modules/azure/kubernetes"
+  source = "git::https://github.com/scalar-labs/scalar-terraform.git//modules/azure/kubernetes?ref=master"
 
   # Required variables (use network remote state)
   network = local.network

@@ -72,8 +72,8 @@ Now let's install the tools in the bastion as follows.
 
 ```console
 $ cd ${SCALAR_K8S_HOME}
-$ export ANSIBLE_CONFIG=${SCALAR_K8S_HOME}/operation/ansible.cfg
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-install-tools.yml
+$ export ANSIBLE_CONFIG=${SCALAR_K8S_HOME}/operations/ansible.cfg
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operations/playbook-install-tools.yml
 
 PLAY [Install necessary kubernetes binary on bastion] ****************************************************************************************************************************************************************************************************************
 
