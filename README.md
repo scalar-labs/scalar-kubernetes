@@ -24,7 +24,7 @@ The repo is divided into two sections, charts and operation. All terraform modul
 
 ### [Charts](./charts)
 
-The `charts` directory contains helm charts to deploy Scalar DL, Schema Loading.
+The `charts` directory contains helm charts to deploy Scalar DL and Schema Loading.
 
 ### [Operation](./operation)
 
