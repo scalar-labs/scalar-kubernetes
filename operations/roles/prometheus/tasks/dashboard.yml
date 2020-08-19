@@ -9,6 +9,7 @@
   copy:
     src: files/{{ item }}
     dest: "{{ remote_directory }}/manifests/grafana/{{ item }}"
+    mode: '0644'
     remote_src: no
   loop:
   - envoy.json

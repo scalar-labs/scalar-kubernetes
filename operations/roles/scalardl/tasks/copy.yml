@@ -14,6 +14,7 @@
   copy:
     src: "{{ local_helm_charts_values_directory }}/{{ item }}"
     dest: "{{ remote_directory }}/helm/charts/config/{{ item }}"
+    mode: '0644'
   loop:
   - scalardl-custom-values.yaml
   - schema-loading-custom-values.yaml

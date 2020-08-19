@@ -9,4 +9,5 @@
   template:
     src: prometheus-custom-values.yaml.j2
     dest: "{{ remote_directory }}/helm/prometheus-custom-values.yaml"
+    mode: '0644'
     remote_src: no

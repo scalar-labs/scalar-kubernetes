@@ -10,6 +10,7 @@
     src: /tmp/helm.tar.gz
     dest: /tmp
     copy: no
+    mode: "0644"
 
 - name: Copy helm binary to $PATH
   copy:
