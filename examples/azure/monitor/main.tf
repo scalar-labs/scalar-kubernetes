@@ -1,5 +1,5 @@
 module "monitor" {
-  source = "git::https://github.com/scalar-labs/scalar-terraform.git//modules/azure/monitor?ref=v1.4.0"
+  source = "git::https://github.com/scalar-labs/scalar-terraform.git//modules/azure/monitor?ref=master"
 
   # Required Variables (Use remote state)
   network   = local.network

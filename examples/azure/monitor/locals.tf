@@ -1,10 +1,10 @@
 locals {
   network = {
-    cidr     = data.terraform_remote_state.network.outputs.network_cidr
-    name     = data.terraform_remote_state.network.outputs.network_name
-    dns      = data.terraform_remote_state.network.outputs.dns_zone_id
-    id       = data.terraform_remote_state.network.outputs.network_id
-    location = data.terraform_remote_state.network.outputs.location
+    cidr   = data.terraform_remote_state.network.outputs.network_cidr
+    name   = data.terraform_remote_state.network.outputs.network_name
+    dns    = data.terraform_remote_state.network.outputs.dns_zone_id
+    id     = data.terraform_remote_state.network.outputs.network_id
+    region = data.terraform_remote_state.network.outputs.region
 
     subnet_id = data.terraform_remote_state.network.outputs.subnet_map["private"]
     image_id  = data.terraform_remote_state.network.outputs.image_id

@@ -1,7 +1,7 @@
 # General Settings
 variable "name" {}
 
-variable "location" {}
+variable "region" {}
 
 variable "public_key_path" {}
 

@@ -1,9 +1,9 @@
 module "network" {
-  source = "git::https://github.com/scalar-labs/scalar-terraform.git//modules/azure/network?ref=v1.4.0"
+  source = "git::https://github.com/scalar-labs/scalar-terraform.git//modules/azure/network?ref=master"
 
   # Required Variables
   name             = var.name
-  location         = var.location
+  region           = var.region
   public_key_path  = var.public_key_path
   private_key_path = var.private_key_path
   internal_domain  = var.internal_domain

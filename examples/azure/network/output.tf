@@ -34,8 +34,8 @@ output "public_key_path" {
   value = module.network.public_key_path
 }
 
-output "location" {
-  value = module.network.location
+output "region" {
+  value = module.network.region
 }
 
 output "user_name" {
