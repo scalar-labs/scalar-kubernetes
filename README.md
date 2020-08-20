@@ -24,7 +24,7 @@ The repo is divided into three sections, Terraform Examples, Helm charts and ope
 
 ### [Terraform Examples](./examples)
 
-The Terraform examples directory is here to help deploy the infrastructure e.g: Cassandra, Monitor and Kubernetes. AAll terraform modules are in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform)
+The examples directory contains a set of Terraform modules to deploy the infrastructure e.g: Network, Cassandra, Monitor, and Kubernetes cluster. Those modules basically configure parameters and delegate actual creation to the terraform modules defined in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform)
 
 ### [Charts](./charts)
 
