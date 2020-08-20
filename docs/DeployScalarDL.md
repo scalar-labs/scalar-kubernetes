@@ -205,6 +205,16 @@ cassandra:
   contactPoints: cassandra-lb.internal.scalar-labs.com
 ```
 
+## How to upgrade Scalar DL
+
+To apply a configuration modification from `scalardl-custom-values.yaml` and `schema-loading-custom-values.yaml`, or new release, please follow this steps
+
+Update the local repository `SCALAR_K8S_HOME` and re-apply the deployment
+
+```console
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operations/playbook-deploy-scalardl.yml
+```
+
 ## Schema Loading Failed
 
 If the internal_domain var is not correct or the Cassandra is not fully started, the schema loading job can fail, you will get the following error

@@ -1,18 +1,13 @@
 # Scalar DL Operation Guide
 
-This document explains different operation for Scalar DL
-
-## How to update Scalar DL
-
-Update the local repository `SCALAR_K8S_HOME` and re-apply the deployment
-
-```console
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml
-```
-
-More information can be found in [Here](./DeployScalarDL.md) to change settings
+This document explains operation for Scalar DL that can be made
 
 ## How to force restart a Scalar DL pods
+
+Rolling out an application can be use to:
+
+* to replace pod on new node installed
+* re distribute the pod to all available node
 
 Get the list of application that can be rollout
 
