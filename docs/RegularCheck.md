@@ -6,8 +6,22 @@ Most of the components deployed by scalar-k8s are self-healing with the help of 
 
 ### Check if Pods are all healthy statues
 
+Please check the kubernetes namespaces:
+
+* `default` for Scalar DL
+* `logging` for Fluent bit
+* `monitoring` for Prometheus
+
+What to check:
+
+* `STATUS` is all `Running`
+* `RESTARTS` number is all 0
+* Pods are evenly distributed on the different nodes
+
+See below the examples
+
 ```console
-$ kubectl get po -o wide
+$ kubectl get po -o wide -n default
 NAME                                         READY   STATUS      RESTARTS   AGE     IP             NODE                                   NOMINATED NODE   READINESS GATES
 load-schema-schema-loading-cassandra-tgqdd   0/1     Completed   0          3h58m   10.42.40.26    aks-default-34802672-vmss000000        <none>           <none>
 prod-scalardl-envoy-568f9cbff9-5ws5v         1/1     Running     0          3h57m   10.42.41.63    aks-scalardlpool-34802672-vmss000002   <none>           <none>
@@ -18,14 +32,6 @@ prod-scalardl-ledger-55d96b74f8-mfgnx        1/1     Running     0          3h57
 prod-scalardl-ledger-55d96b74f8-q4xmr        1/1     Running     0          3h57m   10.42.40.226   aks-scalardlpool-34802672-vmss000001   <none>           <none>
 ```
 
-What to check:
-
-* `STATUS` is all `Running`
-* `RESTARTS` number is all 0
-* Pods are evenly distributed on the different nodes
-
-### Check Fluent bit Pods
-
 ```console
 $ kubectl get pod -n logging -o wide
 NAME               READY   STATUS    RESTARTS   AGE    IP             NODE                                   NOMINATED NODE   READINESS GATES
@@ -34,14 +40,6 @@ fluent-bit-hpc4t   1/1     Running   0          4h8m   10.42.40.230   aks-scalar
 fluent-bit-wbcjv   1/1     Running   0          4h8m   10.42.40.14    aks-default-34802672-vmss000000        <none>           <none>
 fluent-bit-xnpxh   1/1     Running   0          4h8m   10.42.41.95    aks-scalardlpool-34802672-vmss000002   <none>           <none>
 ```
-
-What to check:
-
-* Pods are correctly in states of `Running` status
-* Pods didn't restarted, check RESTARTS column
-* Pods are correctly distributed on the different nodes
-
-### Check the Prometheus Pods
 
 ```console
 $ kubectl get pod -n monitoring -o wide
@@ -56,12 +54,6 @@ prometheus-prometheus-node-exporter-rf7zm                1/1     Running   0    
 prometheus-prometheus-oper-operator-67ccf47d85-wqzm6     2/2     Running   0          4h16m   10.42.40.61    aks-default-34802672-vmss000000        <none>           <none>
 prometheus-prometheus-prometheus-oper-prometheus-0       3/3     Running   1          4h15m   10.42.40.89    aks-default-34802672-vmss000000        <none>           <none>
 ```
-
-What to check:
-
-* Pods are correctly in states of `Running` status
-* Pods didn't restarted, check RESTARTS column
-* Pods are correctly distributed on the different nodes
 
 ### Check if Nodes are all healthy statuses
 
@@ -89,59 +81,33 @@ No resources found
 
 See the guide [How to access](./KubernetesMonitorGuide.md#how-to-access)
 
-### Check the Prometheus Targets
-
 [The targets](http://localhost:9090/targets) are the endpoints that Prometheus check to collect the metrics for each component.
 
+  * `monitoring/prod-scalardl-envoy-metrics` should be always green otherwise It indicates a problem on the envoy pods
+  * `monitoring/fluent-bit-logging-metrics` should be always green otherwise It indicates a problem on the fluentbit pods`
 
-What to check:
+[The rules](http://localhost:9090/rules) for EnvoyAlerts and LedgerAlerts are in `OK` states and thee is no error.
 
-- monitoring/prod-scalardl-envoy-metrics should be always green otherwise It indicates a problem on the envoy pods
-- monitoring/fluent-bit-logging-metrics should be always green otherwise It indicates a problem on the fluentbit pods
+[Grafana](http://localhost:8080) look for any anomaly on the graph:
 
-### Check the Prometheus Rules
-
-Check if [the rules](http://localhost:9090/rules) for EnvoyAlerts and LedgerAlerts are in `OK` states and thee is no error.
-
-
-### Check the Grafana for Envoy Proxy
-
-Go on Grafana and check `Envoy Proxy` dashboard, look for any anomaly on the graph.
-
-### Check the Grafana for Scalar DLT Response
-
-Go on Grafana and check `Scalar DLT Response` dashboard, look for any anomaly on the graph.
-
-### Other dashboards to check
-
-Go on Grafana and check the following dashboard, look for any anomaly on the graph.
-
-* Kubernetes / Compute Resources / Cluster
-* Kubernetes / Compute Resources / Namespace (Workloads)
-* Kubernetes / Compute Resources / Pod
-* CoreDNS
+  * `Envoy Proxy` dashboard
+  * `Scalar DLT Response` dashboard
+  * Other dashboard:
+    * `Kubernetes / Compute Resources / Cluster`
+    * `Kubernetes / Compute Resources / Namespace (Workloads)`
+    * `Kubernetes / Compute Resources / Pod`
+    * `CoreDNS`
 
 ## Monitor Prometheus
 
 See the guide [How to access](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/MonitorGuide.md#how-to-access)
 
-### Check the Prometheus Targets
+[The targets](hhttp://localhost:8000/#prometheus) are the endpoints that Prometheus check to collect the metrics for each component.
 
-the target are the endpoint which Prometheus check to collect the metrics for each components
+  * `Cassandra` should be always green otherwise It indicates a problem on the envoy pods
 
-Available [Here](http://localhost:8000/#prometheus) and go to Targets
+[The rules](hhttp://localhost:8000/#prometheus) for Cassandra Alerts, Docker Container Alerts and Instance Alerts are in state `OK` and no error.
 
-Important
-- cassandra
+[Grafana](http://localhost:3000) look for any anomaly on the graph:
 
-### Check the Prometheus Rules
-
-Check if the rules for Cassandra Alerts, Docker Container Alerts and Instance Alerts are in state `OK` and no error.
-
-Available [Here](http://localhost:8000/#prometheus) and go to Rules
-
-### Check the Grafana for Cassandra
-
-Go on grafana and check `Casssandra` dashboard, look for any anomaly on the graph
-
-Available [Here](http://localhost:3000/d/cassandra/cassandra?orgId=1) and select scalar keyspace
+ * [Cassandra](http://localhost:3000/d/cassandra/cassandra?orgId=1) and select scalar keyspace
