@@ -56,7 +56,7 @@ Waiting for deployment "prod-scalardl-envoy" rollout to finish: 2 of 3 updated r
 deployment "prod-scalardl-envoy" successfully rolled out
 ```
 
-Notes that you will received a slack notification if activated
+Note that you will receive a slack notification if it is activated.
 
 ```
 [FIRING:1] EnvoyClusterDegraded - warning

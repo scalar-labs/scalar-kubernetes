@@ -1,10 +1,10 @@
 # What you might want to check on a regular basis
 
-Most of the components deployed by scalar-k8s are self-healing with the help of the managed k8s services and k8s self-healing capability. There are also configured alerts that occur when some unexpected behavior happens. Thus, there shouldn't be so many things to do day by day for running a service with scalar-k8s. However, it is recommended to check the status of a system on a regular basis to see if everything is working fine. Here is the list of things you might want to do on a basis.
+Most of the components deployed by scalar-k8s are self-healing with the help of the managed k8s services and k8s self-healing capability. There are also configured alerts that occur when some unexpected behavior happens. Thus, there shouldn't be so many things to do day by day for running a service with scalar-k8s. However, it is recommended to check the status of a system on a regular basis to see if everything is working fine. Here is the list of things you might want to do on a regular basis.
 
 ## Kubernetes
 
-### Check Scalar DL pods
+### Check if Pods are all healthy statues
 
 ```console
 $ kubectl get po -o wide
@@ -20,9 +20,9 @@ prod-scalardl-ledger-55d96b74f8-q4xmr        1/1     Running     0          3h57
 
 What to check:
 
-* Pods are correctly in states of `Running` status
-* Pods didn't restarted, check RESTARTS column
-* Pods are correctly distributed on the different nodes
+* `STATUS` is all `Running`
+* `RESTARTS` number is all 0
+* Pods are evenly distributed on the different nodes
 
 ### Check Fluent bit Pods
 
@@ -63,7 +63,7 @@ What to check:
 * Pods didn't restarted, check RESTARTS column
 * Pods are correctly distributed on the different nodes
 
-### Check the Nodes status
+### Check if Nodes are all healthy statuses
 
 ```console
 $ kubectl get nodes -o wide
@@ -76,9 +76,9 @@ aks-scalardlpool-34802672-vmss000002   Ready    agent   5h32m   v1.16.10   10.42
 
 What to check:
 
-* check if the status are `Ready`
+* `STATUS` is all `Ready`
 
-### Check if there is any events on Kubernetes
+### Check if there is any event on Kubernetes
 
 ```console
 $ kubectl get event -o wide --all-namespaces
@@ -91,32 +91,30 @@ See the guide [How to access](./KubernetesMonitorGuide.md#how-to-access)
 
 ### Check the Prometheus Targets
 
-the target are the endpoint which Prometheus check to collect the metrics for each components
+[The targets](http://localhost:9090/targets) are the endpoints that Prometheus check to collect the metrics for each component.
 
-Available [Here](http://localhost:9090/targets)
 
-Important:
+What to check:
 
-- monitoring/prod-scalardl-envoy-metrics should be always green, otherwise It indicate a problem on the envoy pods
-- monitoring/fluent-bit-logging-metrics hould be always green, otherwise It indicate a problem on the fluentbit pods
+- monitoring/prod-scalardl-envoy-metrics should be always green otherwise It indicates a problem on the envoy pods
+- monitoring/fluent-bit-logging-metrics should be always green otherwise It indicates a problem on the fluentbit pods
 
 ### Check the Prometheus Rules
 
-Check if the rules for EnvoyAlerts and LedgerAlerts are in state `OK` and no error.
+Check if [the rules](http://localhost:9090/rules) for EnvoyAlerts and LedgerAlerts are in `OK` states and thee is no error.
 
-Available [Here](http://localhost:9090/rules)
 
 ### Check the Grafana for Envoy Proxy
 
-Go on grafana and check `Envoy Proxy` dashboard, look for any anomaly on the graph
+Go on Grafana and check `Envoy Proxy` dashboard, look for any anomaly on the graph.
 
 ### Check the Grafana for Scalar DLT Response
 
-Go on grafana and check `Scalar DLT Response` dashboard, look for any anomaly on the graph
+Go on Grafana and check `Scalar DLT Response` dashboard, look for any anomaly on the graph.
 
-### Other Dashboard to check
+### Other dashboards to check
 
-Go on grafana and check the list below dashboard, look for any anomaly on the graph
+Go on Grafana and check the following dashboard, look for any anomaly on the graph.
 
 * Kubernetes / Compute Resources / Cluster
 * Kubernetes / Compute Resources / Namespace (Workloads)

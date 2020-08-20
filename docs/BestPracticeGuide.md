@@ -11,7 +11,7 @@ If the tool needs to be upgraded for some reason, please review the change with 
 
 Always keep the same version between kubectl and kubernetes to ensure full compatibility.
 
-## Anything that are not recommended
+## Don't `helm delete` or `kubectl delete`
 
 - Helm delete command, avoid using helm delete <release_name> for Scalar DL as it will stop the production.
 - Kubectl delete nodes command, as I will remove the node from kubernetes but not the cloud providers
