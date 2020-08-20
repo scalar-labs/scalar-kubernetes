@@ -1,6 +1,6 @@
 # Scalar DL Operation Guide
 
-This document explains operation for Scalar DL that can be made
+This document explains operation for Scalar DL that can be made to restore default state
 
 ## How to force restart a Scalar DL pods
 
