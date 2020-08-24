@@ -4,10 +4,14 @@ This document explains operation for Scalar DL that can be made to restore defau
 
 ## How to force restart a Scalar DL pods
 
+### In which case
+
 Rolling out an application can be use to:
 
 * replace pod on new node installed
 * redistribute pods to all available nodes
+
+### How to do it
 
 Get the list of applications that can be rolled out.
 
