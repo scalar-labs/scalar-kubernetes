@@ -10,12 +10,6 @@ variable "kubernetes_cluster" {
   description = "Custom definition kubernetes properties that include name of the cluster, kubernetes version, etc.."
 }
 
-variable "kubernetes_cluster_availability_zones" {
-  type        = list(string)
-  default     = []
-  description = "Select the available zone for the kubernetes cluster or leave empty if the datacenter does not support AZs"
-}
-
 variable "kubernetes_default_node_pool" {
   type        = map
   default     = {}
