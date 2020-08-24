@@ -6,10 +6,10 @@ This document explains operation for Scalar DL that can be made to restore defau
 
 Rolling out an application can be use to:
 
-* to replace pod on new node installed
-* re distribute the pod to all available node
+* replace pod on new node installed
+* redistribute pods to all available nodes
 
-Get the list of application that can be rollout
+Get the list of applications that can be rolled out.
 
 ```console
 $ kubectl get deployments.apps
