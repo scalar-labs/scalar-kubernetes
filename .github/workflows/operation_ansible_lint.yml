@@ -4,14 +4,14 @@ on:
     branches:
       - master
     paths:
-      - operation/*.yml
-      - operation/roles/**
+      - playbooks/*.yml
+      - playbooks/roles/**
   push:
     branches:
       - master
     paths:
-      - operation/*.yml
-      - operation/roles/**
+      - playbooks/*.yml
+      - playbooks/roles/**
 
 jobs:
   ansible-lint:
@@ -22,5 +22,5 @@ jobs:
     - name: Lint Ansible Playbook
       uses: ansible/ansible-lint-action@master
       with:
-        targets: "operation/*.yml"
+        targets: "playbooks/*.yml"
         args: ""

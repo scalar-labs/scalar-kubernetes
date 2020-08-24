@@ -1,8 +1,6 @@
 # Scalar Kubernetes
 
-Scalar Kubernetes is a set of Terraform modules, Kubernetes manifest files, and Ansible scripts that can be used to orchestrate a Scalar DLT network in a cloud environment. The Terraform modules are mainly used to create Cassandra nodes and a Kubernetes cluster.
-
-The manifest files are used to deploy stateless Scalar DL containers such as scalar-ledger and Envoy on the Kubernetes cluster. The Ansible scripts are used to install required tools such as kubectl on bastion and manage the Kubernetes applications.
+Scalar Kubernetes is a set of Terraform modules, Helm charts, and Ansible playbooks that can be used to orchestrate a Scalar DLT network in a cloud environment. The Terraform modules are mainly used to create Cassandra nodes and a Kubernetes cluster. The Helm charts are used to deploy stateless Scalar DL containers such as scalar-ledger and Envoy on the Kubernetes cluster. The Ansible playbooks are used to install required tools such as kubectl on bastion and manage the Kubernetes applications.
 
 Note that the current version only supports the deployment of a single Scalar DLT cluster in Azure. It does *NOT* support multi-cluster Scalar DLT deployment, where multiple ledgers are managed independently through Scalar DM and other cloud providers.
 
@@ -18,17 +16,21 @@ Note that the current version only supports the deployment of a single Scalar DL
 
 To get started with simple deployment, please follow [the getting started guide](docs/GettingStarted.md). This guide will cover how to build an environment with the tool.
 
-## Project Overview
+## Repository Overview
 
-The repo is divided into two sections, modules, operation.
+The repo is divided into three components, Terraform modules, Helm charts, and Ansible playbooks.
 
-### [Modules](./modules)
+### [Terraform modules](./modules)
 
-The modules directory is where the terraform modules are located. Most of the terraform modules are related to [scalar-terraform](https://github.com/scalar-labs/scalar-terraform); only the Kubernetes module is maintained in this project.
+The `modules` directory contains a set of Terraform modules to deploy the infrastructure e.g: Network, Cassandra, Monitor, and Kubernetes cluster. Those modules basically configure parameters and delegate actual creation to the terraform modules defined in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform)
 
-### [Operation](./operation)
+### [Charts](./charts)
 
-The operation directory contains Ansible Playbooks and Kubernetes manifests to help you install and deploy pods on the Kubernetes cluster.
+The `charts` directory contains Helm charts to deploy Scalar DL on the Kubernetes cluster.
+
+### [Playbooks](./playbooks)
+
+The `playbooks` directory contains Ansible playbooks to help you to install and deploy pods on the Kubernetes cluster.
 
 ## Future Work
 

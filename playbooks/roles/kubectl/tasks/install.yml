@@ -1,0 +1,11 @@
+---
+- name: Download and install binary on the admin server
+  get_url:
+    url: "{{ kubectl_url }}"
+    dest: "{{ kubectl_path }}"
+    checksum: "sha256:{{ kubectl_url_checksum_sha256 }}"
+
+- name: Set permissions for kubectl
+  file:
+    path: "{{ kubectl_path }}"
+    mode: 0755

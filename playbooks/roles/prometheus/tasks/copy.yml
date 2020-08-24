@@ -1,0 +1,13 @@
+---
+- name: Create folder on remote server
+  file:
+    path: "{{ remote_directory }}/helm/crds"
+    state: directory
+    mode: 0755
+
+- name: Template file on remote server
+  template:
+    src: prometheus-custom-values.yaml.j2
+    dest: "{{ remote_directory }}/helm/prometheus-custom-values.yaml"
+    mode: 0644
+    remote_src: no
