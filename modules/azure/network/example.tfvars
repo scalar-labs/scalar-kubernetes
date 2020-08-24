@@ -2,6 +2,8 @@ name = "example-k8s-azure" # maximum of 82 characters
 
 region = "japaneast"
 
+# locations = ["1","2","3"]
+
 public_key_path = "./example_key.pub"
 
 private_key_path = "./example_key"

@@ -3,6 +3,11 @@ variable "name" {}
 
 variable "region" {}
 
+variable "locations" {
+  type    = list(string)
+  default = []
+}
+
 variable "public_key_path" {}
 
 variable "private_key_path" {}

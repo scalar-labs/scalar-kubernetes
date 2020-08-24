@@ -38,6 +38,10 @@ output "region" {
   value = module.network.region
 }
 
+output "locations" {
+  value = module.network.locations
+}
+
 output "user_name" {
   value = module.network.user_name
 }
