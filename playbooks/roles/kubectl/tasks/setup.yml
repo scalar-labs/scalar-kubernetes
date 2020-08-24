@@ -4,14 +4,14 @@
   file:
     path: "/home/{{ ansible_user }}/.kube"
     state: directory
-    mode: '0755'
+    mode: 0755
 
 - name: Copy the kube_config into kubectl bastion
   become: no
   copy:
     src: "{{ kubectl_local_config_directory }}"
     dest: "/home/{{ ansible_user }}/.kube/config"
-    mode: '0644'
+    mode: 0644
 
 - name: Check if kubectl completion exists on admin server
   stat:

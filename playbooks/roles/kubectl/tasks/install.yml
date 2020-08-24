@@ -8,4 +8,4 @@
 - name: Set permissions for kubectl
   file:
     path: "{{ kubectl_path }}"
-    mode: '0755'
+    mode: 0755

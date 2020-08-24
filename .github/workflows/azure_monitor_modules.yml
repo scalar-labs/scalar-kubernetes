@@ -4,15 +4,15 @@ on:
     branches:
       - master
     paths:
-      - examples/azure/monitor/**
+      - modules/azure/monitor/**
   push:
     branches:
       - master
     paths:
-      - examples/azure/monitor/**
+      - modules/azure/monitor/**
 defaults:
   run:
-    working-directory: ./examples/azure/monitor
+    working-directory: ./modules/azure/monitor
 jobs:
   terraform:
     name: Terraform

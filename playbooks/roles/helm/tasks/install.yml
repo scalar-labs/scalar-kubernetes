@@ -10,13 +10,13 @@
     src: /tmp/helm.tar.gz
     dest: /tmp
     copy: no
-    mode: "0644"
+    mode: 0644
 
 - name: Copy helm binary to $PATH
   copy:
     src: /tmp/linux-amd64/helm
     dest: "{{ helm_path }}"
-    mode: "0755"
+    mode: 0755
     remote_src: yes
 
 - name: Clean /tmp/helm.tar.gz
@@ -30,4 +30,4 @@
 - name: Set permissions for helm binary
   file:
     path: "{{ helm_path }}"
-    mode: "0755"
+    mode: 0755

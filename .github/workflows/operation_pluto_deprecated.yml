@@ -4,12 +4,12 @@ on:
     branches:
       - master
     paths:
-      - operations/**
+      - playbooks/**
   push:
     branches:
       - master
     paths:
-      - operations/**
+      - playbooks/**
 
 jobs:
   pluto:
@@ -27,5 +27,5 @@ jobs:
         echo "::add-path::$GITHUB_WORKSPACE/bin"
         chmod +x $GITHUB_WORKSPACE/bin/pluto
     
-    - name: Run pluto on operations folder
-      run: pluto detect-files -d operations/
+    - name: Run pluto on playbooks folder
+      run: pluto detect-files -d playbooks/

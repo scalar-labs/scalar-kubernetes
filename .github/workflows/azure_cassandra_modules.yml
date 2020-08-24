@@ -1,18 +1,18 @@
-name: Terraform test for Network module of Azure Example
+name: Terraform test for Cassandra module of Azure Example
 on:
   pull_request:
     branches:
       - master
     paths:
-      - examples/azure/network/**
+      - modules/azure/cassandra/**
   push:
     branches:
       - master
     paths:
-      - examples/azure/network/**
+      - modules/azure/cassandra/**
 defaults:
   run:
-    working-directory: ./examples/azure/network
+    working-directory: ./modules/azure/cassandra
 jobs:
   terraform:
     name: Terraform
@@ -41,4 +41,3 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate -no-color
-

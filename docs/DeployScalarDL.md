@@ -37,7 +37,7 @@ It is now ready to deploy Scalar DL to the k8s cluster.
 
 ```console
 $ cd ${SCALAR_K8S_HOME}
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operations/playbook-deploy-scalardl.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-scalardl.yml
 PLAY [Deploy Scalar Ledger and Envoy in Kubernetes] *****************************************************************************************************************************************************************************************************
 
 TASK [scalardl : Create directory on remote server] *****************************************************************************************************************************************************************************************************
@@ -106,7 +106,7 @@ The default values are describe in here:
 
 * [scalardl](../charts/stable/scalardl/README.md)
 
-Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operations/playbook-deploy-scalardl.yml`
+Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-scalardl.yml`
 
 ### How to increase the number of Envoy Pod
 

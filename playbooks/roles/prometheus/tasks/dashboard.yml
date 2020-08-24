@@ -3,13 +3,13 @@
   file:
     path: "{{ remote_directory }}/manifests/grafana"
     state: directory
-    mode: '0755'
+    mode: 0755
 
 - name: Copy grafana json file on remote server
   copy:
     src: files/{{ item }}
     dest: "{{ remote_directory }}/manifests/grafana/{{ item }}"
-    mode: '0644'
+    mode: 0644
     remote_src: no
   loop:
   - envoy.json
