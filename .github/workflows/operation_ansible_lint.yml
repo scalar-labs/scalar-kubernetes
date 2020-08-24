@@ -4,14 +4,14 @@ on:
     branches:
       - master
     paths:
-      - operation/*.yml
-      - operation/roles/**
+      - operations/*.yml
+      - operations/roles/**
   push:
     branches:
       - master
     paths:
-      - operation/*.yml
-      - operation/roles/**
+      - operations/*.yml
+      - operations/roles/**
 
 jobs:
   ansible-lint:
