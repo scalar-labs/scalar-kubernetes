@@ -1,8 +1,8 @@
 # Scalar Kubernetes
 
-Scalar Kubernetes is a set of Terraform modules, Kubernetes Helm charts, and Ansible scripts that can be used to orchestrate a Scalar DLT network in a cloud environment. The Terraform modules are mainly used to create Cassandra nodes and a Kubernetes cluster.
+Scalar Kubernetes is a set of Terraform modules, Kubernetes Helm charts, and Ansible playbooks that can be used to orchestrate a Scalar DLT network in a cloud environment. The Terraform modules are mainly used to create Cassandra nodes and a Kubernetes cluster.
 
-The Helm charts are used to deploy stateless Scalar DL containers such as scalar-ledger and Envoy on the Kubernetes cluster. The Ansible scripts are used to install required tools such as kubectl on bastion and manage the Kubernetes applications.
+The Helm charts are used to deploy stateless Scalar DL containers such as scalar-ledger and Envoy on the Kubernetes cluster. The Ansible playbooks are used to install required tools such as kubectl on bastion and manage the Kubernetes applications.
 
 Note that the current version only supports the deployment of a single Scalar DLT cluster in Azure. It does *NOT* support multi-cluster Scalar DLT deployment, where multiple ledgers are managed independently through Scalar DM and other cloud providers.
 
@@ -20,19 +20,19 @@ To get started with simple deployment, please follow [the getting started guide]
 
 ## Repository Overview
 
-The repo is divided into three sections, Terraform Examples, Helm charts and operations.
+The repo is divided into three components, Terraform modules, Helm charts, and operations.
 
-### [Terraform Examples](./examples)
+### [Terraform modules](./examples)
 
 The examples directory contains a set of Terraform modules to deploy the infrastructure e.g: Network, Cassandra, Monitor, and Kubernetes cluster. Those modules basically configure parameters and delegate actual creation to the terraform modules defined in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform)
 
 ### [Charts](./charts)
 
-The `charts` directory contains helm charts to deploy Scalar DL.
+The `charts` directory contains helm charts to deploy Scalar DL on the Kubernetes cluster.
 
 ### [Operations](./operations)
 
-The `operations` directory contains Ansible Playbooks and Kubernetes manifests to help you install and deploy pods on the Kubernetes cluster.
+The `operations` directory contains Ansible Playbooks to help you to install and deploy pods on the Kubernetes cluster.
 
 ## Future Work
 
