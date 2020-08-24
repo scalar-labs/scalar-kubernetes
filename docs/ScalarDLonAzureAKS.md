@@ -182,7 +182,7 @@ You can get some useful information about your deployments, such as a bastion pu
 ### Network
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/example/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/azure/network
 $ terraform output
 bastion_ip = bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com
 bastion_provision_id = 2467232388962733384
@@ -218,7 +218,7 @@ user_name = centos
 ### Cassandra
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/example/azure/cassandra
+$ cd ${SCALAR_K8S_HOME}/modules/azure/cassandra
 $ terraform output
 cassandra_provision_ids = [
   "4019088576544490630",
@@ -232,7 +232,7 @@ cassandra_start_on_initial_boot = false
 ### How to access instances
 
 ```
-$ cd ${SCALAR_K8S_HOME}/example/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/azure/network
 
 # Generate SSH config to make it easy to access backend resources
 $ terraform output ssh_config > ssh.cfg
@@ -254,7 +254,7 @@ $ ssh -F ssh.cfg monitor-1.internal.scalar-labs.com
 You need to export the `kube_config` from terraform and after find `server` line and replace with `https://localhost:7000` . finally copy into `~/.kube/config`
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
 $ terraform output kube_config
 ```
 
@@ -286,7 +286,7 @@ users:
 The following command will generate a `ssh.cfg` with `LocalForward` to access the Kubernetes API from your local machine.
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
 $ terraform output k8s_ssh_config
 Host *
   UserKnownHostsFile /dev/null
@@ -307,7 +307,7 @@ Host 10.*
 ```
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
 $ terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/ssh.cfg
 ```
 

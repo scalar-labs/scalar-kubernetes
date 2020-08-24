@@ -22,7 +22,7 @@ The repo is divided into three components, Terraform modules, Helm charts, and o
 
 ### [Terraform modules](./modules)
 
-The examples directory contains a set of Terraform modules to deploy the infrastructure e.g: Network, Cassandra, Monitor, and Kubernetes cluster. Those modules basically configure parameters and delegate actual creation to the terraform modules defined in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform)
+The modules directory contains a set of Terraform modules to deploy the infrastructure e.g: Network, Cassandra, Monitor, and Kubernetes cluster. Those modules basically configure parameters and delegate actual creation to the terraform modules defined in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform)
 
 ### [Charts](./charts)
 
