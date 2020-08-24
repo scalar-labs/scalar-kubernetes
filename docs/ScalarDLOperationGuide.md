@@ -2,6 +2,18 @@
 
 This document explains operation for Scalar DL that can be made to restore default state
 
+## How to upgrade Scalar DL
+
+To apply a configuration modification from `scalardl-custom-values.yaml` and `schema-loading-custom-values.yaml`, or new release, please follow this steps
+
+Update the local repository `SCALAR_K8S_HOME` and re-apply the deployment
+
+```console
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operations/playbook-deploy-scalardl.yml
+```
+
+More information will be available at each release.
+
 ## How to force restart a Scalar DL pods
 
 ### In which case
