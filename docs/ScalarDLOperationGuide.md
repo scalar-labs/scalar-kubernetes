@@ -18,7 +18,7 @@ More information will be available at each release.
 
 ### In which case
 
-Rolling out an application can be use to:
+Force restart might be required when you want to:
 
 * replace pod on new node installed
 * redistribute pods to all available nodes
