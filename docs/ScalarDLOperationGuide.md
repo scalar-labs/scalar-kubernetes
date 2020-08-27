@@ -4,7 +4,9 @@ This document explains operation for Scalar DL that can be made to restore defau
 
 ## How to upgrade Scalar DL
 
-To apply a configuration modification from `scalardl-custom-values.yaml` and `schema-loading-custom-values.yaml`, or new release, please follow this steps
+### Steps
+
+When you want to apply the changes of `scalardl-custom-values.yaml` or `schema-loading-custom-values.yaml`, please update them in your local repository `SCALAR_K8S_HOME` and execute the following command.
 
 Update the local repository `SCALAR_K8S_HOME` and re-apply the deployment
 
