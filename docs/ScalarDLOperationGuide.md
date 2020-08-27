@@ -9,7 +9,7 @@ To apply a configuration modification from `scalardl-custom-values.yaml` and `sc
 Update the local repository `SCALAR_K8S_HOME` and re-apply the deployment
 
 ```console
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operations/playbook-deploy-scalardl.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-scalardl.yml
 ```
 
 More information will be available at each release.
