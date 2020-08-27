@@ -8,7 +8,6 @@ This document explains operation for Scalar DL that can be made to restore defau
 
 When you want to apply the changes of `scalardl-custom-values.yaml` or `schema-loading-custom-values.yaml`, please update them in your local repository `SCALAR_K8S_HOME` and execute the following command.
 
-Update the local repository `SCALAR_K8S_HOME` and re-apply the deployment
 
 ```console
 $ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-scalardl.yml
