@@ -11,7 +11,7 @@ If the tool needs to be upgraded for some reason, please review the change with 
 
 Always keep the same version between kubectl and kubernetes to ensure full compatibility.
 
-## Don't `helm delete` or `kubectl delete`
+## Don't `helm delete` or `kubectl delete` for nodes
 
 `helm delete` should not be done especially in a production environment since it removes completely the application.
 `kubectl delete` node should be avoided as well since it will remove a specified node from a Kubernetes cluster but it might not be noticeable by Cloud providers.
