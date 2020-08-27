@@ -22,7 +22,7 @@ Force restart might be required when you want to:
 * replace pod on new node installed
 * redistribute pods to all available nodes
 
-### How to do it
+### Steps
 
 Get the list of applications that can be rolled out.
 
