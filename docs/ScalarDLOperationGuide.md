@@ -16,7 +16,6 @@ More information will be available at each release.
 
 ## How to force restart a Scalar DL pods
 
-### In which case
 
 Force restart might be required when you want to:
 
