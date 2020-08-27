@@ -7,7 +7,7 @@ This guide shows recommended practices of operation with our Scalar Kubernetes.
 Different versions could produce different results so it is recommended to use the same version if possible.
 If the tool needs to be upgraded for some reason, please review the change with extra care.
 
-## Use the same version for kubectl and kubernetes.
+## Use the same version for kubectl and kubernetes
 
 Always keep the same version between kubectl and kubernetes to ensure full compatibility.
 

@@ -8,7 +8,6 @@ This document explains operation for Scalar DL that can be made to restore defau
 
 When you want to apply the changes of `scalardl-custom-values.yaml` or `schema-loading-custom-values.yaml`, please update them in your local repository `SCALAR_K8S_HOME` and execute the following command.
 
-
 ```console
 $ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-scalardl.yml
 ```
@@ -16,7 +15,6 @@ $ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-
 More information will be available at each release.
 
 ## How to force restart a Scalar DL pods
-
 
 Force restart might be required when you want to:
 
@@ -67,7 +65,7 @@ Waiting for deployment "prod-scalardl-envoy" rollout to finish: 2 of 3 updated r
 deployment "prod-scalardl-envoy" successfully rolled out
 ```
 
-Note that you will receive a slack notification if it is activated.
+Note that you will receive a slack notification if it is activated during the pod rollout.
 
 ```
 [FIRING:1] EnvoyClusterDegraded - warning

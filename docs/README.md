@@ -6,3 +6,7 @@
 * [Prepare bastion tool](./PrepareBastionTool.md)
 * [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md)
 * [Kubernetes Monitor Guide](./K8sLogCollectionGuide.md)
+* [Regular Check](./RegularCheck.md)
+* [Scalar DL Operation Guide](./ScalarDLOperationGuide.md)
+* [Cloud Privileges for scalar-k8s](./CloudPrivileges.md)
+* [Recommended Practices of Operation with Scalar Kubernetes](./BestPracticeGuide.md)
