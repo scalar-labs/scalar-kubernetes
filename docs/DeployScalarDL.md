@@ -5,8 +5,8 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 ## Requirements
 
 * Have completed the [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
-* An authority to pull `scalarlabs/scalar-ledger` docker repository.
-  * `scalar-ledger` is available to only our partners and customers at the moment.
+* An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories.
+  * `scalar-ledger` and `scalardl-schema-loader-cassandra` are available to only our partners and customers at the moment.
 
 Note that the Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [Terraform module](../../docs/README.md)
 
@@ -37,7 +37,7 @@ It is now ready to deploy Scalar DL to the k8s cluster.
 
 ```console
 $ cd ${SCALAR_K8S_HOME}
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-scalardl.yml
 PLAY [Deploy Scalar Ledger and Envoy in Kubernetes] *****************************************************************************************************************************************************************************************************
 
 TASK [scalardl : Create directory on remote server] *****************************************************************************************************************************************************************************************************
@@ -107,7 +107,7 @@ The default values are describe in here:
 * [scalardl](../charts/stable/scalardl/README.md)
 * [schema-loading](../charts/stable/schema-loading/README.md)
 
-Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml`
+Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-scalardl.yml`
 
 ### How to increase the number of Envoy Pod
 

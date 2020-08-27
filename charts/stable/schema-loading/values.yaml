@@ -13,9 +13,9 @@ cassandra:
 
   image:
     # cassandra.image.repository -- Docker image
-    repository: scalarlabs/scalar-ledger
+    repository: scalarlabs/scalardl-schema-loader-cassandra
     # cassandra.image.tag -- Docker tag
-    version: 2.0.7
+    version: 1.0.0
     # cassandra.image.pullPolicy -- Specify a imagePullPolicy
     pullPolicy: IfNotPresent
 

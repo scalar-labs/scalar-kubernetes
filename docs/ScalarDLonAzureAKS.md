@@ -127,8 +127,8 @@ $ terraform output kube_config > ${SCALAR_K8S_CONFIG_DIR}/kube_config
 
 # Setup bastion for Kubernetes
 $ cd ${SCALAR_K8S_HOME}
-$ export ANSIBLE_CONFIG=${SCALAR_K8S_HOME}/operation/ansible.cfg
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-install-tools.yml
+$ export ANSIBLE_CONFIG=${SCALAR_K8S_HOME}/playbooks/ansible.cfg
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-install-tools.yml
 ```
 
 Please refer to [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) for more information.
@@ -141,7 +141,7 @@ How to deploy Prometheus metrics server, Grafana data visualization server, and 
 $ cd ${SCALAR_K8S_HOME}
 
 # Deploy prometheus operator in Kubernetes
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-prometheus.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-prometheus.yml
 ```
 
 Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more information.
@@ -152,16 +152,16 @@ Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more
 $ cd ${SCALAR_K8S_HOME}
 
 # Deploy fluentbit to collect log from Kubernetes
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-fluentbit.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-fluentbit.yml
 ```
 
 Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for more information.
 
 ### Create Scalar DL and Envoy resources
 
-You need an authority to pull `scalarlabs/scalar-ledger` docker repository. `scalar-ledger`. (Note that it is available to only our partners and customers at the moment.)
+You need an authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories. (Note that they are available to only our partners and customers at the moment.)
 
-You also need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as environment variables or set the values directly in the `${SCALAR_K8S_HOME}/operation/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
+You also need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as environment variables or set the values directly in the `${SCALAR_K8S_HOME}/playbooks/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
 ```
 $ cd ${SCALAR_K8S_HOME}
@@ -171,7 +171,7 @@ $ export DOCKERHUB_USER=<user>
 $ export DOCKERHUB_ACCESS_TOKEN=<token>
 
 # Deploy Scalar DL and Envoy resources
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini operation/playbook-deploy-scalardl.yml
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-scalardl.yml
 ```
 
 Please refer to [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDL.md) for more information like: add more pod for envoy or change resource.
@@ -183,7 +183,7 @@ You can get some useful information about your deployments, such as a bastion pu
 ### Network
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/example/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/azure/network
 $ terraform output
 bastion_ip = bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com
 bastion_provision_id = 2467232388962733384
@@ -219,7 +219,7 @@ user_name = centos
 ### Cassandra
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/example/azure/cassandra
+$ cd ${SCALAR_K8S_HOME}/modules/azure/cassandra
 $ terraform output
 cassandra_provision_ids = [
   "4019088576544490630",
@@ -233,7 +233,7 @@ cassandra_start_on_initial_boot = false
 ### How to access instances
 
 ```
-$ cd ${SCALAR_K8S_HOME}/example/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/azure/network
 
 # Generate SSH config to make it easy to access backend resources
 $ terraform output ssh_config > ssh.cfg
@@ -255,7 +255,7 @@ $ ssh -F ssh.cfg monitor-1.internal.scalar-labs.com
 You need to export the `kube_config` from terraform and after find `server` line and replace with `https://localhost:7000` . finally copy into `~/.kube/config`
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
 $ terraform output kube_config
 ```
 
@@ -287,7 +287,7 @@ users:
 The following command will generate a `ssh.cfg` with `LocalForward` to access the Kubernetes API from your local machine.
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
 $ terraform output k8s_ssh_config
 Host *
   UserKnownHostsFile /dev/null
@@ -308,7 +308,7 @@ Host 10.*
 ```
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/example/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
 $ terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/ssh.cfg
 ```
 
