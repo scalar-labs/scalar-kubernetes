@@ -162,7 +162,8 @@ You need an authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalard
 
 You also need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as environment variables or set the values directly in the `${SCALAR_K8S_HOME}/playbooks/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
-If you are using a different internal domain name than `internal.scalar-labs.com`, please follow the extra step [Use a different internal domain
+If you use a different internal domain name from the default `internal.scalar-labs.com`, please follow [the extra step](./DeployScalarDL.md#use-a-different-internal-domain) before applying the playbook below.
+
 
 ```
 $ cd ${SCALAR_K8S_HOME}
