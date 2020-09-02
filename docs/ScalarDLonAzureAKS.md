@@ -6,6 +6,7 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 
 * Terraform >= 0.12.x
 * Ansible >= 2.9
+* Python lib jmespath >= latest (`pip install jmespath`)
 * Azure CLI
 * ssh-agent with a private key
 
