@@ -21,7 +21,7 @@ Force restart might be required when you want to redistribute pods to available 
 
 ### Steps
 
-Get the list of applications that can be rolled out.
+Get the list of pods that can be rolled out.
 
 ```console
 $ kubectl get deployments.apps
