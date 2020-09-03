@@ -10,6 +10,8 @@ This example will deploy a simple Scalar DL environment in the Japaneast region 
 * Azure CLI
 * ssh-agent with a private key
 
+You also need to have enough permissions to deploy the Kubernetes cluster with Terraform. Please see [Cloud Privileges for scalar-k8s](./CloudPrivileges.md#Azure) for more detail.
+
 ## Architecture
 
 ![image](images/architecture-aks.png)
