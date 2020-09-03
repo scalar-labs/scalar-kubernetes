@@ -16,7 +16,7 @@ More information will be available at each release.
 
 ## How to force restart a Scalar DL pods
 
-Force restart might be required when you want to:
+Force restart might be required when you want to redistribute pods to available nodes evenly.
 
 * replace pod on new node installed
 * redistribute pods to all available nodes
