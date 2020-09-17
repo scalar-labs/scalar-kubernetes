@@ -1,10 +1,9 @@
-scalardl
-========
+# scalardl
 
 Implementation scalardl.
 Current chart version is `1.0.0`
 
-## Chart Values
+## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -47,10 +46,10 @@ Current chart version is `1.0.0`
 | ledger.prometheusRule.namespace | string | `"monitoring"` | which namespace prometheus is located. by default monitoring |
 | ledger.replicaCount | int | `3` | number of replicas to deploy |
 | ledger.resources | object | `{}` | resources allowed to the pod |
-| ledger.scalarLedgerConfiguration.cassandraHost | string | `"cassandra"` |  |
-| ledger.scalarLedgerConfiguration.cassandraPassword | string | `"cassandra"` |  |
-| ledger.scalarLedgerConfiguration.cassandraPort | int | `9042` |  |
-| ledger.scalarLedgerConfiguration.cassandraUsername | string | `"cassandra"` |  |
+| ledger.scalarLedgerConfiguration.dbContactPoints | string | `"cassandra"` |  |
+| ledger.scalarLedgerConfiguration.dbContactPort | int | `9042` |  |
+| ledger.scalarLedgerConfiguration.dbPassword | string | `"cassandra"` |  |
+| ledger.scalarLedgerConfiguration.dbUsername | string | `"cassandra"` |  |
 | ledger.scalarLedgerConfiguration.ledgerLogLevel | string | `"INFO"` |  |
 | ledger.scalarLedgerConfiguration.replicationFactor | int | `3` |  |
 | ledger.securityContext | object | `{}` | Setting security context at the pod applies those settings to all containers in the pod |

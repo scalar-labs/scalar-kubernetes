@@ -106,10 +106,10 @@ ledger:
   replicaCount: 3
 
   scalarLedgerConfiguration:
-    cassandraHost: cassandra
-    cassandraPort: 9042
-    cassandraUsername: cassandra
-    cassandraPassword: cassandra
+    dbContactPoints: cassandra
+    dbContactPort: 9042
+    dbUsername: cassandra
+    dbPassword: cassandra
     ledgerLogLevel: INFO
     replicationFactor: 3
 

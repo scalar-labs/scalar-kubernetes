@@ -55,8 +55,8 @@ ledger:
     - name: reg-docker-secrets
 
   scalarLedgerConfiguration:
-    cassandraHost: cassandra-lb.internal.scalar-labs.com
-    
+    dbContactPoints: cassandra-lb.internal.scalar-labs.com
+
   prometheusRule:
     enabled: true
 
