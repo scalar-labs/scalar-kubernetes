@@ -22,6 +22,12 @@ variable "kubernetes_scalar_apps_pool" {
   description = "Custom definition kubernetes scalar apps node pools, same as default_node_pool"
 }
 
+variable "enable_cosmosdb_service_endpoint" {
+  type        = bool
+  default     = false
+  description = "Whether to enable the Cosmos DB service endpoint"
+}
+
 variable "custom_tags" {
   type    = map
   default = {}
