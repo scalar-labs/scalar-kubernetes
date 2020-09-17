@@ -31,7 +31,7 @@ kubernetes_scalar_apps_pool = {
   # cluster_auto_scaling_max_count = "6"
 }
 
-# enable_cosmosdb_service_endpoint = false
+# use_cosmosdb = false
 
 custom_tags = {
   # "environment" = "example"
