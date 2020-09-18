@@ -46,6 +46,8 @@ spec:
             value: "{{ .Values.ledger.scalarLedgerConfiguration.dbUsername }}"
           - name: SCALAR_DB_PASSWORD
             value: "{{ .Values.ledger.scalarLedgerConfiguration.dbPassword }}"
+          - name: SCALAR_DB_STORAGE
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.dbStorage }}"
           - name: SCALAR_DL_LEDGER_LOG_LEVEL
             value: "{{ .Values.ledger.scalarLedgerConfiguration.ledgerLogLevel }}"
           livenessProbe:

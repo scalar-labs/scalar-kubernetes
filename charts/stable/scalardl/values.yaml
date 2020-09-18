@@ -110,6 +110,7 @@ ledger:
     dbContactPort: 9042
     dbUsername: cassandra
     dbPassword: cassandra
+    dbStorage: cassandra
     ledgerLogLevel: INFO
     replicationFactor: 3
 
