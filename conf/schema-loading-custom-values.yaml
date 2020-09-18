@@ -6,3 +6,9 @@ cassandra:
   username: cassandra
   password: cassandra
   replicationFactor: 3
+
+cosmosdb:
+  enabled: false
+
+  contactPoints: ''
+  password: ''

@@ -21,3 +21,21 @@ cassandra:
 
   # cassandra.imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
   imagePullSecrets: [name: reg-docker-secrets]
+
+cosmosdb:
+  enabled: false
+
+  contactPoints: ''
+  password: ''
+  baseResourceUnit: 400
+
+  image:
+    # cassandra.image.repository -- Docker image
+    repository: scalarlabs/scalardl-schema-loader
+    # cassandra.image.tag -- Docker tag
+    version: 1.0.0
+    # cassandra.image.pullPolicy -- Specify a imagePullPolicy
+    pullPolicy: IfNotPresent
+
+  # cassandra.imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
+  imagePullSecrets: [name: reg-docker-secrets]
