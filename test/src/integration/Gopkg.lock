@@ -10,7 +10,7 @@
   version = "v0.66.0"
 
 [[projects]]
-  digest = "1:25ed2dd21b496aabbe961c018a3c21ac9021bcc3125fdfaf804726f45ebfd7f7"
+  digest = "1:7ac35379087e5ec87aa2e3b6a55348b3d2e686935a00bbbe6e70e759a7233ec8"
   name = "github.com/aws/aws-sdk-go"
   packages = [
     "aws",
@@ -53,6 +53,7 @@
     "private/protocol/query",
     "private/protocol/query/queryutil",
     "private/protocol/rest",
+    "private/protocol/restjson",
     "private/protocol/restxml",
     "private/protocol/xml/xmlutil",
     "service/acm",
@@ -63,11 +64,13 @@
     "service/ecs",
     "service/iam",
     "service/kms",
+    "service/lambda",
     "service/rds",
     "service/s3",
     "service/s3/internal/arn",
     "service/s3/s3iface",
     "service/s3/s3manager",
+    "service/secretsmanager",
     "service/sns",
     "service/sqs",
     "service/ssm",
@@ -233,7 +236,7 @@
   version = "v0.7.0"
 
 [[projects]]
-  digest = "1:3b3a285e6aa7ce2dd9c4cd8417c42ca40035fd1e2f823f54261ad99101589be6"
+  digest = "1:b5f12663755caf09de5bf82a5c42984c20399361c35de11eaa60b2cbdc246ba1"
   name = "github.com/gruntwork-io/terratest"
   packages = [
     "modules/aws",
@@ -250,10 +253,11 @@
     "modules/ssh",
     "modules/terraform",
     "modules/test-structure",
+    "modules/testing",
   ]
   pruneopts = "UT"
-  revision = "ef405f088c69e1dc5913c8026daa10efc33d9283"
-  version = "v0.15.13"
+  revision = "9a13cdb207a7572058b667264612e5edbb3f1fda"
+  version = "v0.28.15"
 
 [[projects]]
   digest = "1:eba10af56a904e7d797ccbdca4a6fae4029537b0118b6582f9f93e025b86af2a"
@@ -262,14 +266,6 @@
   pruneopts = "UT"
   revision = "cd55aeac72a19c6d5826061d5125d72b252a12eb"
   version = "v0.3.11"
-
-[[projects]]
-  digest = "1:870d441fe217b8e689d7949fef6e43efbc787e50f200cb1e70dbca9204a1d6be"
-  name = "github.com/inconshreveable/mousetrap"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
-  version = "v1.0"
 
 [[projects]]
   digest = "1:bb81097a5b62634f3e9fec1014657855610c82d19b9a40c17612e32651e35dca"
@@ -347,19 +343,19 @@
   version = "v1.2.0"
 
 [[projects]]
-  digest = "1:b36a0ede02c4c2aef7df7f91cbbb7bb88a98b5d253509d4f997dda526e50c88c"
+  digest = "1:2ee0f15eb0fb04f918db7c2dcf39745f40d69f798ef171610a730e8a56aaa4fd"
   name = "github.com/russross/blackfriday"
   packages = ["."]
   pruneopts = "UT"
-  revision = "05f3235734ad95d0016f6a23902f06461fcf567a"
-  version = "v1.5.2"
+  revision = "d3b5b032dc8e8927d31a5071b56e14c89f045135"
+  version = "v2.0.1"
 
 [[projects]]
-  digest = "1:f6adcf4df6c030a53a14a8fdbb3fade7cac3d014ff78a4e0de500b4c0cf5154f"
-  name = "github.com/spf13/cobra"
+  digest = "1:9421f6e9e28ef86933e824b5caff441366f2b69bb281085b9dca40e1f27a1602"
+  name = "github.com/shurcooL/sanitized_anchor_name"
   packages = ["."]
   pruneopts = "UT"
-  revision = "a684a6d7f5e37385d954dd3b5a14fc6912c6ab9d"
+  revision = "7bfe4c7ecddb3666a94b053b422cdd8f5aaa3615"
   version = "v1.0.0"
 
 [[projects]]
@@ -720,19 +716,13 @@
   pruneopts = "UT"
   revision = "386e588352a49a5c8dc7632348278569d4f57419"
 
-[[projects]]
-  digest = "1:0eb0e54e287f561fa804eba0640e99c857606aa47c04c0a41ce6e395e0ea3b7a"
-  name = "k8s.io/kubernetes"
-  packages = ["pkg/kubectl/generate"]
-  pruneopts = "UT"
-  revision = "e2a822d9f3c2fdb5c9bfbe64313cf9f657f0a725"
-  version = "v1.15.12"
-
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
     "github.com/gruntwork-io/terratest/modules/logger",
+    "github.com/gruntwork-io/terratest/modules/shell",
+    "github.com/gruntwork-io/terratest/modules/ssh",
     "github.com/gruntwork-io/terratest/modules/terraform",
     "github.com/gruntwork-io/terratest/modules/test-structure",
     "github.com/stretchr/testify/assert",
