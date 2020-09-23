@@ -2,15 +2,12 @@
 
 
 [[projects]]
-  digest = "1:c24cf61717273a2331529a7ff524dc0598584816837056f56f4a12ee15dbff6a"
+  digest = "1:6fa8b886634cec12375d8a9187a01f297a19f7ea8e8eb8b1935d39f9f24e32cc"
   name = "github.com/gruntwork-io/terratest"
-  packages = [
-    "modules/logger",
-    "modules/testing",
-  ]
+  packages = ["modules/logger"]
   pruneopts = "UT"
-  revision = "9a13cdb207a7572058b667264612e5edbb3f1fda"
-  version = "v0.28.15"
+  revision = "ef405f088c69e1dc5913c8026daa10efc33d9283"
+  version = "v0.15.13"
 
 [solve-meta]
   analyzer-name = "dep"
