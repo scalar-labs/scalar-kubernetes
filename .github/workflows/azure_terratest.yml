@@ -1,0 +1,72 @@
+name: Integration-test-with-terratest-for-Azure-Kubernetes
+
+on:
+  schedule:
+    - cron: 0 15 * * *
+
+jobs:
+  terratest:
+    name: Terratest
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      TF_VERSION: 0.12.26
+      DOCKERHUB_USER: scalartest
+      DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: autero1/action-terraform@v0.1.0
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Download scalardl client sdk
+        run: |
+          curl -L https://github.com/scalar-labs/scalardl-java-client-sdk/archive/v${SCALARDL_JAVA_CLIENT_SDK_VERSION}.tar.gz | tar xvzf -
+          mv ./scalardl-java-client-sdk-${SCALARDL_JAVA_CLIENT_SDK_VERSION} ./scalardl-java-client-sdk
+        env:
+          SCALARDL_JAVA_CLIENT_SDK_VERSION: 2.0.3
+        working-directory: ./test/src/integration
+
+      - name: Set up GO
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13.5
+        id: go
+
+      - name: Create ssh key
+        run: |
+          ssh-keygen -N "" -t rsa -f test_key <<<y
+          chmod 600 test_key
+        working-directory: ./test/modules
+
+      - name: Install terratest modules and run terratest
+        run: |
+          export GOPATH=$(pwd)
+          export GOBIN=${GOPATH}/bin
+          export PATH=${PATH}:${GOBIN}
+          eval `ssh-agent`
+          ssh-add ./modules/test_key
+          mkdir -p ${GOBIN}
+          curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+          cd ${GITHUB_WORKSPACE}/test/src/modules && dep ensure
+          cd ${GITHUB_WORKSPACE}/test/src/integration && dep ensure
+          go test -run TestEndToEnd -timeout 120m -args -directory="../../modules/azuredeploy/"
+        working-directory: ./test
+
+      - name: Slack Notification
+        if: failure()
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_CHANNEL: eng-notification
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: ${{ job.status }}
+          SLACK_TITLE: Integration test for Azure Kubernetes
+          SLACK_USERNAME: github-actions[bot]
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
