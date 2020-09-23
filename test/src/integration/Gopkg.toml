@@ -8,7 +8,7 @@
 
 [[override]]
   name = "github.com/russross/blackfriday"
-  version = "2.0.1"
+  version = "1.5.2"
 
 [prune]
   go-tests = true
