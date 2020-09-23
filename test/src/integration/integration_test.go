@@ -56,6 +56,7 @@ func TestEndToEnd(t *testing.T) {
 	test_structure.RunTestStage(t, "ansible", func() {
 		logger.Logf(t, "Run Ansible playbooks")
 		runAnsiblePlaybooks(t)
+		time.Sleep(120 * time.Second)
 	})
 
 	test_structure.RunTestStage(t, "validate", func() {
