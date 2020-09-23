@@ -3,6 +3,9 @@ name: Integration-test-with-terratest-for-Azure-Kubernetes
 on:
   schedule:
     - cron: 0 15 * * *
+  pull_request:
+    branches:
+      - master
 
 jobs:
   terratest:
@@ -37,7 +40,7 @@ jobs:
       - name: Set up GO
         uses: actions/setup-go@v1
         with:
-          go-version: 1.13.5
+          go-version: 1.13.10
         id: go
 
       - name: Create ssh key
