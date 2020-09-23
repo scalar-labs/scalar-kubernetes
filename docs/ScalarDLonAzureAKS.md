@@ -44,7 +44,7 @@ az login
 ```
 # Please update `/path/to/local-repository` before running the command.
 $ export SCALAR_K8S_HOME=/path/to/local-repository
-$ cd ${SCALAR_K8S_HOME}/examples/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/azure/network
 
 # Generate a test key-pair
 $ ssh-keygen -b 2048 -t rsa -f ./example_key -q -N ""
@@ -65,7 +65,7 @@ Note that the current version uses [the network module](https://github.com/scala
 ### Create Cassandra resources
 
 ```
-$ cd ${SCALAR_K8S_HOME}/examples/azure/cassandra
+$ cd ${SCALAR_K8S_HOME}/modules/azure/cassandra
 
 # Create the cassandra cluster
 $ terraform init
@@ -77,7 +77,7 @@ Note that the current version uses [the cassandra module](https://github.com/sca
 ### Create Kubernetes cluster
 
 ```
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
 
 # Create the Kubernetes cluster
 $ terraform init
@@ -91,7 +91,7 @@ For more information about the variable in `example.tfvars`, please refer to [ku
 The Scalar deployment tools include a Prometheus metrics server, Grafana data visualization server, and Alertmanager server for cassandra cluster, cassy, and bastion server
 
 ```
-$ cd ${SCALAR_K8S_HOME}/examples/azure/monitor
+$ cd ${SCALAR_K8S_HOME}/modules/azure/monitor
 
 # Create the monitor server for cassandra modules and log collection
 $ terraform init
@@ -120,11 +120,11 @@ $ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-
 
 ```
 # Create inventory for ansible
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
 $ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
 
 # Retrieve kube_config for setup kubectl
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
 $ terraform output kube_config > ${SCALAR_K8S_CONFIG_DIR}/kube_config
 
 # Setup bastion for Kubernetes
@@ -199,8 +199,8 @@ location = East US
 network_cidr = 10.42.0.0/16
 network_id = /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk
 network_name = example-k8s-azure-fpjzfyk
-private_key_path = /path/to/local-repository/scalar-k8s/examples/azure/network/example_key
-public_key_path = /path/to/local-repository/scalar-k8s/examples/azure/network/example_key.pub
+private_key_path = /path/to/local-repository/scalar-k8s/modules/azure/network/example_key
+public_key_path = /path/to/local-repository/scalar-k8s/modules/azure/network/example_key.pub
 ssh_config = Host *
 User centos
 UserKnownHostsFile /dev/null
