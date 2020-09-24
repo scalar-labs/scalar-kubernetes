@@ -1,0 +1,46 @@
+{{- if .Values.schemaLoading.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "schema-loading.fullname" . }}
+  labels:
+    {{- include "schema-loading.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "schema-loading.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.schemaLoading.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+      - name: schema-import
+        image: "{{ .Values.schemaLoading.image.repository }}:{{ .Values.schemaLoading.image.version }}"
+        imagePullPolicy: "{{ .Values.schemaLoading.image.pullPolicy }}"
+        {{- if eq .Values.schemaLoading.database "cassandra" }}
+        env: # for scalarlabs/scalardl-schema-loader-cassandra image
+        - name: CASSANDRA_HOST
+          value: "{{ .Values.schemaLoading.contactPoints }}"
+        - name: CASSANDRA_PORT
+          value: "{{ .Values.schemaLoading.contactPort }}"
+        - name: CASSANDRA_USERNAME
+          value: "{{ .Values.schemaLoading.username }}"
+        - name: CASSANDRA_PASSWORD
+          value: "{{ .Values.schemaLoading.password }}"
+        - name: CASSANDRA_REPLICATION_FACTOR
+          value: "{{ .Values.schemaLoading.replicationFactor }}"
+        {{- else if eq .Values.schemaLoading.database "cosmos" }}
+        args: # for scalarlabs/scalardl-schema-loader image
+        - "--cosmos"
+        - "-h"
+        - "{{ .Values.schemaLoading.contactPoints }}"
+        - "-p"
+        - "{{ .Values.schemaLoading.password }}"
+        - "-r"
+        - "{{ .Values.schemaLoading.cosmosBaseResourceUnit }}"
+        {{- end }}
+      restartPolicy: Never
+  backoffLimit: 0
+{{- end }}
