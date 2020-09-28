@@ -1,7 +1,7 @@
 # scalardl
 
 Implementation scalardl.
-Current chart version is `1.0.0`
+Current chart version is `1.1.0`
 
 ## Values
 
@@ -49,6 +49,7 @@ Current chart version is `1.0.0`
 | ledger.scalarLedgerConfiguration.dbContactPoints | string | `"cassandra"` |  |
 | ledger.scalarLedgerConfiguration.dbContactPort | int | `9042` |  |
 | ledger.scalarLedgerConfiguration.dbPassword | string | `"cassandra"` |  |
+| ledger.scalarLedgerConfiguration.dbStorage | string | `"cassandra"` |  |
 | ledger.scalarLedgerConfiguration.dbUsername | string | `"cassandra"` |  |
 | ledger.scalarLedgerConfiguration.ledgerLogLevel | string | `"INFO"` |  |
 | ledger.scalarLedgerConfiguration.replicationFactor | int | `3` |  |
