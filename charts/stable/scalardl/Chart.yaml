@@ -2,7 +2,7 @@ apiVersion: v2
 name: scalardl
 description: Implementation scalardl.
 type: application
-version: 1.0.0
+version: 1.1.0
 appVersion: 1.0.0
 deprecated: false
 icon: https://scalar-labs.com/wp-content/themes/scalar/assets/img/logo_scalar.svg
