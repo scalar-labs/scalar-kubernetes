@@ -118,7 +118,7 @@ ledger:
     # ledger.image.repository -- Docker image
     repository: scalarlabs/scalar-ledger
     # ledger.image.tag -- Docker tag
-    version: 2.0.7
+    version: 2.0.8
     # ledger.image.pullPolicy -- Specify a imagePullPolicy
     pullPolicy: IfNotPresent
 
