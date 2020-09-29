@@ -1,8 +1,8 @@
 name: Integration-test-with-terratest-for-Azure-Kubernetes
 
 on:
-  # schedule:
-  #   - cron: 0 15 * * *
+  schedule:
+    - cron: 0 15 * * *
   pull_request:
     branches:
       - master
