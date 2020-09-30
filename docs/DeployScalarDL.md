@@ -6,7 +6,7 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 
 * Have completed the [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
 * An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories.
-  * `scalar-ledger` and `scalardl-schema-loader-cassandra` are available to only our partners and customers at the moment.
+  * `scalar-ledger`, `scalardl-schema-loader-cassandra` and `scalardl-schema-loader` are available to only our partners and customers at the moment.
 
 Note that the Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [Terraform module](../../docs/README.md)
 
@@ -29,6 +29,37 @@ Copy from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`
 
 ```console
 $ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
+```
+
+### Using Cosmos DB Storage
+
+Scalar DL uses Cassandra as a backend storage by default. However, Cosmos DB is also supported if your infrastructure is on Azure.
+
+To configure Scalar DL to work with Cosmos DB, `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml` file needs to be updated to reflect the information from the Cosmos DB deployment as described below.
+
+Get the output from the `cosmosdb` module:
+
+```console
+$ cd ${SCALAR_K8S_HOME}/modules/azure/cosmosdb
+$ terraform output
+cosmosdb_account_endpoint = https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
+cosmosdb_account_primary_master_key = ...
+cosmosdb_account_secondary_master_key = ...
+```
+
+And open `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`, change the database to `cosmos`. Then put the endpoint URL and the primary master key from `terraform output` above as a `contactPoint` and a `password` respectively.
+
+```yaml
+schemaLoading:
+  enabled: true
+  database: cosmos
+  contactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
+  password: ...
+  cosmosBaseResourceUnit: "400"
+  image:
+    repository: scalarlabs/scalardl-schema-loader
+    version: 1.0.0
+    pullPolicy: IfNotPresent
 ```
 
 ## Deploy Scalar DL

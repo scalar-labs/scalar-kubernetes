@@ -200,33 +200,7 @@ You need an authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalard
 
 You also need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as environment variables or set the values directly in the `${SCALAR_K8S_HOME}/playbooks/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
-* If you use Cosmos DB, you need to update the `schema-loading-custom-values.yaml` file to reflect the information from the Cosmos DB deployment.
-
-    Get the output from the `cosmosdb` module.
-
-    ```console
-    $ cd ${SCALAR_K8S_HOME}/modules/azure/cosmosdb
-    $ terraform output
-    cosmosdb_account_endpoint = https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
-    cosmosdb_account_primary_master_key = ...
-    cosmosdb_account_secondary_master_key = ...
-    ```
-
-    Open `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`, change the database to `cosmos`. Then put the endpoint URL and the primary master key from `terraform output` above as a `contactPoint` and a `password` respectively.
-
-    ```yaml
-    schemaLoading:
-      enabled: true
-      database: cosmos
-      contactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
-      password: ...
-      cosmosBaseResourceUnit: "400"
-      image:
-        repository: scalarlabs/scalardl-schema-loader
-        version: 1.0.0
-        pullPolicy: IfNotPresent
-    ```
-
+* If you use Cosmos DB, you need to update the `schema-loading-custom-values.yaml`. Please follow [the extra steps](./DeployScalarDL.md#using-cosmos-db-storage) before applying the playbook below.
 * If you use a different internal domain name from the default `internal.scalar-labs.com`, please follow [the extra step](./DeployScalarDL.md#use-a-different-internal-domain) before applying the playbook below.
 
 
