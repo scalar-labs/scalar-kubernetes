@@ -1,3 +1,7 @@
+output "node_pool_subnet_id" {
+  value = module.kubernetes.node_pool_subnet_id
+}
+
 output "kube_config" {
   value       = module.kubernetes.kube_config
   description = "kubectl configuration e.g: ~/.kube/config"
