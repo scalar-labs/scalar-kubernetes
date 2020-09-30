@@ -41,10 +41,10 @@ az login
 
 ### Create network resources
 
-```
+```console
 # Please update `/path/to/local-repository` before running the command.
 $ export SCALAR_K8S_HOME=/path/to/local-repository
-$ cd ${SCALAR_K8S_HOME}/examples/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/azure/network
 
 # Generate a test key-pair
 $ ssh-keygen -b 2048 -t rsa -f ./example_key -q -N ""
@@ -64,8 +64,8 @@ Note that the current version uses [the network module](https://github.com/scala
 
 ### Create Cassandra resources
 
-```
-$ cd ${SCALAR_K8S_HOME}/examples/azure/cassandra
+```console
+$ cd ${SCALAR_K8S_HOME}/modules/azure/cassandra
 
 # Create the cassandra cluster
 $ terraform init
@@ -76,8 +76,8 @@ Note that the current version uses [the cassandra module](https://github.com/sca
 
 ### Create Kubernetes cluster
 
-```
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes
+```console
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
 
 # Create the Kubernetes cluster
 $ terraform init
@@ -90,8 +90,8 @@ For more information about the variable in `example.tfvars`, please refer to [ku
 
 The Scalar deployment tools include a Prometheus metrics server, Grafana data visualization server, and Alertmanager server for cassandra cluster, cassy, and bastion server
 
-```
-$ cd ${SCALAR_K8S_HOME}/examples/azure/monitor
+```console
+$ cd ${SCALAR_K8S_HOME}/modules/azure/monitor
 
 # Create the monitor server for cassandra modules and log collection
 $ terraform init
@@ -105,7 +105,7 @@ Note that the current version uses [the monitor module](https://github.com/scala
 Please decide which directory you want to use to store configuration files for accessing the k8s cluster.
 It is recommended to be set outside of the repo since it should be separately managed per project.
 
-```
+```console
 # Please update `/path/to/local-repository-config-dir` before running the command.
 $ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
 ```
@@ -118,13 +118,13 @@ $ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-
 
 ### Setup bastion for accessing Kubernetes cluster
 
-```
+```console
 # Create inventory for ansible
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
 $ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
 
 # Retrieve kube_config for setup kubectl
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
 $ terraform output kube_config > ${SCALAR_K8S_CONFIG_DIR}/kube_config
 
 # Setup bastion for Kubernetes
@@ -139,7 +139,7 @@ Please refer to [How to install Kubernetes CLI and Helm on the bastion](./Prepar
 
 How to deploy Prometheus metrics server, Grafana data visualization server, and Alertmanager server for Kubernetes resource only. Normally, accessing the Grafana server is enough to see the overall system status.
 
-```
+```console
 $ cd ${SCALAR_K8S_HOME}
 
 # Deploy prometheus operator in Kubernetes
@@ -150,7 +150,7 @@ Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more
 
 ### Deploy log collection for Kubernetes resources
 
-```
+```console
 $ cd ${SCALAR_K8S_HOME}
 
 # Deploy fluentbit to collect log from Kubernetes
@@ -168,7 +168,7 @@ You also need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as environment v
 If you use a different internal domain name from the default `internal.scalar-labs.com`, please follow [the extra step](./DeployScalarDL.md#use-a-different-internal-domain) before applying the playbook below.
 
 
-```
+```console
 $ cd ${SCALAR_K8S_HOME}
 
 # export docker secrets for ansible
@@ -199,8 +199,8 @@ location = East US
 network_cidr = 10.42.0.0/16
 network_id = /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/example-k8s-azure-fpjzfyk/providers/Microsoft.Network/virtualNetworks/example-k8s-azure-fpjzfyk
 network_name = example-k8s-azure-fpjzfyk
-private_key_path = /path/to/local-repository/scalar-k8s/examples/azure/network/example_key
-public_key_path = /path/to/local-repository/scalar-k8s/examples/azure/network/example_key.pub
+private_key_path = /path/to/local-repository/scalar-k8s/modules/azure/network/example_key
+public_key_path = /path/to/local-repository/scalar-k8s/modules/azure/network/example_key.pub
 ssh_config = Host *
 User centos
 UserKnownHostsFile /dev/null
@@ -237,7 +237,7 @@ cassandra_start_on_initial_boot = false
 
 ### How to access instances
 
-```
+```console
 $ cd ${SCALAR_K8S_HOME}/modules/azure/network
 
 # Generate SSH config to make it easy to access backend resources
