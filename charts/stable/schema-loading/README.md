@@ -1,19 +1,20 @@
 # schema-loading
 
 Implementation schema loading for scalar-ledger
-Current chart version is `1.0.0`
+Current chart version is `1.1.0`
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| cassandra.contactPoints | string | `"cassandra"` |  |
-| cassandra.contactPort | int | `9042` |  |
-| cassandra.enabled | bool | `true` |  |
-| cassandra.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
-| cassandra.image.repository | string | `"scalarlabs/scalardl-schema-loader-cassandra"` | Docker image |
-| cassandra.image.version | string | `"1.0.0"` |  |
-| cassandra.imagePullSecrets | list | `[{"name":"reg-docker-secrets"}]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
-| cassandra.password | string | `"cassandra"` |  |
-| cassandra.replicationFactor | int | `3` |  |
-| cassandra.username | string | `"cassandra"` |  |
+| schemaLoading.contactPoints | string | `"cassandra"` |  |
+| schemaLoading.contactPort | int | `9042` |  |
+| schemaLoading.database | string | `"cassandra"` |  |
+| schemaLoading.enabled | bool | `true` |  |
+| schemaLoading.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
+| schemaLoading.image.repository | string | `"scalarlabs/scalardl-schema-loader-cassandra"` | Docker image |
+| schemaLoading.image.version | string | `"1.0.0"` |  |
+| schemaLoading.imagePullSecrets | list | `[{"name":"reg-docker-secrets"}]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
+| schemaLoading.password | string | `"cassandra"` |  |
+| schemaLoading.replicationFactor | int | `3` |  |
+| schemaLoading.username | string | `"cassandra"` |  |
