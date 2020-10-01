@@ -29,6 +29,15 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
+      # - uses: actions/setup-python@v2
+      #   with:
+      #     python-version: "3.7"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jmespath
+
       - name: Download scalardl client sdk
         run: |
           curl -L https://github.com/scalar-labs/scalardl-java-client-sdk/archive/v${SCALARDL_JAVA_CLIENT_SDK_VERSION}.tar.gz | tar xvzf -
