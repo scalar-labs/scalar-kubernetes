@@ -112,7 +112,6 @@ ledger:
     dbPassword: cassandra
     dbStorage: cassandra
     ledgerLogLevel: INFO
-    replicationFactor: 3
 
   image:
     # ledger.image.repository -- Docker image
