@@ -46,13 +46,12 @@ Current chart version is `1.1.0`
 | ledger.prometheusRule.namespace | string | `"monitoring"` | which namespace prometheus is located. by default monitoring |
 | ledger.replicaCount | int | `3` | number of replicas to deploy |
 | ledger.resources | object | `{}` | resources allowed to the pod |
-| ledger.scalarLedgerConfiguration.dbContactPoints | string | `"cassandra"` |  |
-| ledger.scalarLedgerConfiguration.dbContactPort | int | `9042` |  |
-| ledger.scalarLedgerConfiguration.dbPassword | string | `"cassandra"` |  |
-| ledger.scalarLedgerConfiguration.dbStorage | string | `"cassandra"` |  |
-| ledger.scalarLedgerConfiguration.dbUsername | string | `"cassandra"` |  |
-| ledger.scalarLedgerConfiguration.ledgerLogLevel | string | `"INFO"` |  |
-| ledger.scalarLedgerConfiguration.replicationFactor | int | `3` |  |
+| ledger.scalarLedgerConfiguration.dbContactPoints | string | `"cassandra"` | The contact points of the database such as hostnames or URLs |
+| ledger.scalarLedgerConfiguration.dbContactPort | int | `9042` | The port number of the contact points |
+| ledger.scalarLedgerConfiguration.dbPassword | string | `"cassandra"` | The password of the database |
+| ledger.scalarLedgerConfiguration.dbStorage | string | `"cassandra"` | The storage of the database: cassandra or cosmos |
+| ledger.scalarLedgerConfiguration.dbUsername | string | `"cassandra"` | The username of the database |
+| ledger.scalarLedgerConfiguration.ledgerLogLevel | string | `"INFO"` | The log level of Scalar ledger |
 | ledger.securityContext | object | `{}` | Setting security context at the pod applies those settings to all containers in the pod |
 | ledger.service.type | string | `"ClusterIP"` | service types in kubernetes |
 | ledger.strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |

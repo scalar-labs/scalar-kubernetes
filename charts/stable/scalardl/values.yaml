@@ -106,11 +106,17 @@ ledger:
   replicaCount: 3
 
   scalarLedgerConfiguration:
+    # ledger.scalarLedgerConfiguration.dbContactPoints -- The contact points of the database such as hostnames or URLs
     dbContactPoints: cassandra
+    # ledger.scalarLedgerConfiguration.dbContactPort -- The port number of the contact points
     dbContactPort: 9042
+    # ledger.scalarLedgerConfiguration.dbUsername -- The username of the database
     dbUsername: cassandra
+    # ledger.scalarLedgerConfiguration.dbPassword -- The password of the database
     dbPassword: cassandra
+    # ledger.scalarLedgerConfiguration.dbStorage -- The storage of the database: cassandra or cosmos
     dbStorage: cassandra
+    # ledger.scalarLedgerConfiguration.ledgerLogLevel -- The log level of Scalar ledger
     ledgerLogLevel: INFO
 
   image:
