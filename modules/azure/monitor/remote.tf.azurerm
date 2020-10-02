@@ -21,3 +21,15 @@ data "terraform_remote_state" "cassandra" {
 
   }
 }
+
+data "terraform_remote_state" "scalardl" {
+  count = contains(var.targets, "scalardl") ? 1 : 0
+
+  backend = "azurerm"
+
+  config = {
+    storage_account_name = "exampletfstate"
+    container_name       = "tfstate"
+    key                  = "scalardl/terraform.tfstate"
+  }
+}
