@@ -2,9 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-cassandra:
-  enabled: true
-
+schemaLoading:
+  database: cassandra
   contactPoints: cassandra
   contactPort: 9042
   username: cassandra
@@ -12,12 +11,12 @@ cassandra:
   replicationFactor: 3
 
   image:
-    # cassandra.image.repository -- Docker image
+    # schemaLoading.image.repository -- Docker image
     repository: scalarlabs/scalardl-schema-loader-cassandra
-    # cassandra.image.tag -- Docker tag
+    # schemaLoading.image.tag -- Docker tag
     version: 1.0.0
-    # cassandra.image.pullPolicy -- Specify a imagePullPolicy
+    # schemaLoading.image.pullPolicy -- Specify a imagePullPolicy
     pullPolicy: IfNotPresent
 
-  # cassandra.imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
+  # schemaLoading.imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
   imagePullSecrets: [name: reg-docker-secrets]
