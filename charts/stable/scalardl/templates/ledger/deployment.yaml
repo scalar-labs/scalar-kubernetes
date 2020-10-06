@@ -39,13 +39,15 @@ spec:
           - containerPort: 50053
           env:
           - name: SCALAR_DB_CONTACT_POINTS
-            value: "{{ .Values.ledger.scalarLedgerConfiguration.cassandraHost }}"
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.dbContactPoints }}"
           - name: SCALAR_DB_CONTACT_PORT
-            value: "{{ .Values.ledger.scalarLedgerConfiguration.cassandraPort }}"
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.dbContactPort }}"
           - name: SCALAR_DB_USERNAME
-            value: "{{ .Values.ledger.scalarLedgerConfiguration.cassandraUsername }}"
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.dbUsername }}"
           - name: SCALAR_DB_PASSWORD
-            value: "{{ .Values.ledger.scalarLedgerConfiguration.cassandraPassword }}"
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.dbPassword }}"
+          - name: SCALAR_DB_STORAGE
+            value: "{{ .Values.ledger.scalarLedgerConfiguration.dbStorage }}"
           - name: SCALAR_DL_LEDGER_LOG_LEVEL
             value: "{{ .Values.ledger.scalarLedgerConfiguration.ledgerLogLevel }}"
           livenessProbe:

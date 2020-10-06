@@ -106,18 +106,24 @@ ledger:
   replicaCount: 3
 
   scalarLedgerConfiguration:
-    cassandraHost: cassandra
-    cassandraPort: 9042
-    cassandraUsername: cassandra
-    cassandraPassword: cassandra
+    # ledger.scalarLedgerConfiguration.dbContactPoints -- The contact points of the database such as hostnames or URLs
+    dbContactPoints: cassandra
+    # ledger.scalarLedgerConfiguration.dbContactPort -- The port number of the contact points
+    dbContactPort: 9042
+    # ledger.scalarLedgerConfiguration.dbUsername -- The username of the database
+    dbUsername: cassandra
+    # ledger.scalarLedgerConfiguration.dbPassword -- The password of the database
+    dbPassword: cassandra
+    # ledger.scalarLedgerConfiguration.dbStorage -- The storage of the database: cassandra or cosmos
+    dbStorage: cassandra
+    # ledger.scalarLedgerConfiguration.ledgerLogLevel -- The log level of Scalar ledger
     ledgerLogLevel: INFO
-    replicationFactor: 3
 
   image:
     # ledger.image.repository -- Docker image
     repository: scalarlabs/scalar-ledger
     # ledger.image.tag -- Docker tag
-    version: 2.0.7
+    version: 2.0.8
     # ledger.image.pullPolicy -- Specify a imagePullPolicy
     pullPolicy: IfNotPresent
 

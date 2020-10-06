@@ -1,10 +1,9 @@
-scalardl
-========
+# scalardl
 
 Implementation scalardl.
-Current chart version is `1.0.0`
+Current chart version is `1.1.0`
 
-## Chart Values
+## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -39,7 +38,7 @@ Current chart version is `1.0.0`
 | ledger.affinity | object | `{}` | the affinity/anti-affinity feature, greatly expands the types of constraints you can express |
 | ledger.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
 | ledger.image.repository | string | `"scalarlabs/scalar-ledger"` | Docker image |
-| ledger.image.version | string | `"2.0.7"` |  |
+| ledger.image.version | string | `"2.0.8"` |  |
 | ledger.imagePullSecrets | list | `[{"name":"reg-docker-secrets"}]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
 | ledger.nodeSelector | object | `{}` | nodeSelector is form of node selection constraint |
 | ledger.podSecurityContext | object | `{}` | PodSecurityContext holds pod-level security attributes and common container settings |
@@ -47,12 +46,12 @@ Current chart version is `1.0.0`
 | ledger.prometheusRule.namespace | string | `"monitoring"` | which namespace prometheus is located. by default monitoring |
 | ledger.replicaCount | int | `3` | number of replicas to deploy |
 | ledger.resources | object | `{}` | resources allowed to the pod |
-| ledger.scalarLedgerConfiguration.cassandraHost | string | `"cassandra"` |  |
-| ledger.scalarLedgerConfiguration.cassandraPassword | string | `"cassandra"` |  |
-| ledger.scalarLedgerConfiguration.cassandraPort | int | `9042` |  |
-| ledger.scalarLedgerConfiguration.cassandraUsername | string | `"cassandra"` |  |
-| ledger.scalarLedgerConfiguration.ledgerLogLevel | string | `"INFO"` |  |
-| ledger.scalarLedgerConfiguration.replicationFactor | int | `3` |  |
+| ledger.scalarLedgerConfiguration.dbContactPoints | string | `"cassandra"` | The contact points of the database such as hostnames or URLs |
+| ledger.scalarLedgerConfiguration.dbContactPort | int | `9042` | The port number of the contact points |
+| ledger.scalarLedgerConfiguration.dbPassword | string | `"cassandra"` | The password of the database |
+| ledger.scalarLedgerConfiguration.dbStorage | string | `"cassandra"` | The storage of the database: cassandra or cosmos |
+| ledger.scalarLedgerConfiguration.dbUsername | string | `"cassandra"` | The username of the database |
+| ledger.scalarLedgerConfiguration.ledgerLogLevel | string | `"INFO"` | The log level of Scalar ledger |
 | ledger.securityContext | object | `{}` | Setting security context at the pod applies those settings to all containers in the pod |
 | ledger.service.type | string | `"ClusterIP"` | service types in kubernetes |
 | ledger.strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |
