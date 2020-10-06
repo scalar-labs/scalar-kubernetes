@@ -1,0 +1,11 @@
+output
+vendor
+*.log
+.vendor
+.DS_Store
+pkg
+bin
+.terraform
+ssh.cfg
+kube_config
+inventory.ini

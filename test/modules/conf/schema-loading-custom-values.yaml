@@ -1,0 +1,8 @@
+cassandra:
+  enabled: true
+
+  contactPoints: cassandra-lb.internal.scalar-labs.com
+  contactPort: 9042
+  username: cassandra
+  password: cassandra
+  replicationFactor: 3

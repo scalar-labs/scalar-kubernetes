@@ -1,0 +1,98 @@
+envoy:
+  replicaCount: 3
+
+  prometheusRule:
+    enabled: true
+
+  serviceMonitor:
+    enabled: true
+
+  service:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "false"
+      service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "k8s_ingress"
+
+  tolerations:
+    - effect: NoSchedule
+      key: kubernetes.io/app
+      operator: Equal
+      value: scalardlpool
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                  - scalardlpool
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - scalar-ledger
+            topologyKey: kubernetes.io/hostname
+          weight: 50
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 300m
+      memory: 328Mi
+
+ledger:
+  replicaCount: 3
+
+  imagePullSecrets:
+    - name: reg-docker-secrets
+
+  scalarLedgerConfiguration:
+    cassandraHost: cassandra-lb.internal.scalar-labs.com
+
+  prometheusRule:
+    enabled: true
+
+  nodeSelector: {}
+
+  tolerations:
+    - effect: NoSchedule
+      key: kubernetes.io/app
+      operator: Equal
+      value: scalardlpool
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                  - scalardlpool
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - scalar-ledger
+            topologyKey: kubernetes.io/hostname
+          weight: 50
+
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+    limits:
+      cpu: 1500m
+      memory: 3Gi
