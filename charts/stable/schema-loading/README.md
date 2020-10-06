@@ -10,7 +10,6 @@ Current chart version is `1.1.0`
 | schemaLoading.contactPoints | string | `"cassandra"` |  |
 | schemaLoading.contactPort | int | `9042` |  |
 | schemaLoading.database | string | `"cassandra"` |  |
-| schemaLoading.enabled | bool | `true` |  |
 | schemaLoading.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
 | schemaLoading.image.repository | string | `"scalarlabs/scalardl-schema-loader-cassandra"` | Docker image |
 | schemaLoading.image.version | string | `"1.0.0"` |  |

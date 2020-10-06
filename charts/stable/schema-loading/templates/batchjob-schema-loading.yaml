@@ -1,4 +1,3 @@
-{{- if .Values.schemaLoading.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -43,4 +42,3 @@ spec:
         {{- end }}
       restartPolicy: Never
   backoffLimit: 0
-{{- end }}
