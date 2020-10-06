@@ -16,3 +16,5 @@ source: ["https://scalardl.readthedocs.io/en/latest/"]
 maintainers:
   - name: Paul Dozancuk
     email: paul.dozancuk@scalar-labs.com
+  - name: Yusuke Morimoto
+    email: yusuke.morimoto@scalar-labs.com
