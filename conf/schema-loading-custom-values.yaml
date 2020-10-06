@@ -1,6 +1,4 @@
 schemaLoading:
-  enabled: true
-
   #
   # Cassandra
   #

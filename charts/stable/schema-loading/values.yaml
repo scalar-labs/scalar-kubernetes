@@ -3,8 +3,6 @@
 # Declare variables to be passed into your templates.
 
 schemaLoading:
-  enabled: true
-
   database: cassandra
   contactPoints: cassandra
   contactPort: 9042
