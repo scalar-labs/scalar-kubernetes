@@ -11,7 +11,7 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes . Aft
 Note that the Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [Terraform module](../../docs/README.md)
 
 ## Preparation
-Prepare environment variables for easy access
+Prepare environment variables for easy access and add docker registry secrets in kubernetes
 
 ```console
 # Please update `/path/to/local-repository` before running the command.
@@ -21,7 +21,7 @@ $ export SCALAR_K8S_HOME=/path/to/local-repository
 $ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
 $ terraform output kube_config > ~/.kube/config
 
-#Create docker registry secrets in kubernetes
+# Create docker registry secrets in kubernetes
 $ kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=<dockerhub-username> --docker-password=<dockerhub-access-token>
 ```
 
