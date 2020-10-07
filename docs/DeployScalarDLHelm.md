@@ -1,4 +1,5 @@
-##Deploy Scalar DL using Helm Chart
+## Deploy Scalar DL using Helm Chart
+
 This document explains how to deploy Scalar Ledger and Envoy on Kubernetes . After following the doc, you will be able to use Scalar Ledger inside Kubernetes.
 
 ## Requirements
@@ -24,7 +25,8 @@ $ terraform output kube_config > ~/.kube/config
 $ kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=<dockerhub-username> --docker-password=<dockerhub-access-token>
 ```
 
-###Installing ScalarDL resoures using Helm chart
+### Installing ScalarDL resoures using Helm chart
+
 To install the chart with release name ``prod``
  ```console
 #Install scalardl and envoy
@@ -35,7 +37,7 @@ $ helm upgrade --install prod charts/stable/scalardl --namespace default -f conf
 $ cd ${SCALAR_K8S_HOME}
 $ helm upgrade --install load-schema charts/stable/schema-loading --namespace default -f conf/schema-loading-custom-values.yaml
 ```
-###Removing ScalarDL from kubernetes cluster
+### Removing ScalarDL from kubernetes cluster
 ```console
 $ cd ${SCALAR_K8S_HOME}
 $ helm delete prod 
