@@ -11,7 +11,7 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes . Aft
 Note that the Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [Terraform module](../../docs/README.md)
 
 ## Preparation
-Prepare environment variables for easy access and add docker registry secrets in kubernetes
+Prepare environment variables for easy access and add docker registry secrets in kubernetes.
 
 ```console
 # Please update `/path/to/local-repository` before running the command.
@@ -36,7 +36,7 @@ $ helm upgrade --install prod charts/stable/scalardl --namespace default -f conf
 $ cd ${SCALAR_K8S_HOME}
 $ helm upgrade --install load-schema charts/stable/schema-loading --namespace default -f conf/schema-loading-custom-values.yaml
 ```
-## Removing Scalar DL resources from Kubernetes 
+## Removing Scalar DL Resources from Kubernetes 
 ```console
 $ cd ${SCALAR_K8S_HOME}
 $ helm delete prod 
