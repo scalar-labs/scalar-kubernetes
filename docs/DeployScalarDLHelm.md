@@ -25,15 +25,15 @@ $ terraform output kube_config > ~/.kube/config
 $ kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=<dockerhub-username> --docker-password=<dockerhub-access-token>
 ```
 
-### Installing ScalarDL resoures using Helm chart
+### Installing ScalarDL resoures in kubernetes cluster using Helm chart
 
 To install the chart with release name ``prod``
  ```console
-#Install scalardl and envoy
+# Install scalardl and envoy
 $ cd ${SCALAR_K8S_HOME}
 $ helm upgrade --install prod charts/stable/scalardl --namespace default -f conf/scalardl-custom-values.yaml
 
-#Load Schema after installation
+# Load Schema after installation
 $ cd ${SCALAR_K8S_HOME}
 $ helm upgrade --install load-schema charts/stable/schema-loading --namespace default -f conf/schema-loading-custom-values.yaml
 ```
