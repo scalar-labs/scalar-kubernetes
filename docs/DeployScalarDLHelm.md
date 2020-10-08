@@ -43,11 +43,11 @@ $ helm install prod --namespace default -f conf/scalardl-custom-values.yaml char
 ## Upgrade Scalar DL 
 
  ```console
-# upgrade schema with new revision
+# upgrade schema release load-schema with new revision
 $ cd ${SCALAR_K8S_HOME}
 $ helm upgrade load-schema charts/stable/schema-loading --namespace default -f conf/schema-loading-custom-values.yaml
 
-# upgrade scalardl with new revision
+# upgrade scalardl release prod with new revision
 $ cd ${SCALAR_K8S_HOME}
 $ helm upgrade prod charts/stable/scalardl --namespace default -f conf/scalardl-custom-values.yaml
 ```
@@ -58,14 +58,13 @@ Note:
 ## Remove Scalar DL 
 
 ```console
-#Remove scalardl with release name prod   
-$ cd ${SCALAR_K8S_HOME}
-$ helm delete prod 
-
-#Remove loaded schema with release name load-schema  
+# Remove loaded schema with release name load-schema  
 $ cd ${SCALAR_K8S_HOME}
 $ helm delete load-schema 
 
+# Remove scalardl with release name prod   
+$ cd ${SCALAR_K8S_HOME}
+$ helm delete prod 
 ```
 
 ## Configuration
