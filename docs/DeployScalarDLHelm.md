@@ -55,14 +55,14 @@ Note:
 
 `helm ls -a` command can be used to list currently installed releases
       
-## Remove Scalar DL 
+## Uninstall Scalar DL 
 
 ```console
-# Remove loaded schema with release name load-schema  
+# Uninstall loaded schema with release name load-schema  
 $ cd ${SCALAR_K8S_HOME}
 $ helm delete load-schema 
 
-# Remove scalardl with release name prod   
+# Uninstall scalardl with release name prod   
 $ cd ${SCALAR_K8S_HOME}
 $ helm delete prod 
 ```
