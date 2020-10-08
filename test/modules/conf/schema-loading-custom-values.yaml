@@ -1,6 +1,5 @@
-cassandra:
-  enabled: true
-
+schemaLoading:
+  database: cassandra
   contactPoints: cassandra-lb.internal.scalar-labs.com
   contactPort: 9042
   username: cassandra
