@@ -66,7 +66,6 @@ $ helm delete load-schema
 $ cd ${SCALAR_K8S_HOME}
 $ helm delete prod 
 ```
-
 ## Configuration
 
 See the [Configurations](../charts/stable/scalardl/README.md) used in the Charts  
