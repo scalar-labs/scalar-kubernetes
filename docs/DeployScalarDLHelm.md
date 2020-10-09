@@ -33,11 +33,11 @@ $ kubectl create secret docker-registry reg-docker-secrets --docker-server=https
 ```console
 # Load Schema for scalar dl install with release name load-schema
 $ cd ${SCALAR_K8S_HOME}
-$ helm install load-schema --namespace default -f conf/schema-loading-custom-values.yaml charts/stable/schema-loading
+$ helm upgrade --install load-schema charts/stable/schema-loading --namespace default -f conf/schema-loading-custom-values.yaml
 
 # Install scalar dl with release name prod
 $ cd ${SCALAR_K8S_HOME}
-$ helm install prod --namespace default -f conf/scalardl-custom-values.yaml charts/stable/scalardl
+$ helm upgrade --install prod charts/stable/scalardl --namespace default -f conf/scalardl-custom-values.yaml
 ```
 
 ## Upgrade Scalar DL 
@@ -45,15 +45,17 @@ $ helm install prod --namespace default -f conf/scalardl-custom-values.yaml char
  ```console
 # upgrade schema release load-schema with new revision
 $ cd ${SCALAR_K8S_HOME}
-$ helm upgrade load-schema charts/stable/schema-loading --namespace default -f conf/schema-loading-custom-values.yaml
+$ helm upgrade --install load-schema charts/stable/schema-loading --namespace default -f conf/schema-loading-custom-values.yaml
 
 # upgrade scalardl release prod with new revision
 $ cd ${SCALAR_K8S_HOME}
-$ helm upgrade prod charts/stable/scalardl --namespace default -f conf/scalardl-custom-values.yaml
+$ helm upgrade --install prod charts/stable/scalardl --namespace default -f conf/scalardl-custom-values.yaml
 ```
 Note: 
 
 `helm ls -a` command can be used to list currently installed releases
+
+`--install` flag will install the release if its not installed or else it will upgrade the revision.
       
 ## Uninstall Scalar DL 
 
@@ -68,5 +70,5 @@ $ helm delete prod
 ```
 ## Configuration
 
-See the [Configurations](../charts/stable/scalardl/README.md) used in the Charts  
+See the [Configurations](../charts/stable/scalardl/README.md#scalardl) used in the Charts  
  
