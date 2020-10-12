@@ -25,18 +25,18 @@ You also need to have enough permissions to deploy the Kubernetes cluster with T
 * 1 Prometheus operator to collect metrics inside Kubernetes
 * 1 FluentBit Pod on each node to collect Kubernetes log
 * DNS Zone for internal host lookup
-* With Cassandra storage option (default):
+* With Cassandra option (default):
   * 3 Cassandra instances
   * 1 Cassy instance
   * 1 Reaper instance
-* With Cosmos DB storage option:
+* With Cosmos DB option:
   * A Cosmos DB Account
 * 1 Bastion instance with a public IP
 * 1 Monitor instance to collect metrics and logs
 
-## Storage Options
+## Database Options
 
-On Azure, there are two options for the backend storage: Cassandra and Cosmos DB. Cassandra is the default. If you choose Cosmos DB, you will need some additional configuration to change the default in the instructions below.
+On Azure, there are two options for the backend database: Cassandra and Cosmos DB. Cassandra is the default. 
 
 ## How to deploy
 
@@ -71,7 +71,7 @@ Note that the current version uses [the network module](https://github.com/scala
 
 ### Create Kubernetes cluster
 
-* If you use the Cosmos DB storage, please update `example.tfvars` to set `use_cosmosdb` to `true` befeore you run `terraform apply`
+* If you use Cosmos DB, please set `use_cosmosdb` to `true` in `example.tfvars` before you run `terraform apply`
 
     ```
     use_cosmosdb = true
@@ -87,7 +87,7 @@ $ terraform apply -var-file example.tfvars
 
 For more information about the variable in `example.tfvars`, please refer to [kubernetes modules](../modules/azure/kubernetes/README.md)
 
-### Create storage resources
+### Create database resources
 
 Deploy either a Cassandra cluster or a Cosmos DB account, depending on your choice.
 
@@ -119,7 +119,7 @@ Note that the current version uses [the cosmosdb module](https://github.com/scal
 
 The Scalar deployment tools include a Prometheus metrics server, Grafana data visualization server, and Alertmanager server for cassandra cluster, cassy, and bastion server
 
-* If you use Cosmos DB, please update `example.tfvars` to remove `cassandra` from `targets` since the monitor module is not able to monitor Cosmos DB.
+* If you use Cosmos DB, please remove `cassandra` from `targets` in `example.tfvars` since the monitor module is not able to monitor Cosmos DB.
 
     ```hcl
     targets = []
