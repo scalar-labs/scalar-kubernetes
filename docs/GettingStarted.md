@@ -1,21 +1,69 @@
 # Getting Started
 
-This document refers to the necessary tool to install in your local machine, and the next steps.
+This document refers to the possible ways Scalar DL can be deployed in kubernetes cluster, 
 
-## Requirements
+## Deploy Scalar DL on Azure AKS
 
-| Name | Version | Mandatory | link |
-|:------|:-------|:----------|:------|
-| Ansible | 2.9 | yes | https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html |
-| Terraform | 0.12.x | yes | https://learn.hashicorp.com/terraform/getting-started/install |
-| Docker | latest | yes | https://docs.docker.com/install/ |
-| Azure CLI | latest | yes | https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest |
-| Kubectl | 1.16.13 | yes | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
-| Helm | 3.2.1 or latest | no | https://helm.sh/docs/intro/install/ |
-| Minikube | latest | no | https://kubernetes.io/docs/setup/learning-environment/minikube/ |
-| jmespath | latest | yes | https://github.com/jmespath/jmespath.py |
+Following steps can guide you to install Scalar DL on Azure AKS  
 
-## Next Steps
+#### Install the Requirements
 
-* [How to Deploy Scalar DL on Azure AKS](./ScalarDLonAzureAKS.md)
-* How to operate a [Cassandra Cluster](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/CassandraOperation.md)
+* [Terraform](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/GettingStarted.md#terraform)
+* [Ansible](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/GettingStarted.md#ansible)
+* [Azure CLI](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/GettingStarted.md#azure-cli-if-using-azure)
+* jmespath `pip install jmespath`
+
+#### [Deploy Scalar DL on Azure AKS](./ScalarDLonAzureAKS.md) 
+
+## Deploy Scalar DL on already created kubernetes cluster
+
+Already have a Kubernetes cluster and need steps to deploy Scalar DL with Helm. You can use the following steps,
+ 
+#### Install the Requirements
+
+### Helm
+* Helm install instructions can be found here: https://helm.sh/docs/intro/install/ 
+* Please use version 3.2.1 or latest
+
+OSX
+
+```console
+brew install helm
+```
+
+Linux 
+
+Download desired version of helm from [here](https://github.com/helm/helm/releases)
+```console
+tar -zxvf helm-v3.2.1-linux-amd64.tar.gz
+sudo cp helm /usr/local/bin/
+```
+### Kubectl 
+
+* Kubectl install instructions can be found here: https://kubernetes.io/docs/tasks/tools/install-kubectl/ 
+* Please use version 1.16.13 
+
+OSX
+
+```console
+brew install kubectl 
+```
+Linux
+
+```console
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.13/bin/linux/amd64/kubectl
+chmod +x kubectl  
+sudo mv kubectl /usr/local/bin/
+```
+
+#### [Deploy Scalar DL with Helm](./DeployScalarDLHelm.md) 
+
+## Deploy Scalar DL on already created kubernetes cluster with Ansible
+
+Already have Kubernetes cluster and need steps to deploy Scalar DL with ansible scripts. You can use the following steps 
+
+#### Install the Requirements
+
+* [Ansible](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/GettingStarted.md#ansible)
+
+#### [Deploy Scalar DL with Ansible](./DeployScalarDL.md)
