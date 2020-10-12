@@ -51,7 +51,6 @@ And open `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`, change th
 
 ```yaml
 schemaLoading:
-  enabled: true
   database: cosmos
   contactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
   password: <PRIMARY_MASTER_KEY>
