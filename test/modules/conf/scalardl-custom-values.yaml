@@ -55,7 +55,13 @@ ledger:
     - name: reg-docker-secrets
 
   scalarLedgerConfiguration:
-    cassandraHost: cassandra-lb.internal.scalar-labs.com
+    dbContactPoints: cassandra-lb.internal.scalar-labs.com
+
+    # dbContactPoints: <Cosmos DB account endpoint>
+    # dbContactPort: null
+    # dbUsername: ""
+    # dbPassword: <Cosmos DB account primary master key>
+    # dbStorage: cosmos
 
   prometheusRule:
     enabled: true
