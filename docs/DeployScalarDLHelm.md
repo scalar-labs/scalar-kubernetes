@@ -31,42 +31,30 @@ $ kubectl create secret docker-registry reg-docker-secrets --docker-server=https
 ## Install Scalar DL
 
 ```console
-# Load Schema for scalar dl install with release name load-schema
+# Load Schema for Scalar DL install with a release name `load-schema`
 $ cd ${SCALAR_K8S_HOME}
 $ helm upgrade --install load-schema charts/stable/schema-loading --namespace default -f conf/schema-loading-custom-values.yaml
 
-# Install scalar dl with release name prod
+# Install Scalar DL with a release name `my-release-scalardl`
 $ cd ${SCALAR_K8S_HOME}
-$ helm upgrade --install prod charts/stable/scalardl --namespace default -f conf/scalardl-custom-values.yaml
-```
-
-## Upgrade Scalar DL 
-
- ```console
-# upgrade schema release load-schema with new revision
-$ cd ${SCALAR_K8S_HOME}
-$ helm upgrade --install load-schema charts/stable/schema-loading --namespace default -f conf/schema-loading-custom-values.yaml
-
-# upgrade scalardl release prod with new revision
-$ cd ${SCALAR_K8S_HOME}
-$ helm upgrade --install prod charts/stable/scalardl --namespace default -f conf/scalardl-custom-values.yaml
+$ helm upgrade --install my-release-scalardl charts/stable/scalardl --namespace default -f conf/scalardl-custom-values.yaml
 ```
 Note: 
 
-`helm ls -a` command can be used to list currently installed releases
-
-`--install` flag will install the release if its not installed or else it will upgrade the revision.
-      
+* The same commands can be used to upgrade the pods.
+* Release name `my-release-scalardl` can be changed as per your convenience. 
+* `helm ls -a` command can be used to list currently installed releases.
+     
 ## Uninstall Scalar DL 
 
 ```console
-# Uninstall loaded schema with release name load-schema  
+# Uninstall loaded schema with a release name 'load-schema'  
 $ cd ${SCALAR_K8S_HOME}
 $ helm delete load-schema 
 
-# Uninstall scalardl with release name prod   
+# Uninstall scalar DL with a release name 'my-release-scalardl'   
 $ cd ${SCALAR_K8S_HOME}
-$ helm delete prod 
+$ helm delete my-release-scalardl 
 ```
 ## Configuration
 
