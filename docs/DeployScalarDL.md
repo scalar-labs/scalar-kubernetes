@@ -35,7 +35,7 @@ $ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-
 
 Scalar DL uses Cassandra as a backend database by default. However, it can optionally use Cosmos DB instead of Cassandra when you deploy on Azure.
 
-To configure Scalar DL to work with Cosmos DB, `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml` file needs to be updated to set the information about a Cosmos DB deployment as described below.
+To configure Scalar DL to work with Cosmos DB, `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml` and `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` files need to be updated to set the information about a Cosmos DB deployment as described below.
 
 First, get `cosmosdb_account_endpoint` and `cosmosdb_account_primary_master_key` from the `cosmosdb` module:
 
@@ -59,6 +59,17 @@ schemaLoading:
     repository: scalarlabs/scalardl-schema-loader
     version: 1.0.0
     pullPolicy: IfNotPresent
+```
+
+Finally, open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and uncomment and update the values of the `scalarLedgerConfiguration`.
+
+```yaml
+  scalarLedgerConfiguration:
+    dbContactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
+    dbContactPort: null
+    dbUsername: ""
+    dbPassword: <PRIMARY_MASTER_KEY>
+    dbStorage: cosmos
 ```
 
 ## Deploy Scalar DL
