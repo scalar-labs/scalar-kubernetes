@@ -1,3 +1,68 @@
+## Deploy ScalarDL on AKS Cluster 
+
+Note that this document assumes a Kubernetes cluster has been already created and you have access to it.
+
+### Decide where to store configuration files for accessing the k8s cluster
+
+Please decide which directory you want to use to store configuration files for accessing the k8s cluster.
+It is recommended to be set outside of the repo since it should be separately managed per project.
+
+```console
+# Please update `/path/to/local-repository` before running the command.
+$ export SCALAR_K8S_HOME=/path/to/local-repository
+# Please update `/path/to/local-repository-config-dir` before running the command.
+$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
+```
+
+Copy from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`
+
+```console
+$ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
+```
+
+### Setup bastion for accessing Kubernetes cluster
+
+```console
+# Create inventory for ansible
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
+$ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
+
+# Retrieve kube_config for setup kubectl
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
+$ terraform output kube_config > ${SCALAR_K8S_CONFIG_DIR}/kube_config
+
+# Setup bastion for Kubernetes
+$ cd ${SCALAR_K8S_HOME}
+$ export ANSIBLE_CONFIG=${SCALAR_K8S_HOME}/playbooks/ansible.cfg
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-install-tools.yml
+```
+
+Please refer to [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) for more information.
+
+### Deploy Prometheus for Kubernetes resources
+
+How to deploy Prometheus metrics server, Grafana data visualization server, and Alertmanager server for Kubernetes resource only. Normally, accessing the Grafana server is enough to see the overall system status.
+
+```console
+$ cd ${SCALAR_K8S_HOME}
+
+# Deploy prometheus operator in Kubernetes
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-prometheus.yml
+```
+
+Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for more information.
+
+### Deploy log collection for Kubernetes resources
+
+```console
+$ cd ${SCALAR_K8S_HOME}
+
+# Deploy fluentbit to collect log from Kubernetes
+$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-fluentbit.yml
+```
+
+Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for more information.
+
 ### Deploy Scalar DL and Envoy resources in Azure AKS Cluster
 
 You need an authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories. (Note that they are available to only our partners and customers at the moment.)
@@ -214,7 +279,3 @@ Warning: Permanently added 'bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.az
 Warning: Permanently added '10.42.40.5' (ECDSA) to the list of known hosts.
 azureuser@aks-default-34802672-vmss000000:~$
 ```
-
-## How to destroy
-
-Don't forget to delete the entire environment with `terraform destroy` for each modules when you are finished.
