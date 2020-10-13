@@ -28,11 +28,11 @@ To Deploy Scalar DL on a Kubernetes cluster you can follow any of following step
 
 ## Install Scalar DL on the Cluster
 
-To deploy ScalarDL on created Kubernetes cluster you can use the Helm [charts](../charts) and use following methods 
+To deploy ScalarDL on created Kubernetes cluster you can use the [Helm charts](../charts) and use following methods 
 
 ### Use Ansible
 
-* [How to deploy Scalar DL using Ansible Scripts on Azure AKS](./ScalarDLonAzureAKS.md) 
+* [How to deploy Scalar DL using Ansible Scripts](./ScalarDLonAzureAKS.md) 
 
 ### Use Helm
 
