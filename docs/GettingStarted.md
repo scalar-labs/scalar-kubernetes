@@ -1,6 +1,6 @@
 # Getting Started
 
-This document refers to the possible ways Scalar DL can be deployed in kubernetes cluster, 
+This document refers to the ways Scalar DL can be deployed in Kubernetes cluster
 
 ## Deploy Scalar DL on Azure AKS
 
@@ -13,12 +13,10 @@ Following steps can guide you to install Scalar DL on Azure AKS
 * [Azure CLI](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/GettingStarted.md#azure-cli-if-using-azure)
 * jmespath `pip install jmespath`
 
-#### [Deploy Scalar DL on Azure AKS](./ScalarDLonAzureAKS.md) 
+#### [Deploy Scalar DL on Azure AKS](./ScalarDLonAzureAKS.md#how-to-deploy-scalar-dl-on-azure-aks) 
 
-## Deploy Scalar DL on already created kubernetes cluster
+## Create a Kubernetes cluster and Install Scalar DL
 
-Already have a Kubernetes cluster and need steps to deploy Scalar DL with Helm. You can use the following steps,
- 
 ### Install the Requirements
 
 #### Helm
@@ -36,7 +34,7 @@ Linux
 Download desired version of helm from [here](https://github.com/helm/helm/releases)
 ```console
 tar -zxvf helm-v3.2.1-linux-amd64.tar.gz
-sudo cp helm /usr/local/bin/
+sudo mv helm /usr/local/bin/
 ```
 #### Kubectl 
 
@@ -55,15 +53,14 @@ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.13/bin/
 chmod +x kubectl  
 sudo mv kubectl /usr/local/bin/
 ```
+#### [Ansible](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/GettingStarted.md#ansible)
 
-#### [Deploy Scalar DL with Helm](./DeployScalarDLHelm.md) 
+#### [Create a Kubernetes cluster using command line tools ](https://kubernetes.io/docs/setup/production-environment/turnkey/aws/)
 
-## Deploy Scalar DL on already created kubernetes cluster with Ansible
+### Deploy Scalar DL on the cluster
 
-Already have Kubernetes cluster and need steps to deploy Scalar DL with ansible scripts. You can use the following steps 
+* [Deploy Scalar DL with Helm](./DeployScalarDLHelm.md) 
 
-### Install the Requirements
+* [Deploy Scalar DL with Ansible](./DeployScalarDL.md#how-to-deploy-scalar-dl-on-kubernetes-with-ansible)
 
-* [Ansible](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/GettingStarted.md#ansible)
 
-#### [Deploy Scalar DL with Ansible](./DeployScalarDL.md#how-to-deploy-scalar-dl-on-kubernetes-with-ansible)
