@@ -20,7 +20,7 @@ To Deploy Scalar DL on a Kubernetes cluster you can follow any of following step
 
 ### AKS
 
-* [How to deploy Kubernetes Cluster and monitor modules on Azure AKS using scalar terraform modules](./ScalarDLonAKSTerraform.md) 
+* [How to deploy Kubernetes Cluster on Azure AKS using scalar terraform modules](./ScalarDLonAKSTerraform.md) 
 
 ### Create a Kubernetes cluster manually 
 
