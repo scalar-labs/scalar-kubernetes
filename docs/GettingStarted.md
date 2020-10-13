@@ -22,7 +22,7 @@ After creating a Kubernetes cluster the next step is to deploy Scalar DL on it.
 
 ## Create a Kubernetes cluster manually 
 
-Scalar DL can also be deployed in your own Kubernetes Cluster using following methods
+Scalar DL can also be deployed on your own Kubernetes Cluster using following methods
 
 First create a Kubernetes Cluster you can refer [here](https://kubernetes.io/docs/setup/production-environment/turnkey/aws/) 
 
