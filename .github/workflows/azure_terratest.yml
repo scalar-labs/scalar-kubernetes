@@ -40,7 +40,7 @@ jobs:
           curl -L https://github.com/scalar-labs/scalardl-java-client-sdk/archive/v${SCALARDL_JAVA_CLIENT_SDK_VERSION}.tar.gz | tar xvzf -
           mv ./scalardl-java-client-sdk-${SCALARDL_JAVA_CLIENT_SDK_VERSION} ./scalardl-java-client-sdk
         env:
-          SCALARDL_JAVA_CLIENT_SDK_VERSION: 2.0.3
+          SCALARDL_JAVA_CLIENT_SDK_VERSION: 2.0.9
         working-directory: ./test/src/integration
 
       - name: Set up GO
