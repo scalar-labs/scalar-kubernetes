@@ -72,6 +72,8 @@ $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
+Please make sure to start all the Cassandra nodes since Cassandra doesn't start on the initial boot by default.
+
 Note that the current version uses [the cassandra module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cassandra) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
 ### Create Kubernetes cluster
