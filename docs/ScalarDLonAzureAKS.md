@@ -1,4 +1,10 @@
-## Deploy ScalarDL on AKS Cluster 
+## Deploy ScalarDL using Ansible on Azure AKS Cluster
+
+This document explains how to deploy Scalar DL on Kubernetes cluster using Ansible Scripts
+
+### Requirements
+
+* Ansible >= 2.9
 
 Note that this document assumes a Kubernetes cluster has been already created and you have access to it.
 
@@ -63,7 +69,7 @@ $ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-
 
 Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for more information.
 
-### Deploy Scalar DL and Envoy resources in Azure AKS Cluster
+### Deploy Scalar DL and Envoy resources on Kubernetes Cluster
 
 You need an authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories. (Note that they are available to only our partners and customers at the moment.)
 

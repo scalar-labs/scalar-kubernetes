@@ -12,7 +12,7 @@ This Document refers to how to orchestrate the deployment of Scalar DL on Kubern
 
 To Deploy Scalar DL on a Kubernetes cluster you can follow any of following steps currently Scalar terraform modules are only available for Azure AKS.   
 
-* Use Scalar Terraform modules to create the resources for installing Scalar DL.
+* Use Scalar Terraform modules to create the resources to install Scalar DL.
 
 * Create Kubernetes cluster manually with command line tools. 
 
@@ -20,7 +20,7 @@ To Deploy Scalar DL on a Kubernetes cluster you can follow any of following step
 
 ### AKS
 
-* [How to deploy Kubernetes Cluster on Azure AKS using scalar terraform modules](./ScalarDLonAKSTerraform.md) 
+* [How to create Kubernetes Cluster on Azure AKS using scalar terraform modules](./ScalarDLonAKSTerraform.md) 
 
 ### Create a Kubernetes cluster manually 
 
@@ -32,8 +32,12 @@ To deploy ScalarDL on created Kubernetes cluster you can use the [Helm charts](.
 
 ### Use Ansible
 
-* [How to deploy Scalar DL using Ansible Scripts](./ScalarDLonAzureAKS.md) 
+* [How to deploy Scalar DL using Ansible Scripts](ScalarDLonAzureAKS.md) 
 
 ### Use Helm
 
 * [How to deploy Scalar DL with Helm](./DeployScalarDLHelm.md)
+
+## Next Steps
+
+* How to operate a [Cassandra Cluster](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/CassandraOperation.md)
