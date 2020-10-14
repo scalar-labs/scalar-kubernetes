@@ -12,6 +12,8 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 * An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories.
   * `scalar-ledger` and `scalardl-schema-loader-cassandra` are available to only our partners and customers at the moment.
 
+* Please make sure all cassandra nodes are started 
+
 Note that this document assumes a Kubernetes cluster has been already created and you have access to it.
 
 ## Preparation
@@ -22,7 +24,7 @@ Prepare environment variables for easy access and add docker registry secrets in
 $ export SCALAR_K8S_HOME=/path/to/local-repository
 
 # Prepare kubeconfig file
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
 $ terraform output kube_config > ~/.kube/config
 
 # Create docker registry secrets in kubernetes
