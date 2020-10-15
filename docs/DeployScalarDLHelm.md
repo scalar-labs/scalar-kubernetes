@@ -63,5 +63,4 @@ $ helm delete my-release-scalardl
 
 ## Configuration
 
-See the [Configurations](../charts/stable/scalardl/README.md#scalardl) used in the Charts  
- 
+See the [Configurations](../charts/stable/scalardl/README.md#scalardl) used in the Charts
