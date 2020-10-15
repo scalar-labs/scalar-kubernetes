@@ -12,9 +12,9 @@ schemaLoading:
 
   image:
     # schemaLoading.image.repository -- Docker image
-    repository: scalarlabs/scalardl-schema-loader-cassandra
+    repository: scalarlabs/scalardl-schema-loader
     # schemaLoading.image.tag -- Docker tag
-    version: 1.0.0
+    version: 1.1.0
     # schemaLoading.image.pullPolicy -- Specify a imagePullPolicy
     pullPolicy: IfNotPresent
 
