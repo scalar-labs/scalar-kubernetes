@@ -41,12 +41,12 @@ $ helm upgrade --install load-schema charts/stable/schema-loading --namespace de
 $ cd ${SCALAR_K8S_HOME}
 $ helm upgrade --install my-release-scalardl charts/stable/scalardl --namespace default -f conf/scalardl-custom-values.yaml
 ```
-Note: 
+Note:
 
 * The same commands can be used to upgrade the pods.
-* Release name `my-release-scalardl` can be changed as per your convenience. 
+* Release name `my-release-scalardl` can be changed as per your convenience.
 * `helm ls -a` command can be used to list currently installed releases.
-     
+
 ## Uninstall Scalar DL 
 
 ```console
