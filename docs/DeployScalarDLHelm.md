@@ -47,16 +47,16 @@ Note:
 * Release name `my-release-scalardl` can be changed as per your convenience.
 * `helm ls -a` command can be used to list currently installed releases.
 
-## Uninstall Scalar DL 
+## Uninstall Scalar DL
 
 ```console
-# Uninstall loaded schema with a release name 'load-schema'  
+# Uninstall loaded schema with a release name 'load-schema'
 $ cd ${SCALAR_K8S_HOME}
-$ helm delete load-schema 
+$ helm delete load-schema
 
 # Uninstall scalar DL with a release name 'my-release-scalardl'   
 $ cd ${SCALAR_K8S_HOME}
-$ helm delete my-release-scalardl 
+$ helm delete my-release-scalardl
 ```
 ## Configuration
 
