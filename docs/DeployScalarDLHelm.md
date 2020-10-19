@@ -15,7 +15,6 @@ The document assumes the following.
 | Helm | 3.2.1 or latest | yes | https://helm.sh/docs/intro/install/ |
 
 
-Note that this document assumes a Kubernetes cluster has been already created and you have access to it.
 
 ## Preparation
 Prepare environment variables for easy access and add docker registry secrets in kubernetes.
