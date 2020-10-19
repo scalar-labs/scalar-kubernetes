@@ -14,7 +14,6 @@ The document assumes the following.
 | Kubectl | 1.16.13 | yes | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
 | Helm | 3.2.1 or latest | yes | https://helm.sh/docs/intro/install/ |
 
-
 * Please make sure all Cassandra nodes are started. 
 
 Note that this document assumes a Kubernetes cluster has been already created and you have access to it.
