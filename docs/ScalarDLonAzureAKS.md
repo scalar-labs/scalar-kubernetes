@@ -25,11 +25,18 @@ You also need to have enough permissions to deploy the Kubernetes cluster with T
 * 1 Prometheus operator to collect metrics inside Kubernetes
 * 1 FluentBit Pod on each node to collect Kubernetes log
 * DNS Zone for internal host lookup
-* 3 Cassandra instances
-* 1 Cassy instance
-* 1 Reaper instance
+* With Cassandra option (default):
+  * 3 Cassandra instances
+  * 1 Cassy instance
+  * 1 Reaper instance
+* With Cosmos DB option:
+  * A Cosmos DB Account
 * 1 Bastion instance with a public IP
 * 1 Monitor instance to collect metrics and logs
+
+## Database Options
+
+On Azure, there are two options for the backend database: Cassandra and Cosmos DB. Cassandra is the default. 
 
 ## How to deploy
 
@@ -62,7 +69,29 @@ $ terraform apply -var-file example.tfvars
 
 Note that the current version uses [the network module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/network) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform).  It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
-### Create Cassandra resources
+### Create Kubernetes cluster
+
+* If you use Cosmos DB, please set `use_cosmosdb` to `true` in `example.tfvars` before you run `terraform apply`
+
+    ```
+    use_cosmosdb = true
+    ```
+
+```
+$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes
+
+# Create the Kubernetes cluster
+$ terraform init
+$ terraform apply -var-file example.tfvars
+```
+
+For more information about the variable in `example.tfvars`, please refer to [kubernetes modules](../modules/azure/kubernetes/README.md)
+
+### Create database resources
+
+Deploy either a Cassandra cluster or a Cosmos DB account, depending on your choice.
+
+#### Cassandra
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/modules/azure/cassandra
@@ -74,21 +103,27 @@ $ terraform apply -var-file example.tfvars
 
 Note that the current version uses [the cassandra module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cassandra) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
-### Create Kubernetes cluster
+#### Cosmos DB
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
 
-# Create the Kubernetes cluster
+# Create Cosmos DB account
 $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-For more information about the variable in `example.tfvars`, please refer to [kubernetes modules](../modules/azure/kubernetes/README.md)
+Note that the current version uses [the cosmosdb module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cosmosdb) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
 ### Create Monitor resources
 
 The Scalar deployment tools include a Prometheus metrics server, Grafana data visualization server, and Alertmanager server for cassandra cluster, cassy, and bastion server
+
+* If you use Cosmos DB, please remove `cassandra` from `targets` in `example.tfvars` since the monitor module is not able to monitor Cosmos DB.
+
+    ```hcl
+    targets = []
+    ```
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/modules/azure/monitor
@@ -165,7 +200,8 @@ You need an authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalard
 
 You also need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as environment variables or set the values directly in the `${SCALAR_K8S_HOME}/playbooks/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
-If you use a different internal domain name from the default `internal.scalar-labs.com`, please follow [the extra step](./DeployScalarDL.md#use-a-different-internal-domain) before applying the playbook below.
+* If you use Cosmos DB, you need to update the `schema-loading-custom-values.yaml`. Please follow [the extra steps](./DeployScalarDL.md#using-cosmos-db-storage) before applying the playbook below.
+* If you use a different internal domain name from the default `internal.scalar-labs.com`, please follow [the extra step](./DeployScalarDL.md#use-a-different-internal-domain) before applying the playbook below.
 
 
 ```console
