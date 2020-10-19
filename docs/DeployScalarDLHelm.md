@@ -14,7 +14,6 @@ The document assumes the following.
 | Kubectl | 1.16.13 | yes | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
 | Helm | 3.2.1 or latest | yes | https://helm.sh/docs/intro/install/ |
 
-* An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories.
   * `scalar-ledger` and `scalardl-schema-loader-cassandra` are available to only our partners and customers at the moment.
 
 * Please make sure all Cassandra nodes are started. 
