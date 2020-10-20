@@ -7,6 +7,7 @@ Current chart version is `1.1.0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| schemaLoading.cassandraReplicationFactor | int | `3` |  |
 | schemaLoading.contactPoints | string | `"cassandra"` |  |
 | schemaLoading.contactPort | int | `9042` |  |
 | schemaLoading.database | string | `"cassandra"` |  |
@@ -15,5 +16,4 @@ Current chart version is `1.1.0`
 | schemaLoading.image.version | string | `"1.1.0"` |  |
 | schemaLoading.imagePullSecrets | list | `[{"name":"reg-docker-secrets"}]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
 | schemaLoading.password | string | `"cassandra"` |  |
-| schemaLoading.replicationFactor | int | `3` |  |
 | schemaLoading.username | string | `"cassandra"` |  |

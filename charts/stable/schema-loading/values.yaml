@@ -8,7 +8,7 @@ schemaLoading:
   contactPort: 9042
   username: cassandra
   password: cassandra
-  replicationFactor: 3
+  cassandraReplicationFactor: 3
 
   image:
     # schemaLoading.image.repository -- Docker image

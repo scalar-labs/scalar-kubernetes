@@ -32,7 +32,7 @@ spec:
         - "-n"
         - "NetworkTopologyStrategy"
         - "-R"
-        - "{{ .Values.schemaLoading.replicationFactor }}"
+        - "{{ .Values.schemaLoading.cassandraReplicationFactor }}"
         {{- else if eq .Values.schemaLoading.database "cosmos" }}
         - "--cosmos"
         - "-r"
