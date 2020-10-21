@@ -16,7 +16,7 @@ schemaLoading:
   # schemaLoading.cassandraReplicationFactor -- The replication factor value of the Cassandra schema. This is a Cassandra specific option.
   cassandraReplicationFactor: 3
   # schemaLoading.cosmosBaseResourceUnit -- The resource unit value of the Cosmos DB schema. This is a Cosmos DB specific option.
-  cosmosBaseResourceUnit: "400"
+  cosmosBaseResourceUnit: 400
 
   image:
     # schemaLoading.image.repository -- Docker image

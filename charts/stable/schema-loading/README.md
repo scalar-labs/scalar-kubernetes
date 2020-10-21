@@ -10,7 +10,7 @@ Current chart version is `1.1.0`
 | schemaLoading.cassandraReplicationFactor | int | `3` | The replication factor value of the Cassandra schema. This is a Cassandra specific option. |
 | schemaLoading.contactPoints | string | `"cassandra"` | The database contanct point such as a hostname of Cassandra or a URL of Cosmos DB account. |
 | schemaLoading.contactPort | int | `9042` | The database port number. (Ignored if the database is `cosmos`.) |
-| schemaLoading.cosmosBaseResourceUnit | string | `"400"` | The resource unit value of the Cosmos DB schema. This is a Cosmos DB specific option. |
+| schemaLoading.cosmosBaseResourceUnit | int | `400` | The resource unit value of the Cosmos DB schema. This is a Cosmos DB specific option. |
 | schemaLoading.database | string | `"cassandra"` | The database to which the schema is loaded. `cassandra` and `cosmos` are supported. |
 | schemaLoading.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
 | schemaLoading.image.repository | string | `"scalarlabs/scalardl-schema-loader"` | Docker image |

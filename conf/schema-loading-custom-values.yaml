@@ -15,4 +15,4 @@ schemaLoading:
   # database: cosmos
   # contactPoints: 'https://your-cosmos-db-account-endpoint-url.documents.azure.com:443/'
   # password: 'your-primary-master-key'
-  # cosmosBaseResourceUnit: "400"
+  # cosmosBaseResourceUnit: 400
