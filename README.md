@@ -1,3 +1,5 @@
+[![Azure Kubernetes Integration Test](https://github.com/scalar-labs/scalar-k8s/workflows/Integration-test-with-terratest-for-Azure-Kubernetes/badge.svg)](https://github.com/scalar-labs/scalar-k8s/actions)
+
 # Scalar Kubernetes
 
 Scalar Kubernetes is a set of Terraform modules, Helm charts, and Ansible playbooks that can be used to orchestrate a Scalar DLT network in a cloud environment. The Terraform modules are mainly used to create Cassandra nodes and a Kubernetes cluster. The Helm charts are used to deploy stateless Scalar DL containers such as scalar-ledger and Envoy on the Kubernetes cluster. The Ansible playbooks are used to install required tools such as kubectl on bastion and manage the Kubernetes applications.

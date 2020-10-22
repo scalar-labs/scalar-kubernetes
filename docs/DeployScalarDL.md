@@ -6,7 +6,7 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 
 * Have completed the [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
 * An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories.
-  * `scalar-ledger` and `scalardl-schema-loader-cassandra` are available to only our partners and customers at the moment.
+  * `scalar-ledger`, `scalardl-schema-loader-cassandra` and `scalardl-schema-loader` are available to only our partners and customers at the moment.
 
 Note that the Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [Terraform module](../../docs/README.md)
 
@@ -29,6 +29,47 @@ Copy from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`
 
 ```console
 $ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
+```
+
+### Use Cosmos DB
+
+Scalar DL uses Cassandra as a backend database by default. However, it can optionally use Cosmos DB instead of Cassandra when you deploy on Azure.
+
+To configure Scalar DL to work with Cosmos DB, `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml` and `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` files need to be updated to set the information about a Cosmos DB deployment as described below.
+
+First, get `cosmosdb_account_endpoint` and `cosmosdb_account_primary_master_key` from the `cosmosdb` module:
+
+```console
+$ cd ${SCALAR_K8S_HOME}/modules/azure/cosmosdb
+$ terraform output
+cosmosdb_account_endpoint = https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
+cosmosdb_account_primary_master_key = <PRIMARY_MASTER_KEY>
+cosmosdb_account_secondary_master_key = ...
+```
+
+And open `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`, change the value of `database` to `cosmos`, and update the values of `contactPoints` and `password` with the ones you got above respectively.
+
+```yaml
+schemaLoading:
+  database: cosmos
+  contactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
+  password: <PRIMARY_MASTER_KEY>
+  cosmosBaseResourceUnit: "400"
+  image:
+    repository: scalarlabs/scalardl-schema-loader
+    version: 1.0.0
+    pullPolicy: IfNotPresent
+```
+
+Finally, open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and uncomment and update the values of the `scalarLedgerConfiguration`.
+
+```yaml
+  scalarLedgerConfiguration:
+    dbContactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
+    dbContactPort: null
+    dbUsername: ""
+    dbPassword: <PRIMARY_MASTER_KEY>
+    dbStorage: cosmos
 ```
 
 ## Deploy Scalar DL
