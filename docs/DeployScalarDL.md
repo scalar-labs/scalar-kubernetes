@@ -5,8 +5,8 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 ## Requirements
 
 * Have completed the [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
-* An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories.
-  * `scalar-ledger`, `scalardl-schema-loader-cassandra` and `scalardl-schema-loader` are available to only our partners and customers at the moment.
+* An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader` docker repositories.
+  * `scalar-ledger` and `scalardl-schema-loader` are available to only our partners and customers at the moment.
 
 Note that the Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [Terraform module](../../docs/README.md)
 
