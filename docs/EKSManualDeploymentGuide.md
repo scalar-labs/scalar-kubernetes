@@ -1,11 +1,11 @@
 # How to Manually Deploy Scalar DL on AWS EKS
 
-This document explains how to create EKS manually and deploy Scalar DL.
+This document explains how to create an EKS cluster manually and deploy Scalar DL in it.
 
 ## Prerequisites
 
 * Terraform >= 0.12.x
-* Azure CLI (Latest)
+* AWS CLI
 
 ## How to create
 
@@ -20,6 +20,8 @@ aws configure --profile scalar
 Please follow to [Create network resources](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/aws/README.md#create-network-resources).
 
 ## Create AWS Kubernetes cluster
+
+This section explains how to set up AWS Kubernetes services with the AWS console.
 
 1. Open the Amazon EKS console at https://console.aws.amazon.com/eks/home#/cluster.
 2. Choose Create cluster.
@@ -57,17 +59,17 @@ Please follow to [Create network resources](https://github.com/scalar-labs/scala
     * Enter **Maximum size** as `3`.
     * Enter **Desired size** as `3`.
     * Select **Next**.
-10. On the Specify networking page, fill out the parameters accordingly:
+10. On the **Specify networking** page, fill out the parameters accordingly:
     * Select **Subnets**, choose scalardl subnets created by scalar-terraform.
     * Select **SSH key pair**.
     * Select **Next**.
-11. On the Review and create page, review your managed node group configuration.
+11. On the **Review and create** page, review your managed node group configuration.
     * Select **Create**.                
  
 ### Create database resources
  
- * Please follow [Create Cassandra resources](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/aws/README.md#create-cassandra-resources) if you use Cassandra as a backend database.
- * Please follow [Create Cosmos DB Account](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-cosmosdb.md#cosmos-db-setup) if you use Cosmos DB as a backend database.
+ * Please follow to [Create Cassandra resources](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/aws/README.md#create-cassandra-resources) if you use Cassandra as a backend database.
+ * Please follow to [Create Cosmos DB Account](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-cosmosdb.md#cosmos-db-setup) if you use Cosmos DB as a backend database.
  
 ## Setup Local Machine for Accessing AKS Cluster
  

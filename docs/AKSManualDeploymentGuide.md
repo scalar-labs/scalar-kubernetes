@@ -1,6 +1,6 @@
 # How to Manually Deploy Scalar DL on Azure AKS
 
-This document explains how to create AKS manually and deploy Scalar DL.
+This document explains how to create an AKS cluster manually and deploy Scalar DL in it.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ Please follow to [Create network resources](ScalarDLonAzureAKS.md#create-network
 
 ### Create Azure Kubernetes cluster
 
-This section explains how to set up Azure Kubernetes services with Azure portal.
+This section explains how to set up Azure Kubernetes services with the Azure portal.
 
 1. Select **Kubernetes services** from the services on Azure portal.
 2. Select **Add**.
