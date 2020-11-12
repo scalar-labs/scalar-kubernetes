@@ -78,7 +78,7 @@ Note that the current version uses [the network module](https://github.com/scala
     ```
 
 ```
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
 
 # Create the Kubernetes cluster
 $ terraform init
@@ -106,11 +106,11 @@ Note that the current version uses [the cassandra module](https://github.com/sca
 #### Cosmos DB
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/azure/cosmosdb
 
 # Create Cosmos DB account
 $ terraform init
-$ terraform apply -var-file example.tfvars
+$ terraform apply
 ```
 
 Note that the current version uses [the cosmosdb module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cosmosdb) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
