@@ -12,7 +12,7 @@ This document explains how to create an EKS cluster manually and deploy Scalar D
 ### Configure an AWS credential
 
 ```
-aws configure --profile scalar
+$ aws configure --profile scalar
 ```
 
 ### Create network resources
@@ -75,7 +75,7 @@ This section explains how to set up AWS Kubernetes services with the AWS console
  
 Prepare kube config file
 ```
-aws eks --region <REGION_NAME> update-kubeconfig --name <EKS_CLUSTER_NAME>
+$ aws eks --region <REGION_NAME> update-kubeconfig --name <EKS_CLUSTER_NAME>
 ```
 
 ## How to Deploy Scalar DL
@@ -89,4 +89,4 @@ $ kubectl create secret docker-registry reg-docker-secrets --docker-server=https
 
 ### Deploy Scalar DL
 
-Please follow [Install Scalar DL](DeployScalarDLHelm.md#install-scalar-dl)
+Please follow to [Install Scalar DL](DeployScalarDLHelm.md#install-scalar-dl)

@@ -12,7 +12,7 @@ This document explains how to create an AKS cluster manually and deploy Scalar D
 ### Configure an Azure credential
 
 ```
-az login
+$ az login
 ```
 
 ### Create network resources
@@ -37,7 +37,7 @@ This section explains how to set up Azure Kubernetes services with the Azure por
     * Select **Next: Node pools** when complete.
 5. On the **Node pools** page, configure the following options:
     * Click on **agentpool (primary)**.
-    * Change **Node pool name** to `scalardl`.
+    * Change **Node pool name** to `scalardlpool`.
     * Enter **Max pods per node** as `100`.
     * Select **Update**.
     * Select **Next: Authentication** when complete.
@@ -54,6 +54,7 @@ This section explains how to set up Azure Kubernetes services with the Azure por
     * Click on **Create Kubernetes cluster** at top of the page.
     * Select **Cluster subnet** as `k8s_node_pod`.
     * Select **Review + create** when complete.
+    * Select **Create**.
     * Wait some time for **Kubernetes cluster** creation.
     
 ### Create database resources
@@ -64,7 +65,7 @@ Please follow to [Create database resources](ScalarDLonAzureAKS.md#create-databa
 
 Prepare kube config file
 ```
-az aks get-credentials --resource-group <RESOURCE_GROUP_NAME> --name <AKS_CLUSTER_NAME>
+$ az aks get-credentials --resource-group <RESOURCE_GROUP_NAME> --name <AKS_CLUSTER_NAME>
 ```
 
 ## How to Deploy Scalar DL
@@ -78,4 +79,4 @@ $ kubectl create secret docker-registry reg-docker-secrets --docker-server=https
 
 ### Deploy Scalar DL
 
-Please follow [Install Scalar DL](DeployScalarDLHelm.md#install-scalar-dl)
+Please follow to [Install Scalar DL](DeployScalarDLHelm.md#install-scalar-dl)
