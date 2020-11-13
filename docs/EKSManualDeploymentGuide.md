@@ -50,7 +50,7 @@ This section explains how to set up AWS Kubernetes services with the AWS console
     * Select **Name**.
     * Select **Node IAM Role**. 
     Choose the node instance role to use with your node group. For more information, see [Amazon EKS node](https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html) IAM role.
-    * Enter **Kubernetes labels** [Key=agentpool, Value=Scalardlpool]
+    * Enter **Kubernetes labels** [Key=agentpool, Value=scalardlpool]
     * Select **Next**.
 9. On the **Node Group compute configuration** page, fill out the parameters accordingly:
     * Select **AMI type** as `Amazon Linux 2 (AL2_x86_64)`.
