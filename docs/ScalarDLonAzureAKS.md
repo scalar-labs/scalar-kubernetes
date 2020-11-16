@@ -196,7 +196,7 @@ Please refer to [How to collect logs from Kubernetes applications](./K8sLogColle
 
 ### Create Scalar DL and Envoy resources
 
-You need an authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories. (Note that they are available to only our partners and customers at the moment.)
+You need an authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader` docker repositories. (Note that they are available to only our partners and customers at the moment.)
 
 You also need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as environment variables or set the values directly in the `${SCALAR_K8S_HOME}/playbooks/playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 

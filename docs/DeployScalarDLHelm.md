@@ -4,7 +4,7 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 ## Assumptions
 
 The document assumes the following.
-*  You have the authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader-cassandra` docker repositories. (they are only available to our partners and customers at the moment)
+* You have the authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader` docker repositories. (they are only available to our partners and customers at the moment)
 * The backend database that Scalar DL accesses is started properly
 * A Kubernetes cluster has been already created and you have access to it
 ## Requirements

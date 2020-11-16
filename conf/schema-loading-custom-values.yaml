@@ -7,7 +7,7 @@ schemaLoading:
   contactPort: 9042
   username: cassandra
   password: cassandra
-  replicationFactor: 3
+  cassandraReplicationFactor: 3
 
   #
   # Cosmos DB
@@ -15,8 +15,4 @@ schemaLoading:
   # database: cosmos
   # contactPoints: 'https://your-cosmos-db-account-endpoint-url.documents.azure.com:443/'
   # password: 'your-primary-master-key'
-  # cosmosBaseResourceUnit: "400"
-  # image:
-  #   repository: scalarlabs/scalardl-schema-loader
-  #   version: 1.0.0
-  #   pullPolicy: IfNotPresent
+  # cosmosBaseResourceUnit: 400

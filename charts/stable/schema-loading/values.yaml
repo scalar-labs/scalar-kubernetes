@@ -3,18 +3,26 @@
 # Declare variables to be passed into your templates.
 
 schemaLoading:
+  # schemaLoading.database -- The database to which the schema is loaded. `cassandra` and `cosmos` are supported.
   database: cassandra
+  # schemaLoading.contactPoints -- The database contanct point such as a hostname of Cassandra or a URL of Cosmos DB account.
   contactPoints: cassandra
+  # schemaLoading.contactPort -- The database port number. (Ignored if the database is `cosmos`.)
   contactPort: 9042
+  # schemaLoading.username -- The username of the database. (Ignored if the database is `cosmos`.)
   username: cassandra
+  # schemaLoading.password -- The password of the database. For Cosmos DB, please specify a key here.
   password: cassandra
-  replicationFactor: 3
+  # schemaLoading.cassandraReplicationFactor -- The replication factor value of the Cassandra schema. This is a Cassandra specific option.
+  cassandraReplicationFactor: 3
+  # schemaLoading.cosmosBaseResourceUnit -- The resource unit value of the Cosmos DB schema. This is a Cosmos DB specific option.
+  cosmosBaseResourceUnit: 400
 
   image:
     # schemaLoading.image.repository -- Docker image
-    repository: scalarlabs/scalardl-schema-loader-cassandra
+    repository: scalarlabs/scalardl-schema-loader
     # schemaLoading.image.tag -- Docker tag
-    version: 1.0.0
+    version: 1.1.0
     # schemaLoading.image.pullPolicy -- Specify a imagePullPolicy
     pullPolicy: IfNotPresent
 

@@ -18,25 +18,23 @@ spec:
       - name: schema-import
         image: "{{ .Values.schemaLoading.image.repository }}:{{ .Values.schemaLoading.image.version }}"
         imagePullPolicy: "{{ .Values.schemaLoading.image.pullPolicy }}"
-        {{- if eq .Values.schemaLoading.database "cassandra" }}
-        env: # for scalarlabs/scalardl-schema-loader-cassandra image
-        - name: CASSANDRA_HOST
-          value: "{{ .Values.schemaLoading.contactPoints }}"
-        - name: CASSANDRA_PORT
-          value: "{{ .Values.schemaLoading.contactPort }}"
-        - name: CASSANDRA_USERNAME
-          value: "{{ .Values.schemaLoading.username }}"
-        - name: CASSANDRA_PASSWORD
-          value: "{{ .Values.schemaLoading.password }}"
-        - name: CASSANDRA_REPLICATION_FACTOR
-          value: "{{ .Values.schemaLoading.replicationFactor }}"
-        {{- else if eq .Values.schemaLoading.database "cosmos" }}
-        args: # for scalarlabs/scalardl-schema-loader image
-        - "--cosmos"
+        args:
         - "-h"
         - "{{ .Values.schemaLoading.contactPoints }}"
+        - "-P"
+        - "{{ .Values.schemaLoading.contactPort }}"
+        - "-u"
+        - "{{ .Values.schemaLoading.username }}"
         - "-p"
         - "{{ .Values.schemaLoading.password }}"
+        {{- if eq .Values.schemaLoading.database "cassandra" }}
+        - "--cassandra"
+        - "-n"
+        - "NetworkTopologyStrategy"
+        - "-R"
+        - "{{ .Values.schemaLoading.cassandraReplicationFactor }}"
+        {{- else if eq .Values.schemaLoading.database "cosmos" }}
+        - "--cosmos"
         - "-r"
         - "{{ .Values.schemaLoading.cosmosBaseResourceUnit }}"
         {{- end }}
