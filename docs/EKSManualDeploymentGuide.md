@@ -16,8 +16,8 @@ Please follow [Create a cluster with the AWS Management Console](https://docs.aw
 Please follow [Create your managed node group using the AWS Management Console](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with the following Scalar DL specific settings.
 
 #### Scalar DL specific settings
-Please configure an appropriate **Kubernetes labels**, it will help you to deploy the ledger and envoy in the same node pool. Node pool name specified in the helm configuration file is `agentpool` as key and `scalardlpool` as value,
-If you are using a different node pool name you should update it in [helm configuration](../conf/scalardl-custom-values.yaml) file also.
+Please configure an appropriate **Kubernetes labels**, it will help you to deploy the ledger and envoy in the same node pool. The node pool name specified in the helm configuration file is `agentpool` as key and `scalardlpool` as value,  
+So if you are using a different node pool name you should update it in [helm configuration](../conf/scalardl-custom-values.yaml) file also.
 
 Please choose appropriate **Instance type** for Scalar DL, Ledger and envoy will be deployed in the same node so choose the appropriate instance type for that.
               

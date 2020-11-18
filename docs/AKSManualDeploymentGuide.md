@@ -12,8 +12,8 @@ Please follow [Create an AKS cluster](https://docs.microsoft.com/en-us/azure/aks
 Please choose the resource group and the region appropriately for your system. Ledger and envoy will be deployed in the same node so choose the appropriate node size for that.
 You can choose the appropriate node count based on requirements, our recommended node count is 3 or more.
 
-Please configure an appropriate node pool name, it will help you to deploy the ledger and envoy in the same node pool. Node pool name specified in the helm configuration file is `scalardlpool`,
-If you are using a different node pool name you should update it in [helm configuration](../conf/scalardl-custom-values.yaml) file also. 
+Please configure an appropriate node pool name, it will help you to deploy the ledger and envoy in the same node pool. The node pool name specified in the helm configuration file is `scalardlpool`,  
+So if you are using a different node pool name you should update it in [helm configuration](../conf/scalardl-custom-values.yaml) file also. 
 
 On the **Networking** page, configure the Kubernetes cluster in the same virtual network as the other resources, so please choose `Azure CNI` as **network configuration**. 
 Kubernetes cluster deployment requires 388 addresses so please create a subnet accordingly.
