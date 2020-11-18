@@ -2,27 +2,21 @@
 
 This document explains how to create an AKS cluster manually for Scalar DL.
 
-Here we assume the scalar-terraform network environment is properly created, If you haven't done it, please create it first by following [this](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-network-resources).
-
 ## Create Azure Kubernetes cluster
 
 This section explains how to set up Azure Kubernetes cluster with the Azure portal.
 
-Please follow to [Create an AKS cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal#create-an-aks-cluster) with Scalar DL Requirements. 
+Please follow [Create an AKS cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal#create-an-aks-cluster) with the following Scalar DL specific settings.
 
-### Scalar DL Requirements
+### Scalar DL specific settings
+Please choose the resource group and the region appropriately for your system. Ledger and envoy will be deployed in the same node so choose the appropriate node size for that.
+You can choose the appropriate node count based on requirements, our recommended node count is 3 or more.
 
-Page    |Fields  |Default Value  |Remarks    |
---------|--------|---------------|---------------|
-Basics  |Resource group|     |Should use resource group created by scalar-terraform  |
-Basics  |Region  |   |Should select the same region as of scalar-terraform  |
-Basics  |Node size   |Standard D2s v3    |You can choose node size based on requirements    |
-Basics  |Node count  |3  |You can change based on requirements   |
-Node pools  |Node pool name  |scalardlpool   |Should change `agentpool (primary)` to `scalardlpool` by clicking on `agentpool (primary)` link |
-Node pools  |Max pods per node   |100    |You can change max pods per node based on your requirements    |
-Networking  |Network configuration   |Azure CNI  | Should use network configuration type as `Azure CNI` |
-Networking  |Virtual network    |   |Should select Vnet created by scalar-terraform  |
-Networking  |Subnet |   |Should create and select a new subnet with more than 338 address such as `10.42.44.0/22` in Vnet created by scalar-terraform.    |
+Please configure an appropriate node pool name, it will help you to deploy the ledger and envoy in the same node pool. Node pool name specified in the helm configuration file is `scalardlpool`,
+If you are using a different node pool name you should update it in [helm configuration](../conf/scalardl-custom-values.yaml) file also. 
+
+On the **Networking** page, configure the Kubernetes cluster in the same virtual network as the other resources, so please choose `Azure CNI` as **network configuration**. 
+Kubernetes cluster deployment requires 388 addresses so please create a subnet accordingly.
 
 ## Access AKS Cluster
 

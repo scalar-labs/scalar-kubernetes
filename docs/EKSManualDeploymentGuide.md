@@ -2,41 +2,24 @@
 
 This document explains how to create an EKS cluster manually for Scalar DL.
 
-Here we assume the scalar-terraform network environment is properly created, If you haven't done it, please create it first by following [this](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/aws/README.md#create-network-resources).
-
 ## Create AWS Kubernetes cluster
 
 This section explains how to set up an AWS Kubernetes cluster with the AWS console.
 
 ### Kubernetes cluster
 
-Please follow to [Create a cluster with the AWS Management Console](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html) with Scalar DL K8s Cluster Requirements.
+Please follow [Create a cluster with the AWS Management Console](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html) with appropriate VPC and Subnets for your system.
 
-#### Scalar DL K8s Cluster Requirements
-
-Page    |Fields  |Default Value  |Remarks    |
---------|--------|---------------|---------------|
-Specify networking  |VPC    |   |Should choose VPC created by scalar-terraform  |
-Specify networking  |Subnets  |   |Should select 3 Public Subnets for LoadBalancer and 3 ScalarDL Subnet for nodegroup scalardlpool which are created by scalar-terraform  |
-Specify networking  |Security groups    |   |Can select bastion Security group created by scalar-terraform or You can change security group based on you requirements   |
-Specify networking  |Cluster endpoint access| Public and private| You can change based on your requirements  |
 
 ### Node Group
 
-Please follow to [Create your managed node group using the AWS Management Console](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with Scalar DL Node Group Requirements.
+Please follow [Create your managed node group using the AWS Management Console](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with the following Scalar DL specific settings.
 
-#### Scalar DL Node Group Requirements
+#### Scalar DL specific settings
+Please configure an appropriate **Kubernetes labels**, it will help you to deploy the ledger and envoy in the same node pool. Node pool name specified in the helm configuration file is `agentpool` as key and `scalardlpool` as value,
+If you are using a different node pool name you should update it in [helm configuration](../conf/scalardl-custom-values.yaml) file also.
 
-Page    |Fields  |Default Value  |Remarks    |
---------|--------|---------------|---------------|
-Configure Node Group    |Kubernetes labels  |Key=agentpool, Value=scalardlpool    |The label which helps to assign scalar dl pods to specific nodepool. You can change based on your requirements  |
-Node Group compute configuration    |AMI type   |Amazon Linux 2 (AL2_x86_64)   |You can change based on your requirements   |
-Node Group compute configuration  |Instance type  |m5.large   |You can choose instance type based on your requirements |
-Node Group compute configuration  |Disk size  |64   |You can change based on your requirements |
-Node Group compute configuration |Minimum size   |3  |You can change based on your requirements   |
-Node Group compute configuration |Maximum size   |3  |You can change based on your requirements   |
-Node Group compute configuration |Desired size   |3  |You can change based on your requirements   |
-Specify networking  |Subnets    |   |Should select scalardl subnets created by scalar-terraform |
+Please choose appropriate **Instance type** for Scalar DL, Ledger and envoy will be deployed in the same node so choose the appropriate instance type for that.
               
 ## Access AKS Cluster
  
