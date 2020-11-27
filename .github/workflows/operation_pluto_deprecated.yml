@@ -24,7 +24,7 @@ jobs:
         tar xf pluto_3.0.1_linux_amd64.tar.gz
         rm -rf pluto_3.0.1_linux_amd64.tar.gz
         mv pluto $GITHUB_WORKSPACE/bin/pluto
-        echo "::add-path::$GITHUB_WORKSPACE/bin"
+        echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
         chmod +x $GITHUB_WORKSPACE/bin/pluto
     
     - name: Run pluto on playbooks folder
