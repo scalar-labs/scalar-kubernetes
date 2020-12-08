@@ -23,5 +23,7 @@
   roles:
     - kubectl
     - helm
+    - role: awscli
+      when: install_awscli | default(False) | bool
   tags:
     - tools
