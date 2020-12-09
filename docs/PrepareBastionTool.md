@@ -46,29 +46,31 @@ The kubeconfig file should look like below.
 ```yml
 apiVersion: v1
 clusters:
-- cluster:
-    certificate-authority-data: LS0tLS1...
-    server: https://scalar-k8s-c1eae570.fdc2c430-cd60-4952-b269-28d1c1583ca7.privatelink.eastus.azmk8s.io:443
-  name: scalar-kubernetes
+  - cluster:
+      certificate-authority-data: LS0tLS1...
+      server: https://scalar-k8s-c1eae570.fdc2c430-cd60-4952-b269-28d1c1583ca7.privatelink.eastus.azmk8s.io:443
+    name: scalar-kubernetes
 contexts:
-- context:
-    cluster: scalar-kubernetes
-    user: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
-  name: scalar-kubernetes
+  - context:
+      cluster: scalar-kubernetes
+      user: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
+    name: scalar-kubernetes
 current-context: scalar-kubernetes
 kind: Config
 preferences: {}
 users:
-- name: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
-  user:
-    client-certificate-data: LS0tLS1C....
-    client-key-data: LS0tLS...
-    token: 48fdda...
+  - name: clusterUser_exemple-k8s-azure-znmhbo_scalar-kubernetes
+    user:
+      client-certificate-data: LS0tLS1C....
+      client-key-data: LS0tLS...
+      token: 48fdda...
 ```
 
 ## Install tools in the bastion
 
 Now let's install the tools in the bastion as follows.
+
+Note: When using Amazon EKS, you need to add `-e "install_awscli=true"` option to install `awscli` for cluster authentication.
 
 ```console
 $ cd ${SCALAR_K8S_HOME}
