@@ -31,13 +31,19 @@ Copy from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`
 $ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
 ```
 
-### Use Cosmos DB
+## Configure Database
 
 Scalar DL uses Cassandra as a backend database by default. However, it can optionally use Cosmos DB instead of Cassandra when you deploy on Azure.
 
+### Casandra
+
+If you created the Cassandra resources with the default domain name and the default credentials of [How to Create Azure AKS with scalar-terraform](AKSScalarTerraformDeploymentGuide.md), you can use `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml` and `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` as they are. If you used a different configuration for Cassandra, please update the files as needed.
+
+### Cosmos DB
+
 To configure Scalar DL to work with Cosmos DB, `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml` and `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` files need to be updated to set the information about a Cosmos DB deployment as described below.
 
-First, get `cosmosdb_account_endpoint` and `cosmosdb_account_primary_master_key` from the `cosmosdb` module:
+First, get the endpoint and the master key of your Cosmos DB account. If you [deployed a Cosmos DB account with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md#create-database-resources), you can get them by running `terraform output` in the `cosmosdb` module:
 
 ```console
 $ cd ${SCALAR_K8S_HOME}/modules/azure/cosmosdb
@@ -143,7 +149,7 @@ The private endpoint is 10.42.44.4 on port 50051 and 50052
 
 In `${SCALAR_K8S_CONFIG_DIR}` contain the helm custom values use for deploying the application in Kubernetes.
 
-The default values are describe in here:
+The default values are described in here:
 
 * [scalardl](../charts/stable/scalardl/README.md)
 * [schema-loading](../charts/stable/schema-loading/README.md)

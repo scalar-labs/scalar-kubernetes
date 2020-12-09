@@ -1,21 +1,30 @@
 # Getting Started
 
-This document refers to the necessary tool to install in your local machine, and the next steps.
+This document describes how to deploy Scalar DL on Kubernetes Services.
 
 ## Requirements
 
 | Name | Version | Mandatory | link |
 |:------|:-------|:----------|:------|
 | Ansible | 2.9 | yes | https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html |
-| Terraform | 0.12.x | yes | https://learn.hashicorp.com/terraform/getting-started/install |
-| Docker | latest | yes | https://docs.docker.com/install/ |
+| Terraform | 0.12.x | no | https://learn.hashicorp.com/terraform/getting-started/install |
+| Docker | latest | no | https://docs.docker.com/install/ |
 | Azure CLI | latest | yes | https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest |
 | Kubectl | 1.16.13 | yes | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
 | Helm | 3.2.1 or latest | no | https://helm.sh/docs/intro/install/ |
 | Minikube | latest | no | https://kubernetes.io/docs/setup/learning-environment/minikube/ |
 | jmespath | latest | yes | https://github.com/jmespath/jmespath.py |
 
-## Next Steps
+## Setting up Kubernetes Service
 
-* [How to Deploy Scalar DL on Azure AKS](./ScalarDLonAzureAKS.md)
-* How to operate a [Cassandra Cluster](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/CassandraOperation.md)
+scalar-k8s is a collection of scripts that deploys Scalar DL to a Kubernetes cluster.
+
+scalar-k8s has Terraform scripts for creating a set of infrastructure on Azure using modules of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It creates Azure Kubernetes Service (AKS) as well as a virtual network, database (Cassandra and Cosmos DB on Azure are supported) resources and a monitoring/logging service using Prometheus, Grafana, and td-agent. For details, please refer to [How to Create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md).
+
+Alternatively, you can use your own Kubernetes cluster. For the examples to create Kubernetes services such as AKS on Azure or EKS on AWS manually, please refer to [How to Manually Create AKS Cluster for Scalar DL deployment](./AKSManualDeploymentGuide.md) and [How to Manually Create AKS Cluster for Scalar DL deployment](./AKSManualDeploymentGuide.md).
+
+### Deploying Scalar DL on Kubernetes Service
+
+If you are going to create the infrastructure with Terraform scripts mentioned above, you can use Ansible scripts included in scalar-k8s to deploy Scalar DL to AKS. Please follow [How to Deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md).
+
+The Ansible scripts use the Helm charts stored in the [`charts`](../charts) directory. You can run these Helm charts directly if you are going to use your own Kubernetes cluster. You can even use this option on an infrastructure created with the Terraform scripts instead of running them from Ansible. Please follow [How to Deploy Scalar DL on Kubernetes with Helm Charts](./DeployScalarDLHelm.md) for details.
