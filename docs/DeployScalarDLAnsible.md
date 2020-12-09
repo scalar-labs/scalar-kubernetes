@@ -8,8 +8,6 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 * An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader` docker repositories.
   * `scalar-ledger` and `scalardl-schema-loader` are available to only our partners and customers at the moment.
 
-Note that the Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [Terraform module](../../docs/README.md)
-
 ## Preparation
 
 You need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the values directly in the `playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
