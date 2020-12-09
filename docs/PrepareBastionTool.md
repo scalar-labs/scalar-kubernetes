@@ -7,14 +7,8 @@ This document explains how to install Kubernetes CLI (kubectl) and Helm on the b
 First, you create an Ansible inventory file that contains the hostname and the username of the bastion as follows.
 
 ```console
-# Please update `/path/to/local-repository` before running the command.
-$ export SCALAR_K8S_HOME=/path/to/local-repository
-
-# Please update `/path/to/local-repository-config-dir` before running the command.
-$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
-
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
-$ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
+cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
+terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
 ```
 
 The inventory file should look like below.

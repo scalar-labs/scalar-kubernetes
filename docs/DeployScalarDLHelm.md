@@ -14,15 +14,9 @@ The document assumes the following.
 | Kubectl | 1.16.13 | yes | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
 | Helm | 3.2.1 or latest | yes | https://helm.sh/docs/intro/install/ |
 
-
-
 ## Preparation
-Prepare environment variables for easy access and add docker registry secrets in kubernetes.
 
 ```console
-# Please update `/path/to/local-repository` before running the command.
-$ export SCALAR_K8S_HOME=/path/to/local-repository
-
 # Prepare kubeconfig file
 $ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
 $ terraform output kube_config > ~/.kube/config

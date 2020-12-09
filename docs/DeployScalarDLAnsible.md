@@ -13,14 +13,8 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 You need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the values directly in the `playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
 ```console
-$ export DOCKERHUB_USER=<user>
-$ export DOCKERHUB_ACCESS_TOKEN=<token>
-
-# Please update `/path/to/local-repository` before running the command.
-$ export SCALAR_K8S_HOME=/path/to/local-repository
-
-# Please update `/path/to/local-repository-config-dir` before running the command.
-$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
+export DOCKERHUB_USER=<user>
+export DOCKERHUB_ACCESS_TOKEN=<token>
 ```
 
 Copy from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`

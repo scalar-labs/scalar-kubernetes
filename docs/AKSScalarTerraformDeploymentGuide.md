@@ -2,12 +2,6 @@
 
 This document shows how to create Azure Kubernetes Service (AKS) along with a virtual network, a bastion host, and database resources using Terraform scripts.
 
-First of all, this document refers the directory of the cloned copy of scalar-k8s on your local machine as `${SCALAR_K8S_HOME}`. It is a good idea to set the environment variable before you run the commands.
-
-```console
-export SCALAR_K8S_HOME=/path/to/scalar-k8s
-```
-
 The Terraform scripts for creating resources with [scalar-terraform](https://github.com/scalar-labs/scalar-terraform) are all stored in `${SCALAR_K8S_HOME}/modules`.
 
 ## Create network resources

@@ -11,14 +11,8 @@ This key-pair will be used to tunnel a connection to the monitoring system.
 It is assumed that the private key is loaded into an ssh-agent.
 
 ```console
-# Please update `/path/to/local-repository` before running the command.
-$ export SCALAR_K8S_HOME=/path/to/local-repository
-
-# Please update `/path/to/local-repository-config-dir` before running the command.
-$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
-
-$ cd ${SCALAR_K8S_HOME}/example/azure/network
-$ ssh-add example_key # private ssh key
+cd ${SCALAR_K8S_HOME}/example/azure/network
+ssh-add example_key # private ssh key
 ```
 
 ### Prepare Ansible inventory

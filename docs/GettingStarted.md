@@ -15,6 +15,23 @@ This document describes how to deploy Scalar DL on Kubernetes Services.
 | Minikube | latest | no | https://kubernetes.io/docs/setup/learning-environment/minikube/ |
 | jmespath | latest | yes | https://github.com/jmespath/jmespath.py |
 
+## Directory Notations
+
+Throughout the documentation, the directory of the cloned copy of scalar-k8s on your local machine is referred as `${SCALAR_K8S_HOME}`. It is a good idea to set the environment variable before you run the commands.
+
+```console
+export SCALAR_K8S_HOME=/path/to/scalar-k8s
+```
+
+### Decide where to store configuration files for accessing the k8s cluster
+
+Please decide which directory you want to use to store configuration files for accessing the Kubernetes cluster.
+It is recommended to be set outside of the repo since it should be separately managed per project.
+
+```console
+export SCALAR_K8S_CONFIG_DIR=/path/to/scalar-k8s-config-dir
+```
+
 ## Setting up Kubernetes Service
 
 scalar-k8s is a collection of scripts that deploys Scalar DL to a Kubernetes cluster.
