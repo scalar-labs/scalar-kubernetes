@@ -1,4 +1,6 @@
-[![Azure Kubernetes Integration Test](https://github.com/scalar-labs/scalar-k8s/workflows/Integration-test-with-terratest-for-Azure-Kubernetes/badge.svg)](https://github.com/scalar-labs/scalar-k8s/actions)
+[![Azure Kubernetes Integration Test](https://github.com/scalar-labs/scalar-terratest/workflows/Integration-test-with-terratest-for-AWS-Kubernetes/badge.svg)](https://github.com/scalar-labs/scalar-terratest/actions)
+
+[![AWS Kubernetes Integration Test](https://github.com/scalar-labs/scalar-terratest/workflows/Integration-test-with-terratest-for-Azure-Kubernetes/badge.svg)](https://github.com/scalar-labs/scalar-terratest/actions)
 
 # Scalar Kubernetes
 
