@@ -1,12 +1,15 @@
 # Deploy Scalar DL with Helm
 
 This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with Helm.
+
 ## Assumptions
 
 The document assumes the following.
+
 * You have the authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader` docker repositories. (they are only available to our partners and customers at the moment)
 * The backend database that Scalar DL accesses is started properly
 * A Kubernetes cluster has been already created and you have access to it
+
 ## Requirements
 
 | Name | Version | Mandatory | link |
@@ -16,13 +19,23 @@ The document assumes the following.
 
 ## Preparation
 
-```console
-# Prepare kubeconfig file
-$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
-$ terraform output kube_config > ~/.kube/config
+### Prepare kubeconfig file
 
-# Create docker registry secrets in kubernetes
-$ kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=<dockerhub-username> --docker-password=<dockerhub-access-token>
+If you [created the Kubernetes cluster with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md), you can get the config file from the output of `terraform output`.
+
+```console
+cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
+terraform output kube_config > ~/.kube/config
+```
+
+If you use your own Kubernetes cluster, please prepare the config file by yourself to communicate with the cluster by running commands e.g. `az aks get-credentials` or `aws eks update-kubeconfig`.
+
+### Create docker registry secrets in kubernetes
+
+Create a secret for the Docker registory with the following command.
+
+```console
+kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=<dockerhub-username> --docker-password=<dockerhub-access-token>
 ```
 
 ## Install Scalar DL
