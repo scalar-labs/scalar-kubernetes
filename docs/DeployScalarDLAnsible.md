@@ -20,7 +20,7 @@ export DOCKERHUB_ACCESS_TOKEN=<token>
 Copy from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`
 
 ```console
-$ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
+cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
 ```
 
 ## Configure Database
