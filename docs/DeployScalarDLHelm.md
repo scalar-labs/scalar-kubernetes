@@ -23,41 +23,8 @@ The document assumes the following.
 
 #### Case 1: Kubernetes cluster created with scalar-terraform
 
-If you created [the Kubernetes cluster with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md), you can get the config file from `terraform output`.
-
-```console
-cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
-terraform output kube_config > ~/.kube/config
-```
-
-The Kubernetes cluster created with scalar-terraform doesn't expose the API server to public. You must access it via SSH port-forwarding.
-
-Please replace the `server` in `~/.kube/config` with `https://localhost:7000` as follows.
-
-```yaml
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: LS0tLS1...
-    server: https://localhost:7000 # <- Replace this line
-  name: scalar-kubernetes
-contexts:
-...
-```
-
-Then generate an SSH configuration file. The following command will generate an `ssh.cfg` with `LocalForward` to the bastion. It allows you to access the Kubernetes API from your local machine.
-
-```console
-cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
-terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/ssh.cfg
-```
-
-When you commnunicate with the Kubernetes API, please keep a terminal open that runs the SSH port-fowarding with the following command.
-
-```console
-cd ${SCALAR_K8S_CONFIG_DIR}
-ssh -F ssh.cfg bastion
-```
+This is the case that you created [the Kubernetes cluster with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md).
+The Kubernetes cluster in the scalar-terraform network doesn't expose the API server to public. You will need an SSH port-forwarded access to the Kubernetes API to install the Helm charts. Please follow [How to do port-forwarding to Kubnernetes API in scalar-terraform network](./PortForwardingToKubernetesAPIInScalarTerraformNetwork.md) to get the configuration.
 
 #### Case 2: Your own Kubernetes cluster
 
