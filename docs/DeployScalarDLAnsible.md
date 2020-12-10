@@ -137,4 +137,4 @@ endpoints/prod-scalardl-ledger-headless   10.42.40.108,10.42.41.108,10.42.41.17 
 
 The private endpoint is 10.42.44.4 on port 50051 and 50052
 
-Note: To further customize the Helm charts used in the Ansible playbook to deploy Scalar DL and Envoy, please refer to [How to customize values for Scalar DL and Schema Loading charts](./HelmChartsCustomization.md).
+Note: To further customize the Helm charts used in the Ansible playbook to deploy Scalar DL and Envoy, please refer to [How to customize values for Scalar DL and Schema Loading charts](./HelmValuesFiles.md).
