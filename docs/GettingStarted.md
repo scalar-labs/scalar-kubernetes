@@ -25,8 +25,9 @@ export SCALAR_K8S_HOME=/path/to/scalar-k8s
 
 ### Decide where to store configuration files for accessing the k8s cluster
 
-Please decide which directory you want to use to store configuration files for accessing the Kubernetes cluster.
+Before running the deployment, please decide which directory you want to use to store configuration files for accessing the Kubernetes cluster.
 It is recommended to be set outside of the repo since it should be separately managed per project.
+In the documentation, the directory where the configuration files are stored is referred as `${SCALAR_K8S_CONFIG_DIR}`.
 
 ```console
 export SCALAR_K8S_CONFIG_DIR=/path/to/scalar-k8s-config-dir
