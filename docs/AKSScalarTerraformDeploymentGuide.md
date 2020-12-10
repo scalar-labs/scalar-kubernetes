@@ -59,6 +59,22 @@ $ terraform apply -var-file example.tfvars
 
 Note that the current version uses [the cassandra module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cassandra) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
+By default, Cassandra nodes don't start up after the deployment. Once you update the configuration of each node, you need to start up the Cassandra service manually.
+
+```console
+$ cd ${SCALAR_K8S_HOME}/modules/azure/network
+$ ssh -F ssh.cfg cassandra-1.internal.scalar-labs.com
+[centos@cassandra-1 ~]$ sudo systemctl start cassandra
+```
+
+But you can set `start_on_initial_boot` to `"true"` in the example.tfvars file before applying the deployment to let the nodes start automatically.
+
+```hcl
+cassandra = {
+  start_on_initial_boot = "true"
+}
+```
+
 ### Cosmos DB
 
 ```console
