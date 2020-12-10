@@ -25,6 +25,16 @@ $ terraform apply -var-file example.tfvars
 
 Note that the current version uses [the network module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/network) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform).  It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
+### Create SSH config file
+
+Once the `terraform apply` is finished, the network module can output the SSH config file.
+
+```console
+terraform output ssh_config > ssh.cfg
+```
+
+It is needed to connect to the various hosts created with scalar-terraform in the following steps.
+
 ## Create Kubernetes cluster
 
 * If you use Cosmos DB, please set `use_cosmosdb` to `true` in `example.tfvars` before you run `terraform apply`
