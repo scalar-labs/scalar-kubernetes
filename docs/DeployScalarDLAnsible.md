@@ -4,6 +4,7 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 
 ## Requirements
 
+* Have completed the [How to create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
 * Have completed the [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
 * An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader` docker repositories.
   * `scalar-ledger` and `scalardl-schema-loader` are available to only our partners and customers at the moment.
@@ -64,7 +65,7 @@ PLAY RECAP *********************************************************************
 bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com : ok=7    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 ```
 
-You can check if the pods and the services are properly deployed as follows.
+You can check if the pods and the services are properly deployed by running the `kubectl` command on the bastion host as follows.
 
 ```console
 $ kubectl get po,svc,endpoints -o wide
