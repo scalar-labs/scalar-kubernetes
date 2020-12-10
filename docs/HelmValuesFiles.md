@@ -2,7 +2,7 @@
 
 In `${SCALAR_K8S_CONFIG_DIR}` contain the helm custom values use for deploying the application in Kubernetes.
 
-The default values are described in here:
+The default values are described here:
 
 * [scalardl](../charts/stable/scalardl/README.md)
 * [schema-loading](../charts/stable/schema-loading/README.md)
@@ -56,7 +56,7 @@ Finally, open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and uncomme
     dbStorage: cosmos
 ```
 
-## How to increase the number of Envoy Pod
+## Increase the number of Envoy Pod
 
 In `scalardl-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
 
@@ -67,9 +67,9 @@ envoy:
   replicaCount: 6
 ```
 
-The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform
+The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform.
 
-## How to increase the resource of Envoy Pod
+## Increase the resource of Envoy Pod
 
 In `scalardl-custom-values.yaml`, you can update resource as follow
 
@@ -88,7 +88,7 @@ envoy:
 
 More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
 
-## How to expose `Envoy` endpoint to public
+## Expose `Envoy` endpoint to public
 
 In `scalardl-custom-values.yaml`, you can remove `annotations` to expose `Envoy`
 
@@ -101,7 +101,7 @@ envoy:
       service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "k8s_ingress"
 ```
 
-## How to increase the number of Ledger Pod
+## Increase the number of Ledger Pod
 
 In `scalardl-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
 
@@ -112,9 +112,9 @@ ledger:
   replicaCount: 6
 ```
 
-The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform
+The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform.
 
-## How to increase the resource of Ledger Pod
+## Increase the resource of Ledger Pod
 
 In `scalardl-custom-values.yaml`, you can update resource as follow
 
@@ -148,11 +148,11 @@ ledger:
 don't forget to change the schema internal domain in `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`
 
 ```yml
-cassandra:  
+cassandra:
   contactPoints: cassandra-lb.internal.scalar-labs.com
 ```
 
-Note: If the internal_domain var is not correct or the Cassandra is not fully started, the schema loading job can fail, you will get the following error
+Note: If the internal_domain var is not correct or the Cassandra is not fully started, the schema loading job can fail. You will get the following error
 
 ```console
 TASK [scalardl : Check Schema Loading job have been successful] **********************************************************************************************************************************************************
