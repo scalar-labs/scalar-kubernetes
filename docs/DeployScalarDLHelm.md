@@ -73,14 +73,24 @@ kubectl create secret docker-registry reg-docker-secrets --docker-server=https:/
 
 ## Install Scalar DL
 
+Before installing Scalar DL with the `helm` command, copy the Helm values files from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`.
+
+```console
+cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
+```
+
+At this point, you need to update these Helm values files to configure the database. Please follow [Configure Database](./HelmValuesFiles.md#configure-database) in the Helm values files documentation.
+
+Now it is ready to run the helm commands to install Scalar DL.
+
 ```console
 # Load Schema for Scalar DL install with a release name `load-schema`
 $ cd ${SCALAR_K8S_HOME}
-$ helm upgrade --install load-schema charts/stable/schema-loading --namespace default -f conf/schema-loading-custom-values.yaml
+$ helm upgrade --install load-schema charts/stable/schema-loading --namespace default -f ${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml
 
 # Install Scalar DL with a release name `my-release-scalardl`
 $ cd ${SCALAR_K8S_HOME}
-$ helm upgrade --install my-release-scalardl charts/stable/scalardl --namespace default -f conf/scalardl-custom-values.yaml
+$ helm upgrade --install my-release-scalardl charts/stable/scalardl --namespace default -f ${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml
 ```
 
 Note:
@@ -88,6 +98,10 @@ Note:
 * The same commands can be used to upgrade the pods.
 * Release name `my-release-scalardl` can be changed as per your convenience.
 * `helm ls -a` command can be used to list currently installed releases.
+
+## Advanced Configuration
+
+To further customize the Helm charts, please refer to [How to customize values for Scalar DL and Schema Loading charts](./HelmValuesFiles.md).
 
 ## Uninstall Scalar DL
 
@@ -100,7 +114,3 @@ $ helm delete load-schema
 $ cd ${SCALAR_K8S_HOME}
 $ helm delete my-release-scalardl
 ```
-
-## Configuration
-
-See the [Configurations](../charts/stable/scalardl/README.md#scalardl) used in the Charts

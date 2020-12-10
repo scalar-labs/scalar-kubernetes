@@ -9,6 +9,53 @@ The default values are described in here:
 
 Once you change the value on your local machine, you need to re-apply the deployment.
 
+## Configure Database
+
+Scalar DL uses Cassandra as a backend database by default. However, it can optionally use Cosmos DB instead of Cassandra when you deploy on Azure.
+
+### Casandra
+
+If you created the Cassandra resources with the default domain name and the default credentials of [How to Create Azure AKS with scalar-terraform](AKSScalarTerraformDeploymentGuide.md), you can use `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml` and `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` as they are. If you used a different configuration for Cassandra, please update the files as needed.
+
+### Cosmos DB
+
+To configure Scalar DL to work with Cosmos DB, `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml` and `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` files need to be updated to set the information about a Cosmos DB deployment as described below.
+
+First, get the endpoint and the master key of your Cosmos DB account. If you [deployed a Cosmos DB account with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md#create-database-resources), you can get them by running `terraform output` in the `cosmosdb` module:
+
+```console
+$ cd ${SCALAR_K8S_HOME}/modules/azure/cosmosdb
+$ terraform output
+cosmosdb_account_endpoint = https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
+cosmosdb_account_primary_master_key = <PRIMARY_MASTER_KEY>
+cosmosdb_account_secondary_master_key = ...
+```
+
+And open `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`, change the value of `database` to `cosmos`, and update the values of `contactPoints` and `password` with the ones you got above respectively.
+
+```yaml
+schemaLoading:
+  database: cosmos
+  contactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
+  password: <PRIMARY_MASTER_KEY>
+  cosmosBaseResourceUnit: "400"
+  image:
+    repository: scalarlabs/scalardl-schema-loader
+    version: 1.0.0
+    pullPolicy: IfNotPresent
+```
+
+Finally, open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and uncomment and update the values of the `scalarLedgerConfiguration`.
+
+```yaml
+  scalarLedgerConfiguration:
+    dbContactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
+    dbContactPort: null
+    dbUsername: ""
+    dbPassword: <PRIMARY_MASTER_KEY>
+    dbStorage: cosmos
+```
+
 ## How to increase the number of Envoy Pod
 
 In `scalardl-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
