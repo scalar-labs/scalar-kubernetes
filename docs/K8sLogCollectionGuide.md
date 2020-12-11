@@ -31,7 +31,7 @@ TASK [Fluentbit : Create folder on remote server] ******************************
 ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com] => (item=/home/centos/manifests)
 ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com] => (item=/home/centos/manifests/fluentbit)
 
-[OMIT]
+...
 
 TASK [Fluentbit : Deploy ServiceMonitor for Fluentbit] *******************************************************************************************************************************************************
 ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]

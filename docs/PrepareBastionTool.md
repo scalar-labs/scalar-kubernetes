@@ -70,7 +70,7 @@ $ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-
 
 PLAY [Install necessary kubernetes binary on bastion] ****************************************************************************************************************************************************************************************************************
 
-[OMIT]
+...
 
 TASK [helm : Add stable charts repository from helm] *****************************************************************************************************************************************************************************************************************
 changed: [bastion-example-k8s-azure-p5rzic.eastus.cloudapp.azure.com]

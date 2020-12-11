@@ -23,7 +23,7 @@ PLAY [Deploy Prometheus in Kubernetes] *****************************************
 TASK [prometheus : Create folder on remote server] ************************************************************************************************************************************************************
 ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
 
-[OMIT]
+...
 
 TASK [prometheus : Deploy prometheus with helm] ***************************************************************************************************************************************************************
 changed: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]

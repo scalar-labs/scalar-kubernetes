@@ -158,8 +158,7 @@ Note: If the internal_domain var is not correct or the Cassandra is not fully st
 TASK [scalardl : Check Schema Loading job have been successful] **********************************************************************************************************************************************************
 FAILED - RETRYING: Check Schema Loading job have been successful (10 retries left).
 FAILED - RETRYING: Check Schema Loading job have been successful (9 retries left).
-[OMIT]
-FAILED - RETRYING: Check Schema Loading job have been successful (2 retries left).
+...
 FAILED - RETRYING: Check Schema Loading job have been successful (1 retries left).
 fatal: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com]: FAILED!
 ```
