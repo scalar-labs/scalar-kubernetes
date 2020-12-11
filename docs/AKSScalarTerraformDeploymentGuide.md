@@ -78,7 +78,7 @@ $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-For more information about the variable in `example.tfvars`, please refer to [kubernetes modules](../modules/azure/kubernetes/README.md)
+For more information about the variables in `example.tfvars`, please refer to [`kubernetes` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/kubernetes).
 
 ## Create database resources
 
