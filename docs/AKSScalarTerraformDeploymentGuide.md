@@ -144,6 +144,37 @@ $ terraform apply -var-file example.tfvars
 
 Note that the current version uses [the monitor module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/monitor) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform/). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
 
+## How to access scalar-terraform network
+
+### Get SSH config from `terraform output`
+
+You can get some useful information about your deployments, such as a bastion public, internal IP addresses, and an SSH config that you can use to access instances.
+
+Save the SSH config to a file named `ssh.cfg` in the `network` module. The config assumes that the private key for an environment is added to your ssh-agent.
+
+```console
+cd ${SCALAR_K8S_HOME}/modules/azure/network
+terraform output ssh_config > ssh.cfg
+```
+
+### How to SSH to instances
+
+You can log in to instances in the scalar-terraform network using the `ssh.cfg`.
+Here are some examples:
+
+```console
+# You need to cd to the network module directory
+$ cd ${SCALAR_K8S_HOME}/modules/azure/network
+
+# Connect to the instances
+$ ssh -F ssh.cfg cassandra-1.internal.scalar-labs.com
+$ ssh -F ssh.cfg cassandra-2.internal.scalar-labs.com
+$ ssh -F ssh.cfg cassandra-3.internal.scalar-labs.com
+$ ssh -F ssh.cfg cassy-1.internal.scalar-labs.com
+$ ssh -F ssh.cfg reaper-1.internal.scalar-labs.com
+$ ssh -F ssh.cfg monitor-1.internal.scalar-labs.com
+```
+
 ## Next Steps
 
 * Please follow [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) to prepare tools needed in the bastion host, then go to [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md) to do the deployment.
