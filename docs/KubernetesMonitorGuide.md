@@ -12,7 +12,7 @@ This document explains how to deploy Prometheus operator on Kubernetes with Ansi
 
 Let's deploy the Prometheus component inside Kubernetes with Ansible playbook `playbook-deploy-prometheus.yaml`.
 
-Note that the deployment is run on the bastion host with Ansible and the port-forwarding is not needed yet.
+Note that the deployment is run on the bastion host with Ansible, and the port-forwarding is not needed yet.
 
 ```console
 $ cd ${SCALAR_K8S_HOME}

@@ -8,7 +8,7 @@ The document assumes the following.
 
 * You have the authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader` docker repositories. (they are only available to our partners and customers at the moment)
 * The backend database that Scalar DL accesses is started properly
-* A Kubernetes cluster has been already created and you have access to it
+* A Kubernetes cluster has been already created, and you have access to it
 
 ## Requirements
 
@@ -24,15 +24,15 @@ The document assumes the following.
 #### Case 1: Kubernetes cluster created with scalar-terraform
 
 This is the case that you created [the Kubernetes cluster with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md).
-The Kubernetes cluster in the scalar-terraform network doesn't expose the API server to public. You will need an SSH port-forwarded access to the Kubernetes API to install the Helm charts. Please follow [How to do port-forwarding to Kubnernetes API in scalar-terraform network](./PortForwardingToKubernetesAPIInScalarTerraformNetwork.md) to get the configuration.
+The Kubernetes cluster in the scalar-terraform network doesn't expose the API server to the outside of the network. You will need an SSH port-forwarded access to the Kubernetes API to install the Helm charts. Please follow [How to do port-forwarding to Kubnernetes API in scalar-terraform network](./PortForwardingToKubernetesAPIInScalarTerraformNetwork.md) to get the configuration.
 
-#### Case 2: Your own Kubernetes cluster
+#### Case 2: Kubernetes cluster in your own way
 
-If you use your own Kubernetes cluster, please prepare the config file by yourself to communicate with the cluster by running commands e.g. `az aks get-credentials` or `aws eks update-kubeconfig`.
+If you use a Kubernetes cluster in your own way, please prepare the config file by yourself to communicate with the cluster by running commands, for example, `az aks get-credentials` or `aws eks update-kubeconfig`.
 
 ### Create docker registry secrets in kubernetes
 
-Create a secret for the Docker registory with the following command.
+Create a secret for the Docker registry with the following command.
 
 ```console
 kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=<dockerhub-username> --docker-password=<dockerhub-access-token>
@@ -40,7 +40,7 @@ kubectl create secret docker-registry reg-docker-secrets --docker-server=https:/
 
 ## Install Scalar DL
 
-Before installing Scalar DL with the `helm` command, copy the Helm values files from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`.
+Before installing Scalar DL with the `helm` command, copy the Helm values files from the `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`.
 
 ```console
 cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/

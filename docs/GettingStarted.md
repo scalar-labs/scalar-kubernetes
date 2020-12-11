@@ -14,7 +14,7 @@ This document describes how to deploy Scalar DL on Kubernetes Services.
 
 ## Directory Notations
 
-Throughout the documentation, the directory of the cloned copy of scalar-k8s on your local machine is referred as `${SCALAR_K8S_HOME}`. It is a good idea to set the environment variable before you run the commands.
+Throughout the documentation, the directory of the cloned copy of scalar-k8s on your local machine is referred to as `${SCALAR_K8S_HOME}`. It is a good idea to set the environment variable before you run the commands.
 
 ```console
 export SCALAR_K8S_HOME=/path/to/scalar-k8s
@@ -24,7 +24,7 @@ export SCALAR_K8S_HOME=/path/to/scalar-k8s
 
 Before running the deployment, please decide which directory you want to use to store configuration files for accessing the Kubernetes cluster.
 It is recommended to be set outside of the repo since it should be separately managed per project.
-In the documentation, the directory where the configuration files are stored is referred as `${SCALAR_K8S_CONFIG_DIR}`.
+In the documentation, the directory where the configuration files are stored is referred to as `${SCALAR_K8S_CONFIG_DIR}`.
 
 ```console
 export SCALAR_K8S_CONFIG_DIR=/path/to/scalar-k8s-config-dir
@@ -34,12 +34,12 @@ export SCALAR_K8S_CONFIG_DIR=/path/to/scalar-k8s-config-dir
 
 scalar-k8s is a collection of scripts that deploys Scalar DL to a Kubernetes cluster.
 
-scalar-k8s has Terraform scripts for creating a set of infrastructure on Azure using modules of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It creates Azure Kubernetes Service (AKS) as well as a virtual network, database (Cassandra and Cosmos DB on Azure are supported) resources and a monitoring/logging service using Prometheus, Grafana, and td-agent. For details, please refer to [How to Create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md).
+scalar-k8s has Terraform scripts for creating a set of infrastructure on Azure using modules of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It creates Azure Kubernetes Service (AKS) as well as a virtual network, database (Cassandra and Cosmos DB on Azure are supported) resources, and a monitoring/logging service using Prometheus, Grafana, and td-agent. For details, please refer to [How to Create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md).
 
-Alternatively, you can use your own Kubernetes cluster. For the examples to create Kubernetes services such as AKS on Azure or EKS on AWS manually, please refer to [How to Manually Create AKS Cluster for Scalar DL deployment](./AKSManualDeploymentGuide.md) and [How to Manually Create EKS Cluster for Scalar DL deployment](./EKSManualDeploymentGuide.md).
+Alternatively, you can use a Kubernetes cluster set up in your own way. For the examples to create Kubernetes services such as AKS on Azure or EKS on AWS manually, please refer to [How to Manually Create AKS Cluster for Scalar DL deployment](./AKSManualDeploymentGuide.md) and [How to Manually Create EKS Cluster for Scalar DL deployment](./EKSManualDeploymentGuide.md).
 
 ### Deploying Scalar DL on Kubernetes Service
 
 If you are going to create the infrastructure with Terraform scripts mentioned above, you can use Ansible scripts included in scalar-k8s to deploy Scalar DL to AKS. Please follow [How to Deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md).
 
-The Ansible scripts use the Helm charts stored in the [`charts`](../charts) directory. You can run these Helm charts directly if you are going to use your own Kubernetes cluster. You can even use this option on an infrastructure created with the Terraform scripts instead of running them from Ansible. Please follow [How to Deploy Scalar DL on Kubernetes with Helm Charts](./DeployScalarDLHelm.md) for details.
+The Ansible scripts use the Helm charts stored in the [`charts`](../charts) directory. You can run these Helm charts directly if you use a Kubernetes cluster set up in a way that doesn't use scalar-terraform. You can also use the Helm charts on an infrastructure created with the scalar-terraform instead of running them from Ansible. Please follow [How to Deploy Scalar DL on Kubernetes with Helm Charts](./DeployScalarDLHelm.md) for details.

@@ -2,17 +2,17 @@
 
 This document explains how to create an SSH port-forwarded connection to the Kubernetes API in the scalar-terraform network.
 
-The Kubernetes cluster created with scalar-terraform doesn't expose the API server to public. You will need an SSH connection to the bastion host that does port-forwarding to the Kubernetes API to operate from your local machine.
+The Kubernetes cluster created with scalar-terraform doesn't expose the API server to the outside of the network. You will need an SSH connection to the bastion host that does port-forwarding to the Kubernetes API to operate from your local machine.
 
-After following the doc, you will get an ssh.cfg file to establish an SSH connection to the bastion host and a kube_config file for accessing the Kubernetes API on the connection.
+After following the doc, you will get an ssh.cfg file to establish an SSH connection to the bastion host and a kubeconfig file for accessing the Kubernetes API on the connection.
 
 ## Requirement
 
 * Have completed [How to create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
 
-## Create kube_config file
+## Create kubeconfig file
 
-You can get the kube_config file from `terraform output` of the `kubernetes` module.
+You can get the kubeconfig file from `terraform output` of the `kubernetes` module.
 
 ```console
 cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
@@ -63,9 +63,9 @@ cd ${SCALAR_K8S_CONFIG_DIR}
 ssh -F ssh.cfg bastion
 ```
 
-## How to access to Kubernetes from your local machine
+## How to access Kubernetes from your local machine
 
-Let's access to Kubernetes from your local machine.
+Let's access Kubernetes from your local machine.
 
 ```console
 $ kubectl get po,svc,endpoints,nodes -o wide
@@ -102,7 +102,7 @@ Please check out [Scalar DL Getting Started](https://scalardl.readthedocs.io/en/
 
 ## How to SSH to Kubernetes nodes
 
-To access to the Kubernetes nodes, look at the `INTERNAL-IP` from `kubectl get nodes -o wide`
+To access the Kubernetes nodes, look at the `INTERNAL-IP` from `kubectl get nodes -o wide`
 
 ```console
 $ cd ${SCALAR_K8S_CONFIG_DIR}

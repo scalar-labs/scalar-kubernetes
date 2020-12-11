@@ -46,11 +46,11 @@ $ ssh-add example_key
 # Create an environment and bastion server
 $ terraform init
 
-# Update the "name" to an unique value for your deployment inside "example.tfvars"
+# Update the "name" to a unique value for your deployment inside "example.tfvars"
 $ terraform apply -var-file example.tfvars
 ```
 
-Note that the current version uses [the network module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/network) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform).  It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
+Note that the current version uses [the `network` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/network) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
 
 ### Create SSH config file
 
@@ -94,7 +94,7 @@ $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-Note that the current version uses [the cassandra module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cassandra) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
+Note that the current version uses [the `cassandra` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cassandra) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
 
 By default, Cassandra nodes don't start up after the deployment. Once you update the configuration of each node, you need to start up the Cassandra service manually.
 
@@ -122,11 +122,11 @@ $ terraform init
 $ terraform apply
 ```
 
-Note that the current version uses [the cosmosdb module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cosmosdb) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
+Note that the current version uses [the `cosmosdb` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cosmosdb) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
 
 ## Create Monitor resources
 
-The Scalar deployment tools include a Prometheus metrics server, Grafana data visualization server, and Alertmanager server for cassandra cluster, cassy, and bastion server
+The Scalar deployment tools include a Prometheus metrics server, a Grafana data visualization server, an Alertmanager server for the Cassandra cluster, the Cassy instance, and the bastion server.
 
 * If you use Cosmos DB, please remove `cassandra` from `targets` in `example.tfvars` since the monitor module is not able to monitor Cosmos DB.
 
@@ -142,7 +142,7 @@ $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-Note that the current version uses [the monitor module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/monitor) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform/). It uses the master branch but it would probably need to be changed if you deploy it in your production environment.
+Note that the current version uses [the monitor module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/monitor) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform/). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
 
 ## How to access scalar-terraform network
 

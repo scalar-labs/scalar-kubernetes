@@ -7,7 +7,7 @@
 * Have completed [How to create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
   * Make sure the monitor server is up and running.
   * Make sure you generated the ssh.cfg file in `${SCALAR_K8S_HOME}/modules/azure/network`
-* There is `inventory.ini` file in `${SCALAR_K8S_CONFIG_DIR}`. Please refer to [Prepare Ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory).
+* There is the `inventory.ini` file in `${SCALAR_K8S_CONFIG_DIR}`. Please refer to [Prepare Ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory).
 
 ### Set up Fluent Bit Metrics for Prometheus
 
