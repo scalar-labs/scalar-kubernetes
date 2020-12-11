@@ -11,8 +11,6 @@ This document describes how to deploy Scalar DL on Kubernetes Services.
 | Azure CLI | latest | yes | https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest |
 | Kubectl | 1.16.13 | yes | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
 | Helm | 3.2.1 or latest | no | https://helm.sh/docs/intro/install/ |
-| Minikube | latest | no | https://kubernetes.io/docs/setup/learning-environment/minikube/ |
-| jmespath | latest | yes | https://github.com/jmespath/jmespath.py |
 
 ## Directory Notations
 
