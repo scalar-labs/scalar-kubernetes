@@ -1,8 +1,35 @@
-# How to Create Azure AKS with scalar-terraform
+# How to create Azure AKS with scalar-terraform
 
 This document shows how to create Azure Kubernetes Service (AKS) along with a virtual network, a bastion host, and database resources using Terraform scripts.
 
 The Terraform scripts for creating resources with [scalar-terraform](https://github.com/scalar-labs/scalar-terraform) are all stored in `${SCALAR_K8S_HOME}/modules`.
+
+## Prerequisites
+
+* Terraform >= 0.12.x
+* Ansible >= 2.9
+* Azure CLI configured with `az login`
+* ssh-agent
+
+You also need to have enough permissions to deploy the Kubernetes cluster with Terraform. Please see [Cloud Privileges for scalar-k8s](./CloudPrivileges.md#Azure) for more detail.
+
+## Architecture
+
+![image](images/architecture-aks.png)
+
+## What is created
+
+* An Azure VPC associated with Resource Group
+* An AKS cluster with two Kubernetes node pools
+* DNS Zone for internal host lookup
+* With Cassandra option (default):
+  * 3 Cassandra instances
+  * 1 Cassy instance
+  * 1 Reaper instance
+* With Cosmos DB option:
+  * A Cosmos DB Account
+* 1 Bastion instance with a public IP
+* 1 Monitor instance to collect metrics and logs
 
 ## Create network resources
 
@@ -119,5 +146,10 @@ Note that the current version uses [the monitor module](https://github.com/scala
 
 ## Next Steps
 
-* Please follow the steps in [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) to prepare tools needed in the bastion host, then go to [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md) to do the deployment.
+* Please follow [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) to prepare tools needed in the bastion host, then go to [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md) to do the deployment.
 * Alternatively, you can do the deployment process by running Helm charts directly from your local machine. Please refer to [Deploy Scalar DL with Helm](./DeployScalarDLHelm.md) for details.
+
+### Monitoring and log collection
+
+* Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for monitoring with Grafana, Alertmanager, and Prometheus.
+* Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for collecting logs in the monitor server with Fluent Bit.
