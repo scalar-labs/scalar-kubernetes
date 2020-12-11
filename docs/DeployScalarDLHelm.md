@@ -68,7 +68,7 @@ Note:
 
 ## Advanced Configuration
 
-To further customize the Helm charts, please refer to [How to customize values for Scalar DL and Schema Loading charts](./HelmValuesFiles.md).
+To further customize the Helm charts, please refer to [How to customize values for Scalar DL and Schema Loading Helm charts](./HelmValuesFiles.md).
 
 ## Uninstall Scalar DL
 

@@ -1,4 +1,4 @@
-# How to customize values for Scalar DL and Schema Loading charts
+# How to customize values for Scalar DL and Schema Loading Helm charts
 
 In `${SCALAR_K8S_CONFIG_DIR}` contain the helm custom values use for deploying the application in Kubernetes.
 

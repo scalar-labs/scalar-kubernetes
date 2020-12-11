@@ -95,4 +95,4 @@ The private endpoint is 10.42.44.4 on port 50051 and 50052
 
 ## Advanced Configuration
 
-To further customize the Helm charts used in the Ansible playbook to deploy Scalar DL and Envoy, please refer to [How to customize values for Scalar DL and Schema Loading charts](./HelmValuesFiles.md).
+To further customize the Helm charts used in the Ansible playbook to deploy Scalar DL and Envoy, please refer to [How to customize values for Scalar DL and Schema Loading Helm charts](./HelmValuesFiles.md).
