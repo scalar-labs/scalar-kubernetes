@@ -28,3 +28,6 @@ schemaLoading:
 
   # schemaLoading.imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
   imagePullSecrets: [name: reg-docker-secrets]
+
+  # schemaLoading.existingSecret -- Name of existing secret to use for storing database username and password
+  existingSecret: null
