@@ -21,7 +21,7 @@ schemaLoading:
   image:
     # schemaLoading.image.repository -- Docker image
     repository: ghcr.io/scalar-labs/scalardl-schema-loader
-    # schemaLoading.image.tag -- Docker tag
+    # schemaLoading.image.version -- Docker tag
     version: 1.2.0
     # schemaLoading.image.pullPolicy -- Specify a imagePullPolicy
     pullPolicy: IfNotPresent

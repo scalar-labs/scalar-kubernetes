@@ -1,6 +1,8 @@
 {{ template "chart.header" . }}
 
 {{ template "chart.description" . }}
-{{ template "chart.versionLine" . }}
+Current chart version is `{{ template "chart.version" . }}`
+
 {{ template "chart.requirementsSection" . }}
+
 {{ template "chart.valuesSection" . }}
