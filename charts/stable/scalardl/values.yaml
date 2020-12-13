@@ -184,3 +184,6 @@ ledger:
 
   # ledger.affinity -- the affinity/anti-affinity feature, greatly expands the types of constraints you can express
   affinity: {}
+
+  # ledger.existingSecret -- Name of existing secret to use for storing database username and password
+  existingSecret: null

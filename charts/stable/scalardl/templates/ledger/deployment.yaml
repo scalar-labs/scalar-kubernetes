@@ -43,9 +43,23 @@ spec:
           - name: SCALAR_DB_CONTACT_PORT
             value: "{{ .Values.ledger.scalarLedgerConfiguration.dbContactPort }}"
           - name: SCALAR_DB_USERNAME
-            value: "{{ .Values.ledger.scalarLedgerConfiguration.dbUsername }}"
+            valueFrom:
+              secretKeyRef:
+              {{- if .Values.ledger.existingSecret }}
+                name: {{ .Values.ledger.existingSecret }}
+              {{- else }}
+                name: {{ include "scalardl.fullname" . }}-ledger
+              {{- end }}
+                key: db-username
           - name: SCALAR_DB_PASSWORD
-            value: "{{ .Values.ledger.scalarLedgerConfiguration.dbPassword }}"
+            valueFrom:
+              secretKeyRef:
+              {{- if .Values.ledger.existingSecret }}
+                name: {{ .Values.ledger.existingSecret }}
+              {{- else }}
+                name: {{ include "scalardl.fullname" . }}-ledger
+              {{- end }}
+                key: db-password
           - name: SCALAR_DB_STORAGE
             value: "{{ .Values.ledger.scalarLedgerConfiguration.dbStorage }}"
           - name: SCALAR_DL_LEDGER_LOG_LEVEL
