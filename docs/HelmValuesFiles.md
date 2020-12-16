@@ -135,7 +135,7 @@ More information can be found in [the official documentation](https://kubernetes
 
 ## Use a different internal domain
 
-In `scalardl-custom-values.yaml` and `schema-loading-custom-values.yaml`, you can update resource as follow
+In `scalardl-custom-values.yaml` and `schema-loading-custom-values.yaml`, you can update the internal domain as follows.
 
 Open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and update the value of `dbContactPoints`.
 
