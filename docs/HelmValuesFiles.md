@@ -114,7 +114,7 @@ ledger:
 
 The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform.
 
-## Increase the resource of Ledger Pod
+## Increase the resource of Ledger Pods
 
 In `scalardl-custom-values.yaml`, you can update resource as follow
 
