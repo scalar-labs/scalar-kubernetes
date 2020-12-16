@@ -25,7 +25,7 @@ Please select one depending on how you created a Kubernetes cluster.
 
 #### Case 1: Use a Kubernetes cluster created with scalar-terraform
 
-This is the case that you created [the Kubernetes cluster with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md).
+This is the case where you created a Kubernetes cluster with [scalar-terraform](https://github.com/scalar-labs/scalar-terraform).
 The Kubernetes cluster in the scalar-terraform network doesn't expose the API server to the outside of the network. You will need an SSH port-forwarded access to the Kubernetes API to install the Helm charts. Please follow [How to do port-forwarding to Kubnernetes API in scalar-terraform network](./PortForwardingToKubernetesAPIInScalarTerraformNetwork.md) to get the configuration.
 
 #### Case 2: Use a Kubernetes cluster created manually or by other ways than scalar-terraform
