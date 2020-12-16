@@ -12,33 +12,35 @@ envoy:
     annotations:
       service.beta.kubernetes.io/azure-load-balancer-internal: "true"
       service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "k8s_ingress"
+      # service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+      # service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
 
   tolerations:
-  - effect: NoSchedule
-    key: kubernetes.io/app
-    operator: Equal
-    value: scalardlpool
+    - effect: NoSchedule
+      key: kubernetes.io/app
+      operator: Equal
+      value: scalardlpool
 
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
-        - matchExpressions:
-          - key: agentpool
-            operator: In
-            values:
-            - scalardlpool
+          - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                  - scalardlpool
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
-      - podAffinityTerm:
-          labelSelector:
-            matchExpressions:
-            - key: app.kubernetes.io/name
-              operator: In
-              values:
-              - scalar-ledger
-          topologyKey: kubernetes.io/hostname
-        weight: 50
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - scalar-ledger
+            topologyKey: kubernetes.io/hostname
+          weight: 50
 
   resources:
     requests:
@@ -69,31 +71,31 @@ ledger:
   nodeSelector: {}
 
   tolerations:
-  - effect: NoSchedule
-    key: kubernetes.io/app
-    operator: Equal
-    value: scalardlpool
+    - effect: NoSchedule
+      key: kubernetes.io/app
+      operator: Equal
+      value: scalardlpool
 
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
-        - matchExpressions:
-          - key: agentpool
-            operator: In
-            values:
-            - scalardlpool
+          - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                  - scalardlpool
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
-      - podAffinityTerm:
-          labelSelector:
-            matchExpressions:
-            - key: app.kubernetes.io/name
-              operator: In
-              values:
-              - scalar-ledger
-          topologyKey: kubernetes.io/hostname
-        weight: 50
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - scalar-ledger
+            topologyKey: kubernetes.io/hostname
+          weight: 50
 
   resources:
     requests:
