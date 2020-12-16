@@ -142,7 +142,7 @@ Open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and update the value
 ```yml
 ledger:
   scalarLedgerConfiguration:
-    cassandraHost: cassandra-lb.internal.scalar-labs.com
+    dbContactPoints: cassandra-lb.internal.scalar-labs.com
 ```
 
 Please don't forget to change the schema internal domain in `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`.
