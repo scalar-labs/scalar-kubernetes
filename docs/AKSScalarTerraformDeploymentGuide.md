@@ -177,7 +177,7 @@ $ ssh -F ssh.cfg monitor-1.internal.scalar-labs.com
 
 ## Next Steps
 
-* Please follow [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) to prepare tools needed in the bastion host, then go to [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md) to do the deployment.
+* Please follow [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md) to install required tools to deploy applications from the bastion host, then go to [How to deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md) to do the deployment.
 * Alternatively, you can do the deployment process by running Helm charts directly from your local machine. Please refer to [Deploy Scalar DL with Helm](./DeployScalarDLHelm.md) for details.
 
 ### Monitoring and log collection

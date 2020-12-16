@@ -12,7 +12,7 @@ This document describes how to deploy Scalar DL on Kubernetes Services.
 | Kubectl | 1.16.13 | yes | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
 | Helm | 3.2.1 or latest | no | https://helm.sh/docs/intro/install/ |
 
-## Directory Notations
+## Directory Notation
 
 Throughout the documentation, the directory of the cloned copy of scalar-k8s on your local machine is referred to as `${SCALAR_K8S_HOME}`. It is a good idea to set the environment variable before you run the commands.
 
@@ -30,7 +30,7 @@ In the documentation, the directory where the configuration files are stored is 
 export SCALAR_K8S_CONFIG_DIR=/path/to/scalar-k8s-config-dir
 ```
 
-## Setting up Kubernetes Service
+## Setting up a Kubernetes Service
 
 scalar-k8s is a collection of scripts that deploys Scalar DL to a Kubernetes cluster.
 
@@ -38,7 +38,7 @@ scalar-k8s has Terraform scripts for creating a set of infrastructure on Azure u
 
 Alternatively, you can use a Kubernetes cluster set up in your own way. For the examples to create Kubernetes services such as AKS on Azure or EKS on AWS manually, please refer to [How to Manually Create AKS Cluster for Scalar DL deployment](./AKSManualDeploymentGuide.md) and [How to Manually Create EKS Cluster for Scalar DL deployment](./EKSManualDeploymentGuide.md).
 
-### Deploying Scalar DL on Kubernetes Service
+## Deploying Scalar DL on Kubernetes Service
 
 If you are going to create the infrastructure with Terraform scripts mentioned above, you can use Ansible scripts included in scalar-k8s to deploy Scalar DL to AKS. Please follow [How to Deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md).
 

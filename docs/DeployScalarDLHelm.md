@@ -21,14 +21,16 @@ The document assumes the following.
 
 ### Prepare kubeconfig file
 
-#### Case 1: Kubernetes cluster created with scalar-terraform
+Please select one depending on how you created a Kubernetes cluster.
+
+#### Case 1: Use a Kubernetes cluster created with scalar-terraform
 
 This is the case that you created [the Kubernetes cluster with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md).
 The Kubernetes cluster in the scalar-terraform network doesn't expose the API server to the outside of the network. You will need an SSH port-forwarded access to the Kubernetes API to install the Helm charts. Please follow [How to do port-forwarding to Kubnernetes API in scalar-terraform network](./PortForwardingToKubernetesAPIInScalarTerraformNetwork.md) to get the configuration.
 
-#### Case 2: Kubernetes cluster in your own way
+#### Case 2: Use a Kubernetes cluster created manually or by other ways than scalar-terraform
 
-If you use a Kubernetes cluster in your own way, please prepare the config file by yourself to communicate with the cluster by running commands, for example, `az aks get-credentials` or `aws eks update-kubeconfig`.
+If you use a Kubernetes cluster created manually or by other ways than scalar-terraform, please prepare the config file by yourself to communicate with the cluster by running commands, for example, `az aks get-credentials` or `aws eks update-kubeconfig`.
 
 ### Create docker registry secrets in kubernetes
 
