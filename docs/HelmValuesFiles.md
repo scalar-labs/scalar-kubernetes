@@ -56,7 +56,7 @@ Finally, open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and uncomme
     dbStorage: cosmos
 ```
 
-## Increase the number of Envoy Pod
+## Increase the number of Envoy Pods
 
 In `scalardl-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
 
@@ -67,9 +67,9 @@ envoy:
   replicaCount: 6
 ```
 
-The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform.
+The number of deployable pods depends on the number of available nodes. So, you may need to increase the number of nodes with Terraform.
 
-## Increase the resource of Envoy Pod
+## Increase the resource of Envoy Pods
 
 In `scalardl-custom-values.yaml`, you can update resource as follow
 
@@ -101,9 +101,9 @@ envoy:
       service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "k8s_ingress"
 ```
 
-## Increase the number of Ledger Pod
+## Increase the number of Ledger Pods
 
-In `scalardl-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
+In `scalardl-custom-values.yaml`, you can update `replicaCount` to the desired number of pods.
 
 edit `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml`
 
@@ -137,7 +137,7 @@ More information can be found in [the official documentation](https://kubernetes
 
 In `scalardl-custom-values.yaml` and `schema-loading-custom-values.yaml`, you can update resource as follow
 
-edit `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml`
+Open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and update the value of `dbContactPoints`.
 
 ```yml
 ledger:
@@ -145,7 +145,7 @@ ledger:
     cassandraHost: cassandra-lb.internal.scalar-labs.com
 ```
 
-don't forget to change the schema internal domain in `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`
+Please don't forget to change the schema internal domain in `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`.
 
 ```yml
 cassandra:
