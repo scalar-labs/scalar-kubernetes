@@ -112,7 +112,7 @@ ledger:
   replicaCount: 6
 ```
 
-The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform.
+The number of deployable pods depends on the number of available nodes. You may need to increase the number of nodes with Terraform.
 
 ## Increase the resource of Ledger Pods
 
