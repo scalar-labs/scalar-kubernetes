@@ -42,6 +42,6 @@ Alternatively, you can use a Kubernetes cluster set up in your own way. For the 
 
 ## Deploying Scalar DL on Kubernetes Service
 
-If you are going to create the infrastructure with Terraform scripts mentioned above, you can use Ansible scripts included in scalar-k8s to deploy Scalar DL to AKS. Please follow [How to Deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md).
+If you are going to create the infrastructure with Terraform scripts mentioned above, you can use Ansible scripts included in scalar-k8s to deploy Scalar DL to AKS. The Ansible scripts apply the Helm charts stored in the [`charts`](../charts) directory in an appropriate order automatically. Please follow [How to Deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md).
 
-The Ansible scripts use the Helm charts stored in the [`charts`](../charts) directory. You can run these Helm charts directly if you use a Kubernetes cluster set up in a way that doesn't use scalar-terraform. You can also use the Helm charts on an infrastructure created with the scalar-terraform instead of running them from Ansible. Please follow [How to Deploy Scalar DL on Kubernetes with Helm Charts](./DeployScalarDLHelm.md) for details.
+You can also apply these Helm charts manually. Please follow [How to Deploy Scalar DL on Kubernetes with Helm Charts](./DeployScalarDLHelm.md) for details.
