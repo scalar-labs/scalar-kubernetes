@@ -79,7 +79,7 @@ No resources found
 
 ## Kubernetes Prometheus
 
-See the guide [How to access](./KubernetesMonitorGuide.md#how-to-access)
+See the guide [How to access](./K8sMonitorGuide.md#how-to-access)
 
 [The targets](http://localhost:9090/targets) are the endpoints that Prometheus check to collect the metrics for each component.
 

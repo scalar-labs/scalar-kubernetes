@@ -182,5 +182,5 @@ $ ssh -F ssh.cfg monitor-1.internal.scalar-labs.com
 
 ### Monitoring and log collection
 
-* Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for monitoring with Grafana, Alertmanager, and Prometheus.
+* Please refer to [Kubernetes Monitor Guide](./K8sMonitorGuide.md) for monitoring with Grafana, Alertmanager, and Prometheus.
 * Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for collecting logs in the monitor server with Fluent Bit.
