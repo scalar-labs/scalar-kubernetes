@@ -64,7 +64,7 @@ alertmanager:
             {{ end }}
           {{ end }}{% endraw %}
         
-        title_link: 'https://github.com/scalar-labs/scalar-k8s/tree/master/docs/alerts/{% raw %}{{ .GroupLabels.app }}.md#{{ .GroupLabels.alertname }}{% endraw %}'
+        title_link: 'https://github.com/scalar-labs/scalar-kubernetes/tree/master/docs/alerts/{% raw %}{{ .GroupLabels.app }}.md#{{ .GroupLabels.alertname }}{% endraw %}'
 {% endif %}
 
   alertmanagerSpec:

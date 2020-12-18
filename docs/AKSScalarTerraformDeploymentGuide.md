@@ -11,7 +11,7 @@ The Terraform scripts for creating resources with [scalar-terraform](https://git
 * Azure CLI configured with `az login`
 * ssh-agent
 
-You also need to have enough permissions to deploy the Kubernetes cluster with Terraform. Please see [Cloud Privileges for scalar-k8s](./CloudPrivileges.md#Azure) for more detail.
+You also need to have enough permissions to deploy the Kubernetes cluster with Terraform. Please see [Cloud Privileges for scalar-kubernetes](./CloudPrivileges.md#Azure) for more detail.
 
 ## Architecture
 
@@ -182,5 +182,5 @@ $ ssh -F ssh.cfg monitor-1.internal.scalar-labs.com
 
 ### Monitoring and log collection
 
-* Please refer to [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md) for monitoring with Grafana, Alertmanager, and Prometheus.
+* Please refer to [Kubernetes Monitor Guide](./K8sMonitorGuide.md) for monitoring with Grafana, Alertmanager, and Prometheus.
 * Please refer to [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) for collecting logs in the monitor server with Fluent Bit.

@@ -1,6 +1,6 @@
 # How to collect logs from Kubernetes applications
 
-`scalar-k8s` uses Fluent Bit to collect logs from the applications of Kubernetes cluster. This document explains how to deploy Fluent Bit on Kubernetes with Ansible. After following the doc, you will be able to see collected logs in the monitor server.
+`scalar-kubernetes` uses Fluent Bit to collect logs from the applications of Kubernetes cluster. This document explains how to deploy Fluent Bit on Kubernetes with Ansible. After following the doc, you will be able to see collected logs in the monitor server.
 
 ## Requirements
 
@@ -13,7 +13,7 @@
 
 Fluent Bit comes with a built-in HTTP server that can be used to monitor the internal information and the metrics of each running plugin. More information about this feature can be found on the [official website](https://docs.fluentbit.io/manual/administration/monitoring)
 
-Please make sure the monitor resources are created with [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md).
+Please make sure the monitor resources are created with [Kubernetes Monitor Guide](./K8sMonitorGuide.md).
 
 By default, the Prometheus service monitor is created, you can deactivate it by setting `fluent_activate_metrics` to `no` in vars.
 
