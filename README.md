@@ -38,4 +38,4 @@ The `playbooks` directory contains Ansible playbooks to help you to install and 
 
 ## Future Work
 
-* Support other cloud providers like AWS or GKE
+* Support other cloud providers like AKS (coming soon) or GKE
