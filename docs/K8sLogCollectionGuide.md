@@ -4,20 +4,16 @@
 
 ## Requirements
 
-### Prepare Ansible inventory
-
-Setting up Ansible inventory is required to install Fluent Bit with Ansible. Please refer to [prepare ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory) for how to set up an ansible inventory.
-
-### Set up Monitor server
-
-Monitor server must be up and running before start collecting logs.
-please refer to [Monitor server](https://github.com/scalar-labs/scalar-terraform/blob/master/examples/azure/README.md#create-monitor-resources) for how to set up Monitor server.
+* Have completed [How to create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
+  * Make sure the monitor server is up and running.
+  * Make sure you generated the ssh.cfg file in `${SCALAR_K8S_HOME}/modules/azure/network`
+* There is the `inventory.ini` file in `${SCALAR_K8S_CONFIG_DIR}`. Please refer to [Prepare Ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory).
 
 ### Set up Fluent Bit Metrics for Prometheus
 
 Fluent Bit comes with a built-in HTTP server that can be used to monitor the internal information and the metrics of each running plugin. More information about this feature can be found on the [official website](https://docs.fluentbit.io/manual/administration/monitoring)
 
-Please also make sure monitor resources are created with [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md).
+Please make sure the monitor resources are created with [Kubernetes Monitor Guide](./KubernetesMonitorGuide.md).
 
 By default, the Prometheus service monitor is created, you can deactivate it by setting `fluent_activate_metrics` to `no` in vars.
 
@@ -26,12 +22,6 @@ By default, the Prometheus service monitor is created, you can deactivate it by 
 Now let's deploy Fluent Bit to Kubernetes.
 
 ```console
-# Please update `/path/to/local-repository` before running the command.
-$ export SCALAR_K8S_HOME=/path/to/local-repository
-
-# Please update `/path/to/local-repository-config-dir` before running the command.
-$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
-
 $ cd ${SCALAR_K8S_HOME}
 $ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-fluentbit.yml
 
@@ -41,7 +31,7 @@ TASK [Fluentbit : Create folder on remote server] ******************************
 ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com] => (item=/home/centos/manifests)
 ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com] => (item=/home/centos/manifests/fluentbit)
 
-[OMIT]
+...
 
 TASK [Fluentbit : Deploy ServiceMonitor for Fluentbit] *******************************************************************************************************************************************************
 ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
@@ -52,11 +42,11 @@ bastion                    : ok=7    changed=3    unreachable=0    failed=0    s
 
 ## View log in Monitor server
 
-Connect on the monitor server, please refer to [SSH Guide](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/SSHGuide.md)
+Connect on the monitor server.
 
 ```console
-$ cd ${SCALAR_K8S_CONFIG_DIR}/
-$ ssh -F ssh.cfg monitor.internal.scalar-labs.com
+cd ${SCALAR_K8S_HOME}/modules/azure/network
+ssh -F ssh.cfg monitor.internal.scalar-labs.com
 ```
 
 The Kubernetes log are located under `/log/kubernetes/` directory.

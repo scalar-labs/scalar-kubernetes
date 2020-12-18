@@ -4,73 +4,27 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 
 ## Requirements
 
+* Have completed the [How to create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
 * Have completed the [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
 * An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader` docker repositories.
   * `scalar-ledger` and `scalardl-schema-loader` are available to only our partners and customers at the moment.
 
-Note that the Kubernetes cluster needs to be set up properly in advance. This can be easily done with the [Terraform module](../../docs/README.md)
-
 ## Preparation
 
-You need set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the values directly in the `playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
+You need to set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the values directly in the `playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
 ```console
-$ export DOCKERHUB_USER=<user>
-$ export DOCKERHUB_ACCESS_TOKEN=<token>
-
-# Please update `/path/to/local-repository` before running the command.
-$ export SCALAR_K8S_HOME=/path/to/local-repository
-
-# Please update `/path/to/local-repository-config-dir` before running the command.
-$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
+export DOCKERHUB_USER=<user>
+export DOCKERHUB_ACCESS_TOKEN=<token>
 ```
 
-Copy from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`
+Copy the Helm values files from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`
 
 ```console
-$ cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
+cp ${SCALAR_K8S_HOME}/conf/{scalardl-custom-values.yaml,schema-loading-custom-values.yaml} ${SCALAR_K8S_CONFIG_DIR}/
 ```
 
-### Use Cosmos DB
-
-Scalar DL uses Cassandra as a backend database by default. However, it can optionally use Cosmos DB instead of Cassandra when you deploy on Azure.
-
-To configure Scalar DL to work with Cosmos DB, `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml` and `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` files need to be updated to set the information about a Cosmos DB deployment as described below.
-
-First, get `cosmosdb_account_endpoint` and `cosmosdb_account_primary_master_key` from the `cosmosdb` module:
-
-```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/cosmosdb
-$ terraform output
-cosmosdb_account_endpoint = https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
-cosmosdb_account_primary_master_key = <PRIMARY_MASTER_KEY>
-cosmosdb_account_secondary_master_key = ...
-```
-
-And open `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`, change the value of `database` to `cosmos`, and update the values of `contactPoints` and `password` with the ones you got above respectively.
-
-```yaml
-schemaLoading:
-  database: cosmos
-  contactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
-  password: <PRIMARY_MASTER_KEY>
-  cosmosBaseResourceUnit: "400"
-  image:
-    repository: scalarlabs/scalardl-schema-loader
-    version: 1.0.0
-    pullPolicy: IfNotPresent
-```
-
-Finally, open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and uncomment and update the values of the `scalarLedgerConfiguration`.
-
-```yaml
-  scalarLedgerConfiguration:
-    dbContactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
-    dbContactPort: null
-    dbUsername: ""
-    dbPassword: <PRIMARY_MASTER_KEY>
-    dbStorage: cosmos
-```
+At this point, you need to update these Helm values files to configure the database. Please follow [Configure Database](./HelmValuesFiles.md#configure-database) in the Helm values files documentation.
 
 ## Deploy Scalar DL
 
@@ -111,7 +65,7 @@ PLAY RECAP *********************************************************************
 bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com : ok=7    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 ```
 
-You can check if the pods and the services are properly deployed as follows.
+You can check if the pods and the services are properly deployed by running the `kubectl` command on the bastion host as follows.
 
 ```console
 $ kubectl get po,svc,endpoints -o wide
@@ -139,121 +93,6 @@ endpoints/prod-scalardl-ledger-headless   10.42.40.108,10.42.41.108,10.42.41.17 
 
 The private endpoint is 10.42.44.4 on port 50051 and 50052
 
-## Customize values for Scalar DL and Schema Loading charts
+## Advanced Configuration
 
-In `${SCALAR_K8S_CONFIG_DIR}` contain the helm custom values use for deploying the application in Kubernetes.
-
-The default values are describe in here:
-
-* [scalardl](../charts/stable/scalardl/README.md)
-* [schema-loading](../charts/stable/schema-loading/README.md)
-
-Once you change the value on your local machine, you need to re-apply the deployment `ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-scalardl.yml`
-
-### How to increase the number of Envoy Pod
-
-In `scalardl-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
-
-edit `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml`
-
-```yml
-envoy:
-  replicaCount: 6
-```
-
-The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform
-
-### How to increase the resource of Envoy Pod
-
-In `scalardl-custom-values.yaml`, you can update resource as follow
-
-edit `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml`
-
-```yml
-envoy:
-  resources:
-    requests:
-      cpu: 400m
-      memory: 256Mi
-    limits:
-      cpu: 500m
-      memory: 328Mi
-```
-
-More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
-
-### How to expose `Envoy` endpoint to public
-
-In `scalardl-custom-values.yaml`, you can remove `annotations` to expose `Envoy`
-
-```yml
-envoy:
-  service:
-    type: LoadBalancer
-    annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-      service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "k8s_ingress"
-```
-
-### How to increase the number of Ledger Pod
-
-In `scalardl-custom-values.yaml`, you can update the number of replicaCount to the desired number of pod
-
-edit `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml`
-
-```yml
-ledger:
-  replicaCount: 6
-```
-
-The number of pods is linked to the number of nodes available. You may need to increase the number of nodes with Terraform
-
-### How to increase the resource of Ledger Pod
-
-In `scalardl-custom-values.yaml`, you can update resource as follow
-
-edit `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml`
-
-```yml
-ledger:
-  resources:
-    requests:
-      cpu: 1500m
-      memory: 2Gi
-    limits:
-      cpu: 1600m
-      memory: 4Gi
-```
-
-More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container)
-
-## Use a different internal domain
-
-In `scalardl-custom-values.yaml` and `schema-loading-custom-values.yaml`, you can update resource as follow
-
-edit `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml`
-
-```yml
-ledger:
-  scalarLedgerConfiguration:
-    cassandraHost: cassandra-lb.internal.scalar-labs.com
-```
-
-don't forget to change the schema internal domain in `${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml`
-
-```yml
-cassandra:  
-  contactPoints: cassandra-lb.internal.scalar-labs.com
-```
-
-Note: If the internal_domain var is not correct or the Cassandra is not fully started, the schema loading job can fail, you will get the following error
-
-```console
-TASK [scalardl : Check Schema Loading job have been successful] **********************************************************************************************************************************************************
-FAILED - RETRYING: Check Schema Loading job have been successful (10 retries left).
-FAILED - RETRYING: Check Schema Loading job have been successful (9 retries left).
-[OMIT]
-FAILED - RETRYING: Check Schema Loading job have been successful (2 retries left).
-FAILED - RETRYING: Check Schema Loading job have been successful (1 retries left).
-fatal: [bastion-example-k8s-azure-b8ci1si.eastus.cloudapp.azure.com]: FAILED!
-```
+To further customize the Helm charts used in the Ansible playbook to deploy Scalar DL and Envoy, please refer to [How to customize values for Scalar DL and Schema Loading Helm charts](./HelmValuesFiles.md).

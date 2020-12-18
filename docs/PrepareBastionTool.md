@@ -7,14 +7,8 @@ This document explains how to install Kubernetes CLI (kubectl) and Helm on the b
 First, you create an Ansible inventory file that contains the hostname and the username of the bastion as follows.
 
 ```console
-# Please update `/path/to/local-repository` before running the command.
-$ export SCALAR_K8S_HOME=/path/to/local-repository
-
-# Please update `/path/to/local-repository-config-dir` before running the command.
-$ export SCALAR_K8S_CONFIG_DIR=/path/to/local-repository-config-dir
-
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
-$ terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
+cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
+terraform output inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
 ```
 
 The inventory file should look like below.
@@ -37,8 +31,8 @@ internal_domain=internal.scalar-labs.com
 Secondly, you create a kubeconfig file that contains information required to access the kubernetes cluster as follows.
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/examples/azure/kubernetes/
-$ terraform output kube_config > ${SCALAR_K8S_CONFIG_DIR}/kube_config
+cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
+terraform output kube_config > ${SCALAR_K8S_CONFIG_DIR}/kube_config
 ```
 
 The kubeconfig file should look like below.
@@ -78,7 +72,7 @@ $ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-
 
 PLAY [Install necessary kubernetes binary on bastion] ****************************************************************************************************************************************************************************************************************
 
-[OMIT]
+...
 
 TASK [helm : Add stable charts repository from helm] *****************************************************************************************************************************************************************************************************************
 changed: [bastion-example-k8s-azure-p5rzic.eastus.cloudapp.azure.com]
