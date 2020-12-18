@@ -11,7 +11,7 @@ The Terraform scripts for creating resources with [scalar-terraform](https://git
 * Azure CLI configured with `az login`
 * ssh-agent
 
-You also need to have enough permissions to deploy the Kubernetes cluster with Terraform. Please see [Cloud Privileges for scalar-k8s](./CloudPrivileges.md#Azure) for more detail.
+You also need to have enough permissions to deploy the Kubernetes cluster with Terraform. Please see [Cloud Privileges for scalar-kubernetes](./CloudPrivileges.md#Azure) for more detail.
 
 ## Architecture
 

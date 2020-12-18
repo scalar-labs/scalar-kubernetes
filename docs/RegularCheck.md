@@ -1,6 +1,6 @@
 # What you might want to check on a regular basis
 
-Most of the components deployed by scalar-k8s are self-healing with the help of the managed k8s services and k8s self-healing capability. There are also configured alerts that occur when some unexpected behavior happens. Thus, there shouldn't be so many things to do day by day for running a service with scalar-k8s. However, it is recommended to check the status of a system on a regular basis to see if everything is working fine. Here is the list of things you might want to do on a regular basis.
+Most of the components deployed by scalar-kubernetes are self-healing with the help of the managed k8s services and k8s self-healing capability. There are also configured alerts that occur when some unexpected behavior happens. Thus, there shouldn't be so many things to do day by day for running a service with scalar-kubernetes. However, it is recommended to check the status of a system on a regular basis to see if everything is working fine. Here is the list of things you might want to do on a regular basis.
 
 ## Kubernetes
 

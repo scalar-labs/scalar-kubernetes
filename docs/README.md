@@ -19,4 +19,4 @@
 * Best practices
   * [Recommended Practices of Operation with Scalar Kubernetes](./BestPracticeGuide.md)
 * Other docs
-  * [Cloud Privileges for scalar-k8s](./CloudPrivileges.md)
+  * [Cloud Privileges for scalar-kubernetes](./CloudPrivileges.md)
