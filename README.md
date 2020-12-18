@@ -4,9 +4,9 @@
 
 # Scalar Kubernetes
 
-Scalar Kubernetes is a set of Terraform modules, Helm charts, and Ansible playbooks that can be used to orchestrate a Scalar DLT network in a cloud environment. The Terraform modules are mainly used to create Cassandra nodes and a Kubernetes cluster. The Helm charts are used to deploy stateless Scalar DL containers such as scalar-ledger and Envoy on the Kubernetes cluster. The Ansible playbooks are used to install required tools such as kubectl on bastion and manage the Kubernetes applications.
+Scalar Kubernetes is a set of Terraform modules, Helm charts, and Ansible playbooks that can be used to orchestrate a Scalar DLT network in a cloud environment. The Terraform modules are mainly used to create a database environment (e.g., a Cassandra cluster) and a Kubernetes cluster. The Helm charts are used to deploy stateless Scalar DL containers such as scalar-ledger and Envoy on the Kubernetes cluster. The Ansible playbooks are used to install required tools such as kubectl on bastion and manage the Kubernetes applications.
 
-Note that the current version only supports the deployment of a single Scalar DLT cluster in Azure. It does *NOT* support multi-cluster Scalar DLT deployment, where multiple ledgers are managed independently through Scalar DM and other cloud providers.
+Note that the current version only supports the deployment of a single Scalar DL cluster in Azure. It does *NOT* support multi-cluster Scalar DL deployment, where multiple ledgers are managed independently through Scalar DL Ordering and other cloud providers.
 
 ## Requirements
 
