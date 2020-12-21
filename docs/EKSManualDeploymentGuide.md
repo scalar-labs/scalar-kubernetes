@@ -16,7 +16,7 @@ Please follow [Create your managed node group using the AWS Management Console](
 Please specify the same Kubernetes label for `ledger` and `envoy`. It will help you to deploy them in the same node group. The current custom config specifies the key `agentpool` and the value `scalardlpool` for that, so please specify it if you don't have any preference.
 Accordingly, the instance type for `ledger` and `envoy` should be selected appropriately. The recommended instance type is `m5.large` if you don't have any preference.
 
-## Access AKS Cluster
+## Access EKS Cluster
 
 Prepare kube config file
 ```
