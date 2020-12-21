@@ -34,7 +34,7 @@ You also need to have enough permissions to deploy the Kubernetes cluster with T
 ## Create network resources
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/examples/azure/network
 
 # Generate a test key-pair
 $ ssh-keygen -b 2048 -t rsa -f ./example_key -q -N ""
@@ -71,7 +71,7 @@ It is needed to connect to the various hosts created with scalar-terraform in th
     ```
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/examples/azure/kubernetes
 
 # Create the Kubernetes cluster
 $ terraform init
@@ -87,7 +87,7 @@ Deploy either a Cassandra cluster or a Cosmos DB account, depending on your choi
 ### Cassandra
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/cassandra
+$ cd ${SCALAR_K8S_HOME}/modules/examples/azure/cassandra
 
 # Create the cassandra cluster
 $ terraform init
@@ -99,7 +99,7 @@ Note that the current version uses [the `cassandra` module](https://github.com/s
 By default, Cassandra nodes don't start up after the deployment. Once you update the configuration of each node, you need to start up the Cassandra service manually.
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/examples/azure/network
 $ ssh -F ssh.cfg cassandra-1.internal.scalar-labs.com
 [centos@cassandra-1 ~]$ sudo systemctl start cassandra
 ```
@@ -115,7 +115,7 @@ cassandra = {
 ### Cosmos DB
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/cosmosdb
+$ cd ${SCALAR_K8S_HOME}/modules/examples/azure/cosmosdb
 
 # Create Cosmos DB account
 $ terraform init
@@ -135,7 +135,7 @@ The Scalar deployment tools include a Prometheus metrics server, a Grafana data 
     ```
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/monitor
+$ cd ${SCALAR_K8S_HOME}/modules/examples/azure/monitor
 
 # Create the monitor server for cassandra modules and log collection
 $ terraform init
@@ -153,7 +153,7 @@ You can get some useful information about your deployments, such as a bastion pu
 Save the SSH config to a file named `ssh.cfg` in the `network` module. The config assumes that the private key for an environment is added to your ssh-agent.
 
 ```console
-cd ${SCALAR_K8S_HOME}/modules/azure/network
+cd ${SCALAR_K8S_HOME}/modules/examples/azure/network
 terraform output ssh_config > ssh.cfg
 ```
 
@@ -164,7 +164,7 @@ Here are some examples:
 
 ```console
 # You need to cd to the network module directory
-$ cd ${SCALAR_K8S_HOME}/modules/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/examples/azure/network
 
 # Connect to the instances
 $ ssh -F ssh.cfg cassandra-1.internal.scalar-labs.com

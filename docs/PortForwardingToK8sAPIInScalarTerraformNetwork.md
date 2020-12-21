@@ -15,7 +15,7 @@ After following the doc, you will get an ssh.cfg file to establish an SSH connec
 You can get the kubeconfig file from `terraform output` of the `kubernetes` module.
 
 ```console
-cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes/
+cd ${SCALAR_K8S_HOME}/modules/examples/azure/kubernetes/
 terraform output kube_config > ~/.kube/config
 ```
 
@@ -37,7 +37,7 @@ contexts:
 The following command will generate an `ssh.cfg` to connect to the bastion. It contains `LocalForward 7000` to the Kubernetes API so that you can access the API from your local machine with the kube_config file created in the above section.
 
 ```console
-cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
+cd ${SCALAR_K8S_HOME}/modules/examples/azure/kubernetes
 terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/ssh.cfg
 ```
 
