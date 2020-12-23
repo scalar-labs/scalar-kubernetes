@@ -2,7 +2,7 @@
 
 This document shows how to create Azure Kubernetes Service (AKS) along with a virtual network, a bastion host, and database resources using Terraform scripts.
 
-The Terraform scripts for creating resources with [scalar-terraform](https://github.com/scalar-labs/scalar-terraform) are all stored in `${SCALAR_K8S_HOME}/modules`.
+The Terraform scripts for creating resources with [scalar-terraform](https://github.com/scalar-labs/scalar-terraform) are all stored in [scalar-terraform-examples](https://github.com/scalar-labs/scalar-terraform-examples).
 
 ## Prerequisites
 
@@ -30,6 +30,12 @@ You also need to have enough permissions to deploy the Kubernetes cluster with T
   * A Cosmos DB Account
 * 1 Bastion instance with a public IP
 * 1 Monitor instance to collect metrics and logs
+
+## Clone scalar-teraform-examples
+
+```console
+$ git clone https://github.com/scalar-labs/scalar-terraform-examples -b <master or tag> modules
+```
 
 ## Create network resources
 
