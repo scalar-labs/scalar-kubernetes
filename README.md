@@ -22,11 +22,7 @@ To get started with simple deployment, please follow [the getting started guide]
 
 ## Repository Overview
 
-The repo is divided into three components, Terraform modules, Helm charts, and Ansible playbooks.
-
-### [Terraform modules](./modules)
-
-The `modules` directory contains a set of Terraform modules to deploy the infrastructure e.g: Network, Cassandra, Monitor, and Kubernetes cluster. Those modules basically configure parameters and delegate actual creation to the terraform modules defined in [scalar-terraform](https://github.com/scalar-labs/scalar-terraform)
+The repo is divided into two components, Helm charts, and Ansible playbooks.
 
 ### [Charts](./charts)
 
@@ -38,4 +34,4 @@ The `playbooks` directory contains Ansible playbooks to help you to install and 
 
 ## Future Work
 
-* Support other cloud providers like AKS (coming soon) or GKE
+* Support other cloud providers like GKE
