@@ -34,7 +34,7 @@ You also need to have enough permissions to deploy the Kubernetes cluster with T
 ## Clone scalar-teraform-examples
 
 ```console
-$ git clone https://github.com/scalar-labs/scalar-terraform-examples -b <master or tag> /path/to/scalar-terraform-examples
+$ git clone https://github.com/scalar-labs/scalar-terraform-examples -b <main or tag> /path/to/scalar-terraform-examples
 $ export SCALAR_TERRAFORM_EXAMPLES=/path/to/scalar-terraform-examples
 ```
 
