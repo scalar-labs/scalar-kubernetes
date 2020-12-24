@@ -4,9 +4,10 @@
 
 # Scalar Kubernetes
 
-Scalar Kubernetes is a set of Terraform modules, Helm charts, and Ansible playbooks that can be used to orchestrate a Scalar DLT network in a cloud environment. The Terraform modules are mainly used to create a database environment (e.g., a Cassandra cluster) and a Kubernetes cluster. The Helm charts are used to deploy stateless Scalar DL containers such as scalar-ledger and Envoy on the Kubernetes cluster. The Ansible playbooks are used to install required tools such as kubectl on bastion and manage the Kubernetes applications.
+Scalar Kubernetes is a set of Helm charts and Ansible playbooks that can be used to orchestrate a Scalar DLT network in a cloud environment. The Helm charts are used to deploy stateless Scalar DL containers such as scalar-ledger and Envoy on the Kubernetes cluster. The Ansible playbooks are used to install required tools such as kubectl on bastion and manage the Kubernetes applications.
 
-Note that the current version only supports the deployment of a single Scalar DL cluster in Azure. It does *NOT* support multi-cluster Scalar DL deployment, where multiple ledgers are managed independently through Scalar DL Ordering and other cloud providers.
+Note that the current version only supports the deployment of a single Scalar DL cluster. It does *NOT* support multi-cluster Scalar DL deployment, where multiple ledgers are managed independently through Scalar DL Ordering.```
+
 
 ## Requirements
 
@@ -22,7 +23,7 @@ To get started with simple deployment, please follow [the getting started guide]
 
 ## Repository Overview
 
-The repo is divided into two components, Helm charts, and Ansible playbooks.
+The repo is divided into two components: Helm charts and Ansible playbooks.
 
 ### [Charts](./charts)
 
@@ -30,7 +31,8 @@ The `charts` directory contains Helm charts to deploy Scalar DL on the Kubernete
 
 ### [Playbooks](./playbooks)
 
-The `playbooks` directory contains Ansible playbooks to help you to install and deploy pods on the Kubernetes cluster.
+The `playbooks` directory contains Ansible playbooks to help you to install the required tools such as `kubectl` and `helm` on a bastion node, and to install the charts on a Kubernetes cluster.
+
 
 ## Future Work
 
