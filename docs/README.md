@@ -3,6 +3,7 @@
 * [Getting Started](./GettingStarted.md)
 * Create a Kubernetes cluster
   * [How to Create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
+  * [How to Create AWS EKS with scalar-terraform](./EKSScalarTerraformDeploymentGuide.md)
   * [How to Manually Create AKS Cluster for Scalar DL deployment](./AKSManualDeploymentGuide.md)
   * [How to Manually Create EKS Cluster for Scalar DL deployment](./EKSManualDeploymentGuide.md)
 * Deploy Scalar DL on a Kubernetes cluster
