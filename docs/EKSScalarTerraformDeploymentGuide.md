@@ -16,7 +16,7 @@ You also need to have enough permissions to deploy the Kubernetes cluster with T
 
 ## Architecture
 
-![image](images/architecture-aks.png)
+![image](images/architecture-eks.png)
 
 ## What is created
 
@@ -32,7 +32,7 @@ You also need to have enough permissions to deploy the Kubernetes cluster with T
 ## Create network resources
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/aws/network
 
 # Generate a test key-pair
 $ ssh-keygen -b 2048 -t rsa -f ./example_key -q -N ""
@@ -48,7 +48,7 @@ $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-Note that the current version uses [the `network` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/network) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
+Note that the current version uses [the `network` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/aws/network) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
 
 ### Create SSH config file
 
@@ -69,14 +69,14 @@ It is needed to connect to the various hosts created with scalar-terraform in th
     ```
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/kubernetes
+$ cd ${SCALAR_K8S_HOME}/modules/aws/kubernetes
 
 # Create the Kubernetes cluster
 $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-For more information about the variables in `example.tfvars`, please refer to [`kubernetes` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/kubernetes).
+For more information about the variables in `example.tfvars`, please refer to [`kubernetes` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/aws/kubernetes).
 
 ## Create database resources
 
@@ -85,19 +85,19 @@ Deploy either a Cassandra cluster or a Cosmos DB account, depending on your choi
 ### Cassandra
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/cassandra
+$ cd ${SCALAR_K8S_HOME}/modules/aws/cassandra
 
 # Create the cassandra cluster
 $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-Note that the current version uses [the `cassandra` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cassandra) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
+Note that the current version uses [the `cassandra` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/aws/cassandra) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
 
 By default, Cassandra nodes don't start up after the deployment. Once you update the configuration of each node, you need to start up the Cassandra service manually.
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/aws/network
 $ ssh -F ssh.cfg cassandra-1.internal.scalar-labs.com
 [centos@cassandra-1 ~]$ sudo systemctl start cassandra
 ```
@@ -110,18 +110,6 @@ cassandra = {
 }
 ```
 
-### Cosmos DB
-
-```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/cosmosdb
-
-# Create Cosmos DB account
-$ terraform init
-$ terraform apply
-```
-
-Note that the current version uses [the `cosmosdb` module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/cosmosdb) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
-
 ## Create Monitor resources
 
 The Scalar deployment tools include a Prometheus metrics server, a Grafana data visualization server, an Alertmanager server for the Cassandra cluster, the Cassy instance, and the bastion server.
@@ -133,14 +121,14 @@ The Scalar deployment tools include a Prometheus metrics server, a Grafana data 
     ```
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/monitor
+$ cd ${SCALAR_K8S_HOME}/modules/aws/monitor
 
 # Create the monitor server for cassandra modules and log collection
 $ terraform init
 $ terraform apply -var-file example.tfvars
 ```
 
-Note that the current version uses [the monitor module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/azure/monitor) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform/). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
+Note that the current version uses [the monitor module](https://github.com/scalar-labs/scalar-terraform/tree/master/modules/aws/monitor) of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform/). It uses the master branch, but it would probably need to be changed if you deploy it in your production environment.
 
 ## How to access scalar-terraform network
 
@@ -151,7 +139,7 @@ You can get some useful information about your deployments, such as a bastion pu
 Save the SSH config to a file named `ssh.cfg` in the `network` module. The config assumes that the private key for an environment is added to your ssh-agent.
 
 ```console
-cd ${SCALAR_K8S_HOME}/modules/azure/network
+cd ${SCALAR_K8S_HOME}/modules/aws/network
 terraform output ssh_config > ssh.cfg
 ```
 
@@ -162,7 +150,7 @@ Here are some examples:
 
 ```console
 # You need to cd to the network module directory
-$ cd ${SCALAR_K8S_HOME}/modules/azure/network
+$ cd ${SCALAR_K8S_HOME}/modules/aws/network
 
 # Connect to the instances
 $ ssh -F ssh.cfg cassandra-1.internal.scalar-labs.com
