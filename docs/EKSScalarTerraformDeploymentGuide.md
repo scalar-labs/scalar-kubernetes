@@ -2,7 +2,7 @@
 
 This document shows how to create AWS Kubernetes Service (EKS) along with a virtual network, a bastion host, and database resources using Terraform scripts.
 
-The Terraform scripts for creating resources with [scalar-terraform](https://github.com/scalar-labs/scalar-terraform) are all stored in `${SCALAR_K8S_HOME}/modules`.
+The Terraform scripts for creating resources with [scalar-terraform](https://github.com/scalar-labs/scalar-terraform) are available in a separate repository:  [scalar-terraform-examples](https://github.com/scalar-labs/scalar-terraform-examples).
 
 ## Prerequisites
 
@@ -21,6 +21,7 @@ You also need to have enough permissions to deploy the Kubernetes cluster with T
 ## What is created
 
 * An AWS VPC with NAT gateway
+* An EKS cluster with two Kubernetes node pools
 * DNS Zone for internal host lookup
 * With Cassandra option (default):
   * 3 Cassandra instances
@@ -29,10 +30,17 @@ You also need to have enough permissions to deploy the Kubernetes cluster with T
 * 1 Bastion instance with a public IP
 * 1 Monitor instance to collect metrics and logs
 
+## Clone scalar-teraform-examples
+
+```console
+$ git clone https://github.com/scalar-labs/scalar-terraform-examples -b <main or tag> /path/to/scalar-terraform-examples
+$ export SCALAR_TERRAFORM_EXAMPLES=/path/to/scalar-terraform-examples
+```
+
 ## Create network resources
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/aws/network
+$ cd ${SCALAR_TERRAFORM_EXAMPLES}/aws/network
 
 # Generate a test key-pair
 $ ssh-keygen -b 2048 -t rsa -f ./example_key -q -N ""
@@ -69,7 +77,7 @@ It is needed to connect to the various hosts created with scalar-terraform in th
     ```
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/aws/kubernetes
+$ cd ${SCALAR_TERRAFORM_EXAMPLES}/aws/kubernetes
 
 # Create the Kubernetes cluster
 $ terraform init
@@ -85,7 +93,7 @@ Deploy either a Cassandra cluster or a Cosmos DB account, depending on your choi
 ### Cassandra
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/aws/cassandra
+$ cd ${SCALAR_TERRAFORM_EXAMPLES}/aws/cassandra
 
 # Create the cassandra cluster
 $ terraform init
@@ -97,7 +105,7 @@ Note that the current version uses [the `cassandra` module](https://github.com/s
 By default, Cassandra nodes don't start up after the deployment. Once you update the configuration of each node, you need to start up the Cassandra service manually.
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/aws/network
+$ cd ${SCALAR_TERRAFORM_EXAMPLES}/aws/network
 $ ssh -F ssh.cfg cassandra-1.internal.scalar-labs.com
 [centos@cassandra-1 ~]$ sudo systemctl start cassandra
 ```
@@ -121,7 +129,7 @@ The Scalar deployment tools include a Prometheus metrics server, a Grafana data 
     ```
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/aws/monitor
+$ cd ${SCALAR_TERRAFORM_EXAMPLES}/aws/monitor
 
 # Create the monitor server for cassandra modules and log collection
 $ terraform init
@@ -139,7 +147,7 @@ You can get some useful information about your deployments, such as a bastion pu
 Save the SSH config to a file named `ssh.cfg` in the `network` module. The config assumes that the private key for an environment is added to your ssh-agent.
 
 ```console
-cd ${SCALAR_K8S_HOME}/modules/aws/network
+cd ${SCALAR_TERRAFORM_EXAMPLES}/aws/network
 terraform output ssh_config > ssh.cfg
 ```
 
@@ -150,7 +158,7 @@ Here are some examples:
 
 ```console
 # You need to cd to the network module directory
-$ cd ${SCALAR_K8S_HOME}/modules/aws/network
+$ cd ${SCALAR_TERRAFORM_EXAMPLES}/aws/network
 
 # Connect to the instances
 $ ssh -F ssh.cfg cassandra-1.internal.scalar-labs.com
