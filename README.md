@@ -11,12 +11,10 @@ Note that the current version only supports the deployment of a single Scalar DL
 
 ## Requirements
 
-* [Terraform >= 0.12.x](https://www.terraform.io/downloads.html)
 * [Ansible >= 2.9.x](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 * Cloud provider CLI tools such as `az` (they need to be configured with credentials)
 * Docker Engine (with access to `scalarlabs/scalar-ledger` docker registry)
   * `scalar-ledger` is available to only our partners and customers at the moment.
-* [scalar-terraform-examples](https://github.com/scalar-labs/scalar-terraform-examples)
 
 ## Getting Started
 

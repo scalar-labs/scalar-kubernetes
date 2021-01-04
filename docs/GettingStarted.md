@@ -7,7 +7,6 @@ This document describes how to deploy Scalar DL on Kubernetes Services.
 | Name | Version | Mandatory | link |
 |:------|:-------|:----------|:------|
 | Ansible | 2.9 | yes | https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html |
-| Terraform | 0.12.x | no | https://learn.hashicorp.com/terraform/getting-started/install |
 | Azure CLI | latest | yes | https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest |
 | Kubectl | 1.16.13 | yes | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
 | Helm | 3.2.1 or latest | no | https://helm.sh/docs/intro/install/ |
