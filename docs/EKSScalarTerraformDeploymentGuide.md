@@ -70,12 +70,6 @@ It is needed to connect to the various hosts created with scalar-terraform in th
 
 ## Create Kubernetes cluster
 
-* If you use Cosmos DB, please set `use_cosmosdb` to `true` in `example.tfvars` before you run `terraform apply`
-
-    ```hcl
-    use_cosmosdb = true
-    ```
-
 ```console
 $ cd ${SCALAR_TERRAFORM_EXAMPLES}/aws/kubernetes
 
@@ -88,7 +82,7 @@ For more information about the variables in `example.tfvars`, please refer to [`
 
 ## Create database resources
 
-Deploy either a Cassandra cluster or a Cosmos DB account, depending on your choice.
+Deploy either a Cassandra cluster.
 
 ### Cassandra
 
@@ -121,12 +115,6 @@ cassandra = {
 ## Create Monitor resources
 
 The Scalar deployment tools include a Prometheus metrics server, a Grafana data visualization server, an Alertmanager server for the Cassandra cluster, the Cassy instance, and the bastion server.
-
-* If you use Cosmos DB, please remove `cassandra` from `targets` in `example.tfvars` since the monitor module is not able to monitor Cosmos DB.
-
-    ```hcl
-    targets = []
-    ```
 
 ```console
 $ cd ${SCALAR_TERRAFORM_EXAMPLES}/aws/monitor
