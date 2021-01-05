@@ -37,7 +37,7 @@ If you use a Kubernetes cluster created manually or by other ways than scalar-te
 Create a secret for the Docker registry with the following command.
 
 ```console
-kubectl create secret docker-registry reg-docker-secrets --docker-server=https://index.docker.io/v2/ --docker-username=<dockerhub-username> --docker-password=<dockerhub-access-token>
+kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<dockerhub-username> --docker-password=<dockerhub-access-token>
 ```
 
 ## Install Scalar DL
