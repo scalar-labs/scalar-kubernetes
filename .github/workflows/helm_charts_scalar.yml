@@ -55,7 +55,7 @@ jobs:
       - kubeval-chart
     env:
       DOCKER_PASSWORD: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-      DOCKER_USESR: scalar-git
+      DOCKER_USER: scalar-git
       DOCKER_REGISTRY: ghcr.io
     # Uses 1.16.9 since it doesn't support 1.16.13 in https://hub.docker.com/r/kindest/node/tags.
     strategy:
