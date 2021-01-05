@@ -2,9 +2,9 @@ base_local_directory: ../conf
 local_helm_charts_directory: ../../../../charts/stable
 local_helm_charts_values_directory: "{{ base_local_directory }}/"
 remote_directory: "/home/{{ ansible_user }}"
-docker_registry: "https://index.docker.io/v2/"
-docker_username: "{{ lookup('env','DOCKERHUB_USER') }}"
-docker_password: "{{ lookup('env','DOCKERHUB_ACCESS_TOKEN') }}"
+docker_registry: ghcr.io
+docker_username: "{{ lookup('env','DOCKER_USER') }}"
+docker_password: "{{ lookup('env','DOCKER_ACCESS_TOKEN') }}"
 kubernetes_registry_secret_name: "reg-docker-secrets"
 helm_binary_path: /usr/local/bin/helm
 kubernetes_namespace: default

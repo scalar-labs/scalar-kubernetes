@@ -40,7 +40,7 @@ schemaLoading:
   password: <PRIMARY_MASTER_KEY>
   cosmosBaseResourceUnit: "400"
   image:
-    repository: scalarlabs/scalardl-schema-loader
+    repository: ghcr.io/scalar-labs/scalardl-schema-loader
     version: 1.0.0
     pullPolicy: IfNotPresent
 ```

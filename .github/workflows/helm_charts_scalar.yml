@@ -54,7 +54,7 @@ jobs:
       - lint-chart
       - kubeval-chart
     env:
-      DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_ACCESS_TOKEN }}
     # Uses 1.16.9 since it doesn't support 1.16.13 in https://hub.docker.com/r/kindest/node/tags.
     strategy:
       matrix:

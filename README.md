@@ -13,7 +13,7 @@ Note that the current version only supports the deployment of a single Scalar DL
 * [Terraform >= 0.12.x](https://www.terraform.io/downloads.html)
 * [Ansible >= 2.9.x](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 * Cloud provider CLI tools such as `az` (they need to be configured with credentials)
-* Docker Engine (with access to `scalarlabs/scalar-ledger` docker registry)
+* Docker Engine (with access to `ghcr.io/scalar-labs/scalar-ledger` docker registry)
   * `scalar-ledger` is available to only our partners and customers at the moment.
 
 ## Getting Started

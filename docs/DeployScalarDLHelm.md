@@ -6,7 +6,7 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 
 The document assumes the following.
 
-* You have the authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader` docker repositories. (they are only available to our partners and customers at the moment)
+* You have the authority to pull `ghcr.io/scalar-labs/scalar-ledger` and `ghcr.io/scalar-labs/scalardl-schema-loader` docker repositories. (they are only available to our partners and customers at the moment)
 * The backend database that Scalar DL accesses is started properly
 * A Kubernetes cluster has been already created, and you have access to it
 
@@ -79,7 +79,7 @@ To further customize the Helm charts, please refer to [How to customize values f
 $ cd ${SCALAR_K8S_HOME}
 $ helm delete load-schema
 
-# Uninstall scalar DL with a release name 'my-release-scalardl'   
+# Uninstall scalar DL with a release name 'my-release-scalardl'
 $ cd ${SCALAR_K8S_HOME}
 $ helm delete my-release-scalardl
 ```

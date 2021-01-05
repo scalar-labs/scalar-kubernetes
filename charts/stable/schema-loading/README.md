@@ -13,7 +13,7 @@ Current chart version is `1.1.0`
 | schemaLoading.cosmosBaseResourceUnit | int | `400` | The resource unit value of the Cosmos DB schema. This is a Cosmos DB specific option. |
 | schemaLoading.database | string | `"cassandra"` | The database to which the schema is loaded. `cassandra` and `cosmos` are supported. |
 | schemaLoading.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
-| schemaLoading.image.repository | string | `"scalarlabs/scalardl-schema-loader"` | Docker image |
+| schemaLoading.image.repository | string | `"ghcr.io/scalar-labs/scalardl-schema-loader"` | Docker image |
 | schemaLoading.image.version | string | `"1.1.0"` |  |
 | schemaLoading.imagePullSecrets | list | `[{"name":"reg-docker-secrets"}]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
 | schemaLoading.password | string | `"cassandra"` | The password of the database. For Cosmos DB, please specify a key here. |
