@@ -54,9 +54,9 @@ jobs:
       - lint-chart
       - kubeval-chart
     env:
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-      DOCKER_USER: scalar-git
-      DOCKER_REGISTRY: ghcr.io
+      DOCKER_REGISTRY_PASSWORD: ${{ secrets.CR_PAT }}
+      DOCKER_REGISTRY_USER: scalar-git
+      DOCKER_REGISTRY_SERVER: ghcr.io
     # Uses 1.16.9 since it doesn't support 1.16.13 in https://hub.docker.com/r/kindest/node/tags.
     strategy:
       matrix:
@@ -79,7 +79,7 @@ jobs:
       - name: Setup kubernetes (Kind) with registry, cassandra and schema
         run: |
           kubectl cluster-info
-          kubectl create secret docker-registry reg-docker-secrets --docker-server=${{ env.DOCKER_REGISTRY }} --docker-username=${{ env.DOCKER_USER }} --docker-password=${{ env.DOCKER_PASSWORD }}
+          kubectl create secret docker-registry reg-docker-secrets --docker-server=${DOCKER_REGISTRY_SERVER} --docker-username=${DOCKER_REGISTRY_USER} --docker-password=${DOCKER_REGISTRY_PASSWORD}
           kubectl create -f .github/cassandra.yaml
           echo "Wait until cassandra is running" && sleep 100
           kubectl get pods,svc,endpoints,nodes -o wide
