@@ -5,9 +5,9 @@
   become: no
   vars:
     base_local_directory: "{{ lookup('env','SCALAR_K8S_CONFIG_DIR') }}"
-    # docker_registry: "https://index.docker.io/v2/"
-    # docker_username: "{{ lookup('env','DOCKERHUB_USER') }}"
-    # docker_password: "{{ lookup('env','DOCKERHUB_ACCESS_TOKEN') }}"
+    # docker_registry: "ghcr.io"
+    # docker_username: "{{ lookup('env','DOCKER_REGISTRY_USERNAME') }}"
+    # docker_password: "{{ lookup('env','DOCKER_REGISTRY_PASSWORD') }}"
     # kubernetes_registry_secret_name: "reg-docker-secrets"
     # kubernetes_namespace: default
     # deploy_scalardl: yes

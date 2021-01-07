@@ -18,7 +18,7 @@ envoy:
 
   image:
     # envoy.image.repository -- Docker image
-    repository: scalarlabs/scalar-envoy
+    repository: ghcr.io/scalar-labs/scalar-envoy
     # envoy.image.tag -- Docker tag
     version: 1.0.0
     # envoy.image.pullPolicy -- Specify a imagePullPolicy
@@ -121,7 +121,7 @@ ledger:
 
   image:
     # ledger.image.repository -- Docker image
-    repository: scalarlabs/scalar-ledger
+    repository: ghcr.io/scalar-labs/scalar-ledger
     # ledger.image.tag -- Docker tag
     version: 2.1.0
     # ledger.image.pullPolicy -- Specify a imagePullPolicy

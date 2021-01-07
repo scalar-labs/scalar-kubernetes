@@ -13,34 +13,34 @@ spec:
         app.kubernetes.io/name: scalar-kelpie
     spec:
       containers:
-      - name: kelpie-import
-        image: scalarlabs/kelpie-test-client:1.0.0
-        imagePullPolicy: IfNotPresent
-        command:
-        - /bin/bash 
-        - -c 
-        - "kelpie --except-pre --config client-test/benchmark-config.toml"
-        volumeMounts:
-        - mountPath: /home/gradle/kelpie-test/client-test/benchmark-config.toml
-          name: kelpie-config
-          subPath: benchmark-config.toml
-          readOnly: true
+        - name: kelpie-import
+          image: ghcr.io/scalar-labs/kelpie-test-client:1.0.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/bash
+            - -c
+            - "kelpie --except-pre --config client-test/benchmark-config.toml"
+          volumeMounts:
+            - mountPath: /home/gradle/kelpie-test/client-test/benchmark-config.toml
+              name: kelpie-config
+              subPath: benchmark-config.toml
+              readOnly: true
       volumes:
-      - configMap:
-          defaultMode: 256
+        - configMap:
+            defaultMode: 256
+            name: kelpie-config
           name: kelpie-config
-        name: kelpie-config
       restartPolicy: Never
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app.kubernetes.io/name
-                  operator: In
-                  values:
-                  - scalar-kelpie
-              topologyKey: kubernetes.io/hostname
-            weight: 50
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - scalar-kelpie
+                topologyKey: kubernetes.io/hostname
+              weight: 50
   backoffLimit: 0
