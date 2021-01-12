@@ -10,7 +10,7 @@ Current chart version is `1.1.0`
 | envoy.affinity | object | `{}` | the affinity/anti-affinity feature, greatly expands the types of constraints you can express |
 | envoy.envoyConfiguration.adminAccessLogPath | string | `"/dev/stdout"` | admin log path |
 | envoy.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
-| envoy.image.repository | string | `"scalarlabs/scalar-envoy"` | Docker image |
+| envoy.image.repository | string | `"ghcr.io/scalar-labs/scalar-envoy"` | Docker image |
 | envoy.image.version | string | `"1.0.0"` |  |
 | envoy.imagePullSecrets | list | `[]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
 | envoy.nodeSelector | object | `{}` | nodeSelector is form of node selection constraint |
@@ -37,7 +37,7 @@ Current chart version is `1.1.0`
 | fullnameOverride | string | `""` | String to fully override scalardl.fullname template |
 | ledger.affinity | object | `{}` | the affinity/anti-affinity feature, greatly expands the types of constraints you can express |
 | ledger.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
-| ledger.image.repository | string | `"scalarlabs/scalar-ledger"` | Docker image |
+| ledger.image.repository | string | `"ghcr.io/scalar-labs/scalar-ledger"` | Docker image |
 | ledger.image.version | string | `"2.0.8"` |  |
 | ledger.imagePullSecrets | list | `[{"name":"reg-docker-secrets"}]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
 | ledger.nodeSelector | object | `{}` | nodeSelector is form of node selection constraint |

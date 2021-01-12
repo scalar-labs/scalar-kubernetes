@@ -14,7 +14,7 @@ chmod 700 get_helm.sh
 ./get_helm.sh --version "${HELM_VERSION}"
 
 # add helm repos to resolve dependencies
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add stable https://charts.helm.sh/stable
 
 # install kubeval plugins to helm
 helm plugin install https://github.com/instrumenta/helm-kubeval

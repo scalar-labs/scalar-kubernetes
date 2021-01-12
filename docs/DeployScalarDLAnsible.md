@@ -6,16 +6,16 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 
 * Have completed the [How to create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
 * Have completed the [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
-* An authority to pull `scalarlabs/scalar-ledger` and `scalarlabs/scalardl-schema-loader` docker repositories.
+* An authority to pull `ghcr.io/scalar-labs/scalar-ledger` and `ghcr.io/scalar-labs/scalardl-schema-loader` docker repositories.
   * `scalar-ledger` and `scalardl-schema-loader` are available to only our partners and customers at the moment.
 
 ## Preparation
 
-You need to set `DOCKERHUB_USER` and `DOCKERHUB_ACCESS_TOKEN` as env or set the values directly in the `playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
+You need to set `DOCKER_REGISTRY_USERNAME` and `DOCKER_REGISTRY_PASSWORD` as env or set the values directly in the `playbook-deploy-scalardl.yml` for `docker_username` and `docker_password`.
 
 ```console
-export DOCKERHUB_USER=<user>
-export DOCKERHUB_ACCESS_TOKEN=<token>
+export DOCKER_REGISTRY_USERNAME=<user>
+export DOCKER_REGISTRY_PASSWORD=<token>
 ```
 
 Copy the Helm values files from `conf` directory to `${SCALAR_K8S_CONFIG_DIR}`

@@ -24,7 +24,7 @@ To configure Scalar DL to work with Cosmos DB, `${SCALAR_K8S_CONFIG_DIR}/schema-
 First, get the endpoint and the master key of your Cosmos DB account. If you [deployed a Cosmos DB account with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md#create-database-resources), you can get them by running `terraform output` in the `cosmosdb` module:
 
 ```console
-$ cd ${SCALAR_K8S_HOME}/modules/azure/cosmosdb
+$ cd ${SCALAR_TERRAFORM_EXAMPLES}/azure/cosmosdb
 $ terraform output
 cosmosdb_account_endpoint = https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
 cosmosdb_account_primary_master_key = <PRIMARY_MASTER_KEY>
@@ -40,7 +40,7 @@ schemaLoading:
   password: <PRIMARY_MASTER_KEY>
   cosmosBaseResourceUnit: "400"
   image:
-    repository: scalarlabs/scalardl-schema-loader
+    repository: ghcr.io/scalar-labs/scalardl-schema-loader
     version: 1.0.0
     pullPolicy: IfNotPresent
 ```
