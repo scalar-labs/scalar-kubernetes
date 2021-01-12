@@ -1,6 +1,6 @@
 # How to create AWS EKS with scalar-terraform
 
-This document shows how to create AWS Kubernetes Service (EKS) along with a virtual network, a bastion host, and database resources using Terraform scripts.
+This document shows how to create AWS Kubernetes Service (EKS) along with a VPC, a bastion host, and database resources using Terraform scripts.
 
 The Terraform scripts for creating resources with [scalar-terraform](https://github.com/scalar-labs/scalar-terraform) are available in a separate repository:  [scalar-terraform-examples](https://github.com/scalar-labs/scalar-terraform-examples).
 
@@ -82,7 +82,7 @@ For more information about the variables in `example.tfvars`, please refer to [`
 
 ## Create database resources
 
-Deploy either a Cassandra cluster.
+Deploy a Cassandra cluster.
 
 ### Cassandra
 
