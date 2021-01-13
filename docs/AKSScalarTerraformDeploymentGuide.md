@@ -1,4 +1,4 @@
-# How to Create a Kubernetes cluster in Azure AKS with scalar-terraform
+# How to create a Kubernetes cluster in Azure AKS with scalar-terraform
 
 This document shows how to create a Kubernetes cluster in Azure Kubernetes Service (AKS) along with a virtual network, a bastion host, and database resources using Terraform scripts.
 
