@@ -41,7 +41,7 @@ $ export SCALAR_TERRAFORM_EXAMPLES=/path/to/scalar-terraform-examples
 ## Create network resources
 
 ```console
-$ cd ${SCALAR_TERRAFORM_EXAMPLES}/modules/azure/network
+$ cd ${SCALAR_TERRAFORM_EXAMPLES}/azure/network
 
 # Generate a test key-pair
 $ ssh-keygen -b 2048 -t rsa -f ./example_key -q -N ""
