@@ -1,7 +1,7 @@
 # scalardl
 
 Implementation scalardl.
-Current chart version is `1.1.0`
+Current chart version is `1.2.0`
 
 ## Values
 
@@ -36,9 +36,10 @@ Current chart version is `1.1.0`
 | envoy.tolerations | list | `[]` | Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints. |
 | fullnameOverride | string | `""` | String to fully override scalardl.fullname template |
 | ledger.affinity | object | `{}` | the affinity/anti-affinity feature, greatly expands the types of constraints you can express |
+| ledger.existingSecret | string | `nil` | Name of existing secret to use for storing database username and password |
 | ledger.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
-| ledger.image.repository | string | `"ghcr.io/scalar-labs/scalar-ledger"` | Docker image |
-| ledger.image.version | string | `"2.0.8"` |  |
+| ledger.image.repository | string | `"scalarlabs/scalar-ledger"` | Docker image |
+| ledger.image.version | string | `"2.1.0"` | Docker tag |
 | ledger.imagePullSecrets | list | `[{"name":"reg-docker-secrets"}]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
 | ledger.nodeSelector | object | `{}` | nodeSelector is form of node selection constraint |
 | ledger.podSecurityContext | object | `{}` | PodSecurityContext holds pod-level security attributes and common container settings |

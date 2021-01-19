@@ -21,10 +21,13 @@ schemaLoading:
   image:
     # schemaLoading.image.repository -- Docker image
     repository: ghcr.io/scalar-labs/scalardl-schema-loader
-    # schemaLoading.image.tag -- Docker tag
+    # schemaLoading.image.version -- Docker tag
     version: 1.2.0
     # schemaLoading.image.pullPolicy -- Specify a imagePullPolicy
     pullPolicy: IfNotPresent
 
   # schemaLoading.imagePullSecrets -- Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
   imagePullSecrets: [name: reg-docker-secrets]
+
+  # schemaLoading.existingSecret -- Name of existing secret to use for storing database username and password
+  existingSecret: null
