@@ -4,9 +4,16 @@ metadata:
   name: {{ include "scalardl.fullname" . }}-ledger-headless
   labels:
     {{- include "scalardl-ledger.labels" . | nindent 4 }}
+  annotations:
+{{ toYaml .Values.ledger.service.annotations | indent 4 }}
 spec:
   type: {{ .Values.ledger.service.type }}
   clusterIP: None
   sessionAffinity: None
+  ports:
+  {{- range $key, $value := .Values.ledger.service.ports }}
+    - name: {{ $key }}
+{{ toYaml $value | indent 6 }}
+  {{- end }}
   selector:
     {{- include "scalardl-ledger.selectorLabels" . | nindent 4 }}

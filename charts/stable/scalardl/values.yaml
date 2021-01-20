@@ -156,6 +156,29 @@ ledger:
   service:
     # ledger.service.type -- service types in kubernetes
     type: ClusterIP
+    annotations: {}
+    ports:
+      scalardl:
+        # ledger.service.ports.scalardl.port -- scalardl target port
+        port: 50051
+        # ledger.service.ports.scalardl.targetPort -- scalardl k8s internal name
+        targetPort: 50051
+        # ledger.service.ports.scalardl.protocol -- scalardl protocol
+        protocol: TCP
+      scalardl-priv:
+        # ledger.service.ports.scalardl-priv.port -- scalardl-priv target port
+        port: 50052
+        # ledger.service.ports.scalardl-priv.targetPort -- scalardl-priv k8s internal name
+        targetPort: 50052
+        # ledger.service.ports.scalardl-priv.protocol -- scalardl-priv protocol
+        protocol: TCP
+      scalardl-admin:
+        # ledger.service.ports.scalardl-admin.port -- scalardl-admin target port
+        port: 50053
+        # ledger.service.ports.scalardl-admin.targetPort -- scalardl-admin k8s internal name
+        targetPort: 50053
+        # ledger.service.ports.scalardl-admin.protocol -- scalardl-admin protocol
+        protocol: TCP
 
   prometheusRule:
     # ledger.prometheusRule.enabled -- enable rules for prometheus
