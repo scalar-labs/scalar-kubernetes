@@ -1,7 +1,7 @@
 # scalardl
 
 Implementation scalardl.
-Current chart version is `1.2.0`
+Current chart version is `1.2.1`
 
 ## Values
 
@@ -38,7 +38,7 @@ Current chart version is `1.2.0`
 | ledger.affinity | object | `{}` | the affinity/anti-affinity feature, greatly expands the types of constraints you can express |
 | ledger.existingSecret | string | `nil` | Name of existing secret to use for storing database username and password |
 | ledger.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
-| ledger.image.repository | string | `"scalarlabs/scalar-ledger"` | Docker image |
+| ledger.image.repository | string | `"ghcr.io/scalar-labs/scalar-ledger"` | Docker image |
 | ledger.image.version | string | `"2.1.0"` | Docker tag |
 | ledger.imagePullSecrets | list | `[{"name":"reg-docker-secrets"}]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
 | ledger.nodeSelector | object | `{}` | nodeSelector is form of node selection constraint |
@@ -54,6 +54,16 @@ Current chart version is `1.2.0`
 | ledger.scalarLedgerConfiguration.dbUsername | string | `"cassandra"` | The username of the database |
 | ledger.scalarLedgerConfiguration.ledgerLogLevel | string | `"INFO"` | The log level of Scalar ledger |
 | ledger.securityContext | object | `{}` | Setting security context at the pod applies those settings to all containers in the pod |
+| ledger.service.annotations | object | `{}` |  |
+| ledger.service.ports.scalardl-admin.port | int | `50053` | scalardl-admin target port |
+| ledger.service.ports.scalardl-admin.protocol | string | `"TCP"` | scalardl-admin protocol |
+| ledger.service.ports.scalardl-admin.targetPort | int | `50053` | scalardl-admin k8s internal name |
+| ledger.service.ports.scalardl-priv.port | int | `50052` | scalardl-priv target port |
+| ledger.service.ports.scalardl-priv.protocol | string | `"TCP"` | scalardl-priv protocol |
+| ledger.service.ports.scalardl-priv.targetPort | int | `50052` | scalardl-priv k8s internal name |
+| ledger.service.ports.scalardl.port | int | `50051` | scalardl target port |
+| ledger.service.ports.scalardl.protocol | string | `"TCP"` | scalardl protocol |
+| ledger.service.ports.scalardl.targetPort | int | `50051` | scalardl k8s internal name |
 | ledger.service.type | string | `"ClusterIP"` | service types in kubernetes |
 | ledger.strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |
 | ledger.strategy.type | string | `"RollingUpdate"` | New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate |
