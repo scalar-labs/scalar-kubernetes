@@ -38,7 +38,7 @@ envoy:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - scalar-ledger
+                    - scalar-envoy
             topologyKey: kubernetes.io/hostname
           weight: 50
 
