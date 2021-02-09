@@ -2,8 +2,8 @@
 
 * [Getting Started](./GettingStarted.md)
 * Create a Kubernetes cluster
-  * [How to Create a Kubernetes cluster in Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
-  * [How to Create a Kubernetes cluster in Amazon EKS with scalar-terraform](./EKSScalarTerraformDeploymentGuide.md)
+  * [How to Create a Kubernetes cluster in Azure AKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/tree/master/docs/AKSScalarTerraformDeploymentGuide.md)
+  * [How to Create a Kubernetes cluster in Amazon EKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/tree/master/docs/EKSScalarTerraformDeploymentGuide.md)
   * [How to Manually Create AKS Cluster for Scalar DL deployment](./AKSManualDeploymentGuide.md)
   * [How to Manually Create EKS Cluster for Scalar DL deployment](./EKSManualDeploymentGuide.md)
 * Deploy Scalar DL on a Kubernetes cluster
@@ -20,4 +20,4 @@
 * Best practices
   * [Recommended Practices of Operation with Scalar Kubernetes](./BestPracticeGuide.md)
 * Other docs
-  * [Cloud Privileges for scalar-kubernetes](./CloudPrivileges.md)
+  * [Cloud Privileges for scalar-kubernetes](https://github.com/scalar-labs/scalar-terraform/tree/master/docs/CloudPrivileges.md)
