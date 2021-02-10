@@ -62,6 +62,7 @@ ledger:
 
   scalarLedgerConfiguration:
     dbContactPoints: cassandra-lb.internal.scalar-labs.com
+
     # dbContactPoints: <Cosmos DB account endpoint>
     # dbContactPort: null
     # dbUsername: ""
