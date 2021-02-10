@@ -38,7 +38,11 @@ envoy:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - scalar-envoy
+                    - scalardl
+                - key: app.kubernetes.io/app
+                  operator: In
+                  values:
+                    - envoy
             topologyKey: kubernetes.io/hostname
           weight: 50
 
@@ -58,7 +62,6 @@ ledger:
 
   scalarLedgerConfiguration:
     dbContactPoints: cassandra-lb.internal.scalar-labs.com
-
     # dbContactPoints: <Cosmos DB account endpoint>
     # dbContactPort: null
     # dbUsername: ""
@@ -93,7 +96,11 @@ ledger:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - scalar-ledger
+                    - scalardl
+                - key: app.kubernetes.io/app
+                  operator: In
+                  values:
+                    - ledger
             topologyKey: kubernetes.io/hostname
           weight: 50
 
