@@ -46,8 +46,8 @@ Finally, open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and uncomme
 ```yaml
   scalarLedgerConfiguration:
     dbContactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
-    #dbContactPort: null
-    #dbUsername: ""
+    # dbContactPort: null
+    # dbUsername: ""
     dbPassword: <PRIMARY_MASTER_KEY>
     dbStorage: cosmos
 ```
