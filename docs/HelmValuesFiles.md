@@ -39,19 +39,15 @@ schemaLoading:
   contactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
   password: <PRIMARY_MASTER_KEY>
   cosmosBaseResourceUnit: "400"
-  image:
-    repository: ghcr.io/scalar-labs/scalardl-schema-loader
-    version: 1.0.0
-    pullPolicy: IfNotPresent
 ```
 
-Finally, open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and uncomment and update the values of the `scalarLedgerConfiguration`.
+Finally, open `${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml` and uncomment `dbContactPoints`, `dbPassword`, `dbStorage` and update the values of the `scalarLedgerConfiguration`.
 
 ```yaml
   scalarLedgerConfiguration:
     dbContactPoints: https://example-k8s-azure-b8ci1si-cosmosdb.documents.azure.com:443/
-    dbContactPort: null
-    dbUsername: ""
+    #dbContactPort: null
+    #dbUsername: ""
     dbPassword: <PRIMARY_MASTER_KEY>
     dbStorage: cosmos
 ```
