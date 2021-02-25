@@ -16,7 +16,7 @@ You can get the kubeconfig file from `terraform output` of the `kubernetes` modu
 
 ```console
 cd ${SCALAR_TERRAFORM_EXAMPLES}/azure/kubernetes/
-terraform output kube_config > ~/.kube/config
+terraform output -raw kube_config > ~/.kube/config
 ```
 
 Please replace the `server` in the output with `https://localhost:7000` as follows. `7000` is the default local port number which is forwarded to the Kubernetes API.
@@ -38,7 +38,7 @@ The following command will generate an `ssh.cfg` to connect to the bastion. It c
 
 ```console
 cd ${SCALAR_TERRAFORM_EXAMPLES}/azure/kubernetes
-terraform output k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/ssh.cfg
+terraform output -raw k8s_ssh_config > ${SCALAR_K8S_CONFIG_DIR}/ssh.cfg
 ```
 
 The ssh.cfg file should look as follows.
