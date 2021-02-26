@@ -43,7 +43,7 @@ spec:
         - "--dynamo"
         - "--region"
         - "{{ .Values.schemaLoading.contactPoints }}"
-        {{ - end }}
+        {{- end }}
         env:
         - name: DB_USERNAME
           valueFrom:
