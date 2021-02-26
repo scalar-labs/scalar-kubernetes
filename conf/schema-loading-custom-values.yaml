@@ -16,3 +16,11 @@ schemaLoading:
   # contactPoints: 'https://your-cosmos-db-account-endpoint-url.documents.azure.com:443/'
   # password: 'your-primary-master-key'
   # cosmosBaseResourceUnit: 400
+
+  #
+  # DynamoDB
+  #
+  # database: dynamo
+  # contactPoints: <REGION>
+  # username: <AWS_ACCESS_KEY_ID>
+  # password: <AWS_ACCESS_SECRET_KEY>
