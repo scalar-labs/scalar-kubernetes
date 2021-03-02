@@ -1,7 +1,7 @@
 # schema-loading
 
 Implementation schema loading for scalar-ledger
-Current chart version is `1.2.0`
+Current chart version is `1.3.0`
 
 ## Values
 
@@ -15,7 +15,7 @@ Current chart version is `1.2.0`
 | schemaLoading.existingSecret | string | `nil` | Name of existing secret to use for storing database username and password |
 | schemaLoading.image.pullPolicy | string | `"IfNotPresent"` | Specify a imagePullPolicy |
 | schemaLoading.image.repository | string | `"ghcr.io/scalar-labs/scalardl-schema-loader"` | Docker image |
-| schemaLoading.image.version | string | `"1.2.0"` | Docker tag |
+| schemaLoading.image.version | string | `"1.3.0"` | Docker tag |
 | schemaLoading.imagePullSecrets | list | `[{"name":"reg-docker-secrets"}]` | Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace. |
 | schemaLoading.password | string | `"cassandra"` | The password of the database. For Cosmos DB, please specify a key here. |
 | schemaLoading.username | string | `"cassandra"` | The username of the database. (Ignored if the database is `cosmos`.) |
