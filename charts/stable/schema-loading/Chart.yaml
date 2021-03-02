@@ -2,8 +2,8 @@ apiVersion: v2
 name: schema-loading
 description: Implementation schema loading for scalar-ledger
 type: application
-version: 1.2.0
-appVersion: 1.2.0
+version: 1.3.0
+appVersion: 1.3.0
 deprecated: false
 icon: https://scalar-labs.com/wp-content/themes/scalar/assets/img/logo_scalar.svg
 keywords:

@@ -63,9 +63,20 @@ ledger:
   scalarLedgerConfiguration:
     dbContactPoints: cassandra-lb.internal.scalar-labs.com
 
+    #
+    # Cosmos DB
+    #
     # dbContactPoints: <Cosmos DB account endpoint>
     # dbPassword: <Cosmos DB account primary master key>
     # dbStorage: cosmos
+
+    #
+    # DynamoDB
+    #
+    # dbStorage: dynamo
+    # dbContactPoints: <REGION>
+    # dbUsername: <AWS_ACCESS_KEY_ID>
+    # dbPassword: <AWS_ACCESS_SECRET_KEY>
 
   prometheusRule:
     enabled: true
