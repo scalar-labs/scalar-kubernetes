@@ -7,7 +7,7 @@ This document explains how to install Kubernetes CLI (kubectl) and Helm on the b
 First, you create an Ansible inventory file that contains the hostname and the username of the bastion as follows.
 
 ```console
-cd ${SCALAR_TERRAFORM_EXAMPLES}/azure/kubernetes/
+cd ${SCALAR_TERRAFORM_EXAMPLES}/azure/network/
 terraform output -raw inventory_ini > ${SCALAR_K8S_CONFIG_DIR}/inventory.ini
 ```
 
@@ -63,8 +63,6 @@ users:
 ## Install tools in the bastion
 
 Now let's install the tools in the bastion as follows.
-
-Note: When using Amazon EKS, you need to add `-e "install_awscli=true"` option to install `awscli` for cluster authentication.
 
 ```console
 $ cd ${SCALAR_K8S_HOME}

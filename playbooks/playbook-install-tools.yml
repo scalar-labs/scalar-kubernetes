@@ -24,6 +24,6 @@
     - kubectl
     - helm
     - role: awscli
-      when: install_awscli | default(False) | bool
+      when: cloud_provider is defined and cloud_provider == "aws"
   tags:
     - tools
