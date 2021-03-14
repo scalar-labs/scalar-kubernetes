@@ -6,7 +6,7 @@
     kind: Namespace
     state: present
 
-- name: Download Custom Ressource Definition
+- name: Download Custom Resource Definition
   get_url:
     url: "{{ item }}"
     dest: "{{ remote_directory }}/helm/crds/"
