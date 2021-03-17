@@ -4,7 +4,7 @@ This document explains how to deploy Prometheus operator on Kubernetes with Ansi
 
 ## Requirements
 
-* Have completed [How to create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
+* Have completed [How to create Azure AKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/AKSScalarTerraformDeploymentGuide.md)
 * `inventory.ini` file in `${SCALAR_K8S_CONFIG_DIR}`. Please refer to [Prepare Ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory)
 * Able to communicate with the Kubernetes API from your local machine. Please refer to [How to do port-forwarding to Kubnernetes API in scalar-terraform network](./PortForwardingToK8sAPIInScalarTerraformNetwork.md).
 
