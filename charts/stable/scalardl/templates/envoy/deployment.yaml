@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "scalardl-envoy.labels" . | nindent 4 }}
 spec:
-  minReadySeconds: 120
+  minReadySeconds: 60
   replicas: {{ .Values.envoy.replicaCount }}
   selector:
     matchLabels:

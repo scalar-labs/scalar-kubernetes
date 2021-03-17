@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "scalardl-ledger.labels" . | nindent 4 }}
 spec:
-  minReadySeconds: 120
+  minReadySeconds: 60
   replicas: {{ .Values.ledger.replicaCount }}
   selector:
     matchLabels:
