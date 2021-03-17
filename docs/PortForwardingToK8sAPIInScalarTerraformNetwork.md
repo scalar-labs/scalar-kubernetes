@@ -8,7 +8,7 @@ After following the doc, you will get an ssh.cfg file to establish an SSH connec
 
 ## Requirement
 
-* Have completed [How to create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
+* Have completed [How to create Azure AKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/AKSScalarTerraformDeploymentGuide.md)
 
 ## Create kubeconfig file
 

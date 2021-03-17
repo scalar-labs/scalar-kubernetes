@@ -4,7 +4,7 @@ This document explains how to deploy Scalar Ledger and Envoy on Kubernetes with 
 
 ## Requirements
 
-* Have completed the [How to create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
+* Have completed the [How to create Azure AKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/AKSScalarTerraformDeploymentGuide.md)
 * Have completed the [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
 * An authority to pull `ghcr.io/scalar-labs/scalar-ledger` and `ghcr.io/scalar-labs/scalardl-schema-loader` docker repositories.
   * `scalar-ledger` and `scalardl-schema-loader` are available to only our partners and customers at the moment.

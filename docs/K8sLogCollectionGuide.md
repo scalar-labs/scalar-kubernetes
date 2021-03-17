@@ -4,7 +4,7 @@
 
 ## Requirements
 
-* Have completed [How to create Azure AKS with scalar-terraform](./AKSScalarTerraformDeploymentGuide.md)
+* Have completed [How to create Azure AKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/AKSScalarTerraformDeploymentGuide.md)
   * Make sure the monitor server is up and running.
   * Make sure you generated the ssh.cfg file in `${SCALAR_TERRAFORM_EXAMPLES}/azure/network`
 * There is the `inventory.ini` file in `${SCALAR_K8S_CONFIG_DIR}`. Please refer to [Prepare Ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory).
