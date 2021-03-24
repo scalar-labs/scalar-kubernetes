@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "scalardl-ledger.labels" . | nindent 4 }}
 spec:
-  minReadySeconds: 60
   replicas: {{ .Values.ledger.replicaCount }}
   selector:
     matchLabels:
@@ -69,11 +68,11 @@ spec:
               command:
               - /bin/grpc_health_probe
               - -addr=:50051
-          readinessProbe:
-            exec:
-              command:
-              - /bin/grpc_health_probe
-              - -addr=:50051
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
           resources:
             {{- toYaml .Values.ledger.resources | nindent 12 }}
       {{- with .Values.ledger.nodeSelector }}

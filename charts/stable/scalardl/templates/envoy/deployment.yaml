@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "scalardl-envoy.labels" . | nindent 4 }}
 spec:
-  minReadySeconds: 60
   replicas: {{ .Values.envoy.replicaCount }}
   selector:
     matchLabels:
@@ -47,16 +46,7 @@ spec:
               path: /ready
               port: 9001
             failureThreshold: 3
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 1
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: 9001
-            failureThreshold: 3
-            initialDelaySeconds: 20
+            initialDelaySeconds: 10
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
