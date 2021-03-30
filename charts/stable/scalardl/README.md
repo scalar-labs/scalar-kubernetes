@@ -1,7 +1,7 @@
 # scalardl
 
 Implementation scalardl.
-Current chart version is `1.2.1`
+Current chart version is `1.2.2`
 
 ## Values
 
@@ -31,7 +31,7 @@ Current chart version is `1.2.1`
 | envoy.serviceMonitor.enabled | bool | `false` | enable metrics collect with prometheus |
 | envoy.serviceMonitor.interval | string | `"15s"` | custom interval to retrieve the metrics |
 | envoy.serviceMonitor.namespace | string | `"monitoring"` | which namespace prometheus is located. by default monitoring |
-| envoy.strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |
+| envoy.strategy.rollingUpdate | object | `{"maxSurge":"25%","maxUnavailable":"25%"}` | The number of pods that can be unavailable during the update process |
 | envoy.strategy.type | string | `"RollingUpdate"` | New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate |
 | envoy.tolerations | list | `[]` | Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints. |
 | fullnameOverride | string | `""` | String to fully override scalardl.fullname template |
@@ -65,7 +65,7 @@ Current chart version is `1.2.1`
 | ledger.service.ports.scalardl.protocol | string | `"TCP"` | scalardl protocol |
 | ledger.service.ports.scalardl.targetPort | int | `50051` | scalardl k8s internal name |
 | ledger.service.type | string | `"ClusterIP"` | service types in kubernetes |
-| ledger.strategy.rollingUpdate | object | `{"maxSurge":0,"maxUnavailable":1}` | The number of pods that can be unavailable during the update process |
+| ledger.strategy.rollingUpdate | object | `{"maxSurge":"25%","maxUnavailable":"25%"}` | The number of pods that can be unavailable during the update process |
 | ledger.strategy.type | string | `"RollingUpdate"` | New pods are added gradually, and old pods are terminated gradually, e.g: Recreate or RollingUpdate |
 | ledger.tolerations | list | `[]` | Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints. |
 | nameOverride | string | `""` | String to partially override scalardl.fullname template (will maintain the release name) |
