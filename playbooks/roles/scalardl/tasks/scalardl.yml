@@ -1,7 +1,7 @@
 ---
 - name: Deploy Scalar DL
   command: >-
-    {{ helm_binary_path }} upgrade --install {{ scalardl_helm_release_name }} helm/charts/stable/scalardl
+    {{ helm_binary_path }} upgrade --install {{ scalardl_helm_release_name }} helm/charts/scalardl
     --namespace {{ kubernetes_namespace }}
-    -f {{ remote_directory }}/helm/charts/config/scalardl-custom-values.yaml
+    -f {{ remote_directory }}/helm/config/scalardl-custom-values.yaml
   when: deploy_scalardl

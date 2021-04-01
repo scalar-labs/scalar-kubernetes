@@ -1,19 +1,20 @@
 ---
 - name: Create directory on remote server
   file:
-    path: "{{ remote_directory }}/helm/charts/config"
+    path: "{{ remote_directory }}/helm/config"
     state: directory
     mode: 0755
 
-- name: Copy helm charts
-  synchronize:
-    src: "{{ local_helm_charts_directory }}"
+- name: Git clone stable repo on HEAD
+  ansible.builtin.git:
+    repo: "{{ scalardl_chart_repo }}"
     dest: "{{ remote_directory }}/helm/charts"
+    version: "{{ scalardl_chart_version }}"
 
 - name: Copy helm charts custom values
   copy:
     src: "{{ local_helm_charts_values_directory }}/{{ item }}"
-    dest: "{{ remote_directory }}/helm/charts/config/{{ item }}"
+    dest: "{{ remote_directory }}/helm/config/{{ item }}"
     mode: 0644
   loop:
   - scalardl-custom-values.yaml
