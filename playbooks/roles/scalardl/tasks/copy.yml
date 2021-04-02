@@ -5,11 +5,11 @@
     state: directory
     mode: 0755
 
-- name: Git clone stable repo on HEAD
-  ansible.builtin.git:
-    repo: "{{ scalardl_chart_repo }}"
+- name: Get helm charts from GitHub
+  git:
+    repo: "{{ helm_charts_repo }}"
     dest: "{{ remote_directory }}/helm/charts"
-    version: "{{ scalardl_chart_version }}"
+    version: "{{ helm_charts_version }}"
 
 - name: Copy helm charts custom values
   copy:

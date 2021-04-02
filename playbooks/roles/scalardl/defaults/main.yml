@@ -1,5 +1,4 @@
 base_local_directory: ../conf
-local_helm_charts_directory: ../../../../charts/stable
 local_helm_charts_values_directory: "{{ base_local_directory }}/"
 remote_directory: "/home/{{ ansible_user }}"
 docker_registry: ghcr.io
@@ -11,6 +10,5 @@ kubernetes_namespace: default
 deploy_scalardl: yes
 scalardl_helm_release_name: prod
 deploy_scalar_load_schma: yes
-
-scalardl_chart_repo: https://github.com/tei-k/scalar-charts.git
-scalardl_chart_version: main
+helm_charts_repo: https://github.com/scalar-labs/charts.git
+helm_charts_version: main
