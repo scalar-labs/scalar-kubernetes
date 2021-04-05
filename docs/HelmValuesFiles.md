@@ -4,8 +4,8 @@ In `${SCALAR_K8S_CONFIG_DIR}` contain the helm custom values use for deploying t
 
 The default values are described here:
 
-* [scalardl](../charts/stable/scalardl/README.md)
-* [schema-loading](../charts/stable/schema-loading/README.md)
+* [scalardl](https://github.com/scalar-labs/helm-charts/charts/scalardl/README.md)
+* [schema-loading](https://github.com/scalar-labs/helm-charts/charts/schema-loading/README.md)
 
 Once you change the value on your local machine, you need to re-apply the deployment.
 

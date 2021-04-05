@@ -53,13 +53,16 @@ At this point, you need to update these Helm values files to configure the datab
 Now it is ready to run the helm commands to install Scalar DL.
 
 ```console
+# Get helm charts from GitHub
+$ git clone https://github.com/scalar-labs/helm-charts
+
 # Load Schema for Scalar DL install with a release name `load-schema`
 $ cd ${SCALAR_K8S_HOME}
-$ helm upgrade --install load-schema charts/stable/schema-loading --namespace default -f ${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml
+$ helm upgrade --install load-schema helm-charts/charts/schema-loading --namespace default -f ${SCALAR_K8S_CONFIG_DIR}/schema-loading-custom-values.yaml
 
 # Install Scalar DL with a release name `my-release-scalardl`
 $ cd ${SCALAR_K8S_HOME}
-$ helm upgrade --install my-release-scalardl charts/stable/scalardl --namespace default -f ${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml
+$ helm upgrade --install my-release-scalardl helm-charts/charts/scalardl --namespace default -f ${SCALAR_K8S_CONFIG_DIR}/scalardl-custom-values.yaml
 ```
 
 Note:
