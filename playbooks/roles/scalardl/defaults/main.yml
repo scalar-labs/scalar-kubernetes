@@ -11,4 +11,4 @@ deploy_scalardl: yes
 scalardl_helm_release_name: prod
 deploy_scalar_load_schma: yes
 helm_charts_repo: https://github.com/scalar-labs/helm-charts.git
-helm_charts_version: add-scalardl-charts
+helm_charts_version: main

@@ -9,7 +9,7 @@
 - name: Download Custom Resource Definition
   get_url:
     url: "{{ item }}"
-    dest: "{{ remote_directory }}/helm/crds/"
+    dest: "{{ crds_path }}"
   loop: "{{ prometheus_crds_url }}"
   register: prometheus_crds_path
 
