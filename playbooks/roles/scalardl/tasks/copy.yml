@@ -17,5 +17,5 @@
     dest: "{{ remote_directory }}/helm-config/{{ item }}"
     mode: 0644
   loop:
-  - scalardl-custom-values.yaml
-  - schema-loading-custom-values.yaml
+    - scalardl-custom-values.yaml
+    - schema-loading-custom-values.yaml
