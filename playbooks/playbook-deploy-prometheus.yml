@@ -6,9 +6,9 @@
   vars:
     # namespace: monitoring
     # prometheus_version: 8.14.0
-    # deploy_prometheus: yes
-    # create_dashboard: yes
+    # deploy_prometheus: true
+    # create_dashboard: true
     # alertmanager_notification_activated: false
     # slack_webhook_url: "https://hooks.slack.com/services/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx"
   roles:
-  - prometheus
+    - { role: prometheus, tags: prometheus }
