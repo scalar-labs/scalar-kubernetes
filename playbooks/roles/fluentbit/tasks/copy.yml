@@ -10,4 +10,5 @@
   copy:
     src: "{{ item }}"
     dest: "{{ fluent_manifests_path }}/{{ item }}"
+    mode: 0644
   loop: "{{ fluent_manifests_files }}"
