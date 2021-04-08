@@ -27,7 +27,7 @@
     {{ helm_binary_path }} upgrade --install prometheus stable/prometheus-operator
     --namespace {{ namespace }} --version {{ prometheus_version }}
     -f {{ prometheus_config_path }}/prometheus-custom-values.yaml --timeout 200s
-  when: deploy_prometheus
+  when: deploy_prometheus | bool
   register: result
   retries: 2
   delay: 30

@@ -6,8 +6,8 @@ prometheus_config_path: "{{ remote_directory }}/helm/prometheus"
 prometheus_crds_path: "{{ prometheus_config_path }}/crds"
 granafa_manifests_path: "{{ remote_directory }}/manifests/grafana"
 helm_binary_path: /usr/local/bin/helm
-deploy_prometheus: yes
-create_dashboard: yes
+deploy_prometheus: true
+create_dashboard: true
 alertmanager_notification_activated: false
 # slack_webhook_url: "https://hooks.slack.com/services/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx"
 prometheus_crds_files:
