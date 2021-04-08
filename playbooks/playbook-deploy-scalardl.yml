@@ -4,7 +4,7 @@
   gather_facts: no
   become: no
   vars:
-    base_local_directory: "{{ lookup('env','SCALAR_K8S_CONFIG_DIR') }}"
+    # local_helm_charts_values_directory: "{{ lookup('env','SCALAR_K8S_CONFIG_DIR') }}"
     # docker_registry: "ghcr.io"
     # docker_username: "{{ lookup('env','DOCKER_REGISTRY_USERNAME') }}"
     # docker_password: "{{ lookup('env','DOCKER_REGISTRY_PASSWORD') }}"
@@ -12,6 +12,6 @@
     # kubernetes_namespace: default
     # deploy_scalardl: yes
     # scalardl_helm_release_name: prod
-    # env_name: example
+    # helm_charts_version: main
   roles:
-    - scalardl
+    - { role: scalardl, tags: scalardl }

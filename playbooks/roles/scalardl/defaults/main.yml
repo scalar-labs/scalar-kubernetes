@@ -1,5 +1,4 @@
-base_local_directory: ../conf
-local_helm_charts_values_directory: "{{ base_local_directory }}/"
+local_helm_charts_values_directory: "{{ lookup('env','SCALAR_K8S_CONFIG_DIR') | default('../conf', True) }}"
 remote_directory: "/home/{{ ansible_user }}"
 docker_registry: ghcr.io
 docker_username: "{{ lookup('env','DOCKER_REGISTRY_USERNAME') }}"
