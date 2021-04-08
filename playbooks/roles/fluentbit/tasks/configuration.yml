@@ -10,4 +10,4 @@
     src: fluent-bit-service-monitor.yaml.j2
     dest: "{{ fluent_manifests_path }}/fluent-bit-service-monitor.yaml"
     mode: 0644
-  when: fluent_activate_metrics
+  when: fluent_activate_metrics | bool

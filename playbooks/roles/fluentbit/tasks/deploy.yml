@@ -17,4 +17,4 @@
   k8s:
     state: present
     src: "{{ fluent_manifests_path }}/fluent-bit-service-monitor.yaml"
-  when: fluent_activate_metrics
+  when: fluent_activate_metrics | bool
