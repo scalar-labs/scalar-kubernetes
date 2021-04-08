@@ -1,16 +1,21 @@
 ---
 namespace: monitoring
 prometheus_version: 8.14.0
-remote_directory: "/home/{{ ansible_user }}"
+remote_directory: /home/{{ ansible_user }}
+prometheus_config_path: "{{ remote_directory }}/helm/prometheus"
+prometheus_crds_path: "{{ prometheus_config_path }}/crds"
+granafa_manifests_path: "{{ remote_directory }}/manifests/grafana"
 helm_binary_path: /usr/local/bin/helm
 deploy_prometheus: yes
 create_dashboard: yes
 alertmanager_notification_activated: false
-# slack_webhook_url: "https://hooks.slack.com/services/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx" 
-prometheus_crds_url:
-- https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
-- https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
-- https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
-- https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
-- https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
-- https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+# slack_webhook_url: "https://hooks.slack.com/services/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx"
+prometheus_crds_files:
+  - monitoring.coreos.com_alertmanagers.yaml
+  - monitoring.coreos.com_podmonitors.yaml
+  - monitoring.coreos.com_prometheuses.yaml
+  - monitoring.coreos.com_prometheusrules.yaml
+  - monitoring.coreos.com_servicemonitors.yaml
+  - monitoring.coreos.com_thanosrulers.yaml
+prometheus_crds_version: v0.38.3
+prometheus_crds_url: https://raw.githubusercontent.com/coreos/prometheus-operator/{{ prometheus_crds_version }}/example/prometheus-operator-crd
