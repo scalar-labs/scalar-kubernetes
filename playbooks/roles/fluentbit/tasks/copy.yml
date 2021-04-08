@@ -1,12 +1,13 @@
 ---
 - name: Create folder on remote server
   file:
-    path: "{{ remote_manifests_directory }}/fluentbit"
+    path: "{{ fluent_manifests_path }}"
     state: directory
     mode: 0755
 
 
 - name: Copy manifests
-  synchronize:
-    src: "../files/"
-    dest: "{{ remote_manifests_directory }}/fluentbit"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ fluent_manifests_path }}/{{ item }}"
+  loop: "{{ fluent_manifests_files }}"
