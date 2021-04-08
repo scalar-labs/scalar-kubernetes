@@ -63,7 +63,7 @@ alertmanager:
             {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
             {{ end }}
           {{ end }}{% endraw %}
-        
+
         title_link: 'https://github.com/scalar-labs/scalar-kubernetes/tree/master/docs/alerts/{% raw %}{{ .GroupLabels.app }}.md#{{ .GroupLabels.alertname }}{% endraw %}'
 {% endif %}
 
@@ -116,7 +116,7 @@ grafana:
 
   persistence:
     enabled: false
-    storageClassName: default
+    storageClassName: {{ storage_class }}
     accessModes: ["ReadWriteOnce"]
     size: 2Gi
 
@@ -170,7 +170,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: default
+          storageClassName: {{ storage_class }}
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
