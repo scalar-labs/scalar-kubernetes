@@ -3,7 +3,8 @@
   block:
     - name: Change interpreter to python2
       set_fact:
-        ansible_python_interpreter: "/usr/bin/python"
+        ansible_python_default_interpreter: "{{ ansible_python_interpreter }}"
+        ansible_python_interpreter: /usr/bin/python
 
     - name: Install
       package:
@@ -15,6 +16,6 @@
       delay: 5
       become: yes
 
-    - name: Recover interpreter to python3
+    - name: Recover interpreter to default
       set_fact:
-        ansible_python_interpreter: "/usr/bin/python3"
+        ansible_python_interpreter: "{{ ansible_python_default_interpreter }}"
