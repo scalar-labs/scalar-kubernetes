@@ -1,7 +1,7 @@
 ---
 - name: Create folder on remote server
   file:
-    path: "{{ crds_path }}"
+    path: "{{ remote_directory }}/helm/crds"
     state: directory
     mode: 0755
 
