@@ -1,20 +1,20 @@
 ---
 - name: Create directory on remote server
   file:
-    path: "{{ remote_directory }}/helm/config"
+    path: "{{ helm_charts_custom_config_path }}"
     state: directory
     mode: 0755
 
 - name: Get helm charts from GitHub
   git:
-    repo: "{{ helm_charts_repo }}"
-    dest: "{{ remote_directory }}/helm/helm-charts"
+    repo: "{{ helm_charts_repo_url }}"
+    dest: "{{ helm_charts_clone_path }}"
     version: "{{ helm_charts_version }}"
 
 - name: Copy helm charts custom values
   copy:
     src: "{{ local_helm_charts_values_directory }}/{{ item }}"
-    dest: "{{ remote_directory }}/helm/config/{{ item }}"
+    dest: "{{ helm_charts_custom_config_path }}/{{ item }}"
     mode: 0644
   loop:
     - scalardl-custom-values.yaml

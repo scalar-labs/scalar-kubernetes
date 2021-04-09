@@ -54,7 +54,7 @@ Now it is ready to run the helm commands to install Scalar DL.
 
 ```console
 # Get helm charts from GitHub
-$ git clone https://github.com/scalar-labs/helm-charts
+$ git clone https://github.com/scalar-labs/helm-charts -b <main or tag>
 
 # Load Schema for Scalar DL install with a release name `load-schema`
 $ cd ${SCALAR_K8S_HOME}

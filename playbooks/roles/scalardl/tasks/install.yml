@@ -1,0 +1,20 @@
+---
+- name: Install Git
+  block:
+    - name: Change interpreter to python2
+      set_fact:
+        ansible_python_interpreter: "/usr/bin/python"
+
+    - name: Install
+      package:
+        name: git
+        state: present
+      register: install_git_result
+      until: install_git_result is succeeded
+      retries: 3
+      delay: 5
+      become: yes
+
+    - name: Recover interpreter to python3
+      set_fact:
+        ansible_python_interpreter: "/usr/bin/python3"

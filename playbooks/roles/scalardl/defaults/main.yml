@@ -1,5 +1,9 @@
 local_helm_charts_values_directory: "{{ lookup('env','SCALAR_K8S_CONFIG_DIR') | default('../conf', True) }}"
 remote_directory: "/home/{{ ansible_user }}"
+helm_charts_custom_config_path: "{{ remote_directory }}/helm/config"
+helm_charts_clone_path: "{{ remote_directory }}/helm/helm-charts"
+helm_charts_repo_url: https://github.com/scalar-labs/helm-charts.git
+helm_charts_version: main
 docker_registry: ghcr.io
 docker_username: "{{ lookup('env','DOCKER_REGISTRY_USERNAME') }}"
 docker_password: "{{ lookup('env','DOCKER_REGISTRY_PASSWORD') }}"
@@ -9,5 +13,3 @@ kubernetes_namespace: default
 deploy_scalardl: yes
 scalardl_helm_release_name: prod
 deploy_scalar_load_schma: yes
-helm_charts_repo: https://github.com/scalar-labs/helm-charts.git
-helm_charts_version: main
