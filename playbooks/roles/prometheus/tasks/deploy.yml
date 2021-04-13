@@ -8,16 +8,15 @@
 
 - name: Download Custom Resource Definition
   get_url:
-    url: "{{ item }}"
-    dest: "{{ remote_directory }}/helm/crds/"
-  loop: "{{ prometheus_crds_url }}"
-  register: prometheus_crds_path
+    url: "{{ prometheus_crds_url }}/{{ item }}"
+    dest: "{{ prometheus_crds_path }}"
+  loop: "{{ prometheus_crds_files }}"
 
 - name: Deploy Prometheus CRDs
   k8s:
     state: present
-    src: "{{ item.dest }}"
-  with_items: "{{ prometheus_crds_path.results | list }}"
+    src: "{{ prometheus_crds_path }}/{{ item }}"
+  loop: "{{ prometheus_crds_files }}"
 
 - name: wait Prometheus CRDS install in Kubernetes cluster
   pause:
@@ -27,8 +26,8 @@
   command: >-
     {{ helm_binary_path }} upgrade --install prometheus stable/prometheus-operator
     --namespace {{ namespace }} --version {{ prometheus_version }}
-    -f {{ remote_directory }}/helm/prometheus-custom-values.yaml --timeout 200s
-  when: deploy_prometheus
+    -f {{ prometheus_config_path }}/prometheus-custom-values.yaml --timeout 200s
+  when: deploy_prometheus | bool
   register: result
   retries: 2
   delay: 30

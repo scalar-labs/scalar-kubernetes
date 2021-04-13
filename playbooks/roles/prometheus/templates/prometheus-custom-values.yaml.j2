@@ -30,7 +30,7 @@ global:
 
 alertmanager:
   enabled: true
-{% if alertmanager_notification_activated is defined and alertmanager_notification_activated == true %}
+{% if alertmanager_notification_activated | default(false) | bool %}
   config:
     global:
       resolve_timeout: 5m
@@ -63,7 +63,7 @@ alertmanager:
             {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
             {{ end }}
           {{ end }}{% endraw %}
-        
+
         title_link: 'https://github.com/scalar-labs/scalar-kubernetes/tree/master/docs/alerts/{% raw %}{{ .GroupLabels.app }}.md#{{ .GroupLabels.alertname }}{% endraw %}'
 {% endif %}
 
