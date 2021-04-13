@@ -1,13 +1,13 @@
 ---
 - name: Template Fluentbit daemon set
   template:
-    src: templates/fluent-bit-ds.yaml.j2
-    dest: "{{ remote_manifests_directory }}/fluentbit/fluent-bit-ds.yaml"
+    src: fluent-bit-ds.yaml.j2
+    dest: "{{ fluent_manifests_path }}/fluent-bit-ds.yaml"
     mode: 0644
 
 - name: Template Fluentbit service monitor
   template:
-    src: templates/fluent-bit-service-monitor.yaml.j2
-    dest: "{{ remote_manifests_directory }}/fluentbit/fluent-bit-service-monitor.yaml"
+    src: fluent-bit-service-monitor.yaml.j2
+    dest: "{{ fluent_manifests_path }}/fluent-bit-service-monitor.yaml"
     mode: 0644
-  when: fluent_activate_metrics
+  when: fluent_activate_metrics | bool
