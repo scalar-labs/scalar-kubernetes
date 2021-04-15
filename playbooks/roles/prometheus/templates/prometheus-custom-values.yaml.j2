@@ -116,7 +116,6 @@ grafana:
 
   persistence:
     enabled: false
-    storageClassName: default
     accessModes: ["ReadWriteOnce"]
     size: 2Gi
 
@@ -170,7 +169,6 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: default
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
