@@ -15,9 +15,9 @@
 
 - name: (Re) Deploy Schema Loading
   command: >-
-    {{ helm_binary_path }} upgrade --install load-schema helm/charts/stable/schema-loading
+    {{ helm_binary_path }} upgrade --install load-schema {{ helm_charts_clone_path }}/charts/schema-loading
     --namespace {{ kubernetes_namespace }}
-    -f {{ remote_directory }}/helm/charts/config/schema-loading-custom-values.yaml
+    -f {{ helm_charts_custom_config_path }}/schema-loading-custom-values.yaml
   when: deploy_scalar_load_schma
 
 - name: Check Schema Loading job have been successful
