@@ -6,16 +6,20 @@
 
 - name: Add prometheus-community chart repo
   community.kubernetes.helm_repository:
-    name: main
+    name: prometheus
     repo_url: "{{ prometheus_charts_repo }}"
 
 - name: Deploy prometheus with helm
   community.kubernetes.helm:
     name: prometheus
-    chart_ref: prometheus-community/kube-prometheus-stack
+    chart_ref: prometheus/kube-prometheus-stack
+    chart_version: "{{ prometheus_version }}"
     release_namespace: "{{ namespace }}"
-    create_namespace: true
+    update_repo_cache: yes
+    create_namespace: yes
     wait_timeout: "200"
+    values_files:
+      - "{{ prometheus_config_path }}/prometheus-custom-values.yaml"
 
 
 # - name:
