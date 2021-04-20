@@ -12,7 +12,7 @@
 #   loop: "{{ prometheus_crds_files }}"
 
 # - name: Deploy Prometheus CRDs
-#   community.kubernetes.k8s:
+#   kubernetes.core.k8s:
 #     state: present
 #     src: "{{ prometheus_crds_path }}/{{ item }}"
 #   loop: "{{ prometheus_crds_files }}"
@@ -22,12 +22,12 @@
 #     seconds: 30
 
 - name: Add prometheus-community chart repo
-  community.kubernetes.helm_repository:
+  kubernetes.core.helm_repository:
     name: prometheus
     repo_url: "{{ prometheus_charts_repo }}"
 
 - name: Deploy prometheus with helm
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: prometheus
     chart_ref: prometheus/kube-prometheus-stack
     chart_version: "{{ prometheus_charts_version }}"
