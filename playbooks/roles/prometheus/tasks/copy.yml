@@ -1,4 +1,10 @@
 ---
+- name: Create folder on remote server
+  file:
+    path: "{{ prometheus_crds_path }}"
+    state: directory
+    mode: 0755
+
 - name: Template file on remote server
   template:
     src: prometheus-custom-values.yaml.j2

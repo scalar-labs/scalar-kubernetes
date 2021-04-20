@@ -4,6 +4,23 @@
     state: present
     plugin_path: https://github.com/databus23/helm-diff
 
+# https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack#upgrading-an-existing-release-to-a-new-major-version
+# - name: Download Custom Resource Definition
+#   get_url:
+#     url: "{{ prometheus_crds_url }}/{{ item }}"
+#     dest: "{{ prometheus_crds_path }}"
+#   loop: "{{ prometheus_crds_files }}"
+
+# - name: Deploy Prometheus CRDs
+#   community.kubernetes.k8s:
+#     state: present
+#     src: "{{ prometheus_crds_path }}/{{ item }}"
+#   loop: "{{ prometheus_crds_files }}"
+
+# - name: wait Prometheus CRDS install in Kubernetes cluster
+#   pause:
+#     seconds: 30
+
 - name: Add prometheus-community chart repo
   community.kubernetes.helm_repository:
     name: prometheus
