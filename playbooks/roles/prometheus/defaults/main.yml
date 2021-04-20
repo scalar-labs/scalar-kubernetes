@@ -1,6 +1,6 @@
 ---
 namespace: monitoring
-prometheus_version: 14.9.0
+prometheus_charts_version: 14.9.0
 prometheus_charts_repo: https://prometheus-community.github.io/helm-charts
 remote_directory: /home/{{ ansible_user }}
 prometheus_config_path: "{{ remote_directory }}/helm/prometheus"
@@ -19,5 +19,5 @@ prometheus_crds_files:
   - monitoring.coreos.com_prometheuses.yaml
   - monitoring.coreos.com_servicemonitors.yaml
   - monitoring.coreos.com_thanosrulers.yaml
-prometheus_crds_version: v0.47.0
+prometheus_crds_version: v0.46.0
 prometheus_crds_url: https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/{{ prometheus_crds_version }}/example/prometheus-operator-crd

@@ -30,7 +30,7 @@
   community.kubernetes.helm:
     name: prometheus
     chart_ref: prometheus/kube-prometheus-stack
-    chart_version: "{{ prometheus_version }}"
+    chart_version: "{{ prometheus_charts_version }}"
     release_namespace: "{{ namespace }}"
     update_repo_cache: yes
     create_namespace: yes
