@@ -13,12 +13,18 @@
     {{ helm_binary_path }} delete load-schema
   when: job_schema_loading_previous_has_failed | json_query('resources[*].status.conditions[?type==`Failed`].status[]') | unique == ["True"]
 
-- name: (Re) Deploy Schema Loading
-  command: >-
-    {{ helm_binary_path }} upgrade --install load-schema {{ helm_charts_clone_path }}/charts/schema-loading
-    --namespace {{ kubernetes_namespace }}
-    -f {{ helm_charts_custom_config_path }}/schema-loading-custom-values.yaml
-  when: deploy_scalar_load_schma
+- name: Deploy Schema Loading with helm
+  kubernetes.core.helm:
+    name: load-schema
+    chart_ref: scalardl/schema-loading
+    chart_version: "{{ schema_loading_charts_version }}"
+    release_namespace: "{{ kubernetes_namespace }}"
+    update_repo_cache: yes
+    create_namespace: yes
+    wait_timeout: "200"
+    values_files:
+      - "{{ helm_charts_custom_config_path }}/schema-loading-custom-values.yaml"
+  when: deploy_scalardl | bool
 
 - name: Check Schema Loading job have been successful
   k8s_info:

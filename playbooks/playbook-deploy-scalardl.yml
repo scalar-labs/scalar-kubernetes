@@ -12,6 +12,7 @@
     # kubernetes_namespace: default
     # deploy_scalardl: yes
     # scalardl_helm_release_name: prod
-    # helm_charts_version: main
+    # scalardl_charts_version: 1.2.2
+    # schema_loading_charts_version: 1.3.0
   roles:
     - { role: scalardl, tags: scalardl }

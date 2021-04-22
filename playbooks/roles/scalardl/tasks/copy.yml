@@ -5,11 +5,10 @@
     state: directory
     mode: 0755
 
-- name: Get helm charts from GitHub
-  git:
-    repo: "{{ helm_charts_repo_url }}"
-    dest: "{{ helm_charts_clone_path }}"
-    version: "{{ helm_charts_version }}"
+- name: Add scalardl charts repo
+  kubernetes.core.helm_repository:
+    name: scalardl
+    repo_url: "{{ helm_charts_repo_url }}"
 
 - name: Copy helm charts custom values
   copy:

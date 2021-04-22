@@ -1,6 +1,5 @@
 ---
 # roles scalardl entry-point
-- import_tasks: install.yml
 - import_tasks: copy.yml
 - import_tasks: configuration.yml
 - import_tasks: schema.yml
