@@ -5,11 +5,6 @@
     state: directory
     mode: 0755
 
-- name: Add scalardl charts repo
-  kubernetes.core.helm_repository:
-    name: scalardl
-    repo_url: "{{ helm_charts_repo_url }}"
-
 - name: Copy helm charts custom values
   copy:
     src: "{{ local_helm_charts_values_directory }}/{{ item }}"

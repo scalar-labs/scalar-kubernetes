@@ -13,9 +13,11 @@
     - name: Switch Ansible's Python interpreter to Python 2
       set_fact:
         ansible_python_interpreter: "/usr/bin/python"
-    - name: Ensure libselinux-python3 is installed (to use copy in ansible)
+    - name: Install required packages
       package:
-        name: libselinux-python3
+        name:
+          - libselinux-python3
+          - git
         state: present
     - name: Switch Ansible's Python interpreter to Python 3
       set_fact:
