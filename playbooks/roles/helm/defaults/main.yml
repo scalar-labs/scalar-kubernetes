@@ -1,6 +1,5 @@
-helm_version: v3.2.4
+helm_version: v3.5.2
 helm_path: /usr/local/bin/helm
 helm_url: "https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz"
 helm_url_checksum_sha256: 8eb56cbb7d0da6b73cd8884c6607982d0be8087027b8ded01d6b2759a72e34b1
-helm_charts_repo: https://charts.helm.sh/stable/
 remote_home_user: "/home/{{ ansible_user }}/"
