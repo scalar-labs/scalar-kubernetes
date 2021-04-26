@@ -2,7 +2,7 @@
 - name: Deploy Scalar DL with helm
   kubernetes.core.helm:
     name: "{{ scalardl_helm_release_name }}"
-    chart_ref: scalardl/scalardl
+    chart_ref: "{{ scalardl_charts_repo_name }}/scalardl"
     chart_version: "{{ scalardl_charts_version }}"
     release_namespace: "{{ kubernetes_namespace }}"
     update_repo_cache: yes

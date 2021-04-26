@@ -16,7 +16,7 @@
 - name: Deploy Schema Loading with helm
   kubernetes.core.helm:
     name: load-schema
-    chart_ref: scalardl/schema-loading
+    chart_ref: "{{ scalardl_charts_repo_name }}/schema-loading"
     chart_version: "{{ schema_loading_charts_version }}"
     release_namespace: "{{ kubernetes_namespace }}"
     update_repo_cache: yes
