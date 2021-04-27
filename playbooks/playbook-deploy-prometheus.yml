@@ -5,7 +5,7 @@
   become: no
   vars:
     # namespace: monitoring
-    # prometheus_version: 8.14.0
+    # prometheus_charts_version: 14.9.0
     # deploy_prometheus: true
     # create_dashboard: true
     # alertmanager_notification_activated: false
