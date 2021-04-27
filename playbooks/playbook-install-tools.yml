@@ -2,7 +2,7 @@
 - name: Prepare bastion tool - Install Kubernetes CLI and Helm
   hosts: bastion
   gather_facts: no
-  become: yes
+  become: no
   vars:
     base_local_directory: "{{ lookup('env','SCALAR_K8S_CONFIG_DIR') }}"
     # kubectl_version: v1.16.13
@@ -17,6 +17,7 @@
       package:
         name: libselinux-python3
         state: present
+      become: yes
     - name: Switch Ansible's Python interpreter to Python 3
       set_fact:
         ansible_python_interpreter: "/usr/bin/python3"

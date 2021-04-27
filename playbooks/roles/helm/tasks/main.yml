@@ -1,3 +1,4 @@
 ---
 # roles helm entry-point
 - import_tasks: install.yml
+- import_tasks: plugins.yml
