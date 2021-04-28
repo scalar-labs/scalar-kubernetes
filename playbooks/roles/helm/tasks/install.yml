@@ -7,7 +7,7 @@
 
 - name: Download and install helm binary
   block:
-    - name: Downloading {{ helm_url }}
+    - name: Download {{ helm_url }}
       get_url:
         url: "{{ helm_url }}"
         dest: /tmp/{{ helm_archive }}
