@@ -11,7 +11,7 @@
   copy:
     src: "{{ kubectl_local_config_directory }}"
     dest: "/home/{{ ansible_user }}/.kube/config"
-    mode: 0644
+    mode: 0600
 
 - name: Check if kubectl completion exists on admin server
   stat:
