@@ -1,7 +1,7 @@
 ---
 - name: Create folder on remote server
   file:
-    path: "{{ prometheus_crds_path }}"
+    path: "{{ prometheus_config_path }}"
     state: directory
     mode: 0755
 
