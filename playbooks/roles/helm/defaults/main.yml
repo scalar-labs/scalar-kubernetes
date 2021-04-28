@@ -3,6 +3,6 @@ helm_path: /usr/local/bin/helm
 helm_binary_path: "{{ helm_path }}-{{ helm_version }}"
 helm_archive: helm-{{ helm_version }}-linux-amd64.tar.gz
 helm_url: https://get.helm.sh/{{ helm_archive }}
-helm_url_checksum_sha256: 01b317c506f8b6ad60b11b1dc3f093276bb703281cb1ae01132752253ec706a2
+helm_checksum_sha256: 01b317c506f8b6ad60b11b1dc3f093276bb703281cb1ae01132752253ec706a2
 helm_plugins:
   - https://github.com/databus23/helm-diff

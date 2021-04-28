@@ -11,7 +11,7 @@
       get_url:
         url: "{{ helm_url }}"
         dest: /tmp/{{ helm_archive }}
-        checksum: "sha256:{{ helm_url_checksum_sha256 }}"
+        checksum: "sha256:{{ helm_checksum_sha256 }}"
         mode: 0644
       register: download_result
       until: download_result is succeeded
