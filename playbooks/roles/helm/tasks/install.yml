@@ -33,7 +33,7 @@
   always:
     - name: Clean {{ helm_archive }}
       file:
-        path: "/tmp/{{ helm_archive }}"
+        path: "/tmp/{{ item }}"
         state: absent
       loop:
         - "{{ helm_archive }}"
