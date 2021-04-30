@@ -1,0 +1,30 @@
+---
+- name: Install Git
+  block:
+    - name: Change interpreter to python2
+      set_fact:
+        ansible_python_default_interpreter: "{{ ansible_python_interpreter }}"
+        ansible_python_interpreter: /usr/bin/python
+
+    - name: Install
+      package:
+        name: git
+        state: present
+      register: install_git_result
+      until: install_git_result is succeeded
+      retries: 3
+      delay: 5
+      become: yes
+
+    - name: Recover interpreter to default
+      set_fact:
+        ansible_python_interpreter: "{{ ansible_python_default_interpreter }}"
+  when: helm_plugins | default([]) | length > 0
+
+- name: Install helm plugins
+  kubernetes.core.helm_plugin:
+    state: present
+    plugin_path: "{{ item }}"
+    binary_path: "{{ helm_path }}"
+  loop: "{{ helm_plugins }}"
+  become_user: "{{ ansible_user }}"

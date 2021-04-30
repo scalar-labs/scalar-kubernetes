@@ -1,33 +1,48 @@
 ---
-- name: Download and install helm binary on admin server
-  get_url:
-    url: "{{ helm_url }}"
-    dest: /tmp/helm.tar.gz
-    checksum: "sha256:{{ helm_url_checksum_sha256 }}"
+- name: Check the installed helm
+  stat:
+    path: "{{ helm_binary_path }}"
+  changed_when: false
+  register: helm_binary_result
 
-- name: Unarchive the helm tar
-  unarchive:
-    src: /tmp/helm.tar.gz
-    dest: /tmp
-    copy: no
-    mode: 0644
+- name: Download and install helm binary
+  block:
+    - name: Download {{ helm_url }}
+      get_url:
+        url: "{{ helm_url }}"
+        dest: /tmp/{{ helm_archive }}
+        checksum: "sha256:{{ helm_checksum_sha256 }}"
+        mode: 0644
+      register: download_result
+      until: download_result is succeeded
+      retries: 3
 
-- name: Copy helm binary to $PATH
-  copy:
-    src: /tmp/linux-amd64/helm
-    dest: "{{ helm_path }}"
-    mode: 0755
-    remote_src: yes
+    - name: Unarchive the helm tar
+      unarchive:
+        src: /tmp/{{ helm_archive }}
+        dest: /tmp
+        remote_src: yes
+        mode: 0644
 
-- name: Clean /tmp/helm.tar.gz
+    - name: Copy helm binary to $PATH
+      copy:
+        src: /tmp/linux-amd64/helm
+        dest: "{{ helm_binary_path }}"
+        mode: 0755
+        remote_src: yes
+  always:
+    - name: Clean {{ helm_archive }}
+      file:
+        path: "/tmp/{{ item }}"
+        state: absent
+      loop:
+        - "{{ helm_archive }}"
+        - linux-amd64
+  when: not helm_binary_result.stat.exists
+
+- name: Create helm symlink
   file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-  - /tmp/linux-amd64
-  - /tmp/helm.tar.gz
-
-- name: Set permissions for helm binary
-  file:
+    src: "{{ helm_binary_path }}"
     path: "{{ helm_path }}"
-    mode: 0755
+    force: yes
+    state: link
