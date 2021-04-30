@@ -20,5 +20,5 @@
 
 - name: Add scalardl charts repo
   kubernetes.core.helm_repository:
-    name: "{{ scalardl_charts_repo_name }}"
-    repo_url: "{{ scalardl_charts_repo_url }}"
+    name: "{{ helm_charts_repo_name }}"
+    repo_url: "{{ helm_charts_repo_url }}"
