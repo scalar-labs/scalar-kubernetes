@@ -5,12 +5,6 @@
     state: directory
     mode: 0755
 
-- name: Get helm charts from GitHub
-  git:
-    repo: "{{ helm_charts_repo_url }}"
-    dest: "{{ helm_charts_clone_path }}"
-    version: "{{ helm_charts_version }}"
-
 - name: Copy helm charts custom values
   copy:
     src: "{{ local_helm_charts_values_directory }}/{{ item }}"

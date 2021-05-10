@@ -10,8 +10,12 @@
     # docker_password: "{{ lookup('env','DOCKER_REGISTRY_PASSWORD') }}"
     # kubernetes_registry_secret_name: "reg-docker-secrets"
     # kubernetes_namespace: default
-    # deploy_scalardl: yes
+    # deploy_scalardl: true
+    # deploy_scalar_load_schma: true
     # scalardl_helm_release_name: prod
-    # helm_charts_version: main
+    # helm_charts_repo_url: https://scalar-labs.github.io/helm-charts
+    # helm_charts_repo_name: scalar-labs
+    # scalardl_chart_version: 1.2.2
+    # schema_loading_chart_version: 1.3.0
   roles:
     - { role: scalardl, tags: scalardl }
