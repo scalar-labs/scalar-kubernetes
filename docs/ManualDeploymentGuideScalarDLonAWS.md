@@ -23,19 +23,18 @@ In this guide, we will create the following components.
 Configure a secure network with your organizational or application standards. 
 Scalar DL handles highly sensitive data of your application, so you should create a highly secure network for production. This section will help you to configure a secure network for Scalar DL deployments.
 
-> **REQUIREMENTS:**
-> 
-> * You must have a VPC, with NAT gateways on private subnets. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
-> * You must have at least 2 subnets in different AZs for the Kubernetes cluster. This is mandatory to create an EKS cluster.
-> * You must have at least one private subnet for the managed database.
-> * You must create subnets with the prefix at least _/24_ for the Kubernetes cluster to work without issues even after scaling. 
+### Requirements
+ 
+* You must have a VPC, with NAT gateways on private subnets. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
+* You must have at least 2 subnets in different AZs for the Kubernetes cluster. This is mandatory to create an EKS cluster.
+* You must have at least one private subnet for the managed database.
+* You must create subnets with the prefix at least _/24_ for the Kubernetes cluster to work without issues even after scaling. 
 
+### Recommendations
 
-> **RECOMMENDATIONS:**
->
-> * Kubernetes should be private in production and should provide secure access with SSH or VPN. You can use a bastion server as a host machine for secure access to the private network.
-> * Subnets should be in multiple availability zones, to enable fault tolerance for the production use.
-> * Kubernetes cluster should be public to enable the envoy public endpoint. The Kubernetes cluster in public is not recommended for production.
+* Kubernetes should be private in production and should provide secure access with SSH or VPN. You can use a bastion server as a host machine for secure access to the private network.
+* Subnets should be in multiple availability zones, to enable fault tolerance for the production use.
+* Kubernetes cluster should be public to enable the envoy public endpoint. The Kubernetes cluster in public is not recommended for production.
 
 [Create an Amazon VPC](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/gsg_create_vpc.html) with the above requirements and recommendations along with your organizational or application standards.
 
@@ -43,9 +42,9 @@ Scalar DL handles highly sensitive data of your application, so you should creat
 
 Scalar DL can run on various databases, which is an essential component for underlying storage. This section will help you to set up a Scalar DL supported database.
 
-> **REQUIREMENTS:**
->
-> * You must have a Scalar DL supported managed database.
+### Requirements
+
+* You must have a Scalar DL supported managed database.
 
 Follow the [Set up a Scalar DL supported database](ScalarDLSupportedDatabase.md) document.
 
@@ -59,13 +58,20 @@ Install the following tools on your host machine:
 * [awscli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install): In this tutorial, awscli is used to create a kubeconfig file to access the EKS cluster.
 * [kubectl](https://kubernetes.io/docs/tasks/tools/): Kubernetes command-line tool to manage EKS cluster. Kubectl 1.19 or higher is required.
 
+### Requirements
+
+* You must have an EKS cluster with Kubernetes version 1.19 or above in order to use our most up-to-date configuration files.
+* Kubernetes node group must be labeled with key as `agentpool` and value as `scalardlpool` for ledger and envoy deployment.
+
+### Recommendations
+
+* Kubernetes node size should be `m5.large` for deploying `ledger` and `envoy` pods, Because each node requires 2 vcpu and 8gb ram for deploying ledger and envoy pods.
+* Node groups should have at least 3 nodes for high availability in production.
+
+
 ### Create a Kubernetes cluster	
 
 Kubernetes cluster is a primary component of EKS. Scalar DL requires a single EKS cluster for deploying ledger, envoy and monitor services. This section will help you to create an EKS cluster. 
-
-> **REQUIREMENTS:**
->
-> * You must have an EKS cluster with Kubernetes version 1.19 or above in order to use our most up-to-date configuration files.
 
 [Create an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html) with the above requirements.
 
@@ -73,15 +79,6 @@ Kubernetes cluster is a primary component of EKS. Scalar DL requires a single EK
 
 This section will help you to create two managed node groups for Scalar DL deployment. 
 One managed node group dedicated to Ledger and Envoy deployment, and another managed node group for logs and metrics collection.
-
-> **REQUIREMENTS:**
->
-> * Kubernetes node group must be labeled with key as `agentpool` and value as `scalardlpool` for ledger and envoy deployment.
- 
-> **RECOMMENDATIONS:**
->
-> * Kubernetes node size should be `m5.large` for deploying `ledger` and `envoy` pods, Because each node requires 2 vcpu and 8gb ram for deploying ledger and envoy pods.
-> * Node groups should have at least 3 nodes for high availability in production.
 
 [Create a managed node group](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with the above requirements and recommendations.
 
@@ -97,11 +94,11 @@ Install the following tools on your host machine:
 
 * [helm](https://helm.sh/docs/intro/install/): helm command-line tool to manage releases in the EKS cluster. In this tutorial, it is used to deploy Scalar DL and Schema loading helm charts to the EKS cluster. Helm version 3.5 or latest is required.
 
-> **REQUIREMENTS:**
->
-> * You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
-> * You must configure the database properties in the helm chart custom values file.
-> * You must confirm that the node group Kubernetes label matches the label in the helm chart [custom values](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf) file.
+### Requirements
+
+* You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
+* You must configure the database properties in the helm chart custom values file.
+* You must confirm that the node group Kubernetes label matches the label in the helm chart [custom values](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf) file.
 
 ### Deploy Scalar DL
 
@@ -128,13 +125,13 @@ Following steps will help you to install Scalar DL on EKS:
     $ helm upgrade --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
     ```
 
-**Note:**
-
-* The same commands can be used to upgrade the pods.
-* Release name `my-release-scalardl` can be changed as per your convenience.
-* `helm ls -a` command can be used to list currently installed releases.
-* You must confirm the load-schema deployment has been completed with `kubectl get po -o wide` before installing Scalar DL.
-* Follow the [Advanced Scalar DL Configuration](#advanced-scalar-dl-configuration) section for more customization.
+> **Note:**
+>
+> * The same commands can be used to upgrade the pods.
+> * Release name `my-release-scalardl` can be changed as per your convenience.
+> * `helm ls -a` command can be used to list currently installed releases.
+> * You should confirm the load-schema deployment has been completed with `kubectl get po -o wide` before installing Scalar DL.
+> * Follow the [Advanced Scalar DL Configuration](#advanced-scalar-dl-configuration) section for more customization.
 
 ## Step 5. Monitor the Cluster
 
@@ -142,12 +139,12 @@ It is critical to actively monitor the overall health and performance of a clust
 You can use container insights to collect performance metrics and Fluent Bit to collect logs of the EKS cluster. 
 This section will help you to configure monitoring and logging for your EKS cluster.
 
-> **RECOMMENDATIONS:**
->
-> * Monitoring should be enabled for EKS in production.
-> * CloudWatch agent should be configured in the EKS cluster for collecting metrics from pods.
-> * Fluent Bit should be configured in the EKS cluster for collecting logs from pods.
->   * Node instance role should have CreateLogGroup permission for Fluent bit.
+### Recommendations
+
+* Monitoring should be enabled for EKS in production.
+* CloudWatch agent should be configured in the EKS cluster for collecting metrics from pods.
+* Fluent Bit should be configured in the EKS cluster for collecting logs from pods.
+    * Node instance role should have CreateLogGroup permission for Fluent bit.
 
 ### Setup container insights
 
