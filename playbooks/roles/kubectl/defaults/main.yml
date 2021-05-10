@@ -1,7 +1,8 @@
 base_local_directory: ../conf
 kubectl_local_config_directory: "{{ base_local_directory }}/kube_config"
-kubectl_version: v1.16.13
+kubectl_version: v1.19.10
 kubectl_path: /usr/local/bin/kubectl
-kubectl_url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
-kubectl_url_checksum_sha256: ab861ec3ec347062bd1b87f8d78d15cd1ce251e74c5fe662e434056962d2a2c9
-python_package: ['kubernetes<12.0', 'openshift', 'kubernetes-validate']
+kubectl_binary_path: /usr/local/bin/kubectl-{{ kubectl_version }}
+kubectl_url: "https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
+kubectl_checksum_sha256: dbacc1a372f00e2d15ad9a39925191c4e314e39b37dcac3e5b2f5e98f4be0d47
+python_package: ['kubernetes', 'openshift', 'kubernetes-validate']
