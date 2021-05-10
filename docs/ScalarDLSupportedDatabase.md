@@ -1,6 +1,7 @@
 # Set up a Scalar DL supported database
 
-Scalar DL can run on various databases. You can choose any one of the supported databases based on your convenience. 
+This is a database setup document for the Scalar DL manual deployment. Scalar DL can run on various databases. 
+You can choose any one of the supported databases based on your convenience.
 
 ## DynamoDB
 
