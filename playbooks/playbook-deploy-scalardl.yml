@@ -15,7 +15,7 @@
     # scalardl_helm_release_name: prod
     # helm_charts_repo_url: https://scalar-labs.github.io/helm-charts
     # helm_charts_repo_name: scalar-labs
-    # scalardl_chart_version: 1.2.2
+    # scalardl_chart_version: 1.2.3
     # schema_loading_chart_version: 1.3.0
   roles:
     - { role: scalardl, tags: scalardl }
