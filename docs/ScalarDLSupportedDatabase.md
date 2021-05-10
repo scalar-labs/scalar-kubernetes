@@ -5,11 +5,12 @@ You can choose any one of the supported databases based on your convenience.
 
 ## DynamoDB
 
-Scalar DL supports DynamoDB as underlying database. 
 By default, Amazon DynamoDB is available for all AWS users, so you do not need to configure anything manually.
 Scalardl schema tool will help you to configure DynamoDB.
 
 ### Scaling Performance
+
+DynamoDB performance can be adjusted using the following parameters
 
 #### Request Units (RU)
 
@@ -17,10 +18,10 @@ You can scale the throughput of DynamoDB by specifying `dynamoBaseResourceUnit` 
 Scalardl schema tool abstracts Capacity Unit of DynamoDB with RU.
 
 #### Auto-scaling
-By default, the scalardl schema tool enables auto-scaling of RU for all tables: RU is scaled in or out between 10% and 100% of a specified RU depending on a workload. 
+
+By default, the `scalardl schema tool` enables auto-scaling of RU for all tables: RU is scaled in or out between 10% and 100% of a specified RU depending on a workload. 
 
 For example, if you specify RU 10000, RU of each table is scaled in or out between 1000 and 10000.
-
 
 > **WARNING:**
 >
