@@ -116,12 +116,13 @@ Following steps will help you to install Scalar DL on EKS:
     # Add helm charts 
     $ helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
     
+    #List the Scalar charts.
+    $ helm search repo scalar-labs
+    
     # Load Schema for Scalar DL install with a release name `load-schema`
-    $ cd ${SCALAR_K8S_HOME}
     $ helm upgrade --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
     
     # Install Scalar DL with a release name `my-release-scalardl`
-    $ cd ${SCALAR_K8S_HOME}
     $ helm upgrade --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
     ```
 
