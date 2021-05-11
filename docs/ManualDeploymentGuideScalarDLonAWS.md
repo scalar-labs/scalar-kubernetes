@@ -116,7 +116,7 @@ Following steps will help you to install Scalar DL on EKS:
     # Add helm charts 
     $ helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
     
-    #List the Scalar charts.
+    # List the Scalar charts.
     $ helm search repo scalar-labs
     
     # Load Schema for Scalar DL install with a release name `load-schema`
@@ -157,7 +157,7 @@ CloudWatch Container Insights helps you to collect, aggregate, and summarize met
 
 Fluent Bit allows you to collect any data like metrics and logs from different sources, so you can set up the Fluent Bit in the node group created for log and metrics collection.
 
-[Setting up Fluent Bit](https://github.com/scalar-labs/misc/blob/scalar-dl-manual-deployment-doc-for-eks/manual-deployment-guide/DeployScalarDLonAWS.md)  will help you to collect logs from containers.
+[Setting up Fluent Bit](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-logs-FluentBit.html#Container-Insights-FluentBit-setup)  will help you to collect logs from containers.
 
 ## Step 6. Checklist for confirming Scalar DL deployments
 
