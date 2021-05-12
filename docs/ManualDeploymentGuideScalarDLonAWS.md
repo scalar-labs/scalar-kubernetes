@@ -27,7 +27,7 @@ Scalar DL handles highly sensitive data of your application, so you should creat
  
 * You must have a VPC, with NAT gateways on private subnets. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
 * You must have at least 2 subnets in different AZs for the Kubernetes cluster. This is mandatory to create an EKS cluster.
-* You must have at least one private subnet for the managed database.
+* You must have at least one private subnet for the managed database other than Dynamo DB.
 * You must create subnets with the prefix at least _/24_ for the Kubernetes cluster to work without issues even after scaling. 
 
 ### Recommendations
@@ -35,6 +35,10 @@ Scalar DL handles highly sensitive data of your application, so you should creat
 * Kubernetes should be private in production and should provide secure access with SSH or VPN. You can use a bastion server as a host machine for secure access to the private network.
 * Subnets should be in multiple availability zones, to enable fault tolerance for the production use.
 * Kubernetes cluster should be public to enable the envoy public endpoint. The Kubernetes cluster in public is not recommended for production.
+
+> **TIP** 
+>
+> If you plan to create three or more nodes in a Kubernetes node group for high availability, create at least 3 subnets in different AZs for the Kubernetes cluster.
 
 [Create an Amazon VPC](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/gsg_create_vpc.html) with the above requirements and recommendations along with your organizational or application standards.
 
@@ -65,7 +69,7 @@ Install the following tools on your host machine:
 
 ### Recommendations
 
-* Kubernetes node size should be `m5.large` for deploying `ledger` and `envoy` pods, Because each node requires 2 vcpu and 8gb ram for deploying ledger and envoy pods.
+* Kubernetes node size should be `m5.large` for deploying `ledger` and `envoy` pods, because each node requires 2 vcpu and 8gb ram for deploying ledger and envoy pods.
 * Node groups should have at least 3 nodes for high availability in production.
 
 
@@ -75,10 +79,14 @@ Kubernetes cluster is a primary component of EKS. Scalar DL requires a single EK
 
 [Create an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html) with the above requirements.
 
+> **Tip**
+>
+> If you are creating a Kubernetes cluster on a private subnet, you must add a new rule in the Kubernetes Security Group to enable HTTPS access to the public subnet from the Kubernetes cluster.
+
 ### Create managed node groups
 
 This section will help you to create two managed node groups for Scalar DL deployment. 
-One managed node group dedicated to Ledger and Envoy deployment, and another managed node group for logs and metrics collection.
+Create a managed node group for Ledger and Envoy deployment, and create another managed node group for deploying logs and metrics collection agents.
 
 [Create a managed node group](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with the above requirements and recommendations.
 
@@ -99,6 +107,7 @@ Install the following tools on your host machine:
 * You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
 * You must configure the database properties in the helm chart custom values file.
 * You must confirm that the node group Kubernetes label matches the label in the helm chart [custom values](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf) file.
+* You must confirm the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file based on the number of nodes in a Scalar DL node group.
 
 ### Deploy Scalar DL
 
@@ -145,7 +154,7 @@ This section will help you to configure monitoring and logging for your EKS clus
 * Monitoring should be enabled for EKS in production.
 * CloudWatch agent should be configured in the EKS cluster for collecting metrics from pods.
 * Fluent Bit should be configured in the EKS cluster for collecting logs from pods.
-    * Node instance role should have CreateLogGroup permission for Fluent bit.
+    * Node instance role must have `CreateLogGroup` permission for Fluent bit.
 
 ### Setup container insights
 
@@ -276,10 +285,8 @@ You can uninstall Scalar DL installation with the following helm commands:
 
 ```console
 # Uninstall loaded schema with a release name 'load-schema'
-$ cd ${SCALAR_K8S_HOME}
 $ helm delete load-schema
 
 # Uninstall Scalar DL with a release name 'my-release-scalardl'
-$ cd ${SCALAR_K8S_HOME}
 $ helm delete my-release-scalardl
 ```
