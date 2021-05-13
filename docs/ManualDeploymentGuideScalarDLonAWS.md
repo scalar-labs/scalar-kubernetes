@@ -106,6 +106,7 @@ Install the following tools on your host machine:
 * You must configure the database properties in the helm chart custom values file.
 * You must confirm that the node group Kubernetes label matches the label in the helm chart [custom values](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf) file.
 * You must confirm the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file based on the number of nodes in a Scalar DL node group. 
+
 eg: 3 nodes for 3 envoy and ledger replicas.
 
 ### Deploy Scalar DL
@@ -157,9 +158,9 @@ This section will help you to configure monitoring and logging for your EKS clus
 
 ### Set up Container Insights
 
-CloudWatch Container Insights helps you to collect, aggregate, and summarize metrics and logs from your containerized applications. Set up cloudwatch agent in the node group created for log and metrics collection.
+CloudWatch Container Insights helps you to collect, aggregate, and summarize metrics and logs from your containerized applications. Set up CloudWatch agent in the node group created for log and metrics collection.
 
-[Setup cloudwatch agent to collect cluster metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-metrics.html) will help you to collect metrics from your containers.
+[Setup CloudWatch agent to collect cluster metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-metrics.html) will help you to collect metrics from your containers.
 
 ### Set up the Fluent Bit
 
