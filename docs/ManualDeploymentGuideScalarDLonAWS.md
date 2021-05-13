@@ -36,9 +36,9 @@ Scalar DL handles highly sensitive data of your application, so you should creat
 * Subnets should be in multiple availability zones, to enable fault tolerance for the production use.
 * Kubernetes cluster should be public to enable the envoy public endpoint. The Kubernetes cluster in public is not recommended for production.
 
-Tip 
+_Tip_ 
 
-If you plan to create three or more nodes in a Kubernetes node group for high availability, create at least 3 subnets in different AZs for the Kubernetes cluster.
+_If you plan to create three or more nodes in a Kubernetes node group for high availability, create at least 3 subnets in different AZs for the Kubernetes cluster.__
 
 [Create an Amazon VPC](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/gsg_create_vpc.html) with the above requirements and recommendations along with your organizational or application standards.
 
@@ -78,9 +78,9 @@ Scalar DL requires a single EKS cluster for deploying ledger, envoy and monitor 
 
 [Create an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html) with the above requirements.
 
-Tip
+_Tip_
 
-If you are creating a Kubernetes cluster on a private subnet, you must add a new rule in the Kubernetes Security Group to enable HTTPS access to the public subnet from the Kubernetes cluster.
+_If you are creating a Kubernetes cluster on a private subnet, you must add a new rule in the Kubernetes Security Group to enable HTTPS access to the public subnet from the Kubernetes cluster._
 
 ### Create managed node groups
 
