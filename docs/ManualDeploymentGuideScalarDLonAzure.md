@@ -6,6 +6,8 @@ This guide shows you how to manually deploy Scalar DL on a managed database serv
 
 ## What we create
 
+![image](images/azure-diagram.png)
+
 In this guide, we will create the following components.
 
 * An Azure Virtual Network associated with Resource Group
