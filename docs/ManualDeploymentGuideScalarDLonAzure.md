@@ -58,7 +58,9 @@ Install the following tools on your host machine:
 
 * You must have an AKS cluster with Kubernetes version 1.19 or above in order to use our most up-to-date configuration files.
 * Kubernetes node pool must be created with the name `scalardlpool` to deploy ledger and envoy pods.
-* You must configure kubernetes access control to `k8s_ingress` subnet
+* You must configure kubernetes access control to `k8s_ingress` subnet.
+* You must create the Kubernetes cluster with `Service principal` as Authentication method.
+* You must create the Kubernetes cluster with `Azure CNI`.
 
 ### Recommendations
 
