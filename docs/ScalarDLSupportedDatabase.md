@@ -4,7 +4,7 @@ In this section, you will set up a database for Scalar DL.
 
 ## DynamoDB
 
-By default, Amazon DynamoDB is available for all AWS users, so you do not need to configure anything manually.
+By default, Amazon DynamoDB is available for all AWS users. You do not need to configure anything manually.
 Scalardl schema tool [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
 
 ### Configure Scalar DL
