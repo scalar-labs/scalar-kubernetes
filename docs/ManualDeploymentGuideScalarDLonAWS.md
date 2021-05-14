@@ -105,9 +105,7 @@ Install the following tools on your host machine:
 * You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
 * You must configure the database properties in the helm chart custom values file.
 * You must confirm that the node group Kubernetes label matches the label in the helm chart [custom values](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf) file.
-* You must confirm the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file based on the number of nodes in a Scalar DL node group. 
-
-eg: 3 nodes for 3 envoy and ledger replicas.
+* You must confirm that replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes.
 
 ### Deploy Scalar DL
 
