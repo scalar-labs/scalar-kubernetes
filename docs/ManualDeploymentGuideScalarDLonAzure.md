@@ -142,7 +142,8 @@ This section will help you to configure monitoring and logging for your AKS clus
 ### Set up container insights for AKS cluster
 
 Enable container insights for monitoring. 
-[Enable monitoring of Azure Kubernetes Service (AKS) cluster already deployed](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters)
+
+Follow the [Enable monitoring of Azure Kubernetes Service (AKS) cluster already deployed](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters) document.
 
 After the Scalar DL deployment, you need to confirm that deployment has been completed successfully. This section will help you to confirm the deployment.
 
