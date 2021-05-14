@@ -182,6 +182,18 @@ pod/my-release-scalardl-envoy-7598cc45dd-vb4mt    1/1     Running     0         
 pod/my-release-scalardl-ledger-654df95577-c2tzr   1/1     Running     0          70s     172.20.4.231   ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>
 pod/my-release-scalardl-ledger-654df95577-dr64g   1/1     Running     0          70s     172.20.2.26    ip-172-20-2-74.ap-south-1.compute.internal    <none>           <none>
 pod/my-release-scalardl-ledger-654df95577-hxs2t   1/1     Running     0          70s     172.20.4.166   ip-172-20-4-100.ap-south-1.compute.internal   <none>           <none>
+
+NAME                                          TYPE           CLUSTER-IP       EXTERNAL-IP                                                                      PORT(S)                           AGE     SELECTOR
+service/kubernetes                            ClusterIP      10.100.0.1       <none>                                                                           443/TCP                           3h   <none>
+service/my-release-scalardl-envoy             LoadBalancer   10.100.114.185   a2baf5324b1124db6a30238667c4be9c-a418e179c4c5b8f3.elb.ap-south-1.amazonaws.com   50051:32664/TCP,50052:30104/TCP   71s     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+service/my-release-scalardl-envoy-metrics     ClusterIP      10.100.34.146    <none>                                                                           9001/TCP                          71s     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+service/my-release-scalardl-ledger-headless   ClusterIP      None             <none>                                                                           50051/TCP,50053/TCP,50052/TCP     71s     app.kubernetes.io/app=ledger,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+
+NAME                                            ENDPOINTS                                                             AGE
+endpoints/kubernetes                            172.20.2.134:443,172.20.4.152:443                                     3h
+endpoints/my-release-scalardl-envoy             172.20.2.39:50052,172.20.4.7:50052,172.20.4.96:50052 + 3 more...      71s
+endpoints/my-release-scalardl-envoy-metrics     172.20.2.39:9001,172.20.4.7:9001,172.20.4.96:9001                     71s
+endpoints/my-release-scalardl-ledger-headless   172.20.2.26:50051,172.20.4.166:50051,172.20.4.231:50051 + 6 more...   71s
 ```
 * Make sure the schema is properly created in the underlying database service.
 
