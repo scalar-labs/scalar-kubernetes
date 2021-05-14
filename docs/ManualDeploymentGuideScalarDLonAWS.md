@@ -104,7 +104,6 @@ Install the following tools on your host machine:
 
 * You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
 * You must configure the database properties in the helm chart custom values file.
-* You must confirm that the node group Kubernetes label matches the label in the helm chart [custom values](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf) file.
 * You must confirm that replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes.
 
 ### Deploy Scalar DL
@@ -172,34 +171,30 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 ### Confirm Scalar DL deployment
 
-You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the bastion host
+You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the host machine.
+```
+$ kubectl get po,svc,endpoints -o wide
+NAME                                              READY   STATUS      RESTARTS   AGE     IP             NODE                                          NOMINATED NODE   READINESS GATES
+pod/load-schema-schema-loading-f75q6              0/1     Completed   0          3m18s   172.20.4.158   ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>
+pod/my-release-scalardl-envoy-7598cc45dd-dqbgl    1/1     Running     0          70s     172.20.4.7     ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>
+pod/my-release-scalardl-envoy-7598cc45dd-dw4d5    1/1     Running     0          70s     172.20.4.96    ip-172-20-4-100.ap-south-1.compute.internal   <none>           <none>
+pod/my-release-scalardl-envoy-7598cc45dd-vb4mt    1/1     Running     0          70s     172.20.2.39    ip-172-20-2-74.ap-south-1.compute.internal    <none>           <none>
+pod/my-release-scalardl-ledger-654df95577-c2tzr   1/1     Running     0          70s     172.20.4.231   ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>
+pod/my-release-scalardl-ledger-654df95577-dr64g   1/1     Running     0          70s     172.20.2.26    ip-172-20-2-74.ap-south-1.compute.internal    <none>           <none>
+pod/my-release-scalardl-ledger-654df95577-hxs2t   1/1     Running     0          70s     172.20.4.166   ip-172-20-4-100.ap-south-1.compute.internal   <none>           <none>
+```
+NAME                                          TYPE           CLUSTER-IP       EXTERNAL-IP                                                                      PORT(S)                           AGE     SELECTOR
+service/kubernetes                            ClusterIP      10.100.0.1       <none>                                                                           443/TCP                           3h   <none>
+service/my-release-scalardl-envoy             LoadBalancer   10.100.114.185   a2baf5324b1124db6a30238667c4be9c-a418e179c4c5b8f3.elb.ap-south-1.amazonaws.com   50051:32664/TCP,50052:30104/TCP   71s     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+service/my-release-scalardl-envoy-metrics     ClusterIP      10.100.34.146    <none>                                                                           9001/TCP                          71s     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+service/my-release-scalardl-ledger-headless   ClusterIP      None             <none>                                                                           50051/TCP,50053/TCP,50052/TCP     71s     app.kubernetes.io/app=ledger,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
 
-* Make sure the load balancer's private endpoint (EXTERNAL-IP) is created properly.
-```
-$ kubectl get svc
-NAME                                  TYPE           CLUSTER-IP     EXTERNAL-IP                                                                      PORT(S)                           AGE
-kubernetes                            ClusterIP      10.100.0.1     <none>                                                                           443/TCP                           47h
-my-release-scalardl-envoy             LoadBalancer   10.100.77.38   ac03bff4c7d2d43a2b5e550fc1ad740b-502bf634d38e551f.elb.ap-south-1.amazonaws.com   50051:30420/TCP,50052:31761/TCP   12m
-my-release-scalardl-envoy-metrics     ClusterIP      10.100.81.87   <none>                                                                           9001/TCP                          12m
-my-release-scalardl-ledger-headless   ClusterIP      None           <none>                                                                           50051/TCP,50053/TCP,50052/TCP     12m
-```
-* Make sure the ledger and envoy pods are running properly.
-```
-$ kubectl get pods
-NAME                                          READY   STATUS    RESTARTS   AGE
-my-release-scalardl-envoy-7598cc45dd-c2rk5    1/1     Running   0          11m
-my-release-scalardl-envoy-7598cc45dd-cxs8p    1/1     Running   0          11m
-my-release-scalardl-envoy-7598cc45dd-tq4rl    1/1     Running   0          11m
-my-release-scalardl-ledger-654df95577-k5r2c   1/1     Running   0          11m
-my-release-scalardl-ledger-654df95577-wltmd   1/1     Running   0          11m
-my-release-scalardl-ledger-654df95577-wlx6d   1/1     Running   0          11m
-```
-* Make sure the schema loading pod execution is completed properly.
-```
-$ kubectl get pods
-NAME                                          READY   STATUS      RESTARTS   AGE
-load-schema-schema-loading-hw9f8              0/1     Completed   0          7m45s
-```
+NAME                                            ENDPOINTS                                                             AGE
+endpoints/kubernetes                            172.20.2.134:443,172.20.4.152:443                                     3h
+endpoints/my-release-scalardl-envoy             172.20.2.39:50052,172.20.4.7:50052,172.20.4.96:50052 + 3 more...      71s
+endpoints/my-release-scalardl-envoy-metrics     172.20.2.39:9001,172.20.4.7:9001,172.20.4.96:9001                     71s
+endpoints/my-release-scalardl-ledger-headless   172.20.2.26:50051,172.20.4.166:50051,172.20.4.231:50051 + 6 more...   71s
+
 * Make sure the schema is properly created in the underlying database service.
 
 ### Confirm EKS cluster monitoring
