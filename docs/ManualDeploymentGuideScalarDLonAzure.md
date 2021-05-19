@@ -49,22 +49,23 @@ Azure AKS provides a scalable and highly-available Kubernetes control plane that
 This section shows how to configure a Kubernetes service for Scalar DL deployment.
 
 ### Prerequisites
+
 Install the following tools on your host machine:
 
-* [azurecli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux): In this tutorial, azurecli is used to create a kubeconfig file to access the AKS cluster.
+* [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux): In this guide, Azure CLI is used to create a kubeconfig file to access the AKS cluster.
 * [kubectl](https://kubernetes.io/docs/tasks/tools/): Kubernetes command-line tool to manage AKS cluster. Kubectl 1.19 or higher is required.
 
 ### Requirements
 
 * You must have an AKS cluster with Kubernetes version 1.19 or above in order to use our most up-to-date configuration files.
-* Kubernetes node pool must be created with the name `scalardlpool` to deploy ledger and envoy pods.
+* Kubernetes node pool must be created with the name `scalardlpool` to deploy [ledger](https://github.com/scalar-labs/scalardl) and [envoy](https://www.envoyproxy.io/) pods.
 * You must configure kubernetes access control to `k8s_ingress` subnet.
 * You must create the Kubernetes cluster with `Service principal` as Authentication method.
 * You must create the Kubernetes cluster with `Azure CNI`.
 
 ### Recommendations
 
-* Kubernetes node size should be `Standard D2s v3` to deploy the ledger and envoy pods because each node requires 2 vCPU and 8GB ram for deploying ledger and envoy pods.
+* Kubernetes node size should be `Standard D2s v3` to deploy the ledger and envoy pods because each node requires 2 vCPUs and 8 GiB ram for deploying ledger and envoy pods.
 * Node pool should have at least 3 nodes for high availability in production.
 
 ### Create a Kubernetes Cluster
@@ -95,7 +96,7 @@ Install the following tool on your host machine:
 
 * You must have the authority to pull scalar-ledger and scalardl-schema-loader container images.
 * You must configure the database properties in the helm chart custom values file.
-* You must confirm that replica count of the ledger and envoy pods in the scalardl-custom-values file is equal to the number of nodes.
+* You must confirm that replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes.
 
 
 ### Deploy Scalar DL
@@ -106,11 +107,14 @@ Following steps will help you to install Scalar DL on AKS:
     * [scalardl-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/scalardl-custom-values.yaml)
     * [schema-loading-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/schema-loading-custom-values.yaml)
 2. Create the docker-registry secret for pulling the Scalar DL images from the GitHub registry
-    ```
+    
+   ```console
     $ kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
+   
 3. Run the helm commands on the host machine to install Scalar DL on AKS
-    ```
+    
+   ```console
     # Add helm charts 
     $ helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
     
@@ -130,7 +134,7 @@ Note:
 * Release name `my-release-scalardl` can be changed as per your convenience.
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get po -o wide` before installing Scalar DL.
-* Follow the [Maintain the cluster](#maintain-the-cluster) section for more customization.
+* Follow the [Maintain the cluster](./Maintaincluster.md) section for more customization.
 
 ## Step 5. Monitor the cluster
 
@@ -153,29 +157,29 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 * You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the host machine.
 
-```
-$ kubectl get po,svc,endpoints -o wide
-NAME                                              READY   STATUS    RESTARTS   AGE     IP          NODE                                   NOMINATED NODE   READINESS GATES
-pod/load-schema-schema-loading-bgr4x              0/1     Completed 0          3m6s    10.2.0.51   aks-scalardlpool-16372315-vmss000001   <none>           <none>
-pod/my-release-scalardl-envoy-7598cc45dd-cdvg2    1/1     Running   0          2m28s   10.2.0.42   aks-scalardlpool-16372315-vmss000000   <none>           <none>
-pod/my-release-scalardl-envoy-7598cc45dd-dz5v2    1/1     Running   0          2m28s   10.2.0.63   aks-scalardlpool-16372315-vmss000002   <none>           <none>
-pod/my-release-scalardl-envoy-7598cc45dd-nhz72    1/1     Running   0          2m29s   10.2.0.52   aks-scalardlpool-16372315-vmss000001   <none>           <none>
-pod/my-release-scalardl-ledger-5474bdfc6c-slwv7   1/1     Running   0          2m29s   10.2.0.45   aks-scalardlpool-16372315-vmss000000   <none>           <none>
-pod/my-release-scalardl-ledger-5474bdfc6c-v4m8g   1/1     Running   0          2m29s   10.2.0.51   aks-scalardlpool-16372315-vmss000001   <none>           <none>
-pod/my-release-scalardl-ledger-5474bdfc6c-x9xl4   1/1     Running   0          2m29s   10.2.0.62   aks-scalardlpool-16372315-vmss000002   <none>           <none>
+    ```console
+    $ kubectl get po,svc,endpoints -o wide
+    NAME                                              READY   STATUS    RESTARTS   AGE     IP          NODE                                   NOMINATED NODE   READINESS GATES
+    pod/load-schema-schema-loading-bgr4x              0/1     Completed 0          3m6s    10.2.0.51   aks-scalardlpool-16372315-vmss000001   <none>           <none>
+    pod/my-release-scalardl-envoy-7598cc45dd-cdvg2    1/1     Running   0          2m28s   10.2.0.42   aks-scalardlpool-16372315-vmss000000   <none>           <none>
+    pod/my-release-scalardl-envoy-7598cc45dd-dz5v2    1/1     Running   0          2m28s   10.2.0.63   aks-scalardlpool-16372315-vmss000002   <none>           <none>
+    pod/my-release-scalardl-envoy-7598cc45dd-nhz72    1/1     Running   0          2m29s   10.2.0.52   aks-scalardlpool-16372315-vmss000001   <none>           <none>
+    pod/my-release-scalardl-ledger-5474bdfc6c-slwv7   1/1     Running   0          2m29s   10.2.0.45   aks-scalardlpool-16372315-vmss000000   <none>           <none>
+    pod/my-release-scalardl-ledger-5474bdfc6c-v4m8g   1/1     Running   0          2m29s   10.2.0.51   aks-scalardlpool-16372315-vmss000001   <none>           <none>
+    pod/my-release-scalardl-ledger-5474bdfc6c-x9xl4   1/1     Running   0          2m29s   10.2.0.62   aks-scalardlpool-16372315-vmss000002   <none>           <none>
 
-NAME                                          TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE     SELECTOR
-service/kubernetes                            ClusterIP      10.0.0.1       <none>        443/TCP                           159m    <none>
-service/my-release-scalardl-envoy             LoadBalancer   10.0.157.155   10.2.4.4      50051:30990/TCP,50052:30789/TCP   2m29s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
-service/my-release-scalardl-envoy-metrics     ClusterIP      10.0.20.189    <none>        9001/TCP                          2m29s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
-service/my-release-scalardl-ledger-headless   ClusterIP      None           <none>        50051/TCP,50053/TCP,50052/TCP     2m29s   app.kubernetes.io/app=ledger,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+    NAME                                          TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE     SELECTOR
+    service/kubernetes                            ClusterIP      10.0.0.1       <none>        443/TCP                           159m    <none>
+    service/my-release-scalardl-envoy             LoadBalancer   10.0.157.155   10.2.4.4      50051:30990/TCP,50052:30789/TCP   2m29s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+    service/my-release-scalardl-envoy-metrics     ClusterIP      10.0.20.189    <none>        9001/TCP                          2m29s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+    service/my-release-scalardl-ledger-headless   ClusterIP      None           <none>        50051/TCP,50053/TCP,50052/TCP     2m29s   app.kubernetes.io/app=ledger,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
 
-NAME                                            ENDPOINTS                                                     AGE
-endpoints/kubernetes                            10.2.0.4:443                                                  159m
-endpoints/my-release-scalardl-envoy             10.2.0.42:50052,10.2.0.52:50052,10.2.0.63:50052 + 3 more...   2m29s
-endpoints/my-release-scalardl-envoy-metrics     10.2.0.42:9001,10.2.0.52:9001,10.2.0.63:9001                  2m29s
-endpoints/my-release-scalardl-ledger-headless   10.2.0.45:50051,10.2.0.51:50051,10.2.0.62:50051 + 6 more...   2m29s
-```
+    NAME                                            ENDPOINTS                                                     AGE   
+    endpoints/kubernetes                            10.2.0.4:443                                                  159m
+    endpoints/my-release-scalardl-envoy             10.2.0.42:50052,10.2.0.52:50052,10.2.0.63:50052 + 3 more...   2m29s
+    endpoints/my-release-scalardl-envoy-metrics     10.2.0.42:9001,10.2.0.52:9001,10.2.0.63:9001                  2m29s
+    endpoints/my-release-scalardl-ledger-headless   10.2.0.45:50051,10.2.0.51:50051,10.2.0.62:50051 + 6 more...   2m29s
+    ```
 
 * Make sure the schema is properly created in the underlying database service.
 
@@ -187,103 +191,14 @@ endpoints/my-release-scalardl-ledger-headless   10.2.0.45:50051,10.2.0.51:50051,
 
 * Follow the document to confirm the [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db).
 
-## Maintain the cluster
-
-Scalar DL provides customization based on your requirements. You can customize the following features based on your convenience.
-
-### Increase the number of Envoy Pods
-
-You can increase the number of envoy pods based on your requirements. The following steps will help you to achieve it:
-
-In `scalardl-custom-values.yaml`, you can update the number of `replicaCount` to the desired number of pod
-
-edit `scalardl-custom-values.yaml`
-
-```
-envoy:
-  replicaCount: 6
-```
-
-The number of deployable pods depends on the number of available nodes. So, you may need to increase the number of nodes from the Azure portal.
-
-### Increase the resource of Envoy Pods
-
-You can increase the resource of envoy pods based on your requirements. The following steps will help you to achieve it:
-
-In `scalardl-custom-values.yaml`, you can update resource as follow
-
-edit `scalardl-custom-values.yaml`
-
-```
-envoy:
-  resources:
-    requests:
-      cpu: 400m
-      memory: 256Mi
-    limits:
-      cpu: 500m
-      memory: 328Mi
-```
-More information can be found in [the official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container).
-
-### Expose Envoy endpoint to public
-
-Scalar DL supports both public and private endpoints. The public endpoint allows you to access Scalar DL from outside the network so you can deploy your application outside the Scalar DL network. 
-The private endpoint allows you to access Scalar DL from within the network so you can deploy your application within the Scalar DL network or you can connect another VPC to the Scalar DL network using VPC peering.
-
-In `scalardl-custom-values.yaml`, you can update the `azure-load-balancer-internal` as false to expose `Envoy`
-
-```
-envoy:
-  service:
-    type: LoadBalancer
-    annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "false"
-```
-
-### Increase the number of Ledger Pods
-
-You can increase the number of ledger pods based on your requirements. The following steps will help you to achieve it:
-
-In `scalardl-custom-values.yaml`, you can update `replicaCount` to the desired number of pods.
-
-edit `scalardl-custom-values.yaml`
-
-```
-ledger:
-  replicaCount: 6
-```
-
-The number of deployable pods depends on the number of available nodes. You may need to increase the number of nodes from the Azure portal.
-
-### Increase the resource of Ledger Pods
-
-You can increase the resource of ledger pods based on your requirements. The following steps will help you to achieve it:
-
-In `scalardl-custom-values.yaml`, you can update resource as follow
-
-edit `scalardl-custom-values.yaml`
-
-```
-ledger:
-  resources:
-    requests:
-      cpu: 1500m
-      memory: 2Gi
-    limits:
-      cpu: 1600m
-      memory: 4Gi
-```
-More information can be found in the [official documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container).
-
 ## Uninstall Scalar DL
 
 You can uninstall Scalar DL installation with the following helm commands:
 
-```console
-# Uninstall loaded schema with a release name 'load-schema'
-$ helm delete load-schema
+   ```console
+    # Uninstall loaded schema with a release name 'load-schema'
+    $ helm delete load-schema
 
-# Uninstall Scalar DL with a release name 'my-release-scalardl'
-$ helm delete my-release-scalardl
-```
+    # Uninstall Scalar DL with a release name 'my-release-scalardl'
+    $ helm delete my-release-scalardl
+   ```
