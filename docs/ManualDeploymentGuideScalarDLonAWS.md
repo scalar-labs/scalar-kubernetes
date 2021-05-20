@@ -79,6 +79,13 @@ Scalar DL requires a single EKS cluster for deploying ledger, envoy and monitor 
 
 [Create an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html) with the above requirements.
 
+* Configure kubectl to connect to your Kubernetes cluster using the `aws eks update-kubeconfig` command. 
+The following command downloads credentials and configures the Kubernetes CLI to use them from the host machine.
+
+    ```console
+    $ aws eks --region <region-code> update-kubeconfig --name <cluster_name>
+    ```
+  
 _Tip_
 
 _If you are creating a Kubernetes cluster on a private subnet, you must add a new rule in the Kubernetes Security Group to enable HTTPS access to the public subnet from the Kubernetes cluster._
