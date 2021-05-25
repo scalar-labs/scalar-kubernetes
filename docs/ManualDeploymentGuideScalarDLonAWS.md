@@ -38,7 +38,7 @@ Scalar DL handles highly sensitive data of your application, so you should creat
 
 _Tip_ 
 
-_If you plan to create three or more nodes in a Kubernetes node group for high availability, create at least 3 subnets in different AZs for the Kubernetes cluster.__
+_If you plan to create three or more nodes in a Kubernetes node group for high availability, create at least 3 subnets in different AZs for the Kubernetes cluster._
 
 [Create an Amazon VPC](https://docs.aws.amazon.com/eks/latest/userguide/create-public-private-vpc.html) with the above requirements and recommendations along with your organizational or application standards.
 
@@ -61,12 +61,13 @@ This section shows how to configure a Kubernetes service for Scalar DL deploymen
 
 Install the following tools on your host machine:
 * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install): In this guide, AWS CLI is used to create a kubeconfig file to access the EKS cluster.
-* [kubectl](https://kubernetes.io/docs/tasks/tools/): Kubernetes command-line tool to manage EKS cluster. Kubectl 1.19 or higher is required.
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux): Kubernetes command-line tool to manage EKS cluster. Kubectl 1.19 or higher is required.
 
 ### Requirements
 
 * You must have an EKS cluster with Kubernetes version 1.19 or above in order to use our most up-to-date configuration files.
 * Kubernetes node group must be labeled with key as `agentpool` and value as `scalardlpool` for [ledger](https://github.com/scalar-labs/scalardl) and [envoy](https://www.envoyproxy.io/) deployment.
+* [Cluster autoscaler](https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html) must be configured to adjust the number of pods in your cluster when pods fails.
 
 ### Recommendations
 
@@ -162,7 +163,7 @@ This section will help you to configure monitoring and logging for your EKS clus
 * Monitoring should be enabled for EKS in production.
 * CloudWatch agent should be configured in the EKS cluster for collecting metrics from pods.
 * Fluent Bit should be configured in the EKS cluster for collecting logs from pods.
-    * Node instance role must have `CreateLogGroup` permission for Fluent bit.
+    * Node instance role must have `CreateLogGroup`, `CreateLogStream` and `PutLogEvents` permission for Fluent bit.
 
 ### Set up Container Insights
 
