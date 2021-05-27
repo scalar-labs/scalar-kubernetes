@@ -34,7 +34,7 @@ Scalar DL handles highly sensitive data of your application, so you should creat
 
 * Kubernetes should be private in production and should provide secure access with SSH or VPN. You can use a bastion server as a host machine for secure access to the private network.
 * Subnets should be in multiple availability zones, to enable fault tolerance for the production use.
-* Kubernetes cluster should be public to enable the envoy public endpoint(Scalar DL can be accessed from the internet). The Kubernetes cluster in public is not recommended for production.
+* Kubernetes cluster should have public subnets to enable the envoy public endpoint(Scalar DL can be accessed from the internet). The Kubernetes cluster in public is not recommended for production.
 
 _Tip_ 
 
@@ -67,12 +67,12 @@ Install the following tools on your host machine:
 
 * You must have an EKS cluster with Kubernetes version 1.19 or above in order to use our most up-to-date configuration files.
 * Kubernetes node group must be labeled with key as `agentpool` and value as `scalardlpool` for [ledger](https://github.com/scalar-labs/scalardl) and [envoy](https://www.envoyproxy.io/) deployment.
-* [Cluster autoscaler](https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html) must be configured to adjust the number of pods in your cluster when pods fails.
 
 ### Recommendations
 
 * Kubernetes node size should be `m5.xlarge` for deploying `ledger` and `envoy` pods, because each node requires 4 vCPUs and 16 GiB of memory for deploying ledger and envoy pods.
 * Node groups should have at least 3 nodes for high availability in production.
+* [Cluster autoscaler](https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html) should be configured to adjust the number of nodes in your cluster when pods fail or are rescheduled onto other nodes.
 
 ### Create a Kubernetes cluster	
 
