@@ -66,7 +66,7 @@ Install the following tools on your host machine:
 
 * You must have an EKS cluster with Kubernetes version 1.19 or above in order to use our most up-to-date configuration files.
 * Kubernetes node group must be labeled with key as `agentpool` and value as `scalardlpool` for [ledger](https://github.com/scalar-labs/scalardl) and [envoy](https://www.envoyproxy.io/) deployment.
-* If you are creating a Kubernetes cluster on a private subnet, you must add a new rule in the Kubernetes Security Group to enable HTTPS access to the bastion server from the Kubernetes cluster.
+* If you are creating a Kubernetes cluster on a private subnet, you must add a new rule in the Kubernetes Security Group to enable HTTPS access from the bastion server to the Kubernetes cluster.
 
 ### Recommendations
 
@@ -93,7 +93,7 @@ _If you are creating a Kubernetes cluster on a private subnet, you must add a ne
 
 ### Create managed node groups
 
-This section will help you to create two managed node groups for Scalar DL deployment. 
+This section will guide you to create two managed node groups for Scalar DL deployment. 
 Create a managed node group for ledger and envoy deployment, and create another managed node group for deploying logs and metrics collection agents.
 
 [Create a managed node group](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with the above requirements and recommendations.
@@ -156,7 +156,7 @@ Note:
 
 It is critical to actively monitor the overall health and performance of a cluster running in production. 
 You can use Container Insights to collect performance metrics and Fluent Bit to collect logs of the EKS cluster.
-This section will help you to configure monitoring and logging for your EKS cluster.
+This section show how to configure monitoring and logging for your EKS cluster.
 
 ### Recommendations
 
@@ -167,14 +167,14 @@ This section will help you to configure monitoring and logging for your EKS clus
 
 ### Set up Container Insights and Fluent Bit
 
-CloudWatch Container Insights helps you to collect, aggregate, and summarize metrics and logs from your containerized applications and fluent Bit allows you to collect logs from containerized applications and route logs to Amazon CloudWatch. 
-Set up CloudWatch agent and Fluentbit in the node group created for log and metrics collection.
+CloudWatch Container Insights helps you to collect, aggregate, and summarize metrics and logs from your containerized applications and Fluent Bit allows you to collect logs from containerized applications and route logs to Amazon CloudWatch. 
+Set up CloudWatch agent and Fluent Bit in the node group created for log and metrics collection.
 
-[Setup CloudWatch agent and Fluentbit in the EKS cluster](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-EKS-quickstart.html).
+[Setup CloudWatch agent and Fluent Bit in the EKS cluster](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-EKS-quickstart.html).
 
 ## Step 6. Checklist for confirming Scalar DL deployments
 
-After the Scalar DL deployment, you need to confirm that deployment has been completed successfully. This section will help you to confirm the deployment.
+After the Scalar DL deployment, you need to confirm that deployment has been completed successfully. This section shows how to confirm the deployment.
 
 ### Confirm Scalar DL deployment
 
