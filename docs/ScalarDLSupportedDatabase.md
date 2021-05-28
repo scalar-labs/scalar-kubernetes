@@ -1,6 +1,6 @@
 # Set up a Scalar DL supported database
 
-In this section, you will set up a database for Scalar DL.
+This guide generally explains how to set up a database for Scalar DL.
 
 ## DynamoDB
 
