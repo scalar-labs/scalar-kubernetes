@@ -27,13 +27,13 @@ Scalar DL handles highly sensitive data of your application, so you should creat
  
 * You must have a VPC, with NAT gateways on private subnets. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
 * You must have at least 2 subnets in different AZs for the Kubernetes cluster. This is mandatory to create an EKS cluster.
-* You must have at least one private subnet for the managed database other than Dynamo DB.
+* You must have at least one private subnet for the managed database(RDS) other than Dynamo DB.
 * You must create subnets with the prefix at least _/24_ for the Kubernetes cluster to work without issues even after scaling. 
 
 ### Recommendations
 
 * Kubernetes should be private in production and should provide secure access with SSH or VPN. You can use a bastion server as a host machine for secure access to the private network.
-* Subnets should be in multiple availability zones, to enable fault tolerance for the production use.
+* Subnets should be in multiple availability zones to achieve fault tolerance for the production use..
 * Kubernetes cluster should have public subnets to enable the envoy public endpoint(Scalar DL can be accessed from the internet). The Kubernetes cluster in public is not recommended for production.
 
 _Tip_ 
@@ -54,19 +54,19 @@ Follow the [Set up a Scalar DL supported database](ScalarDLSupportedDatabase.md)
 
 ## Step 3. Configure EKS
 
-Amazon EKS provides a scalable and highly-available Kubernetes control plane that runs across multiple AWS availability zones, which helps you to achieve the high availability and scalability for Scalar DL. 
 This section shows how to configure a Kubernetes service for Scalar DL deployment.
 
 ### Prerequisites
 
 Install the following tools on your host machine:
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install): In this guide, AWS CLI is used to create a kubeconfig file to access the EKS cluster.
-* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux): Kubernetes command-line tool to manage EKS cluster. Kubectl 1.19 or higher is required.
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html): In this guide, AWS CLI is used to create a kubeconfig file to access the EKS cluster.
+* [kubectl](https://kubernetes.io/docs/tasks/tools/): Kubernetes command-line tool to manage EKS cluster. Kubectl 1.19 or higher is required.
 
 ### Requirements
 
 * You must have an EKS cluster with Kubernetes version 1.19 or above in order to use our most up-to-date configuration files.
 * Kubernetes node group must be labeled with key as `agentpool` and value as `scalardlpool` for [ledger](https://github.com/scalar-labs/scalardl) and [envoy](https://www.envoyproxy.io/) deployment.
+* If you are creating a Kubernetes cluster on a private subnet, you must add a new rule in the Kubernetes Security Group to enable HTTPS access to the bastion server from the Kubernetes cluster.
 
 ### Recommendations
 
@@ -76,7 +76,7 @@ Install the following tools on your host machine:
 
 ### Create a Kubernetes cluster	
 
-Scalar DL requires a single EKS cluster for deploying ledger, envoy and monitor services. This section will help you to create an EKS cluster. 
+Scalar DL requires a single EKS cluster for deploying ledger, envoy and monitor services. This section section shows how to create an EKS cluster. 
 
 [Create an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html) with the above requirements.
 
@@ -117,7 +117,7 @@ Install the following tools on your host machine:
 
 ### Deploy Scalar DL
 
-Following steps will help you to install Scalar DL on EKS:
+Following steps show how to install Scalar DL on EKS:
 
 1. Download the following Scalar DL configuration files and update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections
     * [scalardl-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/scalardl-custom-values.yaml)
@@ -165,17 +165,12 @@ This section will help you to configure monitoring and logging for your EKS clus
 * Fluent Bit should be configured in the EKS cluster for collecting logs from pods.
     * Node instance role must have `CreateLogGroup`, `CreateLogStream` and `PutLogEvents` permission for Fluent bit.
 
-### Set up Container Insights
+### Set up Container Insights and Fluent Bit
 
-CloudWatch Container Insights helps you to collect, aggregate, and summarize metrics and logs from your containerized applications. Set up CloudWatch agent in the node group created for log and metrics collection.
+CloudWatch Container Insights helps you to collect, aggregate, and summarize metrics and logs from your containerized applications and fluent Bit allows you to collect logs from containerized applications and route logs to Amazon CloudWatch. 
+Set up CloudWatch agent and Fluentbit in the node group created for log and metrics collection.
 
-[Setup CloudWatch agent to collect cluster metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-metrics.html) will help you to collect metrics from your containers.
-
-### Set up the Fluent Bit
-
-Fluent Bit allows you to collect logs from containerized applications and route logs to Amazon CloudWatch, you can set up the Fluent Bit in the node group created for log and metrics collection.
-
-[Setting up Fluent Bit](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-logs-FluentBit.html#Container-Insights-FluentBit-setup)  will help you to collect logs from containers.
+[Setup CloudWatch agent and Fluentbit in the EKS cluster](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-EKS-quickstart.html).
 
 ## Step 6. Checklist for confirming Scalar DL deployments
 
