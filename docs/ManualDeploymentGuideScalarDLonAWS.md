@@ -27,14 +27,14 @@ Scalar DL handles highly sensitive data of your application, so you should creat
  
 * You must have a VPC, with NAT gateways on private subnets. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
 * You must have at least 2 subnets in different AZs for the Kubernetes cluster. This is mandatory to create an EKS cluster.
-* You must have at least one private subnet for the managed database(RDS) other than Dynamo DB.
+* You must have at least one private subnet for the managed databases such as RDS other than Dynamo DB.
 * You must create subnets with the prefix at least _/24_ for the Kubernetes cluster to work without issues even after scaling. 
 
 ### Recommendations
 
 * Kubernetes should be private in production and should provide secure access with SSH or VPN. You can use a bastion server as a host machine for secure access to the private network.
-* Subnets should be in multiple availability zones to achieve fault tolerance for the production use..
-* Kubernetes cluster should have public subnets to enable the envoy public endpoint(Scalar DL can be accessed from the internet). The Kubernetes cluster in public is not recommended for production.
+* Subnets should be in multiple availability zones to achieve fault tolerance for the production use.
+* Kubernetes cluster should have public subnets to enable the public endpoint for envoy LoadBalancer (Scalar DL can be accessed from the internet). The Kubernetes cluster in public is not recommended for production.
 
 _Tip_ 
 
@@ -122,6 +122,16 @@ Following steps show how to install Scalar DL on EKS:
 1. Download the following Scalar DL configuration files and update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections
     * [scalardl-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/scalardl-custom-values.yaml)
     * [schema-loading-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/schema-loading-custom-values.yaml)
+
+        ```console
+        # Scalar DL database configuration 
+        database: dynamo
+        contactPoints: <REGION>
+        username: <AWS_ACCESS_KEY_ID>
+        password: <AWS_ACCESS_SECRET_KEY>
+        dynamoBaseResourceUnit: 10
+        ```
+      
 2. Create the docker-registry secret for pulling the Scalar DL images from the GitHub registry
     
    ```console
@@ -178,7 +188,9 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 ### Confirm Scalar DL deployment
 
-You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the host machine.
+* Confirm the pods and services are properly deployed in Kubernetes cluster by running the `kubectl get po,svc,endpoints -o wide` command on the host machine.
+    * You should confirm the status of all ledger and envoy pods are `Running`.
+    * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.      
 
    ```console    
     $ kubectl get po,svc,endpoints -o wide

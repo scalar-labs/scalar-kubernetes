@@ -7,17 +7,6 @@ This guide generally explains how to set up a database for Scalar DL in AWS.
 By default, Amazon DynamoDB is available for all AWS users. You do not need to configure anything manually.
 Scalardl schema tool [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
 
-### Configure Scalar DL
-
-To deploy Scalar DL with DynamoDB, update the following configuration in [scalardl-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) and [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml) files. 
-
-```
-database: dynamo
-contactPoints: <REGION>
-username: <AWS_ACCESS_KEY_ID>
-password: <AWS_ACCESS_SECRET_KEY>
-dynamoBaseResourceUnit: 10
-```
 ### Scale Performance
 
 DynamoDB performance can be adjusted using the following parameters
