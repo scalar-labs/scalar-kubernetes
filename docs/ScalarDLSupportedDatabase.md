@@ -1,4 +1,4 @@
-# Set up a Scalar DL supported database
+# Set up a database
 
 This guide generally explains how to set up a database for Scalar DL in AWS.
 
