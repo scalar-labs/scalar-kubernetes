@@ -13,18 +13,7 @@ You need to create a Cosmos DB account for Scalar DL. In this section, you will 
 
 [Create an Azure Cosmos DB account](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal#create-an-azure-cosmos-db-account) with the above requirements.
 
-### Configure Scalar DL
-
-To deploy Scalar DL with Cosmos DB, update the following configuration in `scalardl-custom-values` and `schema-loading-custom-values` files.
-
-```
-database: cosmos
-contactPoints: <COSMOS_DB_ACCOUNT_URI>
-password: <COSMOS_DB_KEY>
-cosmosBaseResourceUnit: 400
-```
-
-### Scaling Performance
+### Scale Performance
 
 Cosmos DB performance can be adjusted using the following parameters
 

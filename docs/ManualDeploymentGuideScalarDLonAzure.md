@@ -21,7 +21,7 @@ In this guide, we will create the following components.
 
 Configure a secure network with your organizational or application standards. 
 Scalar DL handles highly sensitive data of your application, so you should create a highly secure network for production. 
-This section will help you to configure a secure network for Scalar DL deployments.
+This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Requirements
 
@@ -31,7 +31,7 @@ This section will help you to configure a secure network for Scalar DL deploymen
 ### Recommendations
 
 * Kubernetes should be private in production and should provide secure access with SSH or VPN. 
-You can use a bastion server as a host machine for secure access to private networks.
+* You can use a bastion server as a host machine for secure access to private networks.
 
 ## Step 2. Set up a database
 
@@ -45,14 +45,13 @@ Follow the [Set up a database](SetupAzureDatabase.md) document.
 
 ## Step 3. Configure AKS
 
-Azure AKS provides a scalable and highly-available Kubernetes control plane that runs across multiple availability zones, which helps you to achieve the high availability and scalability for Scalar DL. 
 This section shows how to configure a Kubernetes service for Scalar DL deployment.
 
 ### Prerequisites
 
 Install the following tools on your host machine:
 
-* [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux): In this guide, Azure CLI is used to create a kubeconfig file to access the AKS cluster.
+* [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli): In this guide, Azure CLI is used to create a kubeconfig file to access the AKS cluster.
 * [kubectl](https://kubernetes.io/docs/tasks/tools/): Kubernetes command-line tool to manage AKS cluster. Kubectl 1.19 or higher is required.
 
 ### Requirements
@@ -65,7 +64,7 @@ Install the following tools on your host machine:
 
 ### Recommendations
 
-* Kubernetes node size should be `Standard D2s v3` to deploy the ledger and envoy pods because each node requires 2 vCPUs and 8 GiB ram for deploying ledger and envoy pods.
+* Kubernetes node size should be `Standard D2s v3` to deploy the ledger and envoy pods because each node requires 2 vCPUs and 8 GiB of memory for deploying ledger and envoy pods.
 * Node pool should have at least 3 nodes for high availability in production.
 
 ### Create a Kubernetes Cluster
@@ -96,8 +95,7 @@ Install the following tool on your host machine:
 
 * You must have the authority to pull scalar-ledger and scalardl-schema-loader container images.
 * You must configure the database properties in the helm chart custom values file.
-* You must confirm that replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes.
-
+* You must confirm that replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes with `agentpool=scalardl` label.
 
 ### Deploy Scalar DL
 
@@ -106,6 +104,15 @@ Following steps will help you to install Scalar DL on AKS:
 1. Download the following Scalar DL configuration files and update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections
     * [scalardl-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/scalardl-custom-values.yaml)
     * [schema-loading-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/schema-loading-custom-values.yaml)
+
+      ```console
+        # Scalar DL database configuration  
+        database: cosmos
+        contactPoints: <COSMOS_DB_ACCOUNT_URI>
+        password: <COSMOS_DB_KEY>
+        cosmosBaseResourceUnit: 400
+        ```        
+
 2. Create the docker-registry secret for pulling the Scalar DL images from the GitHub registry
     
    ```console
@@ -139,7 +146,7 @@ Note:
 ## Step 5. Monitor the cluster
 
 It is critical to actively monitor the overall health and performance of a cluster running in production. 
-This section will help you to configure monitoring and logging for your AKS cluster.
+This section shows how to configure monitoring and logging for your AKS cluster.
 
 ### Recommendation
 
@@ -156,7 +163,9 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 ### Confirm Scalar DL deployment
 
 * You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the host machine.
-
+    * You should confirm the status of all ledger and envoy pods are `Running`.
+    * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
+    
     ```console
     $ kubectl get po,svc,endpoints -o wide
     NAME                                              READY   STATUS    RESTARTS   AGE     IP          NODE                                   NOMINATED NODE   READINESS GATES
