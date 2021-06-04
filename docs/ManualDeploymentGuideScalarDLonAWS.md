@@ -50,7 +50,7 @@ In this section, you will set up a database for Scalar DL.
 
 * You must have a database that Scalar DL supports.
 
-Follow the [Set up a Scalar DL supported database](ScalarDLSupportedDatabase.md) document to Set up a Database for Scalar DL.
+Follow the [Set up a database](ScalarDLSupportedDatabase.md) document to set up a database for Scalar DL.
 
 ## Step 3. Configure EKS
 
@@ -66,7 +66,7 @@ Install the following tools on your host machine:
 
 * You must have an EKS cluster with Kubernetes version 1.19 or above in order to use our most up-to-date configuration files.
 * Kubernetes node group must be labeled with key as `agentpool` and value as `scalardlpool` for [ledger](https://github.com/scalar-labs/scalardl) and [envoy](https://www.envoyproxy.io/) deployment.
-* If you are creating a Kubernetes cluster on a private subnet, you must add a new rule in the Kubernetes Security Group to enable HTTPS access from the bastion server to the Kubernetes cluster.
+* If you are creating a Kubernetes cluster on a private subnet, you must add a new rule in the Kubernetes Security Group **to enable HTTPS access (Port 443)** from the bastion server to the Kubernetes cluster..
 
 ### Recommendations
 
@@ -86,10 +86,6 @@ The following command downloads credentials and configures the Kubernetes CLI to
     ```console
     $ aws eks --region <region-code> update-kubeconfig --name <cluster_name>
     ```
-  
-_Tip_
-
-_If you are creating a Kubernetes cluster on a private subnet, you must add a new rule in the Kubernetes Security Group to enable HTTPS access to the public subnet from the Kubernetes cluster._
 
 ### Create managed node groups
 
