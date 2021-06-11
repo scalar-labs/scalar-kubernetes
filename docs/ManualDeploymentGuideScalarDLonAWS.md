@@ -34,6 +34,8 @@ Scalar DL handles highly sensitive data of your application, so you should creat
 * You should create 3 subnets in 3 availability zones for the Kubernetes cluster for higher availability. 
 * You should create at least one public subnet for the Kubernetes cluster if you want to place envoy LoadBalancer in the public subnet for testing purposes.
 
+### Procedures
+
 [Create an Amazon VPC](https://docs.aws.amazon.com/batch/latest/userguide/create-public-private-vpc.html) with the above requirements and recommendations along with your organizational or application standards.
 
 ## Step 2. Set up a database 
@@ -44,11 +46,13 @@ In this section, you will set up a database for Scalar DL.
 
 * You must have a database that Scalar DL supports.
 
-Follow the [Set up a database](./ScalarDLSupportedDatabase.md) document to set up a database for Scalar DL.
+### Procedures
+
+[Set up a database](./ScalarDLSupportedDatabase.md) for Scalar DL.
 
 ## Step 3. Configure EKS
 
-Scalar DL requires an EKS cluster for deploying ledger, envoy, and monitor services. This section shows how to create an EKS cluster.
+Scalar DL requires a Kubernetes cluster for deploying ledger, envoy, and monitor services. This section shows how to create an EKS cluster and managed node group in the EKS cluster for Scalar DL deployment.
 
 ### Prerequisites
 
@@ -68,20 +72,16 @@ Install the following tools on your machine for controlling the EKS cluster:
 * You should create 3 nodes in each node group for high availability in the production.
 * You should configure [Cluster autoscaler](https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html) to scale the number of nodes in your cluster.
 
-[Create an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html) with the above requirements.
+### Procedures
 
+Create an EKS cluster and 2 managed node groups(one for ledger and envoy and one for logs and metrics collection) for Scalar DL and monitor agent deployment.
+* [Create an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html) 
+* [Create a managed node group](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with the above requirements and recommendations.
 * Configure kubectl to connect to your Kubernetes cluster using the `aws eks update-kubeconfig` command. 
-The following command downloads credentials and configures the Kubernetes CLI
-
-    ```console
+    
+   ```console
     $ aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-    ```
-  
-### Create managed node groups
-
-Create a managed node group for ledger and envoy deployment, and create another managed node group for deploying logs and metrics collection agents.
-
-[Create a managed node group](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with the above requirements and recommendations.
+   ```
 
 ## Step 4. Install Scalar DL
 
@@ -90,7 +90,7 @@ This section shows how to install Scalar DL to the EKS cluster with [Helm charts
 
 ### Prerequisites
 
-Install the following tools on your host machine:
+Install the helm tool on machine to deploy helm-charts:
 
 * [helm](https://helm.sh/docs/intro/install/): helm command-line tool to manage releases in the EKS cluster. In this tutorial, it is used to deploy Scalar DL and Schema loading helm charts to the EKS cluster. Helm version 3.5 or latest is required.
 
@@ -100,7 +100,7 @@ Install the following tools on your host machine:
 * You must configure the database properties in the helm chart custom values file.
 * You must confirm that the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes in the Scalar DL node group.
 
-### Deploy Scalar DL
+### Procedures
 
 The following steps show how to install Scalar DL on EKS:
 
@@ -128,7 +128,7 @@ The following steps show how to install Scalar DL on EKS:
     
     # Install Scalar DL with a release name `my-release-scalardl`
     $ helm upgrade --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
-    ```
+   ```
 
 Note:
 
@@ -151,12 +151,12 @@ This section shows how to configure monitoring and logging for your EKS cluster.
 * You should configure Fluent Bit in the EKS cluster for collecting logs from pods.
     * You should create a CloudWatch Logs policy with `CreateLogGroup`, `CreateLogStream`, and `PutLogEvents` permissions and attach the policy to the Node instance role.
         
-### Set up Container Insights and Fluent Bit
+### Procedures
 
 CloudWatch Container Insights helps you to collect, aggregate, and summarize metrics and logs from your containerized applications and Fluent Bit allows you to collect logs from containerized applications and route logs to Amazon CloudWatch. 
 Set up CloudWatch agent and Fluent Bit in the node group created for log and metrics collection.
 
-[Setup CloudWatch agent and Fluent Bit in the EKS cluster](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-EKS-quickstart.html).
+* [Setup CloudWatch agent and Fluent Bit in the EKS cluster](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-EKS-quickstart.html).
 
 ## Step 6. Checklist for confirming Scalar DL deployments
 
@@ -203,18 +203,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 * Confirm the database metrics are available in CloudWatch metrics.
 
-## Uninstall Scalar DL
-
-You can uninstall Scalar DL installation with the following helm commands:
-
-   ```console
-    # Uninstall loaded schema with a release name 'load-schema'
-    $ helm delete load-schema
-
-    # Uninstall Scalar DL with a release name 'my-release-scalardl'
-    $ helm delete my-release-scalardl
-   ```
-## Remove the resources
+## Wipe out the Resources
 
 Resources should be removed in the following order
 
@@ -225,18 +214,29 @@ Resources should be removed in the following order
 * NAT gateway
 * VPC
 
-### Remove EKS cluster
+### Uninstall Scalar DL 
 
-You can remove the EKS cluster using the following steps 
+You can uninstall Scalar DL installation with the following helm commands:
+
+   ```console
+    # Uninstall loaded schema with a release name 'load-schema'
+    $ helm delete load-schema
+
+    # Uninstall Scalar DL with a release name 'my-release-scalardl'
+    $ helm delete my-release-scalardl
+   ```
+
+### Destroy the Environment 
+
+You can remove the EKS cluster using the following steps: 
 
 * Remove [managed node group](https://docs.aws.amazon.com/eks/latest/userguide/delete-managed-node-group.html)
 * Remove [EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/delete-cluster.html)
 
-### Remove Bastion and VPC
-
-You can remove the bastion server and VPC components using the following steps
+You can remove the bastion server and VPC components using the following steps:
 
 * Remove [ec2-instance](https://docs.aws.amazon.com/quickstarts/latest/vmlaunch/step-3-clean-up-instance.html)
 * Remove VPC
     * [Delete NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html#nat-gateway-deleting)
     * [Delete VPC](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html#subnet-deleting)
+    
