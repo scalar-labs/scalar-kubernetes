@@ -235,7 +235,7 @@ You can remove the EKS cluster using the following steps:
 
 You can remove the bastion server and VPC components using the following steps:
 
-* Remove [ec2-instance](https://docs.aws.amazon.com/quickstarts/latest/vmlaunch/step-3-clean-up-instance.html)
+* Remove [EC2 instance](https://docs.aws.amazon.com/quickstarts/latest/vmlaunch/step-3-clean-up-instance.html)
 * Remove VPC
     * [Delete NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html#nat-gateway-deleting)
     * [Delete VPC](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html#subnet-deleting)
