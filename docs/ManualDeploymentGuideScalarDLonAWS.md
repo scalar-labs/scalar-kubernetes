@@ -32,7 +32,7 @@ Scalar DL handles highly sensitive data of your application, so you should creat
 * You should create private subnets for the Kubernetes cluster for production.
 * You should create a bastion server to manage the Kubernetes cluster.
 * You should create 3 subnets in 3 availability zones for the Kubernetes cluster for higher availability. 
-* You should create at least one public subnet for the Kubernetes cluster if you want to place envoy LoadBalancer in the public subnet for testing purposes.
+* You should create public subnets for the Kubernetes cluster if you want to place envoy LoadBalancer in the public subnet for testing purposes.
 
 ### Procedures
 
@@ -62,7 +62,7 @@ Install the following tools on your machine for controlling the EKS cluster:
 
 ### Requirements
 
-* You must use the Kubernetes cluster with version 1.19 for Scalar DL deployment.
+* You must use the Kubernetes cluster with version 1.19 or higher for Scalar DL deployment.
 * You must create a node group with the label, key as `agentpool` and value as `scalardlpool` for Scalar DL deployment.
 * You must add a rule in the EKS security group to **enable HTTPS access (Port 443)** to the private EKS cluster from the bastion server.
 
