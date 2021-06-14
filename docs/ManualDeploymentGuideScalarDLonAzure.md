@@ -148,7 +148,7 @@ This section shows how to configure monitoring and logging for your AKS cluster.
 
 ### Procedures
 
-* [Enable monitoring of Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters) document.
+* [Enable monitoring of Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters).
 
 ## Step 6. Checklist for confirming Scalar DL deployments
 
