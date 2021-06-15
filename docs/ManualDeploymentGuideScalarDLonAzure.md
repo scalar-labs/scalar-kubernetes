@@ -61,8 +61,8 @@ Install the following tools on your machine for controlling the AKS cluster:
 ### Requirements
 
 * You must have an AKS cluster with Kubernetes version 1.19 or higher for Scalar DL deployment.
-* You must create a Kubernetes node pool with the name `scalardlpool` for Scalar DL deployment.
-* You must configure Kubernetes access control to the `k8s_ingress` subnet.
+* You must create AKS node pool with the name `scalardlpool` for Scalar DL deployment.
+* You must add AKS Service principal as `Network contributor` for the k8s_ingress subnet.
 * You must create the Kubernetes cluster with `Service principal` as the Authentication method.
 * You must create the Kubernetes cluster with `Azure CNI`.
 
@@ -144,11 +144,11 @@ This section shows how to configure monitoring and logging for your AKS cluster.
 
 ### Recommendation
 
-* Monitoring should be enabled for AKS in production.
+* You should enable monitoring for AKS in production.
 
 ### Procedures
 
-* [Enable monitoring of Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters).
+[Enable monitoring of Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters).
 
 ## Step 6. Checklist for confirming Scalar DL deployments
 
