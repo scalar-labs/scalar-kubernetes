@@ -10,6 +10,7 @@ You need to create a Cosmos DB account for Scalar DL. In this section, you will 
 
 * You must create a Cosmos DB account with `Core(SQL)` API.
 * You must change Cosmos DB `Default consistency` to `Strong`.
+* You must use Capacity mode as `Provisioned throughput`.
 
 ### Procedures
 
