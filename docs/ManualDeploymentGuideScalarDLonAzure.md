@@ -104,7 +104,7 @@ Install Helm on your bastion to deploy helm-charts:
 
 Following steps will help you to install Scalar DL on AKS:
 
-1. Download the following Scalar DL configuration files and update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [Set up a database guide](./SetupAzureDatabase.md#Configure-Scalar-DL)
+1. Download the following Scalar DL configuration files and update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [Set up a database guide](./SetupAzureDatabase.md#Configure-Scalar-DL).
     * [scalardl-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/scalardl-custom-values.yaml)
     * [schema-loading-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/schema-loading-custom-values.yaml)
 
