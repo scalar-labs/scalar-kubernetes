@@ -10,12 +10,12 @@ This guide shows you how to manually deploy Scalar DL on a managed database serv
 
 In this guide, we will create the following components.
 
-* An Azure Virtual Network associated with a Resource Group
-* An AKS cluster with a Kubernetes node pool
-* A managed database service 
-    * A Cosmos DB Account
-* A Bastion instance with a public IP
-* Azure container insights
+* An Azure Virtual Network associated with a Resource Group.
+* An AKS cluster with a Kubernetes node pool.
+* A managed database service.
+    * A Cosmos DB Account.
+* A Bastion instance with a public IP.
+* Azure container insights.
 
 ## Step 1. Configure your network
 
@@ -26,7 +26,7 @@ This section shows how to configure a secure network for Scalar DL deployments.
 ### Requirements
 
 * You must create a virtual network with a subnet for bastion.
-* You must create 2 subnets for AKS, one subnet must be created with the name k8s_ingress to create an envoy load balancer.
+* You must create 2 subnets for AKS, one subnet must be created with the name `k8s_ingress` to create an envoy load balancer.
 * You must create 2 subnets with the prefix at least `/22` for the Kubernetes cluster to work without issues even after scaling. 
 
 ### Recommendations
@@ -108,13 +108,13 @@ Following steps will help you to install Scalar DL on AKS:
     * [scalardl-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/scalardl-custom-values.yaml)
     * [schema-loading-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/schema-loading-custom-values.yaml)
 
-2. Create the docker-registry secret for pulling the Scalar DL images from the GitHub registry
+2. Create the docker-registry secret for pulling the Scalar DL images from the GitHub registry.
     
    ```console
     $ kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
    
-3. Run the helm commands on the host machine to install Scalar DL on AKS
+3. Run the helm commands on the host machine to install Scalar DL on AKS.
     
    ```console
     # Add helm charts 
@@ -136,7 +136,7 @@ Note:
 * Release name `my-release-scalardl` can be changed as per your convenience.
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get po -o wide` before installing Scalar DL.
-* Follow the [Maintain the cluster guide](./Maintaincluster.md) for more customisation.
+* Follow the [Maintain the cluster guide](./Maintaincluster.md) for more customization for helm charts deployment.
 
 ## Step 5. Monitor the cluster
 
@@ -194,7 +194,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 ## Clean up the resources
 
 You can use the following steps to remove the resources that you have created. 
-Resources should be removed in the following order
+Resources should be removed in the following order.
 
 * Uninstall Scalar DL installation
 * AKS cluster
@@ -216,7 +216,7 @@ You can uninstall Scalar DL installation with the following helm commands:
    ```
 ### Destroy the Environment
 
-You can remove the environment using following steps
+You can remove the environment using the following steps:
 
 * Remove [AKS cluster](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_delete)
 * Remove [Cosmos DB account](https://docs.microsoft.com/en-us/cli/azure/cosmosdb?view=azure-cli-latest#az_cosmosdb_delete) 
