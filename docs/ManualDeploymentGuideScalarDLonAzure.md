@@ -10,12 +10,12 @@ This guide shows you how to manually deploy Scalar DL on a managed database serv
 
 In this guide, we will create the following components.
 
-* An Azure Virtual Network associated with Resource Group
-* An AKS cluster with Kubernetes node pool
+* An Azure Virtual Network associated with a Resource Group
+* An AKS cluster with a Kubernetes node pool
 * A managed database service 
     * A Cosmos DB Account
-* 1 Bastion instance with a public IP
-* Azure monitor insights
+* A Bastion instance with a public IP
+* Azure container insights
 
 ## Step 1. Configure your network
 
@@ -31,11 +31,11 @@ This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Recommendations
 
-* You should create a bastion server to manage the Kubernetes cluster.
+* You should create a bastion server to manage the Kubernetes cluster for production.
 
-### Procedures
+### Steps
 
-[Create an Azure virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal) with the above requirements and recommendations along with your organizational or application standards.
+* Create an Azure virtual network on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal) with the above requirements and recommendations.
 
 ## Step 2. Set up a database
 
@@ -45,9 +45,9 @@ In this section, you will set up a database for Scalar DL.
 
 * You must have a database that Scalar DL supports.
 
-### Procedures
+### Steps
 
-[Set up a database](./SetupAzureDatabase.md) for Scalar DL.
+* Follow [Set up a database guide](./SetupAzureDatabase.md) to set up a database for Scalar DL.
 
 ## Step 3. Configure AKS
 
@@ -62,22 +62,21 @@ Install the following tools on your bastion for controlling the AKS cluster:
 ### Requirements
 
 * You must have an AKS cluster with Kubernetes version 1.19 or higher for Scalar DL deployment.
-* You must create a seperate AKS node pool with the name `scalardlpool` for Scalar DL deployment.
-* You must add AKS Service principal as `Network contributor` for the k8s_ingress subnet.
-* You must create the Kubernetes cluster with `Service principal` as the Authentication method.
-* You must create the Kubernetes cluster with `Azure CNI`.
+* You must create a new user node pool with the name `scalardlpool` for Scalar DL deployment.
+* You must select the subnet other than `k8s_ingress` subnet for creating the AKS cluster. 
+* You must create a Kubernetes cluster with `service principal` as the Authentication method.
+* You must create a Kubernetes cluster with `Azure CNI`.
+* You should add a role assignment to the `k8s_ingress` subnet to access the newly created AKS cluster service principal using the role of `Network Contributor`.
 
 ### Recommendations
 
 * You should use Kubernetes node size `Standard D2s v3` for Scalar DL node pool.
-* You should create 3 nodes in each node pool for high availability in the production.
-* You should configure [autoscaling](https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler) for the AKS cluster.
+* You should create 3 nodes in each node group for high availability in production.
+* You should configure autoscaling for the AKS cluster on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler#set-the-cluster-autoscaler-profile-on-an-existing-aks-cluster).
 
-### Procedures
+### Steps
 
-Create an AKS cluster with a node pool to deploy the Scalar DL.
-
-* [Create an AKS cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal#create-an-aks-cluster) with the above requirements and recommendations.
+* Create an AKS cluster on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal#create-an-aks-cluster) with the above requirements and recommendations.
 * Configure kubectl to connect to your Kubernetes cluster using the `az aks get-credentials` command. 
 
     ```console
@@ -86,26 +85,26 @@ Create an AKS cluster with a node pool to deploy the Scalar DL.
 
 ## Step 4. Install Scalar DL
 
-After creating the Kubernetes cluster next step is to deploy Scalar DL into the AKS cluster. 
+After creating a Kubernetes cluster next step is to deploy Scalar DL into the AKS cluster. 
 This section shows how to install Scalar DL to the AKS cluster with [Helm charts](https://github.com/scalar-labs/helm-charts).
 
 ### Prerequisites
 
-Install the helm tool on your bastion to deploy helm-charts:
+Install Helm on your bastion to deploy helm-charts:
 
-* [helm](https://helm.sh/docs/intro/install/): helm command-line tool to manage releases in the AKS cluster. In this tutorial, it is used to deploy Scalar DL and Schema loading helm charts to the AKS cluster. Helm version 3.2.1 or latest is required. 
+* [Helm](https://helm.sh/docs/intro/install/): helm command-line tool to manage releases in the AKS cluster. In this tutorial, it is used to deploy Scalar DL and Schema loading helm charts to the AKS cluster. 
+   Helm version 3.2.1 or latest is required. 
 
 ### Requirements
 
 * You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
-* You must configure the database properties in the helm chart custom values file.
-* You must confirm that the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes in the Scalar DL node pool.
+* You must confirm that the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes in the `scalardlpool`.
 
-### Procedures
+### Steps
 
 Following steps will help you to install Scalar DL on AKS:
 
-1. Download the following Scalar DL configuration files and update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections
+1. Download the following Scalar DL configuration files and update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [Set up a database guide](./SetupAzureDatabase.md#Configure-Scalar-DL)
     * [scalardl-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/scalardl-custom-values.yaml)
     * [schema-loading-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/schema-loading-custom-values.yaml)
 
@@ -137,20 +136,16 @@ Note:
 * Release name `my-release-scalardl` can be changed as per your convenience.
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get po -o wide` before installing Scalar DL.
-* Follow the [Maintain the cluster](./Maintaincluster.md) section for more customization.
+* Follow the [Maintain the cluster guide](./Maintaincluster.md) for more customisation.
 
 ## Step 5. Monitor the cluster
 
 It is critical to actively monitor the overall health and performance of a cluster running in production. 
 This section shows how to configure monitoring and logging for your AKS cluster.
 
-### Recommendation
+### Steps
 
-* You should enable monitoring for AKS in production.
-
-### Procedures
-
-[Enable monitoring of Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters).
+* Enable monitoring of Azure Kubernetes Service on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters).
 
 ## Step 6. Checklist for confirming Scalar DL deployments
 
@@ -190,20 +185,23 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 ### Confirm AKS cluster monitoring
 
-* Follow the document to confirm the [Cluster insights](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview#how-do-i-access-this-feature).
+* Confirm the Cluster insights on the basis of [Azure container insights document](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview#how-do-i-access-this-feature).
 
-### Confirm Database monitoring
+### Confirm database monitoring
 
-* Follow the document to confirm the [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db).
+* Confirm the monitoring of Azure Cosmos DB on the basis of [Azure monitor cosmos db document](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db).
 
-## Wipe out the Resources
+## Clean up the resources
 
-If you want to remove the environment you can use the following section  
-
+You can use the following steps to remove the resources that you have created. 
 Resources should be removed in the following order
 
 * Uninstall Scalar DL installation
-* Remove the Resource group
+* AKS cluster
+* CosmoDB account
+* bastion server
+* virtual network
+* Resource group
 
 ### Uninstall Scalar DL
 
@@ -211,13 +209,17 @@ You can uninstall Scalar DL installation with the following helm commands:
 
    ```console
     # Uninstall loaded schema with a release name 'load-schema'
-    $ helm delete load-schema
+    $ helm uninstall load-schema
 
     # Uninstall Scalar DL with a release name 'my-release-scalardl'
-    $ helm delete my-release-scalardl
+    $ helm uninstall my-release-scalardl
    ```
 ### Destroy the Environment
 
-You can remove the environment using the following steps
+You can remove the environment using following steps
 
+* Remove [AKS cluster](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_delete)
+* Remove [Cosmos DB account](https://docs.microsoft.com/en-us/cli/azure/cosmosdb?view=azure-cli-latest#az_cosmosdb_delete) 
+* Remove [Bastion server](https://docs.microsoft.com/en-us/cli/azure/vm?view=azure-cli-latest#az_vm_delete)
+* Remove [virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/manage-virtual-network#delete-a-virtual-network)
 * Remove [Resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/delete-resource-group?tabs=azure-powershell#delete-resource-group)
