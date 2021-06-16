@@ -198,9 +198,9 @@ Resources should be removed in the following order.
 
 * Uninstall Scalar DL installation
 * AKS cluster
-* CosmoDB account
-* bastion server
-* virtual network
+* Cosmos DB account
+* Bastion server
+* Virtual network
 * Resource group
 
 ### Uninstall Scalar DL
@@ -221,5 +221,5 @@ You can remove the environment using the following steps:
 * Remove [AKS cluster](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_delete)
 * Remove [Cosmos DB account](https://docs.microsoft.com/en-us/cli/azure/cosmosdb?view=azure-cli-latest#az_cosmosdb_delete) 
 * Remove [Bastion server](https://docs.microsoft.com/en-us/cli/azure/vm?view=azure-cli-latest#az_vm_delete)
-* Remove [virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/manage-virtual-network#delete-a-virtual-network)
+* Remove [Virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/manage-virtual-network#delete-a-virtual-network)
 * Remove [Resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/delete-resource-group?tabs=azure-powershell#delete-resource-group)

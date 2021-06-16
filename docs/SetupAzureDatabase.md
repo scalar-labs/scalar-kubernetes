@@ -18,7 +18,7 @@ In this section, you will set up a Cosmos DB for Scalar DL.
 
 ### Configure Scalar DL 
 
-To apply the Scalar DL schema to CosmoDB, update the following configuration in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml)
+To apply the Scalar DL schema to Cosmos DB, update the following configuration in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml)
 
 ```yaml
 database: cosmos
@@ -27,7 +27,7 @@ password: <Cosmos DB account primary master key>
 cosmosBaseResourceUnit: 400
 ```
 
-To apply Scalar DL on CosmosDB, update the following configuration in [scalardl-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) 
+To apply Scalar DL on Cosmos DB, update the following configuration in [scalardl-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) 
 
 ```yaml
 dbContactPoints: <Cosmos DB account endpoint>
