@@ -25,8 +25,9 @@ This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Requirements
 
-* You must create 2 subnets for AKS one subnet must be created with the name `k8s_ingress` to create an envoy load balancer.
-* You must create a subnet with the prefix at least `/22` for the Kubernetes cluster to work without issues even after scaling. 
+* You must create a virtual network with a subnet for bastion.
+* You must create 2 subnets for AKS, one subnet must be created with the name k8s_ingress to create an envoy load balancer.
+* You must create 2 subnets with the prefix at least `/22` for the Kubernetes cluster to work without issues even after scaling. 
 
 ### Recommendations
 
@@ -69,7 +70,7 @@ Install the following tools on your bastion for controlling the AKS cluster:
 ### Recommendations
 
 * You should use Kubernetes node size `Standard D2s v3` for Scalar DL node pool.
-* You should create 3 nodes in each node group for high availability in the production.
+* You should create 3 nodes in each node pool for high availability in the production.
 * You should configure [autoscaling](https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler) for the AKS cluster.
 
 ### Procedures
@@ -197,7 +198,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 ## Wipe out the Resources
 
-If you are creating the Resources for testing purpose, you can remove the resources using the following steps
+If you want to remove the environment you can use the following section  
 
 Resources should be removed in the following order
 

@@ -42,7 +42,7 @@ Cosmos DB performance can be adjusted using the following parameters
 #### Request Units (RU)
 
 You can scale the throughput of Cosmos DB by specifying cosmosBaseResourceUnit (which applies to all the tables) in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml). 
-Scalardl schema tool abstracts Request Unit of Cosmos DB with RU.
+Scalardl schema tool abstracts Request Unit of Cosmos DB with RU. So please set appropriate value.
 
 #### Auto-scaling
 
