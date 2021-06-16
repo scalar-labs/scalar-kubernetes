@@ -12,7 +12,7 @@ In this guide, we will create the following components.
 
 * An Azure Virtual Network associated with Resource Group
 * An AKS cluster with Kubernetes node pool
-* A managed database service (you can choose one of them)
+* A managed database service 
     * A Cosmos DB Account
 * 1 Bastion instance with a public IP
 * Azure monitor insights
@@ -25,8 +25,8 @@ This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Requirements
 
+* You must create 2 subnets for AKS one subnet must be created with the name `k8s_ingress` to create an envoy load balancer.
 * You must create a subnet with the prefix at least `/22` for the Kubernetes cluster to work without issues even after scaling. 
-* You must create a subnet with the name `k8s_ingress` to create an envoy load balancer.
 
 ### Recommendations
 
@@ -54,14 +54,14 @@ This section shows how to configure a Kubernetes service for Scalar DL deploymen
 
 ### Prerequisites
 
-Install the following tools on your machine for controlling the AKS cluster:
+Install the following tools on your bastion for controlling the AKS cluster:
 * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli): In this guide, Azure CLI is used to create a kubeconfig file to access the AKS cluster.
 * [kubectl](https://kubernetes.io/docs/tasks/tools/): Kubernetes command-line tool to manage AKS cluster. Kubectl 1.19 or higher is required.
 
 ### Requirements
 
 * You must have an AKS cluster with Kubernetes version 1.19 or higher for Scalar DL deployment.
-* You must create AKS node pool with the name `scalardlpool` for Scalar DL deployment.
+* You must create a seperate AKS node pool with the name `scalardlpool` for Scalar DL deployment.
 * You must add AKS Service principal as `Network contributor` for the k8s_ingress subnet.
 * You must create the Kubernetes cluster with `Service principal` as the Authentication method.
 * You must create the Kubernetes cluster with `Azure CNI`.
@@ -70,6 +70,7 @@ Install the following tools on your machine for controlling the AKS cluster:
 
 * You should use Kubernetes node size `Standard D2s v3` for Scalar DL node pool.
 * You should create 3 nodes in each node group for high availability in the production.
+* You should configure [autoscaling](https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler) for the AKS cluster.
 
 ### Procedures
 
@@ -89,7 +90,7 @@ This section shows how to install Scalar DL to the AKS cluster with [Helm charts
 
 ### Prerequisites
 
-Install the helm tool on your machine to deploy helm-charts:
+Install the helm tool on your bastion to deploy helm-charts:
 
 * [helm](https://helm.sh/docs/intro/install/): helm command-line tool to manage releases in the AKS cluster. In this tutorial, it is used to deploy Scalar DL and Schema loading helm charts to the AKS cluster. Helm version 3.2.1 or latest is required. 
 
@@ -195,6 +196,8 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 * Follow the document to confirm the [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db).
 
 ## Wipe out the Resources
+
+If you are creating the Resources for testing purpose, you can remove the resources using the following steps
 
 Resources should be removed in the following order
 
