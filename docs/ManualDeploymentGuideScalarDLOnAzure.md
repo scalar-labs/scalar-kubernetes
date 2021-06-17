@@ -114,10 +114,10 @@ Install Helm on your bastion to deploy helm-charts:
     $ kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
    
-4. Run the helm commands on the host machine to install Scalar DL on AKS.
+4. Run the Helm commands on the host machine to install Scalar DL on AKS.
     
    ```console
-    # Add helm charts 
+    # Add Helm charts 
     $ helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
     
     # List the Scalar charts.
@@ -136,7 +136,7 @@ Note:
 * Release name `my-release-scalardl` can be changed as per your convenience.
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get po -o wide` before installing Scalar DL.
-* Follow the [Maintain the cluster guide](./MaintainCluster.md) for more customization for helm charts deployment.
+* Follow the [Maintain Scalar DL Pods](./MaintainPods.md) for maintaining Scalar DL pods with Helm.
 
 ## Step 5. Monitor the cluster
 
