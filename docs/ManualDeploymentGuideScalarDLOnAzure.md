@@ -113,7 +113,7 @@ Install Helm on your bastion to deploy helm-charts:
     $ kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
    
-4. Run the Helm commands on the bastion machine to install Scalar DL on AKS.
+4. Run the Helm commands on the bastion to install Scalar DL on AKS.
     
    ```console
     # Add Helm charts 
@@ -154,7 +154,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 * Make sure the schema is properly created in the underlying database service.
 
-* You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the bastion machine.
+* You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the bastion.
     * You should confirm the status of all ledger and envoy pods are `Running`.
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
     
