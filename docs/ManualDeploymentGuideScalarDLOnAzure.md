@@ -136,7 +136,7 @@ Note:
 * Release name `my-release-scalardl` can be changed as per your convenience.
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get po -o wide` before installing Scalar DL.
-* Follow the [Maintain the cluster guide](./Maintaincluster.md) for more customization for helm charts deployment.
+* Follow the [Maintain the cluster guide](./MaintainCluster.md) for more customization for helm charts deployment.
 
 ## Step 5. Monitor the cluster
 
