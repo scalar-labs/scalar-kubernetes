@@ -27,7 +27,7 @@ password: <Cosmos DB account primary master key>
 cosmosBaseResourceUnit: 400
 ```
 
-To apply Scalar DL on Cosmos DB, update the following configuration in [scalardl-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) 
+To deploy Scalar DL on Cosmos DB, update the following configuration in [scalardl-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) 
 
 ```yaml
 dbContactPoints: <Cosmos DB account endpoint>

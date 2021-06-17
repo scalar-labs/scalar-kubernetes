@@ -102,19 +102,19 @@ Install Helm on your bastion to deploy helm-charts:
 
 ### Steps
 
-Following steps will help you to install Scalar DL on AKS:
+1. Download the following Scalar DL configuration files from [the scalar-kubernetes repository](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf). Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
+    * scalardl-custom-values.yaml
+    * schema-loading-custom-values.yaml
 
-1. Download the following Scalar DL configuration files and update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [Set up a database guide](./SetupAzureDatabase.md#Configure-Scalar-DL).
-    * [scalardl-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/scalardl-custom-values.yaml)
-    * [schema-loading-custom-values.yaml](https://raw.githubusercontent.com/scalar-labs/scalar-kubernetes/master/conf/schema-loading-custom-values.yaml)
+2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [Set up a database guide](./SetupAzureDatabase.md#Configure-Scalar-DL).
 
-2. Create the docker-registry secret for pulling the Scalar DL images from the GitHub registry.
+3. Create the docker-registry secret for pulling the Scalar DL images from the GitHub registry.
     
    ```console
     $ kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
    
-3. Run the helm commands on the host machine to install Scalar DL on AKS.
+4. Run the helm commands on the host machine to install Scalar DL on AKS.
     
    ```console
     # Add helm charts 
@@ -145,7 +145,7 @@ This section shows how to configure monitoring and logging for your AKS cluster.
 
 ### Steps
 
-* Enable monitoring of Azure Kubernetes Service on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters).
+* Enable monitoring of Azure Kubernetes Service on the basis of [the official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters).
 
 ## Step 6. Checklist for confirming Scalar DL deployments
 
@@ -185,18 +185,17 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 ### Confirm AKS cluster monitoring
 
-* Confirm the Cluster insights on the basis of [Azure container insights document](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview#how-do-i-access-this-feature).
+* Confirm the Cluster insights on the basis of [Container insights](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview#how-do-i-access-this-feature) document.
 
 ### Confirm database monitoring
 
-* Confirm the monitoring of Azure Cosmos DB on the basis of [Azure monitor cosmos db document](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db).
+* Confirm the monitoring of Azure Cosmos DB on the basis of [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db) document.
 
 ## Clean up the resources
 
-You can use the following steps to remove the resources that you have created. 
-Resources should be removed in the following order.
+When you need to remove the resources that you have created, remove the resources in the following order.
 
-* Uninstall Scalar DL installation
+* Scalar DL
 * AKS cluster
 * Cosmos DB account
 * Bastion server
@@ -205,7 +204,7 @@ Resources should be removed in the following order.
 
 ### Uninstall Scalar DL
 
-You can uninstall Scalar DL installation with the following helm commands:
+You can uninstall Scalar DL with the following helm commands:
 
    ```console
     # Uninstall loaded schema with a release name 'load-schema'
@@ -214,12 +213,8 @@ You can uninstall Scalar DL installation with the following helm commands:
     # Uninstall Scalar DL with a release name 'my-release-scalardl'
     $ helm uninstall my-release-scalardl
    ```
-### Destroy the Environment
+### Clean up the other resources
 
-You can remove the environment using the following steps:
+You can remove the other resources via the web console or the command-line interface.
 
-* Remove [AKS cluster](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_delete)
-* Remove [Cosmos DB account](https://docs.microsoft.com/en-us/cli/azure/cosmosdb?view=azure-cli-latest#az_cosmosdb_delete) 
-* Remove [Bastion server](https://docs.microsoft.com/en-us/cli/azure/vm?view=azure-cli-latest#az_vm_delete)
-* Remove [Virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/manage-virtual-network#delete-a-virtual-network)
-* Remove [Resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/delete-resource-group?tabs=azure-powershell#delete-resource-group)
+For more detail about the command-line interface, please take a look at [the official document]( https://docs.microsoft.com/en-us/cli/azure/).
