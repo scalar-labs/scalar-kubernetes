@@ -34,10 +34,14 @@ DynamoDB performance can be adjusted using the following parameters
 
 #### Request Units (RU)
 
+A read capacity unit represents one strongly consistent read per second, or two eventually consistent reads per second, for an item up to 4 KB in size.
 You can scale the throughput of DynamoDB by specifying `dynamoBaseResourceUnit` (which applies to all the tables) in the `schema-loading-custom-values.yaml` file.
 Scalardl schema tool abstracts Capacity Unit of DynamoDB with RU.
 
-#### Auto-scaling
+#### Autoscale
+
+Amazon DynamoDB auto scaling uses the AWS Application Auto Scaling service to dynamically adjust provisioned throughput capacity on your behalf, in response to actual traffic patterns. 
+This enables a table or a global secondary index to increase its provisioned read and write capacity to handle sudden increases in traffic, without throttling. 
 
 By default, the `scalardl schema tool` enables auto-scaling of RU for all tables: RU is scaled in or out between 10% and 100% of a specified RU depending on a workload. 
 
@@ -52,4 +56,4 @@ WARNING:
 
 By default, monitoring is enabled on DynamoDB
 
-More information can be found in [DynamoDB Metrics and Dimensions](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) documentation.
+More information can be found in [DynamoDB Metrics and Dimensions documentation](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html).
