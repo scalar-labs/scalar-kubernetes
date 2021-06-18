@@ -26,8 +26,7 @@ This section shows how to configure a secure network for Scalar DL deployments.
 ### Requirements
 
 * You must create a virtual network with a subnet for bastion.
-* You must create 2 subnets for AKS, one subnet must be created with the name `k8s_ingress` to create an envoy load balancer.
-* You must create 2 subnets with the prefix at least `/22` for the Kubernetes cluster to work without issues even after scaling. 
+* You must create 2 subnets with the prefix of at least `/22` for AKS, one subnet must be created with the name `k8s_ingress` to create an envoy load balancer.
 
 ### Recommendations
 
@@ -55,18 +54,18 @@ This section shows how to configure a Kubernetes service for Scalar DL deploymen
 
 ### Prerequisites
 
-Install the following tools on your bastion for controlling the AKS cluster:
+Install the following tools on the bastion for controlling the AKS cluster:
 * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli): In this guide, Azure CLI is used to create a kubeconfig file to access the AKS cluster.
 * [kubectl](https://kubernetes.io/docs/tasks/tools/): Kubernetes command-line tool to manage AKS cluster. Kubectl 1.19 or higher is required.
 
 ### Requirements
 
-* You must have an AKS cluster with Kubernetes version 1.19 or higher for Scalar DL deployment.
-* You must create a new user node pool with the name `scalardlpool` for Scalar DL deployment.
+* You must have an AKS cluster with Kubernetes version **1.19** or higher for Scalar DL deployment.
+* You must create a new `user node pool` with the name `scalardlpool` for Scalar DL deployment.
 * You must select the subnet other than `k8s_ingress` subnet for creating the AKS cluster. 
 * You must create a Kubernetes cluster with `service principal` as the Authentication method.
 * You must create a Kubernetes cluster with `Azure CNI`.
-* You should add a role assignment to the `k8s_ingress` subnet to access the newly created AKS cluster service principal using the role of `Network Contributor`.
+* You must add a role assignment to the `k8s_ingress` subnet to access the newly created AKS cluster service principal using the role of `Network Contributor`.
 
 ### Recommendations
 
@@ -114,7 +113,7 @@ Install Helm on your bastion to deploy helm-charts:
     $ kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
    
-4. Run the Helm commands on the host machine to install Scalar DL on AKS.
+4. Run the Helm commands on the bastion to install Scalar DL on AKS.
     
    ```console
     # Add Helm charts 
@@ -155,7 +154,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 * Make sure the schema is properly created in the underlying database service.
 
-* You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the host machine.
+* You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the bastion.
     * You should confirm the status of all ledger and envoy pods are `Running`.
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
     
@@ -204,7 +203,7 @@ When you need to remove the resources that you have created, remove the resource
 
 ### Uninstall Scalar DL
 
-You can uninstall Scalar DL with the following helm commands:
+You can uninstall Scalar DL with the following Helm commands:
 
    ```console
     # Uninstall loaded schema with a release name 'load-schema'
