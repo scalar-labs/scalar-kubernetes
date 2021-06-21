@@ -107,7 +107,7 @@ Install Helm on your bastion to deploy helm-charts:
 
 2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [Set up a database guide](./SetupAzureDatabase-1.md#Configure-Scalar-DL).
 
-3. Create the docker-registry secret for pulling the Scalar DL images from the GitHub registry.
+3. Create the docker-registry secret for pulling the Scalar DL images from the GitHub Packages.
     
    ```console
     $ kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
@@ -154,12 +154,12 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 * Make sure the schema is properly created in the underlying database service.
 
-* You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the bastion.
+* You can check if the pods and the services are properly deployed by running the `kubectl get pods,services -o wide` command on the bastion.
     * You should confirm the status of all ledger and envoy pods are `Running`.
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
     
     ```console
-    $ kubectl get po,svc,endpoints -o wide
+    $ kubectl get pods,services -o wide
     NAME                                              READY   STATUS    RESTARTS   AGE     IP          NODE                                   NOMINATED NODE   READINESS GATES
     pod/load-schema-schema-loading-bgr4x              0/1     Completed 0          3m6s    10.2.0.51   aks-scalardlpool-16372315-vmss000001   <none>           <none>
     pod/my-release-scalardl-envoy-7598cc45dd-cdvg2    1/1     Running   0          2m28s   10.2.0.42   aks-scalardlpool-16372315-vmss000000   <none>           <none>
@@ -174,13 +174,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
     service/my-release-scalardl-envoy             LoadBalancer   10.0.157.155   10.2.4.4      50051:30990/TCP,50052:30789/TCP   2m29s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
     service/my-release-scalardl-envoy-metrics     ClusterIP      10.0.20.189    <none>        9001/TCP                          2m29s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
     service/my-release-scalardl-ledger-headless   ClusterIP      None           <none>        50051/TCP,50053/TCP,50052/TCP     2m29s   app.kubernetes.io/app=ledger,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
-
-    NAME                                            ENDPOINTS                                                     AGE   
-    endpoints/kubernetes                            10.2.0.4:443                                                  159m
-    endpoints/my-release-scalardl-envoy             10.2.0.42:50052,10.2.0.52:50052,10.2.0.63:50052 + 3 more...   2m29s
-    endpoints/my-release-scalardl-envoy-metrics     10.2.0.42:9001,10.2.0.52:9001,10.2.0.63:9001                  2m29s
-    endpoints/my-release-scalardl-ledger-headless   10.2.0.45:50051,10.2.0.51:50051,10.2.0.62:50051 + 6 more...   2m29s
-    ```
+   ```
 
 ### Confirm AKS cluster monitoring
 
