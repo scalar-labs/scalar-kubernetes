@@ -53,5 +53,7 @@ Please replace your subscription ID in the `assignableScopes` array. You can giv
 
 To interact with Azure APIs, an AKS cluster requires either an Azure Active Directory (AD) service principal or a managed identity. 
 A service principal is needed for the AKS cluster to access dynamically create and manage other Azure resources.
-To create a service principal for the AKS cluster ask an account with the `Owner` role to create a service principal on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal?tabs=azure-cli). 
+
+To create a service principal for the AKS cluster ask an account with the `Owner` role to create a service principal on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal?tabs=azure-cli).
+
 Also, add `Directory Reader` permission for your user on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/active-directory/roles/manage-roles-portal) to allow the user access to the service principal.
