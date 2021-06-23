@@ -1,17 +1,17 @@
-# Restricting cloud privileges for deploying Scalar DL
+# Assign Required Cloud Permissions For Deploying Scalar DL
 
-This guide explains how to restrict privileges for deploying Scalar DL on Azure.
+This guide explains how to assign required permissions for the users for deploying Scalar DL on Azure.
 
-In general from security perspective, it is better to assign restricted privileges to users not to make them able to do operations that they are not supposed to do.
+From the security perspective, it is better to give users limited privileges to protect the environment from unwanted activities.
 
 ## Azure
 
-The following JSON is a custom role that allow users to manage resources for Scalar DL. This is sufficient but not necessary.
+The following JSON is a custom role that allows users to manage Azure cloud resources for Scalar DL. These are the minimum permissions for creating a Scalar DL environment on the Azure cloud.
 
-In Azure Portal, you can create the role in Subscriptions section. Choose your subscription and select Access control (IAM) from the menu, then click `+Add` and select `Add custom role`. 
+In Azure Portal, you can create the role in the Subscriptions section. Choose your subscription and select Access control (IAM) from the menu, then click `+Add` and select `Add custom role`. 
 Once the role is created, you can assign it to a user or a group from `Add role assignment` in the `+Add` menu.
 
-Please keep your subscription ID in the `assignableScopes` array. You can give `rolename` and `description` as per your convenience.
+Please replace your subscription ID in the `assignableScopes` array. You can give `roleName` and `description` at your convenience.
 
 ```json
 {   
@@ -49,8 +49,9 @@ Please keep your subscription ID in the `assignableScopes` array. You can give `
 }
 ```
 
-### A Role for creating AKS cluster
+### Create Privileges for AKS cluster
 
-To interact with Azure APIs, an AKS cluster requires either an Azure Active Directory (AD) service principal or a managed identity.
-To create service principal for the AKS cluster ask an account with `Owner` role to create a service principal on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal?tabs=azure-cli). 
-Also, add `Directory Reader` permission for your user on the basis of [Azure official guide]( https://docs.microsoft.com/en-us/azure/active-directory/roles/manage-roles-portal).
+To interact with Azure APIs, an AKS cluster requires either an Azure Active Directory (AD) service principal or a managed identity. 
+A service principal is needed for the AKS cluster to access dynamically create and manage other Azure resources.
+To create a service principal for the AKS cluster ask an account with the `Owner` role to create a service principal on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal?tabs=azure-cli). 
+Also, add `Directory Reader` permission for your user on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/active-directory/roles/manage-roles-portal) to allow the user access to the service principal.
