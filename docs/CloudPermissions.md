@@ -56,18 +56,18 @@ Following are the permissions for each assignment
 
 * `Microsoft.Authorization/roleAssignments/*` : To assign roles for the resources.
 * `Microsoft.Compute/availabilitySets/*` : To create and manage availabilitySets.
-* `Microsoft.Compute/disks/*` : To create and manage disks for Virtual machines.
+* `Microsoft.Compute/disks/*` : To create and manage disks for virtual machines.
 * `Microsoft.Network/loadBalancers/*` : To create and manage Load balancers.
 * `Microsoft.Network/networkInterfaces/*` : To create and manage network interfaces
 * `Microsoft.Network/networkSecurityGroups/*` : To create and manage security groups
-* `Microsoft.Network/publicIPAddresses/*` : To create and manage Public IP address.
+* `Microsoft.Network/publicIPAddresses/*` : To create and manage public IP address.
 * `Microsoft.Network/virtualNetworks/*` : To create and manage virtual network.
 * `Microsoft.Resources/deployments/*` : To validate the Azure deployment template for creating the resources.
 * `Microsoft.Resources/subscriptions/resourceGroups/*` : To create and manage resource groups.
 * `Microsoft.DocumentDb/databaseAccounts/*`: To create and manage Cosmos DB.
 * `Microsoft.ContainerService/managedClusters/*` : To create and manage the AKS cluster.
-* `Microsoft.OperationsManagement/solutions/*`: To manage the container insights.
-* `Microsoft.operationalInsights/workspaces/*` : To manage Azure logs service.
+* `Microsoft.OperationsManagement/solutions/*`: To manage the Azure container insights.
+* `Microsoft.operationalInsights/workspaces/*` : To manage Azure logs.
 
 ### Create Permissions for AKS cluster
 
