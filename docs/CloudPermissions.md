@@ -6,7 +6,7 @@ From the security perspective, it is better to give users limited permissions to
 
 ## Azure
 
-The following JSON is a custom role that allows users to manage Azure cloud resources for deploying Scalar DL from the portal and from command line tools. 
+The following JSON is a custom role that allows users to manage Azure cloud resources from the Azure portal or from command line tools for deploying Scalar DL.
 Please note that it is sufficient but not necessary since, it can/should be further restricted.
 
 In Azure Portal, you can create the role in the Subscriptions section. Choose your subscription and select Access control (IAM) from the menu, then click `+Add` and select `Add custom role`. 
