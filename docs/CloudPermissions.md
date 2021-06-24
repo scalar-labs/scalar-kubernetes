@@ -1,6 +1,7 @@
-# Assign Required Cloud Permissions For Deploying Scalar DL
+# Cloud Permissions For Manual Scalar DL Environment Creation 
 
-This guide explains how to assign required permissions for the users to create cloud resources for deploying Scalar DL on Azure.
+This guide explains how to assign required permissions for the users to manually create cloud resources for deploying Scalar DL on Azure and must be  
+used with Scalar DL [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure.md).
 
 From the security perspective, it is better to give users limited permissions to protect the environment from unwanted activities.
 
@@ -12,13 +13,13 @@ Please note that it is sufficient but not necessary since, it can/should be furt
 In Azure Portal, you can create the role in the Subscriptions section. Choose your subscription and select Access control (IAM) from the menu, then click `+Add` and select `Add custom role`. 
 Once the role is created, you can assign it to a user or a group from `Add role assignment` in the `+Add` menu.
 
-Please replace your subscription ID in the `assignableScopes` array. You can give `roleName` and `description` at your convenience.
+Please replace your subscription ID in the `assignableScopes` array. You can give `roleName` and `description` as per your convenience.
 
 ```json
 {   
  "properties": {
-        "roleName": "manual-guide-test",
-        "description": "manual-guide-test",
+        "roleName": "Scalar DL permissions",
+        "description": "Permissions to deploy Scalar DL on AKS",
         "assignableScopes": [
             "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
         ],
@@ -64,10 +65,15 @@ Following are the permissions for each assignment
 * `Microsoft.Network/virtualNetworks/*` : To create and manage virtual network.
 * `Microsoft.Resources/deployments/*` : To validate the Azure deployment template for creating the resources.
 * `Microsoft.Resources/subscriptions/resourceGroups/*` : To create and manage resource groups.
-* `Microsoft.DocumentDb/databaseAccounts/*`: To create and manage Cosmos DB.
 * `Microsoft.ContainerService/managedClusters/*` : To create and manage the AKS cluster.
 * `Microsoft.OperationsManagement/solutions/*`: To manage the Azure container insights.
 * `Microsoft.operationalInsights/workspaces/*` : To manage Azure logs.
+
+You can replace the permission for accessing the databases as below in the JSON as per the database you use.
+
+| Database | Permission                               | Description                     | 
+|----------|------------------------------------------|---------------------------------|
+| Cosmos DB| `Microsoft.DocumentDb/databaseAccounts/*`|  To create and manage Cosmos DB |
 
 ### Create Permissions for AKS cluster
 
