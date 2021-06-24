@@ -19,7 +19,7 @@ In this guide, we will create the following components.
 
 ## Prerequisites
 
-You need to have enough permissions to deploy Scalar DL on Azure. Please see [Cloud permissions document](./CloudPermissions.md) for more details.
+You must have required permissions as specified in [Cloud permissions document](./CloudPermissions.md) to create cloud resources to deploy Scalar DL on Azure.
 
 ## Step 1. Configure your network
 
