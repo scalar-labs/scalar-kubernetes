@@ -1,19 +1,19 @@
-# Cloud Permissions For Manual Scalar DL Environment Creation 
+# Cloud Permissions for Creating Scalar DL on Azure AKS
 
-This guide explains how to assign required permissions for the users to manually create cloud resources for deploying Scalar DL on Azure 
-and must be used with Scalar DL [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure.md).
-
+This guide explains what permissions are required to deploy Scalar DL on Azure AKS.
+This guide assumes that you create the environment on the basis of [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure.md).
 From the security perspective, it is better to give users limited permissions to protect the environment from unwanted activities.
 
-## Azure
+## Assign permissions to users who create resources for Scalar DL
 
-The following JSON is a custom role that allows users to manage Azure cloud resources from the Azure portal or from command line tools for deploying Scalar DL.
-Please note that it is sufficient but not necessary since, it can/should be further restricted.
+The following JSON is a custom role that specifies the required permissions that allow users to create Azure cloud resources (either from Azure portal or the command line) to deploy Scalar DL. 
+Please replace your subscription ID in the `assignableScopes` array. 
+It is recommended to put `roleName` and `description` to specify what the permissions for, however, they are not required.
+Note that the permissions are sufficient but not necessary.
 
-In Azure Portal, you can create the role in the Subscriptions section. Choose your subscription and select Access control (IAM) from the menu, then click `+Add` and select `Add custom role`. 
+In Azure Portal, you can create the role in the `Subscriptions` section. Choose your subscription and select Access control (IAM) from the menu, then click `+Add` and select `Add custom role`. 
 Once the role is created, you can assign it to a user or a group from `Add role assignment` in the `+Add` menu.
 
-Please replace your subscription ID in the `assignableScopes` array. You can give `roleName` and `description` as per your convenience.
 
 ```json
 {   
@@ -51,9 +51,10 @@ Please replace your subscription ID in the `assignableScopes` array. You can giv
 }
 ```
 
-Note:
+Note that `Microsoft.DocumentDb/databaseAccounts/*` is the one for Cosmos DB, so
+it must be replaced if you want to use another database.
 
-Following are the permissions for each assignment
+Please check the following to understand what each assignment means, and add or remove on the basis of your need.
 
 * `Microsoft.Authorization/roleAssignments/*` : To assign roles for the resources.
 * `Microsoft.Compute/availabilitySets/*` : To create and manage availabilitySets.
@@ -65,20 +66,15 @@ Following are the permissions for each assignment
 * `Microsoft.Network/virtualNetworks/*` : To create and manage virtual network.
 * `Microsoft.Resources/deployments/*` : To validate the Azure deployment template for creating the resources.
 * `Microsoft.Resources/subscriptions/resourceGroups/*` : To create and manage resource groups.
+| `Microsoft.DocumentDb/databaseAccounts/*` : To create and manage Cosmos DB.
 * `Microsoft.ContainerService/managedClusters/*` : To create and manage the AKS cluster.
 * `Microsoft.OperationsManagement/solutions/*`: To manage the Azure container insights.
 * `Microsoft.operationalInsights/workspaces/*` : To manage Azure logs.
 
-You can replace the permission for accessing the databases as below in the JSON as per the database you use.
+## Assign permissions to an AKS cluster to interact with the resources
 
-| Database | Permission                               | Description                     | 
-|----------|------------------------------------------|---------------------------------|
-| Cosmos DB| `Microsoft.DocumentDb/databaseAccounts/*`|  To create and manage Cosmos DB |
+An AKS cluster itself also needs to create and manage Azure resources by using Azure APIs.
+To do that, the AKS cluster requires either an Azure Active Directory (AD) service principal or a managed identity. 
 
-### Create Permissions for AKS cluster
-
-To interact with Azure APIs, an AKS cluster requires either an Azure Active Directory (AD) service principal or a managed identity. 
-A service principal is needed for the AKS cluster to access dynamically create and manage other Azure resources.
-
-To create a service principal for the AKS cluster ask an account with the `Owner` role to create a service principal on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal?tabs=azure-cli).
-Also, add `Directory Reader` permission for your user on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/active-directory/roles/manage-roles-portal) to allow the user access to the service principal.
+To create a service principal for an AKS cluster, ask an account with the `Owner` role to create a service principal on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal?tabs=azure-cli).
+Also, add `Directory Reader` role to a user that creates the cluster on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/active-directory/roles/manage-roles-portal) to allow the user access to the service principal.
