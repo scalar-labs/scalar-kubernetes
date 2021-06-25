@@ -1,7 +1,7 @@
 # Cloud Permissions For Manual Scalar DL Environment Creation 
 
-This guide explains how to assign required permissions for the users to manually create cloud resources for deploying Scalar DL on Azure and must be  
-used with Scalar DL [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure.md).
+This guide explains how to assign required permissions for the users to manually create cloud resources for deploying Scalar DL on Azure 
+and must be used with Scalar DL [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure.md).
 
 From the security perspective, it is better to give users limited permissions to protect the environment from unwanted activities.
 
