@@ -39,7 +39,7 @@ You can use the following steps to create and assign a custom role to the user. 
         * Click **Next**
     * On the JSON page
         * Click **Edit**
-        * Paste the permissions section from [JSON](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CloudPermissionsForScalarDLOnAKS.md#assign-permissions-to-users-who-create-resources-for-scalar-dl)
+        * Paste the permissions section from [JSON](./CloudPermissionsForScalarDLOnAKS.md)
         * Click **Next** 
     * On **Review+Create** page
         * Click **Create**
