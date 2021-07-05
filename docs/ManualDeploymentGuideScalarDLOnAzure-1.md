@@ -138,7 +138,7 @@ Note:
 * The same commands can be used to upgrade the pods.
 * Release name `my-release-scalardl` can be changed as per your convenience.
 * `helm ls -a` command can be used to list currently installed releases.
-* You should confirm the load-schema deployment has been completed with `kubectl get po -o wide` before installing Scalar DL.
+* You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
 * Follow the [Maintain Scalar DL Pods](./MaintainPods-1.md) for maintaining Scalar DL pods with Helm.
 
 ## Step 5. Monitor the cluster

@@ -1,4 +1,4 @@
-# Set up a database
+# Set up an Azure database
 
 This guide explains how to set up a database for Scalar DL in Azure AKS and how to configure helm charts for Scalar DL deployment.
 
