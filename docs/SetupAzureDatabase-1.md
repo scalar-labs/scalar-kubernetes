@@ -1,6 +1,6 @@
 # Set up a database
 
-This guide explains how to set up a database for Scalar DL in Azure and how to configure helm charts for Scalar DL deployment.
+This guide explains how to set up a database for Scalar DL in Azure AKS and how to configure helm charts for Scalar DL deployment.
 
 ## Cosmos DB
 
@@ -18,7 +18,7 @@ In this section, you will set up a Cosmos DB for Scalar DL.
 
 ### Configure Scalar DL 
 
-To apply the Scalar DL schema to Cosmos DB, update the following configuration in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml)
+To create Scalar DL schema in Cosmos DB, update the following configuration in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml)
 
 ```yaml
 database: cosmos
