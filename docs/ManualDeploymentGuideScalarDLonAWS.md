@@ -12,7 +12,7 @@ In this guide, we will create the following components.
 
 * A VPC with NAT gateway
 * An EKS cluster with two Kubernetes node groups
-* A managed database service (you can choose one of them)
+* A managed database service 
     * DynamoDB    
 * A Bastion instance with a public IP
 * Amazon CloudWatch
@@ -137,7 +137,7 @@ Note:
 * The same commands can be used to upgrade the pods.
 * Release name `my-release-scalardl` can be changed as per your convenience.
 * `helm ls -a` command can be used to list currently installed releases.
-* You should confirm the load-schema deployment has been completed with `kubectl get po -o wide` before installing Scalar DL.
+* You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
 * Follow the [Maintain Scalar DL Pods ](./MaintainPods.md) for maintaining Scalar DL pods with Helm.
 
 ## Step 5. Monitor the Cluster
@@ -165,12 +165,12 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 * Make sure the schema is properly created in the underlying database service.
 
-* You can check if the pods and the services are properly deployed by running the `kubectl get po,svc,endpoints -o wide` command on the bastion.
+* You can check if the pods and the services are properly deployed by running the `kubectl get pods,svc,endpoints -o wide` command on the bastion.
     * You should confirm the status of all ledger and envoy pods are `Running`.
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.      
 
    ```console    
-    $ kubectl get po,svc,endpoints -o wide
+    $ kubectl get pods,svc,endpoints -o wide
     NAME                                              READY   STATUS      RESTARTS   AGE     IP             NODE                                          NOMINATED NODE   READINESS GATES
     pod/load-schema-schema-loading-f75q6              0/1     Completed   0          3m18s   172.20.4.158   ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>
     pod/my-release-scalardl-envoy-7598cc45dd-dqbgl    1/1     Running     0          70s     172.20.4.7     ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>
