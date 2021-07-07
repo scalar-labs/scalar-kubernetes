@@ -25,8 +25,8 @@ This section shows how to configure a secure network for Scalar DL deployments.
 ### Requirements
  
 * You must create VPC with NAT gateways on private networks. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
-* You must create at least 2 subnets for the EKS cluster in different availability zones. This is mandatory to create an EKS cluster
-* You must create subnets with the prefix at least _/24_ for the Kubernetes cluster to work without issues even after scaling. 
+* You must create at least 2 subnets for the EKS cluster in different availability zones. This is mandatory to create an EKS cluster.
+* You must create subnets with the prefix at least `/24` for the Kubernetes cluster to work without issues even after scaling. 
 
 ### Recommendations
 
@@ -230,5 +230,4 @@ You can uninstall Scalar DL installation with the following Helm commands:
 
 You can remove the other resources via the web console or the command-line interface.
 
-For more detail about the command-line interface, please take a look at the [official document](https://docs.aws.amazon.com/cli/index.html?nc2=h_ql_doc_cli).
-    
+For more detail about the command-line interface, please take a look at the [official document](https://docs.aws.amazon.com/cli/index.html?nc2=h_ql_doc_cli).    
