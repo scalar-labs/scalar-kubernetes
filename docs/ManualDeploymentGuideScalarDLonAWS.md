@@ -165,12 +165,12 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 * Make sure the schema is properly created in the underlying database service.
 
-* You can check if the pods and the services are properly deployed by running the `kubectl get pods,svc,endpoints -o wide` command on the bastion.
+* You can check if the pods and the services are properly deployed by running the `kubectl get pods,services -o wide` command on the bastion.
     * You should confirm the status of all ledger and envoy pods are `Running`.
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.      
 
    ```console    
-    $ kubectl get pods,svc,endpoints -o wide
+    $ kubectl get pods,services -o wide
     NAME                                              READY   STATUS      RESTARTS   AGE     IP             NODE                                          NOMINATED NODE   READINESS GATES
     pod/load-schema-schema-loading-f75q6              0/1     Completed   0          3m18s   172.20.4.158   ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>
     pod/my-release-scalardl-envoy-7598cc45dd-dqbgl    1/1     Running     0          70s     172.20.4.7     ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>

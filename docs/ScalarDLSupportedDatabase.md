@@ -9,7 +9,7 @@ Scalardl schema tool [helm charts](https://github.com/scalar-labs/helm-charts/tr
 
 ### Configure Scalar DL
 
-To deploy Schema loading with DynamoDB, update the following configuration in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml)
+To deploy schema loading with DynamoDB, update the following configuration in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml)
 
 ```yaml
 dbStorage: dynamo
