@@ -14,8 +14,8 @@ In this guide, we will create the following components.
 * An AKS cluster with a Kubernetes node pool.
 * A managed database service (you can choose one of them).
     * A Cosmos DB Account.
-    * An Azure Database for MySQL servers.
-    * An Azure Database for PostgreSQL servers.
+    * An Azure Database for MySQL.
+    * An Azure Database for PostgreSQL.
 * A Bastion instance with a public IP.
 * Azure container insights.
 
