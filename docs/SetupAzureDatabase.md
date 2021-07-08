@@ -55,7 +55,7 @@ By default, the scalardl schema tool enables autoscale of RU for all tables: RU 
 
 Azure Cosmos DB automatically takes backups of your data at regular intervals. The automatic backups are taken without affecting the performance or availability of the database operations. All the backups are stored separately in a storage service. 
 
-More information can be found in [Backup and Restore in Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/online-backup-and-restore) document.
+More information can be found in [Backup and Restore in Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/online-backup-and-restore) documentation.
 
 ### Monitor Cosmos DB
 
@@ -73,7 +73,7 @@ In this section, you will set up an Azure Database for MySQL servers for Scalar 
 
 ### Steps
 
-* Create an Azure Database for MySQL servers using the [official document](https://docs.microsoft.com/en-us/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal).
+* Create an Azure Database for MySQL servers on the base of [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal).
 
 ### Configure Scalar DL 
 
@@ -110,7 +110,7 @@ For servers with more than 100 GB of provisioned storage, the provisioned storag
 
 Azure Database for MySQL automatically creates server backups and stores them in user configured locally redundant or geo-redundant storage. Backups can be used to restore your server to a point-in-time. 
 
-More information can be found in [Backup and restore in Azure Database for MySQL](https://docs.microsoft.com/en-us/azure/mysql/concepts-backup) document.
+More information can be found in [Backup and restore in Azure Database for MySQL](https://docs.microsoft.com/en-us/azure/mysql/concepts-backup) documentation.
 
 ### Monitor MySQL
 
@@ -128,7 +128,7 @@ In this section, you will set up an Azure Database for PostgreSQL servers for Sc
 
 ### Steps
 
-* Create an Azure Database for PostgreSQL servers using the [official document](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal).
+* Create an Azure Database for PostgreSQL servers on the base of [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal).
 
 ### Configure Scalar DL 
 
@@ -166,7 +166,7 @@ For servers with more than 100 GB of provisioned storage, the provisioned storag
 Azure Database for PostgreSQL automatically creates server backups and stores them in user configured locally redundant or geo-redundant storage. 
 Backups can be used to restore your server to a point-in-time. 
 
-More information can be found in [Backup and restore in Azure Database for PostgreSQL](https://docs.microsoft.com/en-us/azure/postgresql/concepts-backup) document.
+More information can be found in [Backup and restore in Azure Database for PostgreSQL](https://docs.microsoft.com/en-us/azure/postgresql/concepts-backup) documentation.
 
 
 ### Monitor PostgreSQL
