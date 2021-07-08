@@ -12,8 +12,10 @@ In this guide, we will create the following components.
 
 * An Azure Virtual Network associated with a Resource Group.
 * An AKS cluster with a Kubernetes node pool.
-* A managed database service.
+* A managed database service (you can choose one of them).
     * A Cosmos DB Account.
+    * An Azure Database for MySQL servers.
+    * An Azure Database for PostgreSQL servers.
 * A Bastion instance with a public IP.
 * Azure container insights.
 
