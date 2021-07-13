@@ -66,7 +66,7 @@ Please check the following to understand what each assignment means, and add or 
 * `Microsoft.Network/virtualNetworks/*` : To create and manage virtual networks.
 * `Microsoft.Resources/deployments/*` : To validate the Azure deployment template for creating the resources.
 * `Microsoft.Resources/subscriptions/resourceGroups/*` : To create and manage resource groups.
-| `Microsoft.DocumentDb/databaseAccounts/*` : To create and manage Cosmos DB.
+* `Microsoft.DocumentDb/databaseAccounts/*` : To create and manage Cosmos DB.
 * `Microsoft.ContainerService/managedClusters/*` : To create and manage the AKS clusters.
 * `Microsoft.OperationsManagement/solutions/*`: To manage the Azure container insights.
 * `Microsoft.operationalInsights/workspaces/*` : To manage Azure logs.
