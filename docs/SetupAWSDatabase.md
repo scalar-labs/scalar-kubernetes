@@ -17,9 +17,9 @@ dbContactPoints: <REGION>
 dbUsername: <AWS_ACCESS_KEY_ID>
 dbPassword: <AWS_ACCESS_SECRET_KEY>
 dynamoBaseResourceUnit: 10
-```   
+```
 
-To deploy Scalar DL with DynamoDB, update the following configuration in [scalardl-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml) 
+To deploy Scalar DL with DynamoDB, update the following configuration in [scalardl-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardl-custom-values.yaml)
 
 ```yaml
 database: dynamo
@@ -40,17 +40,17 @@ Scalardl schema tool abstracts Capacity Unit of DynamoDB with RU.
 
 #### Autoscale
 
-Amazon DynamoDB auto scaling uses the AWS Application Auto Scaling service to dynamically adjust provisioned throughput capacity on your behalf, in response to actual traffic patterns. 
-This enables a table or a global secondary index to increase its provisioned read and write capacity to handle sudden increases in traffic, without throttling. 
+Amazon DynamoDB auto scaling uses the AWS Application Auto Scaling service to dynamically adjust provisioned throughput capacity on your behalf, in response to actual traffic patterns.
+This enables a table or a global secondary index to increase its provisioned read and write capacity to handle sudden increases in traffic, without throttling.
 
-By default, the `scalardl schema tool` enables auto-scaling of RU for all tables: RU is scaled in or out between 10% and 100% of a specified RU depending on a workload. 
+By default, the `scalardl schema tool` enables auto-scaling of RU for all tables: RU is scaled in or out between 10% and 100% of a specified RU depending on a workload.
 
 For example, if you specify RU 10000, the RU of each table is scaled in or out between 1000 and 10000.
 
 WARNING:
 
 * Scalar schema tool sets the same value to both Read and Write Request Units.
-* By default, the Read and Write Request Unit is 10. 
+* By default, the Read and Write Request Unit is 10.
 
 ### Monitor DynamoDB
 

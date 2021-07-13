@@ -1,8 +1,8 @@
 # Deploy Scalar DL on AWS
 
-Scalar DL is a database-agnostic distributed ledger middleware containerized with Docker. 
-It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability and scalability, and maintainability. 
-This guide shows you how to manually deploy Scalar DL on a managed database service and a managed Kubernetes service in Amazon Web Services (AWS) as a starting point for deploying Scalar DL for production. 
+Scalar DL is a database-agnostic distributed ledger middleware containerized with Docker.
+It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability and scalability, and maintainability.
+This guide shows you how to manually deploy Scalar DL on a managed database service and a managed Kubernetes service in Amazon Web Services (AWS) as a starting point for deploying Scalar DL for production.
 
 ## What we create
 
@@ -12,34 +12,34 @@ In this guide, we will create the following components.
 
 * A VPC with NAT gateway
 * An EKS cluster with two Kubernetes node groups
-* A managed database service 
-    * DynamoDB    
+* A managed database service
+    * DynamoDB
 * A Bastion instance with a public IP
 * Amazon CloudWatch
 
 ## Step 1. Configure your network
 
-Configure a secure network with your organizational or application standards. Scalar DL handles highly sensitive data of your application, so you should create a highly secure network for production. 
+Configure a secure network with your organizational or application standards. Scalar DL handles highly sensitive data of your application, so you should create a highly secure network for production.
 This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Requirements
  
 * You must create VPC with NAT gateways on private networks. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
 * You must create at least 2 subnets for the EKS cluster in different availability zones. This is mandatory to create an EKS cluster.
-* You must create subnets with the prefix at least `/24` for the Kubernetes cluster to work without issues even after scaling. 
+* You must create subnets with the prefix at least `/24` for the Kubernetes cluster to work without issues even after scaling.
 
 ### Recommendations
 
 * You should create private subnets for the Kubernetes cluster for production.
 * You should create a bastion server to manage the Kubernetes cluster.
-* You should create 3 subnets in 3 availability zones for the Kubernetes cluster for higher availability. 
+* You should create 3 subnets in 3 availability zones for the Kubernetes cluster for higher availability.
 * You should create public subnets for the Kubernetes cluster if you want to place envoy LoadBalancer in the public subnet for testing purposes.
 
 ### Steps
 
 * Create an Amazon VPC on the basis of [AWS official guide](https://docs.aws.amazon.com/batch/latest/userguide/create-public-private-vpc.html) with the above requirements and recommendations.
 
-## Step 2. Set up a database 
+## Step 2. Set up a database
 
 In this section, you will set up a database for Scalar DL.
 
@@ -49,7 +49,7 @@ In this section, you will set up a database for Scalar DL.
 
 ### Steps
 
-* Follow [Set up a database guide](./ScalarDLSupportedDatabase.md) to set up a database for Scalar DL.
+* Follow [Set up a database guide](./SetupAWSDatabase.md) to set up a database for Scalar DL.
 
 ## Step 3. Configure EKS
 
@@ -77,7 +77,7 @@ Install the following tools on your bastion for controlling the EKS cluster:
 
 * Create an Amazon EKS cluster on the basis of [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html). 
 * Create a managed node group on the basis of [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with the above requirements and recommendations.
-* Configure kubectl to connect to your Kubernetes cluster using the `aws eks update-kubeconfig` command. 
+* Configure kubectl to connect to your Kubernetes cluster using the `aws eks update-kubeconfig` command.
     
    ```console
     $ aws eks --region <region-code> update-kubeconfig --name <cluster_name>
@@ -109,7 +109,7 @@ Note that they are going to be versioned in the future, so you might want to cha
     * scalardl-custom-values.yaml
     * schema-loading-custom-values.yaml
  
-2. Update the database configuration in scalarLedgerConfiguration and schemaLoading sections as specified in [Set up a database guide](./ScalarDLSupportedDatabase.md#Configure-Scalar-DL).
+2. Update the database configuration in scalarLedgerConfiguration and schemaLoading sections as specified in [Set up a database guide](./SetupAWSDatabase.md#Configure-Scalar-DL).
 3. Create the docker-registry secrets for pulling the Scalar DL images from the GitHub registry
     
    ```console
@@ -119,7 +119,7 @@ Note that they are going to be versioned in the future, so you might want to cha
 4. Run the Helm commands on the bastion machine to install Scalar DL on EKS
     
    ```console
-    # Add Helm charts 
+    # Add Helm charts
     $ helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
     
     # List the Scalar charts.
@@ -142,14 +142,14 @@ Note:
 
 ## Step 5. Monitor the Cluster
 
-It is critical to actively monitor the overall health and performance of a cluster running in production. 
+It is critical to actively monitor the overall health and performance of a cluster running in production.
 You can use Container Insights to collect performance metrics and Fluent Bit to collect logs of the EKS cluster.
 This section shows how to configure monitoring and logging for your EKS cluster.
 
 ### Recommendations
 
 * You should enable monitoring for EKS in the production.
-* You should configure cloudwatch agent in the EKS cluster for collecting metrics from pods. 
+* You should configure cloudwatch agent in the EKS cluster for collecting metrics from pods.
 * You should configure Fluent Bit in the EKS cluster for collecting logs from pods.
     * You should create a CloudWatch Logs policy with `CreateLogGroup`, `CreateLogStream`, and `PutLogEvents` permissions and attach the policy to the Node instance role.
         
@@ -167,9 +167,9 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 * You can check if the pods and the services are properly deployed by running the `kubectl get pods,services -o wide` command on the bastion.
     * You should confirm the status of all ledger and envoy pods are `Running`.
-    * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.      
+    * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
 
-   ```console    
+   ```console
     $ kubectl get pods,services -o wide
     NAME                                              READY   STATUS      RESTARTS   AGE     IP             NODE                                          NOMINATED NODE   READINESS GATES
     pod/load-schema-schema-loading-f75q6              0/1     Completed   0          3m18s   172.20.4.158   ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>
@@ -206,7 +206,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 
 When you need to remove the resources that you have created, remove the resources in the following order.
 
-* Scalar DL 
+* Scalar DL
 * Managed node group
 * EKS cluster
 * DynamoDB
@@ -214,7 +214,7 @@ When you need to remove the resources that you have created, remove the resource
 * NAT gateway
 * VPC
 
-### Uninstall Scalar DL 
+### Uninstall Scalar DL
 
 You can uninstall Scalar DL installation with the following Helm commands:
 
@@ -230,4 +230,4 @@ You can uninstall Scalar DL installation with the following Helm commands:
 
 You can remove the other resources via the web console or the command-line interface.
 
-For more detail about the command-line interface, please take a look at the [official document](https://docs.aws.amazon.com/cli/index.html?nc2=h_ql_doc_cli).    
+For more detail about the command-line interface, please take a look at the [official document](https://docs.aws.amazon.com/cli/index.html?nc2=h_ql_doc_cli).
