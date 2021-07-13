@@ -16,7 +16,7 @@ In this section, you will set up a Cosmos DB for Scalar DL.
 
 * Create an Azure Cosmos DB account on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal#create-an-azure-cosmos-db-account) with the above requirements.
 
-### Configure Scalar DL 
+### Configure Scalar DL
 
 To create Scalar DL schema in Cosmos DB, update the following configuration in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml)
 
@@ -47,7 +47,7 @@ Scalardl schema tool abstracts Request Unit of Cosmos DB with RU. So please set 
 
 #### Autoscale
 
-Autoscale provisioned throughput in Azure Cosmos DB allows you to scale the throughput (RU/s) of your database or container automatically and instantly. 
+Autoscale provisioned throughput in Azure Cosmos DB allows you to scale the throughput (RU/s) of your database or container automatically and instantly.
 The throughput is scaled based on the usage, without impacting the availability, latency, throughput, or performance of the workload.
 By default, the scalardl schema tool enables autoscale of RU for all tables: RU is scaled in or out between 10% and 100% of a specified RU depending on a workload.
 

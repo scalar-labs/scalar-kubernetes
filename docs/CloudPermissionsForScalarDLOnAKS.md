@@ -57,17 +57,17 @@ it must be replaced if you want to use another database.
 Please check the following to understand what each assignment means, and add or remove on the basis of your need.
 
 * `Microsoft.Authorization/roleAssignments/*` : To assign roles for the resources.
-* `Microsoft.Compute/availabilitySets/*` : To create and manage availabilitySets.
+* `Microsoft.Compute/availabilitySets/*` : To create and manage availabilitysets.
 * `Microsoft.Compute/disks/*` : To create and manage disks for virtual machines.
-* `Microsoft.Network/loadBalancers/*` : To create and manage Load balancers.
-* `Microsoft.Network/networkInterfaces/*` : To create and manage network interfaces
-* `Microsoft.Network/networkSecurityGroups/*` : To create and manage security groups
-* `Microsoft.Network/publicIPAddresses/*` : To create and manage public IP address.
-* `Microsoft.Network/virtualNetworks/*` : To create and manage virtual network.
+* `Microsoft.Network/loadBalancers/*` : To create and manage load balancers.
+* `Microsoft.Network/networkInterfaces/*` : To create and manage network interfaces.
+* `Microsoft.Network/networkSecurityGroups/*` : To create and manage security groups.
+* `Microsoft.Network/publicIPAddresses/*` : To create and manage public IP addresses.
+* `Microsoft.Network/virtualNetworks/*` : To create and manage virtual networks.
 * `Microsoft.Resources/deployments/*` : To validate the Azure deployment template for creating the resources.
 * `Microsoft.Resources/subscriptions/resourceGroups/*` : To create and manage resource groups.
 | `Microsoft.DocumentDb/databaseAccounts/*` : To create and manage Cosmos DB.
-* `Microsoft.ContainerService/managedClusters/*` : To create and manage the AKS cluster.
+* `Microsoft.ContainerService/managedClusters/*` : To create and manage the AKS clusters.
 * `Microsoft.OperationsManagement/solutions/*`: To manage the Azure container insights.
 * `Microsoft.operationalInsights/workspaces/*` : To manage Azure logs.
 

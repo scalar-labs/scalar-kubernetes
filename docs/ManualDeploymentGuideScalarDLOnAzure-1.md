@@ -1,7 +1,7 @@
 # Deploy Scalar DL on Azure
 
-Scalar DL is a database-agnostic distributed ledger middleware containerized with Docker. 
-It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability and scalability, and maintainability. 
+Scalar DL is a database-agnostic distributed ledger middleware containerized with Docker.
+It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability and scalability, and maintainability.
 This guide shows you how to manually deploy Scalar DL on a managed database service and a managed Kubernetes service in Azure as a starting point for deploying Scalar DL for production.
 
 ## What we create
@@ -23,8 +23,8 @@ You must have required permissions as specified in [Cloud permissions document](
 
 ## Step 1. Configure your network
 
-Configure a secure network with your organizational or application standards. 
-Scalar DL handles highly sensitive data of your application, so you should create a highly secure network for production. 
+Configure a secure network with your organizational or application standards.
+Scalar DL handles highly sensitive data of your application, so you should create a highly secure network for production.
 This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Requirements
@@ -66,7 +66,7 @@ Install the following tools on the bastion for controlling the AKS cluster:
 
 * You must have an AKS cluster with Kubernetes version **1.19** or higher for Scalar DL deployment.
 * You must create a new `user node pool` with the name `scalardlpool` for Scalar DL deployment.
-* You must select the subnet other than `k8s_ingress` subnet for creating the AKS cluster. 
+* You must select the subnet other than `k8s_ingress` subnet for creating the AKS cluster.
 * You must create a Kubernetes cluster with `service principal` as the Authentication method.
 * You must create a Kubernetes cluster with `Azure CNI`.
 * You must add a role assignment to the `k8s_ingress` subnet to access the newly created AKS cluster service principal using the role of `Network Contributor`.
@@ -80,7 +80,7 @@ Install the following tools on the bastion for controlling the AKS cluster:
 ### Steps
 
 * Create an AKS cluster on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal#create-an-aks-cluster) with the above requirements and recommendations.
-* Configure kubectl to connect to your Kubernetes cluster using the `az aks get-credentials` command. 
+* Configure kubectl to connect to your Kubernetes cluster using the `az aks get-credentials` command.
 
     ```console
     $ az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
@@ -88,15 +88,15 @@ Install the following tools on the bastion for controlling the AKS cluster:
 
 ## Step 4. Install Scalar DL
 
-After creating a Kubernetes cluster next step is to deploy Scalar DL into the AKS cluster. 
+After creating a Kubernetes cluster next step is to deploy Scalar DL into the AKS cluster.
 This section shows how to install Scalar DL to the AKS cluster with [Helm charts](https://github.com/scalar-labs/helm-charts).
 
 ### Prerequisites
 
 Install Helm on your bastion to deploy helm-charts:
 
-* [Helm](https://helm.sh/docs/intro/install/): helm command-line tool to manage releases in the AKS cluster. In this tutorial, it is used to deploy Scalar DL and Schema loading helm charts to the AKS cluster. 
-   Helm version 3.2.1 or latest is required. 
+* [Helm](https://helm.sh/docs/intro/install/): helm command-line tool to manage releases in the AKS cluster. In this tutorial, it is used to deploy Scalar DL and Schema loading helm charts to the AKS cluster.
+   Helm version 3.2.1 or latest is required.
 
 ### Requirements
 
@@ -120,7 +120,7 @@ Install Helm on your bastion to deploy helm-charts:
 4. Run the Helm commands on the bastion to install Scalar DL on AKS.
     
    ```console
-    # Add Helm charts 
+    # Add Helm charts
     $ helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
     
     # List the Scalar charts.
@@ -143,7 +143,7 @@ Note:
 
 ## Step 5. Monitor the cluster
 
-It is critical to actively monitor the overall health and performance of a cluster running in production. 
+It is critical to actively monitor the overall health and performance of a cluster running in production.
 This section shows how to configure monitoring and logging for your AKS cluster.
 
 ### Steps
