@@ -109,7 +109,7 @@ Install Helm on your bastion to deploy helm-charts:
     * scalardl-custom-values.yaml
     * schema-loading-custom-values.yaml
 
-2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [Set up a database guide](./SetupAzureDatabase-1.md#Configure-Scalar-DL).
+2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [Configure Scalar DL guide](./ConfigureScalarDL.md).
 
 3. Create the docker-registry secret for pulling the Scalar DL images from the GitHub Packages.
     
