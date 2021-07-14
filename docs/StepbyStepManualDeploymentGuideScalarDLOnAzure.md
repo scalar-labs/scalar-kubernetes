@@ -1,12 +1,12 @@
 # Example steps to Deploy Scalar DL on Azure
 
-This guide assumes that you create the environment on the basis of [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure.md)
-This document contains example steps for creating a Scalar DL environment in the Azure cloud. 
+This guide assumes that you create the environment on the basis of [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure.md).
+This document contains example steps for creating a Scalar DL environment in the Azure cloud.
 
 ## Prerequisites
 
 You can skip the following steps If the user has an [Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner) or [Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor) role in Azure.
-You can use the following steps to create and assign a custom role to the user. User should have `Privileged Role Administrator` or `Global Administrator` to do the following 
+You can use the following steps to create and assign a custom role to the user. User should have `Privileged Role Administrator` or `Global Administrator` to do the following
 
 * Select [Subscriptions](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade) from Azure portal
 * Select **Subscription name**
@@ -14,7 +14,7 @@ You can use the following steps to create and assign a custom role to the user. 
 * Click **Add**
 * Select **Add custom role**
     * On the Basics page, configure the following options
-        * Enter a **custom role name** 
+        * Enter a **custom role name**
         * Enter a **Description**
         * Select **Start from scratch**
         * Click **Next**
@@ -24,7 +24,7 @@ You can use the following steps to create and assign a custom role to the user. 
     * On the JSON page
         * Click **Edit**
         * Paste the permissions section from [JSON](./CloudPermissionsForScalarDLOnAKS.md)
-        * Click **Next** 
+        * Click **Next**
     * On **Review+Create** page
         * Click **Create**
         * Click **OK**
@@ -33,7 +33,7 @@ You can use the following steps to create and assign a custom role to the user. 
     * Click **Add role assignment**, enter the following details in the blade that can be seen on the right side
         * Select created custom role from **Role**
         * Select User, group or service principal from **Assign access to**
-        * Select desired username from **Select** 
+        * Select desired username from **Select**
         * Click **Save**
 
 Add _Directory reader_ permission for the user to access the service principal
@@ -41,7 +41,7 @@ Add _Directory reader_ permission for the user to access the service principal
 * Select **Roles and administrators** from left navigation
 * Select **Directory readers** role
 * Click **Add assignments**
-    * Search username and click **Add** 
+    * Search username and click **Add**
    
 Create service principal for AKS cluster using the following steps
 
@@ -85,7 +85,7 @@ Create a virtual network based on the [requirements](./ManualDeploymentGuideScal
 
 ## Create Cosmos DB
 
-You can use following steps to create Cosmos DB account based on the basis of [requirements](./SetupAzureDatabase.md#cosmos-db) 
+You can use following steps to create Cosmos DB account based on the basis of [requirements](./SetupAzureDatabase.md#cosmos-db)
 
 * Select [Cosmos DB](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts) from Azure portal
 * Click **Create**
@@ -97,9 +97,9 @@ You can use following steps to create Cosmos DB account based on the basis of [r
 * Select **Capacity mode** as _Provisioned throughput_
 * Click **Review+Create**
 * Click **Create**
-* Click **Go to resource** (option available after Cosmos DB account creation)  
+* Click **Go to resource** (option available after Cosmos DB account creation)
 * Select **Default consistency** from left navigation
-    * Select _STRONG_ and click **Save** 
+    * Select _STRONG_ and click **Save**
 
 ## Create Bastion
 
@@ -112,7 +112,7 @@ You must have a bastion server to access the private AKS cluster. You can use th
     * Select an Azure **Subscription**
     * Select your **Resource group**
     * Enter **Virtual machine name**
-    * Select **Region** 
+    * Select **Region**
     * Select any of the following availability options in the dropdown menu, select any of the following availability options in the dropdown menu, You can select the _No infrastructure redundancy required_ option if you don't want any.
         * Availability set: Select created availability set from dropdown menu
         * Availability zone: Select an availability zone 1 or 2 or 3
@@ -132,7 +132,7 @@ You must have a bastion server to access the private AKS cluster. You can use th
     * Select your **virtual network** from drop-down menu
     * Select subnet **public**
     * Click **Review+Create**
-    * Click **Create** 
+    * Click **Create**
 
 ## Create Kubernetes Cluster
 
@@ -153,7 +153,7 @@ You can use the following steps to configure Kubernetes cluster based on the [re
     * Select Node count range as min: 3 and max: 6
     * Click **Next: Node pools**
 * On the Node Pools page, configure the following options
-    * Click **Add node pool** 
+    * Click **Add node pool**
     * On Add a node pool page, configure the following options
         * Enter **Node pool name** as _scalardlpool_
         * Select **Mode** as _User_
@@ -178,7 +178,7 @@ You can use the following steps to configure Kubernetes cluster based on the [re
     * Select **Next:Integrations**
 * On the Integrations page, configure the following options
     * Select _Enabled_ for **Container monitoring**
-    * Click **Review+Create**         
+    * Click **Review+Create**
     * Click **Create**
 
 Add `network contributor` role for the `k8s_ingress` subnet to create the envoy load balancer
@@ -192,7 +192,7 @@ Add `network contributor` role for the `k8s_ingress` subnet to create the envoy 
     * Select **Add role assignment**
         * Select _Network Contributor_ as Role
         * Select _User, group or service principal_ in **Assign access to** option
-        * Type the name of the service principal used for creating the AKS cluster and **Select**  
+        * Type the name of the service principal used for creating the AKS cluster and **Select**
         * Click **Save**
         
 ## Install Scalar DL
@@ -218,9 +218,9 @@ To Remove the **AKS cluster** you can use the following steps
 To Remove the **Cosmos DB** account you can use the following steps
 * Select [Cosmos DB](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts) from Azure portal
 * Select your Cosmos DB account
-* Select **Delete Account** 
+* Select **Delete Account**
     * Enter Cosmos DB account name in **Confirm the Account Name** box
-    * Click **Delete**  
+    * Click **Delete**
 
 To Remove the **Virtual machine** you can use the following steps
 * Select [Virtual machines](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.Compute%2FVirtualMachines) from Azure portal
@@ -233,4 +233,5 @@ To Remove **Virtual Network** and **Resource group** you can use the following s
 * Select your Resource group.
     * Select **Delete resource group**.
     * Enter resource group name in **TYPE THE RESOURCE GROUP NAME** box.
-    * Click Delete.               
+    * Click Delete.
+      
