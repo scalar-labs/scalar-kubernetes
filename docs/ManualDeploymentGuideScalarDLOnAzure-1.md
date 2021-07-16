@@ -1,7 +1,7 @@
 # Deploy Scalar DL on Azure
 
 Scalar DL is a database-agnostic distributed ledger middleware containerized with Docker.
-It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability and scalability, and maintainability.
+It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability, scalability, and maintainability.
 This guide shows you how to manually deploy Scalar DL on a managed database service and a managed Kubernetes service in Azure as a starting point for deploying Scalar DL for production.
 
 ## What we create
@@ -11,7 +11,7 @@ This guide shows you how to manually deploy Scalar DL on a managed database serv
 In this guide, we will create the following components.
 
 * An Azure Virtual Network associated with a Resource Group.
-* An AKS cluster with a Kubernetes node pool.
+* An AKS cluster with 2 node pools.
 * A managed database service.
     * A Cosmos DB Account.
 * A Bastion instance with a public IP.
@@ -39,6 +39,7 @@ This section shows how to configure a secure network for Scalar DL deployments.
 ### Steps
 
 * Create an Azure virtual network on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal) with the above requirements and recommendations.
+* Create a bastion server on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal).
 
 ## Step 2. Set up a database
 
@@ -50,7 +51,7 @@ In this section, you will set up a database for Scalar DL.
 
 ### Steps
 
-* Follow [Set up a database guide](./SetupAzureDatabase-1.md) to set up a database for Scalar DL.
+* Follow [Set up a database guide](./SetupDatabase.md) to set up a database for Scalar DL.
 
 ## Step 3. Configure AKS
 
@@ -88,15 +89,14 @@ Install the following tools on the bastion for controlling the AKS cluster:
 
 ## Step 4. Install Scalar DL
 
-After creating a Kubernetes cluster next step is to deploy Scalar DL into the AKS cluster.
-This section shows how to install Scalar DL to the AKS cluster with [Helm charts](https://github.com/scalar-labs/helm-charts).
+In this section, we will deploy Scalar DL on the AKS cluster using [Helm charts](https://github.com/scalar-labs/helm-charts).
 
 ### Prerequisites
 
-Install Helm on your bastion to deploy helm-charts:
+You must install Helm on your bastion to deploy helm-charts:
 
-* [Helm](https://helm.sh/docs/intro/install/): helm command-line tool to manage releases in the AKS cluster. In this tutorial, it is used to deploy Scalar DL and Schema loading helm charts to the AKS cluster.
-   Helm version 3.2.1 or latest is required.
+* [Helm](https://helm.sh/docs/intro/install/): Helm command-line tool to manage releases in the AKS cluster, Helm version 3.2.1 or latest is required.
+  In this guide, it is used to deploy Scalar DL and Schema loading helm charts to the AKS cluster.
 
 ### Requirements
 
@@ -109,9 +109,9 @@ Install Helm on your bastion to deploy helm-charts:
     * scalardl-custom-values.yaml
     * schema-loading-custom-values.yaml
 
-2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [Configure Scalar DL guide](./ConfigureScalarDL.md).
+2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [configure Scalar DL guide](./ConfigureScalarDL.md).
 
-3. Create the docker-registry secret for pulling the Scalar DL images from the GitHub Packages.
+3. Create the docker-registry secret for pulling the Scalar DL images from GitHub Packages.
     
    ```console
     $ kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
