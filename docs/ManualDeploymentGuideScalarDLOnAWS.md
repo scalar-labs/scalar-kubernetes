@@ -37,7 +37,7 @@ This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Steps
 
-* Create an Amazon VPC on the basis of [AWS official guide](https://docs.aws.amazon.com/batch/latest/userguide/create-public-private-vpc.html) with the above requirements and recommendations.
+* Create an Amazon VPC on the basis of [AWS official guide](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html) with the above requirements and recommendations.
 
 ## Step 2. Set up a database
 
@@ -75,7 +75,7 @@ Install the following tools on your bastion for controlling the EKS cluster:
 
 ### Steps
 
-* Create an Amazon EKS cluster on the basis of [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html). 
+* Create an Amazon EKS cluster on the basis of [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html).
 * Create a managed node group on the basis of [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with the above requirements and recommendations.
 * Configure kubectl to connect to your Kubernetes cluster using the `aws eks update-kubeconfig` command.
     
@@ -104,7 +104,7 @@ Install the Helm on your bastion to deploy helm-charts:
 
 The following steps show how to install Scalar DL on EKS:
 
-1. Download the following Scalar DL configuration files from the [scalar-kubernetes repository](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf). 
+1. Download the following Scalar DL configuration files from the [scalar-kubernetes repository](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf).
 Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
     * scalardl-custom-values.yaml
     * schema-loading-custom-values.yaml
