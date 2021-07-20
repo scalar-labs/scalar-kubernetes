@@ -35,13 +35,13 @@ This section shows how to configure a secure network for Scalar DL deployments.
 ### Recommendations
 
 * You should create a bastion server to manage the Kubernetes cluster for production.
-* You should create subnets for AKS on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/configure-azure-cni)
+* You should create subnets for AKS with prefix of at least `/22` on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/configure-azure-cni).
 
 ### Steps
 
 * Create a Resource group on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#create-resource-groups).
 * Create an Azure virtual network on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal) with the above requirements and recommendations.
-* Create subnets on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet).
+* Create subnets on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet) with the above requirements and recommendations.
 * Create a bastion server on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal).
 
 ## Step 2. Set up a database
