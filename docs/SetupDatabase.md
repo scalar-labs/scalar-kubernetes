@@ -24,7 +24,7 @@ Cosmos DB performance can be adjusted using the following parameters.
 
 Request unit is a performance currency abstracting the system resources such as CPU, IOPS, and memory that are required to perform the database operations supported by Azure Cosmos DB.
 You can scale the throughput of Cosmos DB by specifying `cosmosBaseResourceUnit` (which applies to all the tables) in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml).
-Scalardl schema tool abstracts Request Unit of Cosmos DB with RU. So please set appropriate value.
+Scalar schema tool abstracts Request Unit of Cosmos DB with RU. So please set appropriate value.
 
 #### Autoscale
 
@@ -41,7 +41,7 @@ More information can be found in [Monitor Azure Cosmos DB](https://docs.microsof
 ## DynamoDB
 
 By default, Amazon DynamoDB is available for all AWS users. You do not need to configure anything manually.
-Scalardl schema tool [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
+Scalar schema tool [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
 
 ### Scale Performance
 
@@ -51,7 +51,7 @@ DynamoDB performance can be adjusted using the following parameters
 
 A read capacity unit represents one strongly consistent read per second, or two eventually consistent reads per second, for an item up to 4 KB in size.
 You can scale the throughput of DynamoDB by specifying `dynamoBaseResourceUnit` (which applies to all the tables) in the `schema-loading-custom-values.yaml` file.
-Scalardl schema tool abstracts Capacity Unit of DynamoDB with RU.
+Scalar schema tool abstracts Capacity Unit of DynamoDB with RU.
 
 #### Autoscale
 

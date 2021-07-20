@@ -30,15 +30,18 @@ This section shows how to configure a secure network for Scalar DL deployments.
 ### Requirements
 
 * You must create a virtual network with a subnet for bastion.
-* You must create 2 subnets with the prefix of at least `/22` for AKS, one subnet must be created with the name `k8s_ingress` to create an envoy load balancer.
+* You must create 2 subnets for AKS, one subnet must be created with the name `k8s_ingress` to create an envoy load balancer.
 
 ### Recommendations
 
 * You should create a bastion server to manage the Kubernetes cluster for production.
+* You should create subnets for AKS on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/configure-azure-cni)
 
 ### Steps
 
+* Create a Resource group on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#create-resource-groups).
 * Create an Azure virtual network on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal) with the above requirements and recommendations.
+* Create subnets on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet).
 * Create a bastion server on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal).
 
 ## Step 2. Set up a database
@@ -76,7 +79,6 @@ Install the following tools on the bastion for controlling the AKS cluster:
 
 * You should use Kubernetes node size `Standard D2s v3` for Scalar DL node pool.
 * You should create 3 nodes in each node group for high availability in production.
-* You should configure autoscaling for the AKS cluster on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler#set-the-cluster-autoscaler-profile-on-an-existing-aks-cluster).
 
 ### Steps
 
@@ -97,6 +99,9 @@ You must install Helm on your bastion to deploy helm-charts:
 
 * [Helm](https://helm.sh/docs/intro/install/): Helm command-line tool to manage releases in the AKS cluster, Helm version 3.2.1 or latest is required.
   In this guide, it is used to deploy Scalar DL and Schema loading helm charts to the AKS cluster.
+
+* You must create a Github Personal Access Token (PAT) on the basis of [Github official document](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+  with `read:packages` scope, it is used to access the `scalar-ledger` and `scalardl-schema-loader` container images from GitHub Packages.
 
 ### Requirements
 
@@ -127,16 +132,17 @@ You must install Helm on your bastion to deploy helm-charts:
     $ helm search repo scalar-labs
     
     # Load Schema for Scalar DL install with a release name `load-schema`
-    $ helm upgrade --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
-    
+    $ helm upgrade --version <chart version> --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
+   
     # Install Scalar DL with a release name `my-release-scalardl`
-    $ helm upgrade --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
-    ```
+    $ helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
+   ```
 
 Note:
 
 * The same commands can be used to upgrade the pods.
 * Release name `my-release-scalardl` can be changed as per your convenience.
+* The `chart version` can be obtained from `helm search repo scalar-labs` output
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
 * Follow the [Maintain Scalar DL Pods](./MaintainPods-1.md) for maintaining Scalar DL pods with Helm.
@@ -145,6 +151,10 @@ Note:
 
 It is critical to actively monitor the overall health and performance of a cluster running in production.
 This section shows how to configure monitoring and logging for your AKS cluster.
+
+## Recommendations
+
+* You should configure alerting for the AKS cluster on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-metric-alerts#enable-alert-rules)
 
 ### Steps
 
