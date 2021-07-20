@@ -24,16 +24,15 @@ This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Requirements
  
-* You must create VPC with NAT gateways on private networks. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
+* You must create VPC with public NAT gateways on private networks. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
 * You must create at least 2 subnets for the EKS cluster in different availability zones. This is mandatory to create an EKS cluster.
-* You must create subnets with the prefix at least `/24` for the Kubernetes cluster to work without issues even after scaling.
 
 ### Recommendations
 
 * You should create private subnets for the Kubernetes cluster for production.
 * You should create a bastion server to manage the Kubernetes cluster.
 * You should create 3 subnets in 3 availability zones for the Kubernetes cluster for higher availability.
-* You should create public subnets for the Kubernetes cluster if you want to place envoy LoadBalancer in the public subnet for testing purposes.
+* You should choose public subnets for the Kubernetes cluster if you want to place envoy LoadBalancer in the public subnet for testing purposes.
 
 ### Steps
 
@@ -93,6 +92,8 @@ This section shows how to install Scalar DL to the EKS cluster with [Helm charts
 Install the Helm on your bastion to deploy helm-charts:
 
 * [Helm](https://helm.sh/docs/intro/install/): helm command-line tool to manage releases in the EKS cluster. In this tutorial, it is used to deploy Scalar DL and Schema loading helm charts to the EKS cluster. Helm version 3.5 or latest is required.
+* You must create a Github Personal Access Token (PAT) on the basis of [Github official document](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+  with `read:packages` scope, it is used to access the `scalar-ledger` and `scalardl-schema-loader` container images from GitHub Packages.
 
 ### Requirements
 
@@ -126,16 +127,17 @@ Note that they are going to be versioned in the future, so you might want to cha
     $ helm search repo scalar-labs
     
     # Load Schema for Scalar DL install with a release name `load-schema`
-    $ helm upgrade --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
+    $ helm upgrade --version <chart version> --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
     
     # Install Scalar DL with a release name `my-release-scalardl`
-    $ helm upgrade --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
+    $ helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
    ```
 
 Note:
 
 * The same commands can be used to upgrade the pods.
 * Release name `my-release-scalardl` can be changed as per your convenience.
+* The `chart version` can be obtained from `helm search repo scalar-labs` output
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
 * Follow the [Maintain Scalar DL Pods ](./MaintainPods.md) for maintaining Scalar DL pods with Helm.

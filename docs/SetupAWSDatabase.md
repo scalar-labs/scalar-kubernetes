@@ -5,7 +5,7 @@ This guide explains how to set up a database for Scalar DL in AWS and how to con
 ## DynamoDB
 
 By default, Amazon DynamoDB is available for all AWS users. You do not need to configure anything manually.
-Scalardl schema tool [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
+Scalar schema tool [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
 
 ### Configure Scalar DL
 
@@ -36,7 +36,7 @@ DynamoDB performance can be adjusted using the following parameters
 
 A read capacity unit represents one strongly consistent read per second, or two eventually consistent reads per second, for an item up to 4 KB in size.
 You can scale the throughput of DynamoDB by specifying `dynamoBaseResourceUnit` (which applies to all the tables) in the `schema-loading-custom-values.yaml` file.
-Scalardl schema tool abstracts Capacity Unit of DynamoDB with RU.
+Scalar schema tool abstracts Capacity Unit of DynamoDB with RU.
 
 #### Autoscale
 
