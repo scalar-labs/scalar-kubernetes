@@ -150,7 +150,9 @@ Note:
 ## Step 5. Monitor the cluster
 
 It is critical to actively monitor the overall health and performance of a cluster running in production.
-This section shows how to configure monitoring and logging for your AKS cluster.
+This section shows how to configure container insights for the AKS cluster, Container insights gives you performance visibility by collecting memory and processor metrics from controllers, nodes, and containers.
+Container insights collects container logs also for log monitoring.
+For more information on the container insights you can follow [official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview).
 
 ## Recommendations
 
