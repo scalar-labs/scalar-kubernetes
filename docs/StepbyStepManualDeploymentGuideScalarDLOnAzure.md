@@ -5,8 +5,8 @@ This document contains example steps for creating a Scalar DL environment in the
 
 ## Prerequisites
 
-You can skip the following steps If the user has an [Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner) or [Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor) role in Azure.
-You can use the following steps to create and assign a custom role to the user. User should have `Privileged Role Administrator` or `Global Administrator` to do the following
+You can skip the following steps If the user has an [Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner) or [User Access Administrator](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#user-access-administrator) role in Azure.
+You can use the following steps to create and assign a custom role to the user who creates the resources. User who do the following steps should have `Privileged Role Administrator` or `Global Administrator`.
 
 * Select [Subscriptions](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade) from Azure portal
 * Select **Subscription name**
@@ -37,7 +37,7 @@ You can use the following steps to create and assign a custom role to the user. 
         * Click **Save**
 
 Add _Directory reader_ permission for the user to access the service principal
-* Select [Azure Active Directory](https://aad.portal.azure.com/) from Azure portal
+* Select [Azure Active Directory](https://aad.portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview) from Azure portal
 * Select **Roles and administrators** from left navigation
 * Select **Directory readers** role
 * Click **Add assignments**
