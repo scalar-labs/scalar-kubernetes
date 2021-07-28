@@ -2,10 +2,10 @@ envoy:
   replicaCount: 3
 
   prometheusRule:
-    enabled: true
+    enabled: false
 
   serviceMonitor:
-    enabled: true
+    enabled: false
 
   service:
     type: LoadBalancer
@@ -79,7 +79,7 @@ ledger:
     # dbPassword: <AWS_ACCESS_SECRET_KEY>
 
   prometheusRule:
-    enabled: true
+    enabled: false
 
   nodeSelector: {}
 
