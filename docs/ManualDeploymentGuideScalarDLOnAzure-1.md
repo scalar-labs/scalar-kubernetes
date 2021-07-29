@@ -34,7 +34,7 @@ This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Recommendations
 
-* You should create a bastion server to manage the Kubernetes cluster for production or use you can local machine to manage Kubernetes cluster for testing purposes.
+* You should create a bastion server to manage the Kubernetes cluster for production or you can use VPN to access from local machine.
 * You should create subnets for AKS with prefix of at least `/22` on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/configure-azure-cni).
 
 ### Steps
