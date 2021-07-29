@@ -34,7 +34,7 @@ This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Recommendations
 
-* You should create a bastion server to manage the Kubernetes cluster for production.
+* You should create a bastion server to manage the Kubernetes cluster for production or use you can local machine to manage Kubernetes cluster for testing purposes.
 * You should create subnets for AKS with prefix of at least `/22` on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/configure-azure-cni).
 
 ### Steps
@@ -42,7 +42,7 @@ This section shows how to configure a secure network for Scalar DL deployments.
 * Create a Resource group on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#create-resource-groups).
 * Create an Azure virtual network on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal) with the above requirements and recommendations.
 * Create subnets on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet) with the above requirements and recommendations.
-* Create a bastion server on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal).
+* Create a virtual machine to use as a bastion server on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal).
 
 ## Step 2. Set up a database
 
@@ -70,10 +70,10 @@ Install the following tools on the bastion for controlling the AKS cluster:
 
 * You must have an AKS cluster with Kubernetes version **1.19** or higher for Scalar DL deployment.
 * You must create a new `user node pool` with the name `scalardlpool` for Scalar DL deployment.
-* You must select the subnet other than `k8s_ingress` subnet for creating the AKS cluster.
 * You must create a Kubernetes cluster with `service principal` as the Authentication method.
 * You must create a Kubernetes cluster with `Azure CNI`.
-* You must add a role assignment to the `k8s_ingress` subnet to access the newly created AKS cluster service principal using the role of `Network Contributor`.
+* You must select the subnet other than `k8s_ingress` subnet for creating the AKS cluster.
+* You must assign `network contributor` role to service principal for creating the envoy load balancer on `k8s_ingress` subnet.
 
 ### Recommendations
 
@@ -86,7 +86,7 @@ Install the following tools on the bastion for controlling the AKS cluster:
 * Configure kubectl to connect to your Kubernetes cluster using the `az aks get-credentials` command.
 
     ```console
-    $ az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+    az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
     ```
 
 ## Step 4. Install Scalar DL
@@ -119,29 +119,29 @@ You must install Helm on your bastion to deploy helm-charts:
 3. Create the docker-registry secret for pulling the Scalar DL images from GitHub Packages.
     
    ```console
-    $ kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
+    kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
    
 4. Run the Helm commands on the bastion to install Scalar DL on AKS.
     
    ```console
     # Add Helm charts
-    $ helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
+      helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
     
     # List the Scalar charts.
-    $ helm search repo scalar-labs
+      helm search repo scalar-labs
     
     # Load Schema for Scalar DL install with a release name `load-schema`
-    $ helm upgrade --version <chart version> --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
+      helm upgrade --version <chart version> --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
    
     # Install Scalar DL with a release name `my-release-scalardl`
-    $ helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
+      helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
    ```
 
 Note:
 
 * The same commands can be used to upgrade the pods.
-* Release name `my-release-scalardl` can be changed as per your convenience.
+* Release name `my-release-scalardl` should be changed at your convenience.
 * The `chart version` can be obtained from `helm search repo scalar-labs` output
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
@@ -175,7 +175,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
     
     ```console
-    $ kubectl get pods,services -o wide
+    kubectl get pods,services -o wide
     NAME                                              READY   STATUS    RESTARTS   AGE     IP          NODE                                   NOMINATED NODE   READINESS GATES
     pod/load-schema-schema-loading-bgr4x              0/1     Completed 0          3m6s    10.2.0.51   aks-scalardlpool-16372315-vmss000001   <none>           <none>
     pod/my-release-scalardl-envoy-7598cc45dd-cdvg2    1/1     Running   0          2m28s   10.2.0.42   aks-scalardlpool-16372315-vmss000000   <none>           <none>
@@ -217,10 +217,10 @@ You can uninstall Scalar DL with the following Helm commands:
 
    ```console
     # Uninstall loaded schema with a release name 'load-schema'
-    $ helm uninstall load-schema
+      helm uninstall load-schema
 
     # Uninstall Scalar DL with a release name 'my-release-scalardl'
-    $ helm uninstall my-release-scalardl
+      helm uninstall my-release-scalardl
    ```
 ### Clean up the other resources
 
