@@ -80,7 +80,7 @@ Install the following tools on your bastion for controlling the EKS cluster:
 * Configure kubectl to connect to your Kubernetes cluster using the `aws eks update-kubeconfig` command.
     
    ```console
-    $ aws eks --region <region-code> update-kubeconfig --name <cluster_name>
+   aws eks --region <region-code> update-kubeconfig --name <cluster_name>
    ```
 
 ## Step 4. Install Scalar DL
@@ -115,23 +115,23 @@ Note that they are going to be versioned in the future, so you might want to cha
 3. Create the docker-registry secrets for pulling the Scalar DL images from the GitHub registry
     
    ```console
-    $ kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
+    kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
    ```
 
 4. Run the Helm commands on the bastion machine to install Scalar DL on EKS
     
    ```console
     # Add Helm charts
-    $ helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
+    helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
     
     # List the Scalar charts.
-    $ helm search repo scalar-labs
+    helm search repo scalar-labs
     
     # Load Schema for Scalar DL install with a release name `load-schema`
-    $ helm upgrade --version <chart version> --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
+    helm upgrade --version <chart version> --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
     
     # Install Scalar DL with a release name `my-release-scalardl`
-    $ helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
+    helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
    ```
 
 Note:
@@ -173,7 +173,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
 
    ```console
-    $ kubectl get pods,services -o wide
+    kubectl get pods,services -o wide
     NAME                                              READY   STATUS      RESTARTS   AGE     IP             NODE                                          NOMINATED NODE   READINESS GATES
     pod/load-schema-schema-loading-f75q6              0/1     Completed   0          3m18s   172.20.4.158   ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>
     pod/my-release-scalardl-envoy-7598cc45dd-dqbgl    1/1     Running     0          70s     172.20.4.7     ip-172-20-4-249.ap-south-1.compute.internal   <none>           <none>
@@ -223,10 +223,10 @@ You can uninstall Scalar DL installation with the following Helm commands:
 
    ```console
     # Uninstall loaded schema with a release name 'load-schema'
-    $ helm delete load-schema
+    helm delete load-schema
 
     # Uninstall Scalar DL with a release name 'my-release-scalardl'
-    $ helm delete my-release-scalardl
+    helm delete my-release-scalardl
    ```
 
 ### Clean up the other resources
