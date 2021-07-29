@@ -5,8 +5,8 @@ This document contains example steps for creating a Scalar DL environment in the
 
 ## Prerequisites
 
-You can skip the following steps If the user has an [Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner) or [User Access Administrator](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#user-access-administrator) role in Azure.
-You can use the following steps to create and assign a custom role to the user who creates the resources. User who do the following steps should have `Privileged Role Administrator` or `Global Administrator`.
+You can skip the following steps if the user who creates the resources has an [Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner) or [User Access Administrator](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#user-access-administrator) role in Azure.
+The User with `Privileged Role Administrator` or `Global Administrator` permission can use the following steps to create and assign a custom role with minimum permissions to the user who creates the resources in Azure cloud.
 
 * Select [Subscriptions](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade) from Azure portal
 * Select **Subscription name**
@@ -47,7 +47,7 @@ Create service principal for AKS cluster using the following steps
 
 * Manually create service principal using following command
     ```console
-    $ az ad sp create-for-rbac --skip-assignment --name myAKSClusterServicePrincipal
+    az ad sp create-for-rbac --skip-assignment --name myAKSClusterServicePrincipal
     ```
 ## Create resource group
 
@@ -120,12 +120,8 @@ You must have a bastion server to access the private AKS cluster. You can use th
     * Select **Size** as _Standard_B1s_ from dropdown menu
     * Select authentication type as SSH public key(generate an SSH key to access the server) or password(can use username and password to SSH access the server).
     * Enter **Username** as centos
-    * If you are using **Password** for authentication type.
-        * Enter **Password**
-        * Enter **Confirm password**
-    * If you are using **SSH public key** for authentication type.
-        * Select **Generate new key pair**
-        * Select **Use existing public key** and upload already generated public key in SSH public key box.
+    * if you want to create a new key pair, select **Generate new key pair**.
+    * if you want to use an existing key pair, select **Use existing public key** and upload already generated public key in SSH public key box.
     * Select **Public inbound ports** as _Allow selected ports_.
     * **Select inbound ports** as _SSH (22)_ from the dropdown menu.
 * On the Networking page, select virtual network settings
@@ -147,7 +143,7 @@ You can use the following steps to configure Kubernetes cluster based on the [re
     * Enter **Kubernetes Cluster name**
     * Select **Region**
     * Select **Availability zones** from drop down if you want to create in multiple availability zones
-    * Select **Kubernetes version** _1.19.11_ from dropdown
+    * Select **Kubernetes version** _1.19_ from dropdown
     * Select **Node size** as _Standard_D2s_v3_
     * Select **Scale method** as _Autoscale_
     * Select Node count range as min: 3 and max: 6
@@ -181,7 +177,7 @@ You can use the following steps to configure Kubernetes cluster based on the [re
     * Click **Review+Create**
     * Click **Create**
 
-Add `network contributor` role for the `k8s_ingress` subnet to create the envoy load balancer
+Assign `network contributor` role to service principal for creating the envoy load balancer on `k8s_ingress` subnet
 
 * Select your **Virtual network**
 * Select **Subnets** from left navigation
