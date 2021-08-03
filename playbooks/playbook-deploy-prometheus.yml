@@ -7,7 +7,6 @@
     # namespace: monitoring
     # prometheus_charts_version: 14.9.0
     # deploy_prometheus: true
-    # create_dashboard: true
     # alertmanager_notification_activated: false
     # slack_webhook_url: "https://hooks.slack.com/services/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx/xxxxxxxxxxxxxxx"
   roles:
