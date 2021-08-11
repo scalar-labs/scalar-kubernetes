@@ -7,6 +7,9 @@ envoy:
   serviceMonitor:
     enabled: true
 
+  grafanaDashboard:
+    enabled: true
+
   service:
     type: LoadBalancer
     annotations:
@@ -79,6 +82,9 @@ ledger:
     # dbPassword: <AWS_ACCESS_SECRET_KEY>
 
   prometheusRule:
+    enabled: true
+
+  grafanaDashboard:
     enabled: true
 
   nodeSelector: {}
