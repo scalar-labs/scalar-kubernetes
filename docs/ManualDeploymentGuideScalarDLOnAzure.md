@@ -17,6 +17,10 @@ In this guide, we will create the following components.
 * A Bastion instance with a public IP.
 * Azure container insights.
 
+## Prerequisites
+
+You must have required permissions as specified in [Cloud permissions document](./CloudPermissionsForScalarDLOnAKS.md) to create cloud resources to deploy Scalar DL on Azure.
+
 ## Step 1. Configure your network
 
 Configure a secure network with your organizational or application standards. 

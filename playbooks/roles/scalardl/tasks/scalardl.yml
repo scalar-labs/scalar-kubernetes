@@ -3,7 +3,7 @@
   kubernetes.core.helm:
     name: "{{ scalardl_helm_release_name }}"
     chart_ref: "{{ helm_charts_repo_name }}/scalardl"
-    chart_version: "{{ scalardl_chart_version }}"
+    chart_version: "{{ scalardl_chart_version | default('') }}"
     release_namespace: "{{ kubernetes_namespace }}"
     update_repo_cache: yes
     create_namespace: yes

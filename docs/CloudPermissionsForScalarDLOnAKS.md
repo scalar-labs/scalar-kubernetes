@@ -1,7 +1,7 @@
 # Cloud Permissions for Creating Scalar DL on Azure AKS
 
 This guide explains what permissions are required to deploy Scalar DL on Azure AKS.
-This guide assumes that you create the environment on the basis of [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure-1.md).
+This guide assumes that you create the environment on the basis of [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure.md).
 From the security perspective, it is better to give users limited permissions to protect the environment from unwanted activities.
 
 ## Assign permissions to users who create resources for Scalar DL

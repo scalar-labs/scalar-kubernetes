@@ -24,3 +24,4 @@ schemaLoading:
   # contactPoints: <REGION>
   # username: <AWS_ACCESS_KEY_ID>
   # password: <AWS_ACCESS_SECRET_KEY>
+  # dynamoBaseResourceUnit: 10
