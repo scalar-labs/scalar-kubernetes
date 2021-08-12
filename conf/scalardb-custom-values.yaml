@@ -1,0 +1,30 @@
+scalardb:
+  replicaCount: 3
+
+  storageConfiguration:
+    contactPoints: cassandra-lb.internal.scalar-labs.com
+    contactPort: 9042
+    username: cassandra
+    password: cassandra
+    storage: cassandra
+
+
+  service:
+    type: LoadBalancer
+
+  serviceMonitor:
+    enabled: true
+
+  prometheusRule:
+    enabled: true
+
+  grafanaDashboard:
+    enabled: true
+
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+    limits:
+      cpu: 1500m
+      memory: 3Gi
