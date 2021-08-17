@@ -116,7 +116,7 @@ You must have a bastion server to access the private AKS cluster. You can use th
     * Select any of the following availability options in the dropdown menu, select any of the following availability options in the dropdown menu, You can select the _No infrastructure redundancy required_ option if you don't want any.
         * Availability set: Select created availability set from dropdown menu
         * Availability zone: Select an availability zone 1 or 2 or 3
-    * Select appropriate `CentOS-based` image (example: _CentOS-based 7.9 - Gen 2_)
+    * Select appropriate `CentOS-based` **Image** (example: _CentOS-based 7.9 - Gen 2_)
     * Select **Size** as _Standard_B1s_ from dropdown menu
     * Select authentication type as SSH public key(generate an SSH key to access the server) or password(can use username and password to SSH access the server).
     * Enter **Username** as centos
