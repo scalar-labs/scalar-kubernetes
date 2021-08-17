@@ -75,7 +75,7 @@ Create a virtual network based on the [requirements](./ManualDeploymentGuideScal
     * Select **Region**
     * Click **Next: IP Addresses**
 * On the IP Addresses page, enter the following values for the virtual network.
-    * Enter **IPv4 Address space** as _10.42.0.0/16_ for virtual network.
+    * Update the default **IPv4 Address space** with _10.42.0.0/16_ for virtual network.
     * Click **Add subnet** and add the following subnets
         * Enter **Subnet name** as _public_ and **subnet address range** as _10.42.0.0/24_ then click **Add**
         * Enter **Subnet name** as _k8s_node_pod_ and **subnet address range** as _10.42.40.0/22_ then click **Add**
@@ -116,7 +116,7 @@ You must have a bastion server to access the private AKS cluster. You can use th
     * Select any of the following availability options in the dropdown menu, select any of the following availability options in the dropdown menu, You can select the _No infrastructure redundancy required_ option if you don't want any.
         * Availability set: Select created availability set from dropdown menu
         * Availability zone: Select an availability zone 1 or 2 or 3
-    * Select Image _CentOS-based 7.9 - Gen 1_
+    * Select appropriate `CentOS-based` image (example: _CentOS-based 7.9 - Gen 2_)
     * Select **Size** as _Standard_B1s_ from dropdown menu
     * Select authentication type as SSH public key(generate an SSH key to access the server) or password(can use username and password to SSH access the server).
     * Enter **Username** as centos
@@ -156,6 +156,7 @@ You can use the following steps to configure Kubernetes cluster based on the [re
         * Select **OS type** as _Linux_
         * Select **Availability zones** from drop-down
         * Select **Node size** as _D2s_v3_
+        * Select **Scale method** as _Autoscale_
         * Select **Node count** range as min: 3 and max: 6
         * Enter **Max pods per node** as 10
         * Click **Add**
@@ -191,6 +192,16 @@ Assign `network contributor` role to service principal for creating the envoy lo
         * Type the name of the service principal used for creating the AKS cluster and **Select**
         * Click **Save**
         
+## Setup Bastion
+
+Follow the _Prerequisites_ of _Configure AKS_ in the [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure.md#prerequisites-1)
+
+After completing the above specified prerequisites, configure the kubectl to your Kubernetes cluster using the `az aks get-credentials` command. 
+
+```console
+az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+```
+
 ## Install Scalar DL
 
 Install Scalar DL to the AKS cluster on the basis of [manual deployment guide for Azure](./ManualDeploymentGuideScalarDLOnAzure.md#step-4-install-scalar-dl)
