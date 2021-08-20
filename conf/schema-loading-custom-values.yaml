@@ -8,6 +8,7 @@ schemaLoading:
   username: cassandra
   password: cassandra
   cassandraReplicationFactor: 3
+  cassandraReplicationStrategy: NetworkTopologyStrategy
 
   #
   # Cosmos DB
@@ -25,3 +26,8 @@ schemaLoading:
   # username: <AWS_ACCESS_KEY_ID>
   # password: <AWS_ACCESS_SECRET_KEY>
   # dynamoBaseResourceUnit: 10
+
+  #
+  # General
+  #
+  # schemaType: ledger
