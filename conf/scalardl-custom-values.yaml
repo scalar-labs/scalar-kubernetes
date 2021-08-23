@@ -82,6 +82,7 @@ ledger:
     # dbPassword: <AWS_ACCESS_SECRET_KEY>
 
     # To use Auditor
+    # ledgerProofEnabled: true
     # ledgerAuditorEnabled: true
 
   prometheusRule:
