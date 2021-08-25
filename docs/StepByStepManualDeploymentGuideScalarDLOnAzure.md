@@ -85,7 +85,7 @@ Create a virtual network based on the [requirements](./ManualDeploymentGuideScal
 
 ## Create Cosmos DB
 
-You can use following steps to create Cosmos DB account based on the basis of [requirements](./SetupAzureDatabase.md#cosmos-db)
+You can use following steps to create Cosmos DB account based on the basis of [requirements](./SetupDatabase.md#cosmos-db)
 
 * Select [Cosmos DB](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts) from Azure portal
 * Click **Create**
