@@ -49,7 +49,7 @@ In this section, you will set up a database for Scalar DL.
 
 ### Steps
 
-* Follow [Set up a database guide](./SetupAWSDatabase.md) to set up a database for Scalar DL.
+* Follow [Set up a database guide](./SetupDatabase.md) to set up a database for Scalar DL.
 
 ## Step 3. Configure EKS
 
@@ -111,7 +111,7 @@ Note that they are going to be versioned in the future, so you might want to cha
     * scalardl-custom-values.yaml
     * schema-loading-custom-values.yaml
  
-2. Update the database configuration in scalarLedgerConfiguration and schemaLoading sections as specified in [Set up a database guide](./SetupAWSDatabase.md#Configure-Scalar-DL).
+2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [configure Scalar DL guide](./ConfigureScalarDL.md).
 3. Create the docker-registry secrets for pulling the Scalar DL images from the GitHub registry
     
    ```console
