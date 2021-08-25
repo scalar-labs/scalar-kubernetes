@@ -12,7 +12,7 @@ In this section, you will set up a Cosmos DB for Scalar DL.
 * You must change Cosmos DB `Default consistency` to `Strong`.
 * You must use Capacity mode as `Provisioned throughput`.
 
-## Recommendations
+### Recommendations
 
 * You should configure service endpoint on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-configure-vnet-service-endpoint) to restrict access to Cosmos DB for production.
 
