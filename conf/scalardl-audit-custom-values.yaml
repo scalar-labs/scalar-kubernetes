@@ -115,7 +115,7 @@ auditor:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - scalardl
+                    - scalardl-audit
                 - key: app.kubernetes.io/app
                   operator: In
                   values:
