@@ -66,7 +66,7 @@ dbStorage: cosmos
 
 ### DynamoDB
 
-To create Scalar DL schema in Cosmos DB, update the following configuration in [schema-loading-custom-values](../conf/schema-loading-custom-values.yaml)
+To create Scalar DL schema in DynamoDB, update the following configuration in [schema-loading-custom-values](../conf/schema-loading-custom-values.yaml)
 
 * You can skip configuring the `username` and `password` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
 
@@ -78,7 +78,7 @@ password: <AWS_ACCESS_SECRET_KEY>
 dynamoBaseResourceUnit: 10
 ```
 
-To deploy Scalar DL on Cosmos DB, update the following configuration in [scalardl-custom-values](../conf/scalardl-custom-values.yaml)
+To deploy Scalar DL on DynamoDB, update the following configuration in [scalardl-custom-values](../conf/scalardl-custom-values.yaml)
 
 * You can skip configuring the `dbUsername` and `dbPassword` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
 
