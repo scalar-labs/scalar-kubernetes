@@ -41,7 +41,7 @@ envoy:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - scalardl
+                    - scalardl-audit
                 - key: app.kubernetes.io/app
                   operator: In
                   values:
@@ -57,13 +57,13 @@ envoy:
       cpu: 300m
       memory: 328Mi
 
-ledger:
+auditor:
   replicaCount: 3
 
   imagePullSecrets:
     - name: reg-docker-secrets
 
-  scalarLedgerConfiguration:
+  scalarAuditorConfiguration:
     dbContactPoints: cassandra-lb.internal.scalar-labs.com
 
     #
@@ -82,8 +82,7 @@ ledger:
     # dbPassword: <AWS_ACCESS_SECRET_KEY>
 
     # To use Auditor
-    # ledgerProofEnabled: true
-    # ledgerAuditorEnabled: true
+    # auditorLedgerHost: <the service endpoint of ledger-side envoy>
 
   prometheusRule:
     enabled: true
@@ -116,11 +115,11 @@ ledger:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - scalardl
+                    - scalardl-audit
                 - key: app.kubernetes.io/app
                   operator: In
                   values:
-                    - ledger
+                    - auditor
             topologyKey: kubernetes.io/hostname
           weight: 50
 
