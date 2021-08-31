@@ -82,7 +82,7 @@ auditor:
     # dbPassword: <AWS_ACCESS_SECRET_KEY>
 
     # To use Auditor
-    # auditorLedgerHost: <ledger hostname>
+    # auditorLedgerHost: <the service endpoint of ledger-side envoy>
 
   prometheusRule:
     enabled: true
