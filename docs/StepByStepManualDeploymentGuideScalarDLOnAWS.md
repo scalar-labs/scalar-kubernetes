@@ -593,7 +593,7 @@ To remove the **Internet gateway** you can use the following steps.
 * In the navigation pane, Select **Internet Gateways**
 * From the list on **Internet Gateways** , select the checkbox of the internet gateway you created.
 * To detach internet gateway from VPC before deleting it follow the below steps.
-    * Select **Detach from VPC* option from **Actions** drop down menu on the top right section of the list to detach internet gateway from VPC before deleting it.
+    * Select **Detach from VPC** option from **Actions** drop down menu on the top right section of the list to detach internet gateway from VPC before deleting it.
     * On the popup displayed, select **Detach internet gateway** button.
 * Select **Delete Internet gateway** from **Actions** drop down menu.
 * On the popup displayed, type `delete` in the **To confirm deletion, type delete in the field:** input field.
