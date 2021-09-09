@@ -44,15 +44,7 @@ More information can be found in [Monitor Azure Cosmos DB](https://docs.microsof
 
 ## DynamoDB
 
-By default, Amazon DynamoDB is available for all AWS users.If you are configuring DynamoDB for scalar DB server, you need to create your application schema using the [For scalar DB server](#for-scalar-db-server) section.
-If you are configuring for scalar DL, you do not need to configure anything manually. Scalar schema tool [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
-### For scalar DB server
-To create a database table in DynamoDB, use the scalar schema standalone tool.
-Download the [scalar schema standalone tool](https://github.com/orgs/scalar-labs/packages/container/package/scalardl-schema-loader).
-Run the command below to create the database table schema.
-```
-$ java -jar scalar-schema-standalone-<version>.jar --dynamo -u <AWS_ACCESS_KEY_ID> -p <AWS_ACCESS_SECRET_KEY> --region <REGION> -f <schema.json>
-```
+By default, Amazon DynamoDB is available for all AWS users. You do not need to configure anything manually. Scalar schema tool or schema loading [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
 ### Scale Performance
 
 DynamoDB performance can be adjusted using the following parameters
