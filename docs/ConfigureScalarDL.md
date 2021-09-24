@@ -2,9 +2,47 @@
 
 This guide explains how to configure database properties in helm charts for Scalar DL deployment.
 
+Note:- Optional sections are mandatory to enable the audit service.
+
 ## Steps
 
+### Enable Auditor [Optional]
+
+To enable the auditor service, enable the following configurations in the [scalardl-custom-values](../conf/scalardl-custom-values.yaml) file.
+
+```
+scalarLedgerConfiguration:
+
+  # To use Auditor
+  ledgerProofEnabled: true
+  ledgerAuditorEnabled: true
+```
+
+Configure the service endpoint of ledger-side envoy in the [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml) file. 
+The Service endpoint of ledger-side envoy will be available only after the Scalar DL ledger deployment, you should configure the service endpoint after that.
+
+```
+scalarAuditorConfiguration:
+  # To use Auditor
+  auditorLedgerHost: <the service endpoint of ledger-side envoy>
+```
+
 ### Create Kubernetes Secrets
+
+#### Auditor Secrets [Optional]
+
+Create a proper ledger-key secret to enable ledger Proof. 
+```
+kubectl create secret generic ledger-keys --from-file=private-key=conf/ledger-key.pem 
+```
+
+Auditor manages a key pair to sign a request before sending the request to Ledger and validate a request given from Ledger, so you need to create the following secrets properly.
+
+```
+kubectl create secret generic auditor-keys --from-file=certificate=conf/auditor-cert.pem --from-file=private-key=conf/auditor-key.pem
+```
+
+#### Database Secrets
 
 Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. 
 This method is highly recommended for handling credentials in the production environment.
@@ -25,23 +63,34 @@ kubectl create secret generic scalardl --from-literal db-username=<username> --f
 
 Next, update each configuration file with `existingSecret` as key and Secret Object as value.
 
-[schema-loading-custom-values](../conf/schema-loading-custom-values.yaml)
+To configure schema tool, [schema-loading-custom-values](../conf/schema-loading-custom-values.yaml)
 
 ```yaml
 schemaLoading:
   existingSecret: scalardl
 ```
 
-[scalardl-custom-values](../conf/scalardl-custom-values.yaml)
+To configure ledger, [scalardl-custom-values](../conf/scalardl-custom-values.yaml)
 
 ```yaml
 ledger:
   existingSecret: scalardl
 ```
 
-Then, You should follow the remaining section and you can skip the credential details specified in the Kubernetes Secrets from the custom value files.
+[Optional]
 
-### Cosmos DB
+To configure auditor, [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml)
+
+```yaml
+auditor:
+  existingSecret: scalardl
+```
+
+### Update database configuration
+
+You can skip the database credentials specified in the secrets from the custom value files.
+
+#### Cosmos DB
 
 To create Scalar DL schema in Cosmos DB, update the following configuration in [schema-loading-custom-values](../conf/schema-loading-custom-values.yaml)
 
@@ -64,7 +113,19 @@ dbPassword: <Cosmos DB account primary master key>
 dbStorage: cosmos
 ```
 
-### DynamoDB
+[Optional]
+
+To deploy auditor service, update the following configuration in [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml)
+
+* You can skip configuring the `dbPassword` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+
+```yaml
+dbContactPoints: <Cosmos DB account endpoint>
+dbPassword: <Cosmos DB account primary master key>
+dbStorage: cosmos
+```
+
+#### DynamoDB
 
 To create Scalar DL schema in DynamoDB, update the following configuration in [schema-loading-custom-values](../conf/schema-loading-custom-values.yaml)
 
@@ -79,6 +140,19 @@ dynamoBaseResourceUnit: 10
 ```
 
 To deploy Scalar DL on DynamoDB, update the following configuration in [scalardl-custom-values](../conf/scalardl-custom-values.yaml)
+
+* You can skip configuring the `dbUsername` and `dbPassword` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+
+```yaml
+dbStorage: dynamo
+dbContactPoints: <REGION>
+dbUsername: <AWS_ACCESS_KEY_ID>
+dbPassword: <AWS_ACCESS_SECRET_KEY>
+```
+
+[Optional]
+
+To deploy auditor service, update the following configuration in [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml)
 
 * You can skip configuring the `dbUsername` and `dbPassword` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
 
