@@ -8,19 +8,6 @@ Note:- Optional sections are mandatory to enable the audit service.
 
 ### Create Kubernetes Secrets
 
-#### Auditor Secrets [Optional]
-
-Create a proper ledger-key secret to enable ledger Proof. 
-```
-kubectl create secret generic ledger-keys --from-file=private-key=conf/ledger-key.pem 
-```
-
-Auditor manages a key pair to sign a request before sending the request to Ledger and validate a request given from Ledger, so you need to create the following secrets properly.
-
-```
-kubectl create secret generic auditor-keys --from-file=certificate=conf/auditor-cert.pem --from-file=private-key=conf/auditor-key.pem
-```
-
 #### Database Secrets
 
 Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. 
@@ -28,7 +15,7 @@ This method is highly recommended for handling credentials in the production env
 
 First, you should create a Secret object. The key to store the username should be db-username and the key to store the password should be db-password.
 
-```
+```console
 # Cosmos DB
     # username=<Account name>
     # password=<Cosmos DB account primary master key>
@@ -63,6 +50,20 @@ To configure auditor, [scalardl-audit-custom-values](../conf/scalardl-audit-cust
 ```yaml
 auditor:
   existingSecret: scalardl
+```
+
+#### Auditor Secrets [Optional]
+
+Create a proper ledger-key secret to enable ledger Proof. 
+
+```console
+kubectl create secret generic ledger-keys --from-file=private-key=conf/ledger-key.pem 
+```
+
+Auditor manages a key pair to sign a request before sending the request to Ledger and validate a request given from Ledger, so you need to create the following secrets properly.
+
+```console
+kubectl create secret generic auditor-keys --from-file=certificate=conf/auditor-cert.pem --from-file=private-key=conf/auditor-key.pem
 ```
 
 ### Update database configuration
@@ -146,7 +147,7 @@ dbPassword: <AWS_ACCESS_SECRET_KEY>
 
 To enable the auditor service, enable the following configurations in the [scalardl-custom-values](../conf/scalardl-custom-values.yaml) file.
 
-```
+```yaml
 scalarLedgerConfiguration:
 
   # To use Auditor
@@ -157,7 +158,7 @@ scalarLedgerConfiguration:
 Configure the service endpoint of ledger-side envoy in the [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml) file. 
 The Service endpoint of ledger-side envoy will be available only after the Scalar DL ledger deployment, you should configure the service endpoint after that.
 
-```
+```yaml
 scalarAuditorConfiguration:
   # To use Auditor
   auditorLedgerHost: <the service endpoint of ledger-side envoy>
