@@ -66,7 +66,7 @@ Auditor manages a key pair to sign a request before sending the request to Ledge
 kubectl create secret generic auditor-keys --from-file=certificate=conf/auditor-cert.pem --from-file=private-key=conf/auditor-key.pem
 ```
 
-### Update database configuration
+### Update Database Configuration
 
 You can skip the database credentials specified in the secrets from the custom value files.
 
