@@ -156,7 +156,7 @@ scalarLedgerConfiguration:
 ```
 
 Configure the service endpoint of ledger-side envoy in the [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml) file. 
-The Service endpoint of ledger-side envoy will be available only after the Scalar DL ledger deployment, you should configure the service endpoint after that.
+The service endpoint of the ledger-side envoy is only available after the Scalar DL ledger deployment, you should configure the service endpoint after that.
 
 ```yaml
 scalarAuditorConfiguration:
