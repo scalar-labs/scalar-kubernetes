@@ -6,27 +6,6 @@ Note:- Optional sections are mandatory to enable the audit service.
 
 ## Steps
 
-### Enable Auditor [Optional]
-
-To enable the auditor service, enable the following configurations in the [scalardl-custom-values](../conf/scalardl-custom-values.yaml) file.
-
-```
-scalarLedgerConfiguration:
-
-  # To use Auditor
-  ledgerProofEnabled: true
-  ledgerAuditorEnabled: true
-```
-
-Configure the service endpoint of ledger-side envoy in the [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml) file. 
-The Service endpoint of ledger-side envoy will be available only after the Scalar DL ledger deployment, you should configure the service endpoint after that.
-
-```
-scalarAuditorConfiguration:
-  # To use Auditor
-  auditorLedgerHost: <the service endpoint of ledger-side envoy>
-```
-
 ### Create Kubernetes Secrets
 
 #### Auditor Secrets [Optional]
@@ -161,4 +140,25 @@ dbStorage: dynamo
 dbContactPoints: <REGION>
 dbUsername: <AWS_ACCESS_KEY_ID>
 dbPassword: <AWS_ACCESS_SECRET_KEY>
+
+```
+### Enable Auditor [Optional]
+
+To enable the auditor service, enable the following configurations in the [scalardl-custom-values](../conf/scalardl-custom-values.yaml) file.
+
+```
+scalarLedgerConfiguration:
+
+  # To use Auditor
+  ledgerProofEnabled: true
+  ledgerAuditorEnabled: true
+```
+
+Configure the service endpoint of ledger-side envoy in the [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml) file. 
+The Service endpoint of ledger-side envoy will be available only after the Scalar DL ledger deployment, you should configure the service endpoint after that.
+
+```
+scalarAuditorConfiguration:
+  # To use Auditor
+  auditorLedgerHost: <the service endpoint of ledger-side envoy>
 ```

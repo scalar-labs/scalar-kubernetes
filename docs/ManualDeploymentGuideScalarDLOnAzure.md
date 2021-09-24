@@ -117,9 +117,10 @@ You must install Helm on your bastion to deploy helm-charts:
 
 1. Download the following Scalar DL configuration files from [the scalar-kubernetes repository](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf). Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
     * scalardl-custom-values.yaml
+    * scalardl-audit-custom-values.yaml
     * schema-loading-custom-values.yaml
 
-2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [configure Scalar DL guide](./ConfigureScalarDL.md).
+2. Update the database configuration in `scalarLedgerConfiguration`, `scalarAuditorConfiguration` and `schemaLoading` sections as specified in [configure Scalar DL guide](./ConfigureScalarDL.md).
 
 3. Create the docker-registry secret for pulling the Scalar DL images from GitHub Packages.
     
@@ -143,7 +144,8 @@ You must install Helm on your bastion to deploy helm-charts:
       helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
    ```
  5. Run the Helm commands on the bastion to install Scalar DL auditor on AKS.
-    ```
+   
+    ```console
     # Load schema for Scalar DL auditor install with a release name `load-schema`
       helm upgrade --version <chart version> --install load-schema-audit scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml --set schemaLoading.schemaType=auditor
     
