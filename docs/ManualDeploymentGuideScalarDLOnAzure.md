@@ -192,6 +192,8 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
     * You should confirm the status of all ledger and envoy pods are `Running`.
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
     
+    ```
+    kubectl get pods,services -o wide
     NAME                                                     READY   STATUS      RESTARTS   AGE     IP             NODE                                   NOMINATED NODE   READINESS GATES
     pod/load-schema-audit-schema-loading-rjd2z               0/1     Completed   0          11m     10.44.13.207   aks-agentpool-94561911-vmss000002      <none>           <none>
     pod/load-schema-schema-loading-bnkf5                     0/1     Completed   0          100m    10.44.12.17    aks-scalardlpool-94561911-vmss000000   <none>           <none>
