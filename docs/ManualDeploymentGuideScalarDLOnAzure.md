@@ -108,11 +108,11 @@ You must install Helm on your bastion to deploy helm-charts:
   In this guide, it is used to deploy Scalar DL and Schema loading helm charts to the AKS cluster.
 
 * You must create a Github Personal Access Token (PAT) on the basis of [Github official document](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-  with `read:packages` scope, it is used to access the `scalar-ledger` and `scalardl-schema-loader` container images from GitHub Packages.
+  with `read:packages` scope, it is used to access the `scalar-ledger`, `scalar-auditor` and `scalardl-schema-loader` container images from GitHub Packages.
 
 ### Requirements
 
-* You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
+* You must have the authority to pull `scalar-ledger`, `scalar-auditor` and `scalardl-schema-loader` container images.
 * You must confirm that the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes in the `scalardlpool`.
 
 ### Steps
