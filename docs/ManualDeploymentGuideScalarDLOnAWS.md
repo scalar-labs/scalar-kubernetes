@@ -7,7 +7,7 @@ This guide shows you how to manually deploy Scalar DL on a managed database serv
 Scalar DL Auditor is an optional component that manages the identical states of Ledger to help clients to detect Byzantine faults. 
 Using Auditor brings great benefit from the security perspective but it comes with extra processing costs.
 
-_Note:- Optional sections are mandatory to enable the audit service._
+Note: Optional sections are mandatory to enable the auditor service.
 
 ## What we create
 
@@ -114,7 +114,7 @@ The following steps show how to install Scalar DL on EKS:
 1. Download the following Scalar DL configuration files from the [scalar-kubernetes repository](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf).
 Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
     * scalardl-custom-values.yaml
-    * scalardl-audit-custom-values.yaml [optional]
+    * scalardl-audit-custom-values.yaml [Optional]
     * schema-loading-custom-values.yaml
  
 2. Update the database configuration in `scalarLedgerConfiguration`, `scalarAuditorConfiguration` and `schemaLoading` sections as specified in [configure Scalar DL guide](./ConfigureScalarDL.md).
@@ -140,14 +140,14 @@ Note that they are going to be versioned in the future, so you might want to cha
     helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
    ```
    
- 5. [optional] Run the Helm commands on the bastion to install Scalar DL auditor on AKS.
+ 5. [Optional] Run the Helm commands on the bastion to install Scalar DL auditor on AKS.
    
     ```console
     # Load schema for Scalar DL auditor install with a release name `load-schema`
-      helm upgrade --version <chart version> --install load-schema-audit scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml --set schemaLoading.schemaType=auditor
+    helm upgrade --version <chart version> --install load-schema-audit scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml --set schemaLoading.schemaType=auditor
     
     # Install Scalar DL with a release name `my-release-scalardl`
-      helm upgrade --version <chart version> --install my-release-scalardl-audit scalar-labs/scalardl-audit --namespace default -f scalardl-audit-custom-values.yaml
+    helm upgrade --version <chart version> --install my-release-scalardl-audit scalar-labs/scalardl-audit --namespace default -f scalardl-audit-custom-values.yaml
     ```
 
 Note:
