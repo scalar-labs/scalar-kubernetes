@@ -2,7 +2,7 @@
 
 This guide explains how to configure database properties in helm charts for Scalar DL deployment.
 
-Note:- Optional sections are mandatory to enable the audit service.
+Note: Optional sections are mandatory to enable the auditor service.
 
 ## Steps
 

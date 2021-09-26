@@ -7,6 +7,8 @@ This guide shows you how to manually deploy Scalar DL on a managed database serv
 Scalar DL Auditor is an optional component that manages the identical states of Ledger to help clients to detect Byzantine faults.
 Using Auditor brings great benefit from the security perspective but it comes with extra processing costs.
 
+Note: Optional sections are mandatory to enable the auditor service.
+
 ## What we create
 
 ![image](images/azure-diagram.png)
@@ -117,7 +119,7 @@ You must install Helm on your bastion to deploy helm-charts:
 
 1. Download the following Scalar DL configuration files from [the scalar-kubernetes repository](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf). Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
     * scalardl-custom-values.yaml
-    * scalardl-audit-custom-values.yaml
+    * scalardl-audit-custom-values.yaml [Optional]
     * schema-loading-custom-values.yaml
 
 2. Update the database configuration in `scalarLedgerConfiguration`, `scalarAuditorConfiguration` and `schemaLoading` sections as specified in [configure Scalar DL guide](./ConfigureScalarDL.md).
@@ -143,7 +145,7 @@ You must install Helm on your bastion to deploy helm-charts:
     # Install Scalar DL with a release name `my-release-scalardl`
       helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
    ```
- 5. Run the Helm commands on the bastion to install Scalar DL auditor on AKS.
+ 5. [Optional] Run the Helm commands on the bastion to install Scalar DL auditor on AKS.
    
     ```console
     # Load schema for Scalar DL auditor install with a release name `load-schema`
@@ -190,23 +192,37 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
     * You should confirm the status of all ledger and envoy pods are `Running`.
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
     
-    ```console
-    kubectl get pods,services -o wide
-    NAME                                              READY   STATUS    RESTARTS   AGE     IP          NODE                                   NOMINATED NODE   READINESS GATES
-    pod/load-schema-schema-loading-bgr4x              0/1     Completed 0          3m6s    10.2.0.51   aks-scalardlpool-16372315-vmss000001   <none>           <none>
-    pod/my-release-scalardl-envoy-7598cc45dd-cdvg2    1/1     Running   0          2m28s   10.2.0.42   aks-scalardlpool-16372315-vmss000000   <none>           <none>
-    pod/my-release-scalardl-envoy-7598cc45dd-dz5v2    1/1     Running   0          2m28s   10.2.0.63   aks-scalardlpool-16372315-vmss000002   <none>           <none>
-    pod/my-release-scalardl-envoy-7598cc45dd-nhz72    1/1     Running   0          2m29s   10.2.0.52   aks-scalardlpool-16372315-vmss000001   <none>           <none>
-    pod/my-release-scalardl-ledger-5474bdfc6c-slwv7   1/1     Running   0          2m29s   10.2.0.45   aks-scalardlpool-16372315-vmss000000   <none>           <none>
-    pod/my-release-scalardl-ledger-5474bdfc6c-v4m8g   1/1     Running   0          2m29s   10.2.0.51   aks-scalardlpool-16372315-vmss000001   <none>           <none>
-    pod/my-release-scalardl-ledger-5474bdfc6c-x9xl4   1/1     Running   0          2m29s   10.2.0.62   aks-scalardlpool-16372315-vmss000002   <none>           <none>
-
-    NAME                                          TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE     SELECTOR
-    service/kubernetes                            ClusterIP      10.0.0.1       <none>        443/TCP                           159m    <none>
-    service/my-release-scalardl-envoy             LoadBalancer   10.0.157.155   10.2.4.4      50051:30990/TCP,50052:30789/TCP   2m29s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
-    service/my-release-scalardl-envoy-metrics     ClusterIP      10.0.20.189    <none>        9001/TCP                          2m29s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
-    service/my-release-scalardl-ledger-headless   ClusterIP      None           <none>        50051/TCP,50053/TCP,50052/TCP     2m29s   app.kubernetes.io/app=ledger,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+    NAME                                                     READY   STATUS      RESTARTS   AGE     IP             NODE                                   NOMINATED NODE   READINESS GATES
+    pod/load-schema-audit-schema-loading-rjd2z               0/1     Completed   0          11m     10.44.13.207   aks-agentpool-94561911-vmss000002      <none>           <none>
+    pod/load-schema-schema-loading-bnkf5                     0/1     Completed   0          100m    10.44.12.17    aks-scalardlpool-94561911-vmss000000   <none>           <none>
+    pod/my-release-scalardl-audit-auditor-75fdddb97d-6vdvb   1/1     Running     0          9m37s   10.44.12.12    aks-scalardlpool-94561911-vmss000000   <none>           <none>
+    pod/my-release-scalardl-audit-auditor-75fdddb97d-hh95c   1/1     Running     0          9m37s   10.44.12.136   aks-scalardlpool-94561911-vmss000002   <none>           <none>
+    pod/my-release-scalardl-audit-auditor-75fdddb97d-j7gv6   1/1     Running     0          9m37s   10.44.12.102   aks-scalardlpool-94561911-vmss000001   <none>           <none>
+    pod/my-release-scalardl-audit-envoy-7488f87cb7-4vb92     1/1     Running     0          9m37s   10.44.12.114   aks-scalardlpool-94561911-vmss000002   <none>           <none>
+    pod/my-release-scalardl-audit-envoy-7488f87cb7-g6mj9     1/1     Running     0          9m37s   10.44.12.22    aks-scalardlpool-94561911-vmss000000   <none>           <none>
+    pod/my-release-scalardl-audit-envoy-7488f87cb7-lpkwm     1/1     Running     0          9m37s   10.44.12.61    aks-scalardlpool-94561911-vmss000001   <none>           <none>
+    pod/my-release-scalardl-envoy-76f55dd48d-9lsw9           1/1     Running     0          43m     10.44.12.104   aks-scalardlpool-94561911-vmss000001   <none>           <none>
+    pod/my-release-scalardl-envoy-76f55dd48d-n2bff           1/1     Running     0          43m     10.44.12.109   aks-scalardlpool-94561911-vmss000002   <none>           <none>
+    pod/my-release-scalardl-envoy-76f55dd48d-sbvsj           1/1     Running     0          43m     10.44.12.40    aks-scalardlpool-94561911-vmss000000   <none>           <none>
+    pod/my-release-scalardl-ledger-6564866b5d-886r4          1/1     Running     0          43m     10.44.12.93    aks-scalardlpool-94561911-vmss000001   <none>           <none>
+    pod/my-release-scalardl-ledger-6564866b5d-8wx8t          1/1     Running     0          43m     10.44.12.18    aks-scalardlpool-94561911-vmss000000   <none>           <none>
+    pod/my-release-scalardl-ledger-6564866b5d-q9xhk          1/1     Running     0          43m     10.44.12.144   aks-scalardlpool-94561911-vmss000002   <none>           <none>
+  
+    NAME                                                 TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE     SELECTOR
+    service/kubernetes                                   ClusterIP      10.0.0.1       <none>        443/TCP                           3h2m    <none>
+    service/my-release-scalardl-audit-auditor-headless   ClusterIP      None           <none>        50051/TCP,50053/TCP,50052/TCP     9m37s   app.kubernetes.io/app=auditor,app.kubernetes.io/instance=my-release-scalardl-audit,app.kubernetes.io/name=scalardl-audit
+    service/my-release-scalardl-audit-envoy              LoadBalancer   10.0.133.105   10.44.24.5    40051:32140/TCP,40052:30215/TCP   9m37s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl-audit,app.kubernetes.io/name=scalardl-audit
+    service/my-release-scalardl-audit-envoy-metrics      ClusterIP      10.0.245.41    <none>        9001/TCP                          9m37s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl-audit,app.kubernetes.io/name=scalardl-audit
+    service/my-release-scalardl-audit-metrics            ClusterIP      10.0.7.153     <none>        8080/TCP                          9m37s   app.kubernetes.io/app=auditor,app.kubernetes.io/instance=my-release-scalardl-audit,app.kubernetes.io/name=scalardl-audit
+    service/my-release-scalardl-envoy                    LoadBalancer   10.0.160.101   10.44.24.4    50051:32326/TCP,50052:30093/TCP   43m     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+    service/my-release-scalardl-envoy-metrics            ClusterIP      10.0.15.90     <none>        9001/TCP                          43m     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+    service/my-release-scalardl-ledger-headless          ClusterIP      None           <none>        50051/TCP,50053/TCP,50052/TCP     43m     app.kubernetes.io/app=ledger,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl
+    service/my-release-scalardl-metrics                  ClusterIP      10.0.42.200    <none>        8080/TCP                          43m     app.kubernetes.io/app=ledger,app.kubernetes.io/instance=my-release-scalardl,app.kubernetes.io/name=scalardl 
    ```
+
+Note:
+
+* Audit pods and services will be available after the deployment of auditor services. 
 
 ### Confirm AKS cluster monitoring
 
