@@ -4,6 +4,11 @@ Scalar DL is a database-agnostic distributed ledger middleware containerized wit
 It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability and scalability, and maintainability.
 This guide shows you how to manually deploy Scalar DL on a managed database service and a managed Kubernetes service in Amazon Web Services (AWS) as a starting point for deploying Scalar DL for production.
 
+Scalar DL Auditor is an optional component that manages the identical states of Ledger to help clients to detect Byzantine faults. 
+Using Auditor brings great benefit from the security perspective but it comes with extra processing costs.
+
+_Note:- Optional sections are mandatory to enable the audit service._
+
 ## What we create
 
 ![image](images/network_diagram_eks.png)
@@ -109,9 +114,10 @@ The following steps show how to install Scalar DL on EKS:
 1. Download the following Scalar DL configuration files from the [scalar-kubernetes repository](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf).
 Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
     * scalardl-custom-values.yaml
+    * scalardl-audit-custom-values.yaml [optional]
     * schema-loading-custom-values.yaml
  
-2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [configure Scalar DL guide](./ConfigureScalarDL.md).
+2. Update the database configuration in `scalarLedgerConfiguration`, `scalarAuditorConfiguration` and `schemaLoading` sections as specified in [configure Scalar DL guide](./ConfigureScalarDL.md).
 3. Create the docker-registry secrets for pulling the Scalar DL images from the GitHub registry
     
    ```console
@@ -133,11 +139,22 @@ Note that they are going to be versioned in the future, so you might want to cha
     # Install Scalar DL with a release name `my-release-scalardl`
     helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
    ```
+   
+ 5. [optional] Run the Helm commands on the bastion to install Scalar DL auditor on AKS.
+   
+    ```console
+    # Load schema for Scalar DL auditor install with a release name `load-schema`
+      helm upgrade --version <chart version> --install load-schema-audit scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml --set schemaLoading.schemaType=auditor
+    
+    # Install Scalar DL with a release name `my-release-scalardl`
+      helm upgrade --version <chart version> --install my-release-scalardl-audit scalar-labs/scalardl-audit --namespace default -f scalardl-audit-custom-values.yaml
+    ```
 
 Note:
 
 * The same commands can be used to upgrade the pods.
 * Release name `my-release-scalardl` can be changed as per your convenience.
+* Release name `my-release-scalardl-audit` can be changed at your convenience.
 * The `chart version` can be obtained from `helm search repo scalar-labs` output
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
@@ -227,6 +244,9 @@ You can uninstall Scalar DL installation with the following Helm commands:
 
     # Uninstall Scalar DL with a release name 'my-release-scalardl'
     helm delete my-release-scalardl
+
+    # Uninstall Scalar DL with a release name 'my-release-scalardl-audit'
+    helm uninstall my-release-scalardl-audit
    ```
 
 ### Clean up the other resources
