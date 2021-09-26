@@ -158,8 +158,8 @@ You must install Helm on your bastion to deploy helm-charts:
 Note:
 
 * The same commands can be used to upgrade the pods.
-* Release name `my-release-scalardl` should be changed at your convenience.
-* Release name `my-release-scalardl-audit` should be changed at your convenience.
+* Release name `my-release-scalardl` can be changed at your convenience.
+* Release name `my-release-scalardl-audit` can be changed at your convenience.
 * The `chart version` can be obtained from `helm search repo scalar-labs` output
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
