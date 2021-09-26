@@ -99,11 +99,11 @@ Install the Helm on your bastion to deploy helm-charts:
 
 * [Helm](https://helm.sh/docs/intro/install/): helm command-line tool to manage releases in the EKS cluster. In this tutorial, it is used to deploy Scalar DL and Schema loading helm charts to the EKS cluster. Helm version 3.5 or latest is required.
 * You must create a Github Personal Access Token (PAT) on the basis of [Github official document](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-  with `read:packages` scope, it is used to access the `scalar-ledger` and `scalardl-schema-loader` container images from GitHub Packages.
+  with `read:packages` scope, it is used to access the `scalar-ledger`, `scalar-auditor` and `scalardl-schema-loader` container images from GitHub Packages.
 
 ### Requirements
 
-* You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
+* You must have the authority to pull `scalar-ledger`, `scalar-auditor` and `scalardl-schema-loader` container images.
 * You must configure the database properties in the helm chart custom values file.
 * You must confirm that the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes in the Scalar DL node group.
 
