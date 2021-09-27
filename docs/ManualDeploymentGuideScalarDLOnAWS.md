@@ -7,8 +7,6 @@ This guide shows you how to manually deploy Scalar DL on a managed database serv
 Scalar DL Auditor is an optional component that manages the identical states of Ledger to help clients to detect Byzantine faults. 
 Using Auditor brings great benefit from the security perspective but it comes with extra processing costs.
 
-Note: Optional sections are mandatory to enable the auditor service.
-
 ## What we create
 
 ![image](images/network_diagram_eks.png)
@@ -153,6 +151,7 @@ Note that they are going to be versioned in the future, so you might want to cha
 Note:
 
 * The same commands can be used to upgrade the pods.
+* Optional steps are mandatory to enable the auditor service.
 * Release name `my-release-scalardl` can be changed as per your convenience.
 * Release name `my-release-scalardl-audit` can be changed at your convenience.
 * The `chart version` can be obtained from `helm search repo scalar-labs` output
