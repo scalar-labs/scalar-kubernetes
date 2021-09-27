@@ -138,7 +138,7 @@ Note that they are going to be versioned in the future, so you might want to cha
     helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
    ```
    
- 5. [Optional] Run the Helm commands on the bastion to install Scalar DL auditor on AKS.
+ 5. [Optional] Run the Helm commands on the bastion to install Scalar DL auditor on EKS.
    
     ```console
     # Load schema for Scalar DL auditor install with a release name `load-schema`
