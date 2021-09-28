@@ -2,16 +2,16 @@
 
 This guide explains how to configure database properties in helm charts for Scalar DL deployment.
 
-Note: Optional sections are mandatory to enable the auditor service.
+Note: Optional steps are mandatory to enable the auditor service.
 
 ## Steps
 
 ### Create Kubernetes Secrets
 
-#### Database Secrets
-
 Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. 
 This method is highly recommended for handling credentials in the production environment.
+
+#### Database Secrets
 
 First, you should create a Secret object. The key to store the username should be db-username and the key to store the password should be db-password.
 
@@ -74,7 +74,7 @@ You can skip the database credentials specified in the secrets from the custom v
 
 To create Scalar DL schema in Cosmos DB, update the following configuration in [schema-loading-custom-values](../conf/schema-loading-custom-values.yaml)
 
-* You can skip configuring the `password` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+* You can skip configuring the `password` while using the [database-secrets](#database-secrets) section.
 
 ```yaml
 database: cosmos
@@ -85,7 +85,7 @@ cosmosBaseResourceUnit: 400
 
 To deploy Scalar DL on Cosmos DB, update the following configuration in [scalardl-custom-values](../conf/scalardl-custom-values.yaml)
 
-* You can skip configuring the `dbPassword` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+* You can skip configuring the `dbPassword` while using the [database-secrets](#database-secrets) section.
 
 ```yaml
 dbContactPoints: <Cosmos DB account endpoint>
@@ -97,7 +97,7 @@ dbStorage: cosmos
 
 To deploy auditor service, update the following configuration in [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml)
 
-* You can skip configuring the `dbPassword` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+* You can skip configuring the `dbPassword` while using the [database-secrets](#database-secrets) section.
 
 ```yaml
 dbContactPoints: <Cosmos DB account endpoint>
@@ -109,7 +109,7 @@ dbStorage: cosmos
 
 To create Scalar DL schema in DynamoDB, update the following configuration in [schema-loading-custom-values](../conf/schema-loading-custom-values.yaml)
 
-* You can skip configuring the `username` and `password` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+* You can skip configuring the `username` and `password` while using the [database-secrets](#database-secrets) section.
 
 ```yaml
 database: dynamo
@@ -121,7 +121,7 @@ dynamoBaseResourceUnit: 10
 
 To deploy Scalar DL on DynamoDB, update the following configuration in [scalardl-custom-values](../conf/scalardl-custom-values.yaml)
 
-* You can skip configuring the `dbUsername` and `dbPassword` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+* You can skip configuring the `dbUsername` and `dbPassword` while using the [database-secrets](#database-secrets) section.
 
 ```yaml
 dbStorage: dynamo
@@ -134,15 +134,15 @@ dbPassword: <AWS_ACCESS_SECRET_KEY>
 
 To deploy auditor service, update the following configuration in [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml)
 
-* You can skip configuring the `dbUsername` and `dbPassword` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+* You can skip configuring the `dbUsername` and `dbPassword` while using the [database-secrets](#database-secrets) section.
 
 ```yaml
 dbStorage: dynamo
 dbContactPoints: <REGION>
 dbUsername: <AWS_ACCESS_KEY_ID>
 dbPassword: <AWS_ACCESS_SECRET_KEY>
-
 ```
+
 ### Enable Auditor [Optional]
 
 To enable the auditor service, enable the following configurations in the [scalardl-custom-values](../conf/scalardl-custom-values.yaml) file.
