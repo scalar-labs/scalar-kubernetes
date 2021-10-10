@@ -4,6 +4,9 @@ Scalar DL is a database-agnostic distributed ledger middleware containerized wit
 It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability, scalability, and maintainability.
 This guide shows you how to manually deploy Scalar DL on a managed database service and a managed Kubernetes service in Azure as a starting point for deploying Scalar DL for production.
 
+Scalar DL Auditor is a component that manages the identical states of Ledger to help clients to detect Byzantine faults. 
+You can refer to the [Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) guide for more information.
+
 ## What we create
 
 ![image](images/azure-diagram.png)
@@ -108,6 +111,12 @@ You must install Helm on your bastion to deploy helm-charts:
 
 * You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
 * You must confirm that the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes in the `scalardlpool`.
+* You must enable auditor configurations in `scalardl-custom-values` file if you are planning to deploy an auditor.
+* You must create a `ledger-key` secret if you are planning to deploy an auditor.
+
+### Recommendations
+
+* You should enable `ledgerProofEnabled` in `scalardl-custom-values` file and create a `ledger-key` secret for ledger deployment.
 
 ### Steps
 
@@ -122,8 +131,12 @@ You must install Helm on your bastion to deploy helm-charts:
    ```console
     kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
+4. To enable the auditor service, create a proper ledger-key secret to enable ledger Proof.   
    
-4. Run the Helm commands on the bastion to install Scalar DL on AKS.
+   ```console
+   kubectl create secret generic ledger-keys --from-file=private-key=ledger-key.pem
+   ```
+5. Run the Helm commands on the bastion to install Scalar DL on AKS.
     
    ```console
     # Add Helm charts
@@ -148,7 +161,19 @@ Note:
 * You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
 * Follow the [Maintain Scalar DL Pods](./MaintainPods-1.md) for maintaining Scalar DL pods with Helm.
 
-## Step 5. Monitor the cluster
+## Step 5. Deploy Scalar DL Auditor
+
+Scalar DL Auditor is an optional component to detect Byzantine faults. Using Auditor brings great benefit from the security perspective but it comes with extra processing costs. 
+
+### Recommendations
+
+* You must deploy Scalar DL Ledger with auditor support.
+
+Steps
+
+* Follow the [Deploy Scalar Auditor on Azure]() guide.
+
+## Step 6. Monitor the cluster
 
 It is critical to actively monitor the overall health and performance of a cluster running in production.
 This section shows how to configure container insights for the AKS cluster, Container insights gives you performance visibility by collecting memory and processor metrics from controllers, nodes, and containers.
@@ -163,7 +188,7 @@ For more information on the container insights you can follow [official guide](h
 
 * Enable monitoring of Azure Kubernetes Service on the basis of [the official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters).
 
-## Step 6. Checklist for confirming Scalar DL deployments
+## Step 7. Checklist for confirming Scalar DL deployments
 
 After the Scalar DL deployment, you need to confirm that deployment has been completed successfully. This section will help you to confirm the deployment.
 
@@ -218,11 +243,22 @@ You can uninstall Scalar DL with the following Helm commands:
 
    ```console
     # Uninstall loaded schema with a release name 'load-schema'
-      helm uninstall load-schema
+    helm uninstall load-schema
 
     # Uninstall Scalar DL with a release name 'my-release-scalardl'
-      helm uninstall my-release-scalardl
+    helm uninstall my-release-scalardl
    ```
+
+You can uninstall Scalar Auditor with the following Helm commands:
+
+    ```console
+     # Uninstall loaded schema with a release name 'load-schema'
+     helm uninstall load-audit-schema
+    
+     # Uninstall Scalar Auditor with a release name 'my-release-scalar-audit'
+     helm uninstall my-release-scalardl-audit
+    ```
+
 ### Clean up the other resources
 
 You can remove the other resources via the web console or the command-line interface.
