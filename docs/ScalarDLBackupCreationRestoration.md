@@ -76,9 +76,14 @@ kubectl exec -i -t scalaradminutils -- ./bin/scalar-admin -c unpause -s <SRV_Ser
 
 You can use the time of paused second as a restoration point for PITR.
 
+### Requirements
+
+* You must restore the Scalar DL Ledger and Auditor schema using the same restore point.
+
 ### Cosmos DB
 
-Follow the [Restore an Azure Cosmos DB account that uses continuous backup mode](https://docs.microsoft.com/en-us/azure/cosmos-db/restore-account-continuous-backup#restore-account-portal) document
+* Follow the [Restore an Azure Cosmos DB account that uses continuous backup mode](https://docs.microsoft.com/en-us/azure/cosmos-db/restore-account-continuous-backup#restore-account-portal) document to restore.
+* Change the default consistency to STRONG after restoring the data.
 
 ### DynamoDB
 
