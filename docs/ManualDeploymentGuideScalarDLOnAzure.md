@@ -111,12 +111,12 @@ You must install Helm on your bastion to deploy helm-charts:
 
 * You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
 * You must confirm that the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes in the `scalardlpool`.
-* You must enable auditor configurations in `scalardl-custom-values` file if you are planning to deploy an auditor.
+* You must enable auditor configurations in `scalardl-custom-values.yaml` file if you are planning to deploy an auditor.
 * You must create a `ledger-key` secret if you are planning to deploy an auditor.
 
 ### Recommendations
 
-* You should enable `ledgerProofEnabled` in `scalardl-custom-values` file and create a `ledger-key` secret for ledger deployment.
+* You should enable `ledgerProofEnabled` in `scalardl-custom-values.yaml` file and create a kubernetes `ledger-key` secret for ledger deployment.
 
 ### Steps
 
@@ -140,16 +140,16 @@ You must install Helm on your bastion to deploy helm-charts:
     
    ```console
     # Add Helm charts
-      helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
+    helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
     
     # List the Scalar charts.
-      helm search repo scalar-labs
+    helm search repo scalar-labs
     
     # Load Schema for Scalar DL install with a release name `load-schema`
-      helm upgrade --version <chart version> --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
+    helm upgrade --version <chart version> --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
    
     # Install Scalar DL with a release name `my-release-scalardl`
-      helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
+    helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
    ```
 
 Note:
@@ -171,7 +171,7 @@ Scalar DL Auditor is an optional component to detect Byzantine faults. Using Aud
 
 Steps
 
-* Follow the [Deploy Scalar Auditor on Azure]() guide.
+* Follow the [Deploy Scalar Auditor on Azure](ManualDeploymentGuideScalarDLAuditorOnAzure.md) guide.
 
 ## Step 6. Monitor the cluster
 

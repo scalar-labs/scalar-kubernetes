@@ -57,13 +57,13 @@ ledger:
     dbStorage: cosmos
 ```
 
-Follow the Enable Auditor [Configure scalardl-custom-values]() section to enable the auditor service.
+To enable the auditor service, follow the Enable Auditor [Configure scalardl-custom-values](#configure-scalardl-custom-values-2) section.
 
 #### Configure scalardl-audit-custom-values 
 To deploy Scalar Ledger on Cosmos DB, update the [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml) file with `existingSecret` as key and Secret Object as value.
 You can skip the key `dbPassword` while using the kubernetes secret object. 
 
-```console
+```yaml
 audit:
   existingSecret: scalardl
   ....
@@ -73,7 +73,7 @@ audit:
     dbStorage: cosmos
 ```
 
-Follow the Enable Auditor Configure [scalardl-audit-custom-values]() section to enable the auditor service.
+To enable the auditor service, follow the Enable Auditor [Configure scalardl-audit-custom-values](#configure-scalardl-audit-custom-values-2) section.
 
 ### DynamoDB
 
@@ -109,7 +109,7 @@ ledger:
     # dbPassword: <AWS_ACCESS_SECRET_KEY>
 ```
 
-Follow the Enable Auditor Configure [scalardl-custom-values]() section to enable the auditor service.
+To enable the auditor service, follow the Enable Auditor [Configure scalardl-custom-values](#configure-scalardl-custom-values-2) section.
 
 #### Configure scalardl-audit-custom-values
 
@@ -127,7 +127,7 @@ audit:
     # dbPassword: <AWS_ACCESS_SECRET_KEY>
 ```
 
-Follow the Enable Auditor [Configure scalardl-audit-custom-values]() section to enable the auditor service.
+To enable the auditor service, follow the Enable Auditor [Configure scalardl-audit-custom-values](#configure-scalardl-audit-custom-values-2) section.
 
 ### Enable Auditor 
 
