@@ -131,7 +131,7 @@ You must install Helm on your bastion to deploy helm-charts:
    ```console
     kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
-4. To enable the auditor service, create a proper ledger-key secret to enable ledger Proof.   
+4. Create a proper ledger-key secret to enable ledger proof (Required for enabling the ledger proof).
    
    ```console
    kubectl create secret generic ledger-keys --from-file=private-key=ledger-key.pem
@@ -171,7 +171,7 @@ Scalar DL Auditor is an optional component to detect Byzantine faults. Using Aud
 
 Steps
 
-* Follow the [Deploy Scalar Auditor on Azure](ManualDeploymentGuideScalarDLAuditorOnAzure.md) guide.
+* Follow the [Deploy Scalar Auditor on Azure](./ManualDeploymentGuideScalarDLAuditorOnAzure.md) guide.
 
 ## Step 6. Monitor the cluster
 

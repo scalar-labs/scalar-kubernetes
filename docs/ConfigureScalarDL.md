@@ -29,7 +29,7 @@ Then, You should follow the remaining section and you can skip the credential de
 
 #### Configure schema-loading-custom-values
 
-To create Scalar DL schema in Cosmos DB, update the [schema-loading-custom-values](../conf/schema-loading-custom-values.yaml) file with `existingSecret` as key and Secret Object as value.
+To create Scalar DL schema in Cosmos DB, update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file with `existingSecret` as key and Secret Object as value.
 You can skip the key `password` while using the kubernetes secret object.
 
 ```yaml
@@ -44,7 +44,7 @@ schemaLoading:
 
 #### Configure scalardl-custom-values 
 
-To deploy Scalar Ledger on Cosmos DB, update the [scalardl-custom-values](../conf/scalardl-custom-values.yaml) file with `existingSecret` as key and Secret Object as value.
+To deploy Scalar Ledger on Cosmos DB, update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file with `existingSecret` as key and Secret Object as value.
 You can skip the key `dbPassword` while using the kubernetes secret object.
 
 ```yaml
@@ -60,7 +60,7 @@ ledger:
 To enable the auditor service, follow the Enable Auditor [Configure scalardl-custom-values](#configure-scalardl-custom-values-2) section.
 
 #### Configure scalardl-audit-custom-values 
-To deploy Scalar Ledger on Cosmos DB, update the [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml) file with `existingSecret` as key and Secret Object as value.
+To deploy Scalar Ledger on Cosmos DB, update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file with `existingSecret` as key and Secret Object as value.
 You can skip the key `dbPassword` while using the kubernetes secret object. 
 
 ```yaml
@@ -79,7 +79,7 @@ To enable the auditor service, follow the Enable Auditor [Configure scalardl-aud
 
 #### Configure schema-loading-custom-values
 
-To create Scalar DL schema in Cosmos DB, update the [schema-loading-custom-values](../conf/schema-loading-custom-values.yaml) file with existingSecret as key and Secret Object as value.
+To create Scalar DL schema in Cosmos DB, update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file with existingSecret as key and Secret Object as value.
 You can skip the key `username` and `password` while using the kubernetes secret object.
 
 ```yaml
@@ -95,7 +95,7 @@ schemaLoading:
 
 #### Configure scalardl-custom-values
 
-To deploy Scalar Ledger on Cosmos DB, update the [scalardl-custom-values](../conf/scalardl-custom-values.yaml) file with existingSecret as key and Secret Object as value.
+To deploy Scalar Ledger on Cosmos DB, update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file with existingSecret as key and Secret Object as value.
 You can skip the key `dbUsername` and `dbPassword` while using the kubernetes secret object. 
 
 ```yaml
@@ -113,7 +113,7 @@ To enable the auditor service, follow the Enable Auditor [Configure scalardl-cus
 
 #### Configure scalardl-audit-custom-values
 
-To deploy Scalar Ledger on Cosmos DB, update the [scalardl-audit-custom-values](../conf/scalardl-audit-custom-values.yaml) file with existingSecret as key and Secret Object as value.
+To deploy Scalar Ledger on Cosmos DB, update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file with existingSecret as key and Secret Object as value.
 You can skip the key `dbUsername` and `dbPassword` while using the kubernetes secret object.
 
 ```yaml

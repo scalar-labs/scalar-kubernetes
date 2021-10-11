@@ -9,12 +9,12 @@ If you have not deployed Scalar DL Ledger, please follow [Deploy Scalar DL on Az
 
 In this guide, we will create the following components for auditor.
 
-An Azure Virtual Network associated with a Resource Group.
-An AKS cluster with 2 node pools.
-A managed database service.
-A Cosmos DB Account.
-A Bastion instance with a public IP.
-Azure container insights.
+* An Azure Virtual Network associated with a Resource Group.
+* An AKS cluster with 2 node pools.
+* A managed database service.
+* A Cosmos DB Account.
+* A Bastion instance with a public IP.
+* Azure container insights.
 
 ## Prerequisites
 
@@ -30,7 +30,6 @@ For more security, you can deploy the ledger and auditor on different subscripti
 
 ### Requirements
 
-* You must follow step 1 to step 3 in the [Deploy Scalar DL on Azure](ManualDeploymentGuideScalarDLOnAzure.md) guide to create an Scalar DL Auditor environment.
 * You must create different clusters for ledger and auditor.
 * You must set up a separate database for the auditor.
 
@@ -38,6 +37,10 @@ For more security, you can deploy the ledger and auditor on different subscripti
 
 * You should deploy ledger and auditor in separate subscriptions for production use.
 * Ledger and auditor should be managed by different administrators.
+
+### Steps
+
+* Follow step 1 to step 3 in the [Deploy Scalar DL on Azure](./ManualDeploymentGuideScalarDLOnAzure.md) guide to create an Scalar DL Auditor environment.
 
 ## Step 2. Peer the Virtual Networks
 
@@ -60,7 +63,7 @@ so you need to create peering for internal communication between the auditor, le
 
 ### Prerequisites
 
-You must install Helm on your bastion to deploy helm-charts:
+You must install Helm on your bastion to deploy [helm-charts](https://github.com/scalar-labs/helm-charts):
 
 * [Helm](https://helm.sh/docs/intro/install/): Helm command-line tool to manage releases in the AKS cluster, Helm version 3.2.1 or latest is required. In this guide, it is used to deploy Scalar Auditor and Schema loading helm charts to the AKS cluster.
 * You must create a Github Personal Access Token (PAT) on the basis of Github official document with read:packages scope, it is used to access the `scalar-auditor` and `scalardl-schema-loader` container images from GitHub Packages.
@@ -107,10 +110,11 @@ Note:
 * The chart version can be obtained from `helm search repo scalar-labs` output
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-audit-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar auditor.
+* Follow the [Maintain Scalar DL Pods](./MaintainPods-1.md) for maintaining Scalar DL pods with Helm.
 
 ## Step 4. Monitor the cluster
 
-You can follow step 6 in the [Deploy Scalar DL on Azure](ManualDeploymentGuideScalarDLOnAzure.md#step-6-monitor-the-cluster) guide to enable the monitor service.
+Follow step 6 in the [Deploy Scalar DL on Azure](./ManualDeploymentGuideScalarDLOnAzure.md#step-6-monitor-the-cluster) guide to enable the monitor services.
 
 ## Step 5. Checklist for confirming Scalar DL Auditor deployments
 

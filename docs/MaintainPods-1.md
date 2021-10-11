@@ -17,6 +17,7 @@ Auditor
 ```yaml
 auditor:
   replicaCount: 6
+```
 
 Envoy
 ```yaml
