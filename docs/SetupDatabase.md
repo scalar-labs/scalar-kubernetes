@@ -44,7 +44,9 @@ More information can be found in [Monitor Azure Cosmos DB](https://docs.microsof
 
 ## DynamoDB
 
-By default, Amazon DynamoDB is available for all AWS users. You do not need to configure anything manually. Scalar schema tool or schema loading [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
+By default, Amazon DynamoDB is available for all AWS users. You do not need to configure anything manually.
+Scalar schema tool [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
+
 ### Scale Performance
 
 DynamoDB performance can be adjusted using the following parameters
