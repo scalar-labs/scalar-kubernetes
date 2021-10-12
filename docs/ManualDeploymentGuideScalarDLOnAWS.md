@@ -4,6 +4,9 @@ Scalar DL is a database-agnostic distributed ledger middleware containerized wit
 It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability and scalability, and maintainability.
 This guide shows you how to manually deploy Scalar DL on a managed database service and a managed Kubernetes service in Amazon Web Services (AWS) as a starting point for deploying Scalar DL for production.
 
+Scalar DL Auditor is an optional component that manages the identical states of Ledger to help clients to detect Byzantine faults. 
+You can refer to the [Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) guide for more information.
+
 ## What we create
 
 ![image](images/network_diagram_eks.png)
@@ -24,15 +27,15 @@ This section shows how to configure a secure network for Scalar DL deployments.
 
 ### Requirements
  
-* You must create VPC with public NAT gateways on private networks. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
-* You must create at least 2 subnets for the EKS cluster in different availability zones. This is mandatory to create an EKS cluster.
+* You must create a VPC with public NAT gateways on private networks, NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
+* You must create at least 2 subnets for the EKS cluster in different availability zones, which is mandatory for creating an EKS cluster.
 
 ### Recommendations
 
 * You should create private subnets for the Kubernetes cluster for production.
 * You should create a bastion server to manage the Kubernetes cluster.
 * You should create 3 subnets in 3 availability zones for the Kubernetes cluster for higher availability.
-* You should choose public subnets when creating eks cluster for public access.
+* You should choose public subnets when creating EKS cluster for public access.
 * You should create subnets with the prefix at least `/24` for the Kubernetes cluster to work without issues even after scaling.
 
 ### Steps
@@ -53,7 +56,7 @@ In this section, you will set up a database for Scalar DL.
 
 ## Step 3. Configure EKS
 
-This section shows how to create an EKS cluster and 2 managed node groups(one for ledger and envoy and one for logs and metrics collection) for Scalar DL and monitor agent deployment.
+This section shows how to create an EKS cluster and 2 managed node groups(one for Ledger and Envoy, and one for logs and metrics collection) for Scalar DL and monitor agent deployment.
 
 ### Prerequisites
 
@@ -100,7 +103,13 @@ Install the Helm on your bastion to deploy helm-charts:
 
 * You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
 * You must configure the database properties in the helm chart custom values file.
-* You must confirm that the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes in the Scalar DL node group.
+* You must confirm that the replica count of the Ledger and Envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes in the Scalar DL node group.
+* You must enable Auditor configurations in `scalardl-custom-values.yaml` file if you are planning to deploy an Auditor.
+* You must create a `ledger-key` secret if you are planning to deploy an Auditor.
+
+### Recommendations
+
+* You should enable `ledgerProofEnabled` in `scalardl-custom-values.yaml` file and create a kubernetes `ledger-key` secret for Ledger deployment.
 
 ### Steps
 
@@ -115,10 +124,13 @@ Note that they are going to be versioned in the future, so you might want to cha
 3. Create the docker-registry secrets for pulling the Scalar DL images from the GitHub registry
     
    ```console
-    kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
+   kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
    ```
-
-4. Run the Helm commands on the bastion machine to install Scalar DL on EKS
+4. (Optional if you do not intend to deploy an Auditor) Create a proper `ledger-key` secret to enable ledger proof.
+    ```console
+    kubectl create secret generic ledger-keys --from-file=private-key=ledger-key.pem
+    ```
+5. Run the Helm commands on the bastion machine to install Scalar DL on EKS
     
    ```console
     # Add Helm charts
@@ -138,12 +150,24 @@ Note:
 
 * The same commands can be used to upgrade the pods.
 * Release name `my-release-scalardl` can be changed as per your convenience.
-* The `chart version` can be obtained from `helm search repo scalar-labs` output
+* The `chart version` can be obtained from `helm search repo scalar-labs` output.
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
-* Follow the [Maintain Scalar DL Pods ](./MaintainPods.md) for maintaining Scalar DL pods with Helm.
+* Follow the [Maintain Scalar DL Pods](./MaintainPods.md) for maintaining Scalar DL pods with Helm.
 
-## Step 5. Monitor the Cluster
+## Step 5. Deploy Scalar DL Auditor
+
+Scalar DL Auditor is an optional component to detect Byzantine faults. Using Auditor brings great benefit from the security perspective but it comes with extra processing costs. 
+
+### Requirements
+
+* You must deploy Scalar DL Ledger with Auditor support.
+
+Steps
+
+* Follow the [Deploy Scalar DL Auditor on AWS](./ManualDeploymentGuideScalarDLAuditorOnAWS.md) guide.
+
+## Step 6. Monitor the Cluster
 
 It is critical to actively monitor the overall health and performance of a cluster running in production.
 You can use Container Insights to collect performance metrics and Fluent Bit to collect logs of the EKS cluster.
@@ -160,7 +184,7 @@ This section shows how to configure monitoring and logging for your EKS cluster.
 
 * Setup CloudWatch agent and Fluent Bit in the EKS cluster based on [AWS official guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-EKS-quickstart.html).
 
-## Step 6. Checklist for confirming Scalar DL deployments
+## Step 7. Checklist for confirming Scalar DL deployments
 
 After the Scalar DL deployment, you need to confirm that deployment has been completed successfully. This section will help you to confirm the deployment.
 
@@ -169,7 +193,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
 * Make sure the schema is properly created in the underlying database service.
 
 * You can check if the pods and the services are properly deployed by running the `kubectl get pods,services -o wide` command on the bastion.
-    * You should confirm the status of all ledger and envoy pods are `Running`.
+    * You should confirm the status of all Ledger and Envoy pods are `Running`.
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
 
    ```console
@@ -222,11 +246,20 @@ When you need to remove the resources that you have created, remove the resource
 You can uninstall Scalar DL installation with the following Helm commands:
 
    ```console
-    # Uninstall loaded schema with a release name 'load-schema'
-    helm delete load-schema
+   # Uninstall loaded schema with a release name 'load-schema'
+   helm delete load-schema
 
-    # Uninstall Scalar DL with a release name 'my-release-scalardl'
-    helm delete my-release-scalardl
+   # Uninstall Scalar DL with a release name 'my-release-scalardl'
+   helm delete my-release-scalardl
+   ```
+You can uninstall Scalar DL Auditor with the following Helm commands:
+
+   ```console
+   # Uninstall loaded schema with a release name 'load-schema'
+   helm uninstall load-audit-schema
+
+   # Uninstall Scalar DL Auditor with a release name 'my-release-scalar-audit'
+   helm uninstall my-release-scalardl-audit
    ```
 
 ### Clean up the other resources
