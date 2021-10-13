@@ -25,7 +25,7 @@ In this guide, we will create the following components for auditor.
 Scalar DL Auditor component is implemented to detect Byzantine faults,
 it manages the identical states of Ledger so you need to deploy the ledger and auditor in separate clusters to manage the cluster for different admins / owners. Otherwise, there is a possibility of forgery.
 
-In this guide the auditor will be deployed in different clusters on the same subscription.
+In this guide, the auditor will be deployed in different clusters on the same subscription.
 For more security, you can deploy the ledger and auditor on different subscriptions.
 
 ### Requirements
@@ -46,14 +46,14 @@ For more security, you can deploy the ledger and auditor on different subscripti
 
 This section shows how to peer the virtual networks for Scalar DL deployment.
 
-In this guide the ledger and the auditor are deployed on the private subnet of the different virtual networks,
+In this guide, ledger and the auditor are deployed on the private subnet of the different virtual networks,
 so you need to create peering for internal communication between the auditor, ledger and client SDK(application). 
 
 ### Requirements
 
-* You must create a peering between the virtual network created for ledger and auditor services.
-* You must create a peering between the virtual network created for ledger and client SDK (application).
-* You must create a peering between the virtual network created for auditor and client SDK (application).
+* You must create a peering between the virtual network created for the ledger and auditor services.
+* You must create a peering between the virtual network created for the ledger and client SDK (application).
+* You must create a peering between the virtual network created for the auditor and client SDK (application).
 
 ### Steps
 
@@ -126,7 +126,7 @@ Follow step 6 in the [Deploy Scalar DL on Azure](./ManualDeploymentGuideScalarDL
     * You should confirm the EXTERNAL-IP of Scalar auditor envoy service is created.
     
     ```console
-    $ kubectl get pod,node,svc -o wide
+    $ kubectl get pod,services -o wide
     NAME                                                                  READY   STATUS      RESTARTS   AGE     IP            NODE                                   NOMINATED NODE   READINESS GATES
     pod/load-audit-schema-schema-loading-tkpqd                            0/1     Completed   0          6m36s   10.45.4.94    aks-scalardlpool-52642482-vmss000001   <none>           <none>
     pod/my-release-scalar-audit-scalardl-audit-auditor-5dd6fdfd6b-4fkbw   1/1     Running     0          2m42s   10.45.4.47    aks-scalardlpool-52642482-vmss000000   <none>           <none>
@@ -135,14 +135,6 @@ Follow step 6 in the [Deploy Scalar DL on Azure](./ManualDeploymentGuideScalarDL
     pod/my-release-scalar-audit-scalardl-audit-envoy-5469ccd578-6thkf     1/1     Running     0          2m42s   10.45.4.78    aks-scalardlpool-52642482-vmss000001   <none>           <none>
     pod/my-release-scalar-audit-scalardl-audit-envoy-5469ccd578-h549q     1/1     Running     0          2m42s   10.45.4.134   aks-scalardlpool-52642482-vmss000002   <none>           <none>
     pod/my-release-scalar-audit-scalardl-audit-envoy-5469ccd578-vs7x4     1/1     Running     0          2m42s   10.45.4.32    aks-scalardlpool-52642482-vmss000000   <none>           <none>
-    
-    NAME                                        STATUS   ROLES   AGE    VERSION    INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
-    node/aks-agentpool-52642482-vmss000000      Ready    agent   106m   v1.19.13   10.45.4.158   <none>        Ubuntu 18.04.6 LTS   5.4.0-1059-azure   containerd://1.4.9+azure
-    node/aks-agentpool-52642482-vmss000001      Ready    agent   106m   v1.19.13   10.45.5.13    <none>        Ubuntu 18.04.6 LTS   5.4.0-1059-azure   containerd://1.4.9+azure
-    node/aks-agentpool-52642482-vmss000002      Ready    agent   106m   v1.19.13   10.45.5.124   <none>        Ubuntu 18.04.6 LTS   5.4.0-1059-azure   containerd://1.4.9+azure
-    node/aks-scalardlpool-52642482-vmss000000   Ready    agent   106m   v1.19.13   10.45.4.5     <none>        Ubuntu 18.04.6 LTS   5.4.0-1059-azure   containerd://1.4.9+azure
-    node/aks-scalardlpool-52642482-vmss000001   Ready    agent   106m   v1.19.13   10.45.4.56    <none>        Ubuntu 18.04.6 LTS   5.4.0-1059-azure   containerd://1.4.9+azure
-    node/aks-scalardlpool-52642482-vmss000002   Ready    agent   106m   v1.19.13   10.45.4.107   <none>        Ubuntu 18.04.6 LTS   5.4.0-1059-azure   containerd://1.4.9+azure
     
     NAME                                                           TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)                           AGE     SELECTOR
     service/kubernetes                                             ClusterIP      10.0.0.1      <none>        443/TCP                           110m    <none>

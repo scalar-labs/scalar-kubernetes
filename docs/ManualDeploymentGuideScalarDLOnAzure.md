@@ -4,7 +4,7 @@ Scalar DL is a database-agnostic distributed ledger middleware containerized wit
 It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability, scalability, and maintainability.
 This guide shows you how to manually deploy Scalar DL on a managed database service and a managed Kubernetes service in Azure as a starting point for deploying Scalar DL for production.
 
-Scalar DL Auditor is a component that manages the identical states of Ledger to help clients to detect Byzantine faults. 
+Scalar DL Auditor is an optional component that manages the identical states of Ledger to help clients to detect Byzantine faults. 
 You can refer to the [Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) guide for more information.
 
 ## What we create
