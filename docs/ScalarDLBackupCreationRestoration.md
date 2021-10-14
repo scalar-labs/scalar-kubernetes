@@ -113,7 +113,7 @@ This section shows how to restore transactionally-consistent backup for Scalar D
         ```console
         aws configure
         ```
-        * Download the [Point In Time Restore](./script/dynamodb_pitr.sh) script.
+        * Download the [Point In Time Restore](./script/restore_dynamo.sh) script.
         * Execute the script with restore point as UNIX time (UTC) and all table names
             * `time` must be without millisecond
             * All tables except `scalardb.metadata` must be passed to the restore script
