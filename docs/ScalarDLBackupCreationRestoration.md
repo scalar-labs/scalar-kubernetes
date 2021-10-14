@@ -88,57 +88,34 @@ You can use the time of paused second as a restoration point for PITR.
 ### DynamoDB
 
 1. Restore tables by specifying the time
-    * On the web console, [Restoring a table one by one from a backup](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Restore.Tutorial.html#restoretable_console).
-    * With restore_dynamo.sh script, Following script will help to restore all tables.
-        * The time should be specified in UNIX time (UTC)
-        * This script adds a prefix ${time}- to each name of all restored table 
-   
-       ```shell script
-        #!/bin/sh -e
-        export AWS_PAGER=""
-        
-        tables=()
-        while [ $# -gt 0 ]; do
-            case ${1} in
-                --time)
-                    time="${2}"
-                    shift 2
-                    ;;
-                *)
-                  tables+=("${1}")
-                  shift 1
-                  ;;
-            esac
-        done
-        
-        for table in "${tables[@]}"
-        do
-          aws dynamodb restore-table-to-point-in-time \
-          --source-table-name ${table} \
-          --target-table-name ${time}-${table} \
-          --no-use-latest-restorable-time \
-          --restore-date-time ${time}
-        
-          while true
-          do
-            status=$(aws dynamodb describe-table --table-name ${time}-${table} | jq '.Table.TableStatus')
-            if [ "${status}" = "\"ACTIVE\"" ]; then
-              break
-            fi
-            sleep 60
-          done
-        done
+    
+    * On the Amazon DynamoDB console, you can restore the tables one by one. 
+        A. Restore the PITR (Point In Time Restore) backup of scalar tables on the basis of [AWS official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.Tutorial.html#restoretabletopointintime_console).
+        B. Create the backup of previously restored tables (A) using the [AWS official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Backup.Tutorial.html#backup_console).
+        C. Delete all scalar tables except the previously restored tables (A).
+        D. Restore the previously created backup (B) using the actual scalar table name (previously deleted tables (C)) on the basis of [AWS official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Restore.Tutorial.html#restoretable_console).
+    
+    * On the AWS Command Line Interface, You can restore all tables using following shell script.
+        * Configure AWS CLI with the region of DynamoDB.
+        ```console
+        aws configure
         ```
-        * Should restore all indexes
-        * How to execute script:
+        * Download the [Point In Time Restore](./script/dynamodb_pitr.sh) script.
+        * Execute the script with restore point as UNIX time (UTC) and all table names
         ```console
         #Example
         ./restore_dynamo.sh --time 1613960773 coordinator.state scalar.asset scalar.asset_metadata scalar.certificate scalar.contract scalar.contract_class scalar.function
         ```
+        Note:- You do not need to restore `scalardb.metadata`.
 2. Insert the new metadata and enable continuous backup and auto-scaling with the schema tool
-    * You must make the new metadata table and insert metadata since the table names are different from those of the source tables
-    * You must enable continuous backup and auto-scaling since they are disabled after restoring data
-    * You can just execute the same command as creating a schema. The schema tool doesn't remake the existing tables.
-     ```console
-     java -jar scalar-schema-standalone-<version>.jar --dynamo --region <REGION> -u <DYNAMODB_USER> -p <DYNAMODB_PASS>
-     ```
+    * You must enable continuous backup and auto-scaling since they are disabled after restoring data.
+    * You must execute the same command as creating a schema. The schema tool doesn't remake the existing tables.
+         ```console
+         #Using scalar schema standalone tool
+         java -jar scalar-schema-standalone-<version>.jar --dynamo --region <REGION> -u <DYNAMODB_USER> -f ledger-schema.json
+         
+         OR
+         
+         #Using helm charts
+         helm upgrade --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
+         ```
