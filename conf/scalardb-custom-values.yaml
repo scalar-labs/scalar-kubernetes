@@ -1,0 +1,128 @@
+envoy:
+  enabled: true
+  nameOverride: scalardb
+  replicaCount: 3
+
+  envoyConfiguration:
+    adminAccessLogPath: /dev/stdout
+    serviceListeners: scalardb-service:50051,scalardb-privileged:50052
+
+  image:
+    repository: ghcr.io/scalar-labs/scalar-envoy
+    version: 1.2.0
+    pullPolicy: IfNotPresent
+
+  imagePullSecrets: []
+
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+      
+    type: RollingUpdate
+
+  podSecurityContext: {}
+
+  securityContext: {}
+  service:
+    type: ClusterIP
+    annotations: {}
+    ports:
+      envoy:
+        port: 60051
+        targetPort: 50051
+        protocol: TCP
+
+  serviceMonitor:
+    enabled: false
+    interval: "15s"
+    namespace: monitoring
+
+  prometheusRule:
+    enabled: false
+    namespace: monitoring
+
+  grafanaDashboard:
+    enabled: false
+    namespace: monitoring
+
+  resources: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+scalardb:
+  replicaCount: 3
+
+  storageConfiguration:
+  
+    #
+    # Cosmos DB
+    #
+    # contactPoints: <Cosmos DB account endpoint>
+    # password: <Cosmos DB account primary master key>
+    # storage: cosmos
+
+    #
+    # DynamoDB
+    #
+    # contactPoints: <REGION>
+    # username: <AWS_ACCESS_KEY_ID>
+    # password: <AWS_ACCESS_SECRET_KEY>
+    # storage: dynamo
+    
+    dbLogLevel: INFO
+
+  image:
+    repository: ghcr.io/scalar-labs/scalardb-server
+    pullPolicy: IfNotPresent
+    tag: 3.2.0
+
+  imagePullSecrets: []
+
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+
+  service:
+    type: ClusterIP
+    ports:
+      scalardb:
+        port: 50051
+        targetPort: 50051
+        protocol: TCP
+
+  serviceMonitor:
+    enabled: false
+    interval: "15s"
+    namespace: monitoring
+
+  prometheusRule:
+    enabled: false
+    namespace: monitoring
+
+  grafanaDashboard:
+    enabled: false
+    namespace: monitoring
+
+  podSecurityContext:
+    {}
+
+  securityContext:
+    {}
+
+  resources:
+    {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  existingSecret: null
