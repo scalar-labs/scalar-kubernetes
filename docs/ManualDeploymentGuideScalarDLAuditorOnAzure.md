@@ -20,23 +20,16 @@ In this guide, we will create the following components for auditor.
 
 * Scalar DL Ledger deployment with auditor configuration completed.
 
-## Step 1. Create environment
+## Step 1. Create an environment
 
 Scalar DL Auditor component is implemented to detect Byzantine faults,
-it manages the identical states of Ledger so you need to deploy the ledger and auditor in separate clusters to manage the cluster for different admins / owners. Otherwise, there is a possibility of forgery.
+it manages the identical states of Ledger so you need to deploy Ledger and Auditor in separate administrative domains. For more details, please refer to  [Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) guide.
 
-In this guide, the auditor will be deployed in different clusters on the same subscription.
-For more security, you can deploy the ledger and auditor on different subscriptions.
-
-### Requirements
-
-* You must create different clusters for ledger and auditor.
-* You must set up a separate database for the auditor.
+In this guide, for ease of explanation, we deploy Auditor in a different cluster on the same subscription. However, it is highly recommended to deploy it in another administrative domain in production.
 
 ### Recommendations
 
-* You should deploy ledger and auditor in separate subscriptions for production use.
-* Ledger and auditor should be managed by different administrators.
+* You should deploy Ledger and Auditor in separate administrative domains.
 
 ### Steps
 
@@ -46,14 +39,14 @@ For more security, you can deploy the ledger and auditor on different subscripti
 
 This section shows how to peer the virtual networks for Scalar DL deployment.
 
-In this guide, ledger and the auditor are deployed on the private subnet of the different virtual networks,
-so you need to create peering for internal communication between the auditor, ledger and client SDK(application). 
+In this guide, Ledger and Auditor are deployed on the private subnet of the different virtual networks, 
+so you need to add peering for internal communication between the Auditor, Ledger and Client SDK(application). 
 
 ### Requirements
 
-* You must create a peering between the virtual network created for the ledger and auditor services.
-* You must create a peering between the virtual network created for the ledger and client SDK (application).
-* You must create a peering between the virtual network created for the auditor and client SDK (application).
+* You must create a peering between the virtual networks created for Ledger and Auditor services.
+* You must create a peering between the virtual network created for Ledger and Client SDK (application).
+* You must create a peering between the virtual network created for Auditor and Client SDK (application).
 
 ### Steps
 
@@ -71,8 +64,11 @@ You must install Helm on your bastion to deploy [helm-charts](https://github.com
 ### Requirements
 
 * You must have the authority to pull `scalar-auditor` and `scalardl-schema-loader` container images.
-* You must confirm that the replica count of the auditor and envoy pods in the `scalardl-audit-custom-values.yaml` file is equal to the number of nodes in the scalardlpool.
-* You must keep an equal number of pods for envoy, ledger and auditor.
+
+### Recommendations
+
+* You should confirm that the replica count of the Auditor and Envoy pods in the `scalardl-audit-custom-values.yaml` file is equal to the number of nodes in the scalardlpool.
+* You should keep an equal number of pods for Envoy, Ledger and Auditor.
 
 ### Steps
 
