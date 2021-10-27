@@ -40,13 +40,13 @@ In this guide, for ease of explanation, we deploy Auditor in a different cluster
 This section shows how to peer the virtual networks for Scalar DL deployment.
 
 In this guide, Ledger and Auditor are deployed on the private subnet of the different virtual networks, 
-so you need to add peering for internal communication between the Auditor, Ledger and Client SDK(application). 
+so you need to create the peering for internal communication between the Auditor, Ledger and Client SDK(application). 
 
 ### Requirements
 
-* You must add peering between the virtual networks created for Ledger and Auditor services.
-* You must add peering between the virtual network created for Ledger and Client SDK (application).
-* You must add peering between the virtual network created for Auditor and Client SDK (application).
+* You must create a peering between the virtual networks created for Ledger and Auditor services.
+* You must create a peering between the virtual network created for Ledger and Client SDK (application).
+* You must create a peering between the virtual network created for Auditor and Client SDK (application).
 
 ### Steps
 
