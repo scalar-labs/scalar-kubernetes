@@ -44,9 +44,9 @@ so you need to add peering for internal communication between the Auditor, Ledge
 
 ### Requirements
 
-* You must create a peering between the virtual networks created for Ledger and Auditor services.
-* You must create a peering between the virtual network created for Ledger and Client SDK (application).
-* You must create a peering between the virtual network created for Auditor and Client SDK (application).
+* You must add peering between the virtual networks created for Ledger and Auditor services.
+* You must add peering between the virtual network created for Ledger and Client SDK (application).
+* You must add peering between the virtual network created for Auditor and Client SDK (application).
 
 ### Steps
 
