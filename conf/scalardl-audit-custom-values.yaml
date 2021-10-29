@@ -87,6 +87,9 @@ auditor:
   prometheusRule:
     enabled: true
 
+  serviceMonitor:
+    enabled: true
+
   grafanaDashboard:
     enabled: true
 
