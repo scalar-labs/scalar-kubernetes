@@ -3,18 +3,23 @@
 This guide explains how to create database schema and configure database properties in helm charts for Scalar DB server deployment.
 
 ## Create schema
+There are m2 methods to create schema for scalar DB server.
 
-To create database schema, [schema tool for Scalar DB](https://github.com/scalar-labs/scalardb/tree/master/tools/scalar-schema) can be used to create the database schema.
+###Using Scalar DB Schema Loader
+Scalar DB schema loader is a part of scalar DB, which lets you create a schema in the database.
+To create database schema, [schema loader for Scalar DB](https://github.com/scalar-labs/scalardb/tree/master/schema-loader), follow this [file](https://github.com/scalar-labs/scalardb/blob/master/schema-loader/README.md) to create the database schema.
+
+### Using Scalar schema tool
+Scalar schema tool is a standalone tool, which lets you create a schema in your database.
 You can download the appropriate version of Scalar schema tool from [here](https://github.com/scalar-labs/scalardb/releases).
 
-### For Cosmos DB
-
+#### For Cosmos DB
 To create a Cosmos DB database schema using the Scalar schema tool, use the following command.
 ```console
 $ java -jar scalar-schema-standalone-<version>.jar --cosmos -h <COSMOS_DB_ACCOUNT_URI> -p <COSMOS_DB_KEY> -f schema.json [-r BASE_RESOURCE_UNIT]
 ```
 
-### For DynamoDB
+#### For DynamoDB
 
 To create a DynamoDB database schema using the Scalar schema tool, use the following command.
 ```console

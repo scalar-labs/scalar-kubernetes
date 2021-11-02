@@ -4,7 +4,6 @@ Scalar DB server is a standalone gRPC server that implements the Scalar DB inter
 We can deploy the Scalar DB server on any Kubernetes service.
 This guide will help you to deploy a Scalar DB server in azure AKS.
 
-
 ## What we create
 
 ![image](images/scalardbserver-aks-diagram.png)
@@ -51,10 +50,10 @@ In this step we will set up a database.
 * You must have a database that Scalar DB supports.
 
 ### Steps
+
 * Follow [Set up a database guide](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/SetupDatabase.md) to set up a database for Scalar DB.
 
 ## Step 3. Configure AKS
-
 
 ### Prerequisites
 
@@ -84,14 +83,12 @@ Install the following tools on the bastion for controlling the AKS cluster:
 
 ## Step 4. Install Scalar DB server
 
-
 ### Prerequisites
 
 You must install Helm on your bastion to deploy helm-charts:
 
 * [Helm](https://helm.sh/docs/intro/install/): Helm command-line tool to manage releases in the AKS cluster, Helm version 3.2.1 or latest is required.
   In this guide, it is used to deploy Scalar DB server helm charts to the AKS cluster.
-
 
 ### Steps
 
@@ -112,7 +109,6 @@ You must install Helm on your bastion to deploy helm-charts:
     # Install Scalar DB with a release name `my-release-scalardb`
       helm upgrade --version <chart version> --install my-release-scalardb scalar-labs/scalardb --namespace default -f scalardb-custom-values.yaml
    ```
-
 
 ## Step 5. Monitor the cluster
 
@@ -136,22 +132,21 @@ You can check if the pods and the services are properly deployed by running the 
 
 ```console
 kubectl get pods,services -o wide
-NAME                                             READY   STATUS    RESTARTS   AGE   IP             NODE                                   NOMINATED NODE   READINESS GATES
-pod/my-release-scalardb-64f7c9bbc-hqv2q          1/1     Running   0          24s   10.43.41.95    aks-scalardbpool-67464374-vmss000001   <none>           <none>
-pod/my-release-scalardb-64f7c9bbc-ksmz7          1/1     Running   0          24s   10.43.40.247   aks-agentpool-67464374-vmss000002      <none>           <none>
-pod/my-release-scalardb-64f7c9bbc-zhgxv          1/1     Running   0          24s   10.43.41.83    aks-scalardbpool-67464374-vmss000000   <none>           <none>
-pod/my-release-scalardb-envoy-5b7c859c4f-j7btv   1/1     Running   0          24s   10.43.41.46    aks-agentpool-67464374-vmss000002      <none>           <none>
-pod/my-release-scalardb-envoy-5b7c859c4f-rhqhq   1/1     Running   0          24s   10.43.40.200   aks-agentpool-67464374-vmss000001      <none>           <none>
-pod/my-release-scalardb-envoy-5b7c859c4f-zjm4r   1/1     Running   0          24s   10.43.41.86    aks-scalardbpool-67464374-vmss000000   <none>           <none>
+NAME                                             READY   STATUS    RESTARTS   AGE   IP            NODE                                   NOMINATED NODE   READINESS GATES
+pod/my-release-scalardb-5bc8c65447-jwlc4         1/1     Running   0          11s   10.43.40.18   aks-scalardbpool-67464374-vmss000001   <none>           <none>
+pod/my-release-scalardb-5bc8c65447-w978k         1/1     Running   0          11s   10.43.40.30   aks-scalardbpool-67464374-vmss000002   <none>           <none>
+pod/my-release-scalardb-5bc8c65447-wfbcq         1/1     Running   0          11s   10.43.40.5    aks-scalardbpool-67464374-vmss000000   <none>           <none>
+pod/my-release-scalardb-envoy-5b8f69c85c-kj78c   1/1     Running   0          11s   10.43.40.10   aks-scalardbpool-67464374-vmss000000   <none>           <none>
+pod/my-release-scalardb-envoy-5b8f69c85c-qstr6   1/1     Running   0          11s   10.43.40.29   aks-scalardbpool-67464374-vmss000002   <none>           <none>
+pod/my-release-scalardb-envoy-5b8f69c85c-xfrs9   1/1     Running   0          11s   10.43.40.19   aks-scalardbpool-67464374-vmss000001   <none>           <none>
 
 NAME                                        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)               AGE   SELECTOR
-service/kubernetes                          ClusterIP   10.0.0.1       <none>        443/TCP               17m   <none>
-service/my-release-scalardb-envoy           ClusterIP   10.0.240.101   <none>        60051/TCP,50052/TCP   25s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
-service/my-release-scalardb-envoy-metrics   ClusterIP   10.0.203.157   <none>        9001/TCP              25s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
-service/my-release-scalardb-headless        ClusterIP   None           <none>        50051/TCP             25s   app.kubernetes.io/app=scalardb,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
-service/my-release-scalardb-metrics         ClusterIP   10.0.20.150    <none>        8080/TCP              25s   app.kubernetes.io/app=scalardb,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
+service/kubernetes                          ClusterIP   10.0.0.1       <none>        443/TCP               36m   <none>
+service/my-release-scalardb-envoy           ClusterIP   10.0.243.104   <none>        60051/TCP,50052/TCP   11s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
+service/my-release-scalardb-envoy-metrics   ClusterIP   10.0.1.246     <none>        9001/TCP              11s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
+service/my-release-scalardb-headless        ClusterIP   None           <none>        50051/TCP             11s   app.kubernetes.io/app=scalardb,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
+service/my-release-scalardb-metrics         ClusterIP   10.0.63.5      <none>        8080/TCP              11s   app.kubernetes.io/app=scalardb,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
 ```
-
 ### Confirm AKS cluster monitoring
 
 * Confirm the Cluster insights on the basis of [Container insights](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview#how-do-i-access-this-feature) document.
@@ -161,7 +156,6 @@ service/my-release-scalardb-metrics         ClusterIP   10.0.20.150    <none>   
 * Confirm the monitoring of Azure Cosmos DB on the basis of [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db) document.
 
 ## Clean up the resources
-
 
 ### Uninstall Scalar DB server
 ```
