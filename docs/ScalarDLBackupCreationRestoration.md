@@ -1,14 +1,13 @@
-# Scalar DL Backup Creation and Restoration
+# Scalar DL Backup Creation
 
-Scalar DL backup should be created after the Scalar DL server is paused otherwise there is a chance for inconsistency. 
-This guide shows you how to create and restore Scalar DL data backup without any data inconsistency.
+This guide shows you how to create transactionally consistent Scalar DL backups on Kubernetes services.
 
 ## Prerequisites
 
-* Read the Guide on How to [Back up and Restore Databases Integrated with Scalar DB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md)
-* Scalar DL must be deployed in the Kubernetes cluster
-* Cosmos DB account must be created with the backup policy `continuous` if you are using Cosmos DB.
-* You must synchronize time on the ledger and auditor servers if you are using the audit service.
+* Read the [Guide on How to Back up and Restore Databases Integrated with Scalar DB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md)
+* Scalar DL must be deployed in a Kubernetes cluster
+* Cosmos DB account must be created with the backup policy `continuous` if you use Cosmos DB.
+* You must synchronize the clocks (moderately) between Ledger and Auditor servers by using clock synchronization mechanisms such as NTP if you use Auditor. 
 
 ## Backup Creation
 
@@ -16,8 +15,9 @@ This section shows how to create a transactionally-consistent backup for Scalar 
 
 ### Requirements
 
-* You must wait at least 10 sec after pausing to create a backup.
-* You must identify a unique `Point In Time Restoration` for the ledger and auditor if you are using both the ledger and audit services. 
+* You must wait at least 10 sec (based on clock drift) after pausing to create a backup.
+    * You must be able to identify a common restore point between the pausing based on the clock drift of the Ledger and Auditor.
+* You must identify a unique `Point In Time Restoration` for the ledger and auditor if you use both the ledger and audit services. 
 
 ### Find SRV service URL
 
@@ -74,7 +74,7 @@ Note:-
 
 ### Unpause
 
-Use the following command to unpause the Scalar DL service after at least 10 seconds
+Use the following command to unpause the Scalar DL service after finding a common restore point based on the clock drift of Ledger and Auditor
 
 ```console
 kubectl exec -i -t scalaradminutils -- ./bin/scalar-admin -c unpause -s <SRV_Service_URL>
@@ -82,59 +82,4 @@ kubectl exec -i -t scalaradminutils -- ./bin/scalar-admin -c unpause -s <SRV_Ser
 
 ## Restore
 
-This section shows how to restore transactionally-consistent backup for Scalar DL.
-
-### Requirements
-
-* You must use a middle value of the paused time as restore point.
-* You must restore Scalar Ledger and Auditor tables with the same restore point if you are using the ledger and audit services.
-
-### Cosmos DB
-
-* Follow the [Restore an Azure Cosmos DB account that uses continuous backup mode](https://docs.microsoft.com/en-us/azure/cosmos-db/restore-account-continuous-backup#restore-account-portal) document to restore.
-* Change the default consistency to STRONG after restoring the data.
-
-### DynamoDB
-
-1. Restore tables by specifying the time
-    
-    * On the Amazon DynamoDB console, you can restore the tables one by one. 
-    
-        A. Restore the PITR (Point In Time Restore) backup of scalar/auditor tables on the basis of [AWS official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.Tutorial.html#restoretabletopointintime_console).
-        
-        B. Create the backup of previously restored tables (A) using the [AWS official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Backup.Tutorial.html#backup_console).
-        
-        C. Delete all scalar/auditor tables except the previously restored tables (A).
-        
-        D. Restore the previously created backup (B) using the actual scalar/auditor table name (previously deleted tables (C)) on the basis of [AWS official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Restore.Tutorial.html#restoretable_console).
-    
-    * On the AWS Command Line Interface, You can restore all tables using following shell script.
-        * Configure AWS CLI with the region of DynamoDB.
-        ```console
-        aws configure
-        ```
-        * Download the [Point In Time Restore](./script/restore_dynamo.sh) script.
-        * Execute the script with restore point as UNIX time (UTC) and all table names
-            * `time` must be without millisecond
-            * All tables except `scalardb.metadata` must be passed to the restore script
-        ```console
-        #Example
-        #For ledger restoration
-        ./restore_dynamo.sh --time 1613960773 coordinator.state scalar.asset scalar.asset_metadata scalar.certificate scalar.contract scalar.contract_class scalar.function
-        
-        #For auditor restoration
-        ./restore_dynamo.sh --time 1613960773 auditor.asset auditor.contract auditor.contract_class auditor.certificate auditor.request_proof auditor.asset_lock 
-        ```
-     
-2. Insert the new metadata and enable continuous backup and auto-scaling with the schema tool
-    * You must enable continuous backup and auto-scaling since they are disabled after restoring data.
-    * You must execute the same command as creating a schema. The schema tool doesn't remake the existing tables.
-         ```console
-         #Using scalar schema standalone tool
-         java -jar scalar-schema-standalone-<version>.jar --dynamo --region <REGION> -u <DYNAMODB_USER> -f [ledger-schema.json/auditor-schema.json]
-         
-         OR
-         
-         #Using helm charts
-         helm upgrade --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml [--set schemaLoading.schemaType=auditor]
-         ```
+To restore the backup, you can follow [Guide on How to Back up and Restore Databases Integrated with Scalar DB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md)
