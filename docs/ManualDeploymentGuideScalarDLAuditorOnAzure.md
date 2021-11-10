@@ -130,7 +130,7 @@ Follow step 6 in the [Deploy Scalar DL on Azure](./ManualDeploymentGuideScalarDL
     * You should confirm the status of all auditor and envoy pods are Running.
     * You should confirm the EXTERNAL-IP of Scalar auditor envoy service is created.
     
-    ```console
+   ```console
     $ kubectl get pod,services -o wide
     NAME                                                                  READY   STATUS      RESTARTS   AGE     IP            NODE                                   NOMINATED NODE   READINESS GATES
     pod/load-audit-schema-schema-loading-tkpqd                            0/1     Completed   0          6m36s   10.45.4.94    aks-scalardlpool-52642482-vmss000001   <none>           <none>
@@ -147,4 +147,4 @@ Follow step 6 in the [Deploy Scalar DL on Azure](./ManualDeploymentGuideScalarDL
     service/my-release-scalar-audit-scalardl-audit-envoy-metrics   ClusterIP      10.0.136.32   <none>        9001/TCP                          2m42s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalar-audit,app.kubernetes.io/name=scalardl-audit
     service/my-release-scalar-audit-scalardl-audit-headless        ClusterIP      None          <none>        50051/TCP,50053/TCP,50052/TCP     2m42s   app.kubernetes.io/app=auditor,app.kubernetes.io/instance=my-release-scalar-audit,app.kubernetes.io/name=scalardl-audit
     service/my-release-scalar-audit-scalardl-audit-metrics         ClusterIP      10.0.22.255   <none>        8080/TCP                          2m42s   app.kubernetes.io/app=auditor,app.kubernetes.io/instance=my-release-scalar-audit,app.kubernetes.io/name=scalardl-audit
-    ```
+   ```
