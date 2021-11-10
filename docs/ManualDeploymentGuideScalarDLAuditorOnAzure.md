@@ -58,8 +58,13 @@ so you need to create the peering for internal communication between the Auditor
 
 ### Steps
 
-* Create the peering between 3 VPCs on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
-* Create the network security groups on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/manage-network-security-group).
+* Create the peering between the Ledger and Auditor VPCs on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
+* Create the peering between the Ledger and Client VPCs on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
+* Create the peering between the Auditor and Client VPCs on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
+* Create the network security groups for Ledger and Auditor subnet on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/manage-network-security-group).
+* Update the Inbound rule of Ledger and Auditor security groups based on the above recommendation.
+
+Note: - We expect that you have created the Client VPC for your application deployment.
 
 ## Step 3. Install Scalar DL Auditor
 
