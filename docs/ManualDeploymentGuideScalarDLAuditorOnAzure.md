@@ -48,7 +48,7 @@ so you need to create the peering for internal communication between the Auditor
 
 ### Requirements
 
-* You must create 3 peering between 3 VPCs.
+* You must create 3 peering between 3 Virtual Networks.
 
 ### Recommendations
 
@@ -58,9 +58,9 @@ so you need to create the peering for internal communication between the Auditor
 
 ### Steps
 
-* Create the peering between the Ledger and Auditor VPCs on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
-* Create the peering between the Ledger and Client VPCs on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
-* Create the peering between the Auditor and Client VPCs on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
+* Create the peering between the Ledger and Auditor Virtual Networks on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
+* Create the peering between the Ledger and Client Virtual Networks on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
+* Create the peering between the Auditor and Client Virtual Networks on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
 * Create the network security groups for Ledger and Auditor subnet on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/manage-network-security-group).
 * Add new Inbound rule to restrict the access to Ledger and Auditor.
     * Add new Inbound rules to the Ledger Network Security Group to allow the Ledger Envoy LoadBalancer (50051, 50052) access from the Auditor and Client.
@@ -68,7 +68,7 @@ so you need to create the peering for internal communication between the Auditor
     * Add new Inbound rules to the Auditor Network Security Group to allow the Auditor Envoy LoadBalancer (40051, 40052) access from the Ledger and Client.
     * Add new Inbound rules to the Auditor Network Security Group to deny all access from the Ledger and Client.
 
-Note: - We expect that you have created the Client VPC for your application deployment.
+Note: - We expect you have created the Client Virtual Networks for your application deployment.
 
 ## Step 3. Install Scalar DL Auditor
 
