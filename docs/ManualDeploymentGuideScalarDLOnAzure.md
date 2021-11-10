@@ -243,21 +243,21 @@ You can uninstall Scalar DL with the following Helm commands:
 
    ```console
     # Uninstall loaded schema with a release name 'load-schema'
-    helm uninstall load-schema
+      helm uninstall load-schema
 
     # Uninstall Scalar DL with a release name 'my-release-scalardl'
-    helm uninstall my-release-scalardl
+      helm uninstall my-release-scalardl
    ```
 
 You can uninstall Scalar Auditor with the following Helm commands:
 
-    ```console
-     # Uninstall loaded schema with a release name 'load-schema'
-     helm uninstall load-audit-schema
-    
-     # Uninstall Scalar Auditor with a release name 'my-release-scalar-audit'
-     helm uninstall my-release-scalardl-audit
-    ```
+   ```console
+    # Uninstall loaded schema with a release name 'load-audit-schema'
+      helm uninstall load-audit-schema
+
+    # Uninstall Scalar Auditor with a release name 'my-release-scalar-audit'
+      helm uninstall my-release-scalardl-audit
+   ```
 
 ### Clean up the other resources
 

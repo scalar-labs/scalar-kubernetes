@@ -27,6 +27,10 @@ it manages the identical states of Ledger so you need to deploy Ledger and Audit
 
 In this guide, for ease of explanation, we deploy Auditor in a different cluster on the same subscription. However, it is highly recommended to deploy it in another administrative domain in production.
 
+### Requirements
+
+* You must create subnets in a different address range than Ledger and Client.
+
 ### Recommendations
 
 * You should deploy Ledger and Auditor in separate administrative domains.
@@ -44,13 +48,18 @@ so you need to create the peering for internal communication between the Auditor
 
 ### Requirements
 
-* You must create a peering between the virtual networks created for Ledger and Auditor services.
-* You must create a peering between the virtual network created for Ledger and Client SDK (application).
-* You must create a peering between the virtual network created for Auditor and Client SDK (application).
+* You must create 3 peering between 3 VPCs.
+
+### Recommendations
+
+* You should create Network Security Groups for Ledger and Auditor subnets.
+* You should restrict all access from the Auditor and Client except scalardl envoy LoadBalancer ports (50051 and 50052) in the Ledger Network Security Group. 
+* You should restrict all access from the Ledger and Client except scalardl auditor envoy LoadBalancer ports (40051 and 40052) in the Auditor Network Security Group.
 
 ### Steps
 
-* Create the peering on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering) with the above requirements.
+* Create the peering between 3 VPCs on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
+* Create the network security groups on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/manage-network-security-group).
 
 ## Step 3. Install Scalar DL Auditor
 
@@ -74,8 +83,8 @@ You must install Helm on your bastion to deploy [helm-charts](https://github.com
 
 1. Download the following Scalar DL configuration files from the [scalar-kubernetes](https://github.com/scalar-labs/scalar-kubernetes/tree/audit-guide-aks/conf) repository.
 Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
-    * Scalardl-audit-custom-values.yaml
-    * Schema-loading-custom-values.yaml
+    * scalardl-audit-custom-values.yaml
+    * schema-loading-custom-values.yaml
 1. Update the database configuration in `scalarAuditorConfiguration` and `schemaLoading` sections as specified in the [Configure Scalar DL](ConfigureScalarDL.md) guide.
 1. Create the docker-registry secret for pulling the Scalar Auditor images from GitHub Packages.
    ```console
