@@ -1,13 +1,13 @@
-# Scalar DL Backup Creation
+# Scalar DL Backup Creation on Kubernetes
 
-This guide shows you how to create transactionally consistent Scalar DL backups on Kubernetes services.
+This guide shows you how to create transactionally consistent Scalar DL backups on DynamoDB or Cosmos DB deployed on Kubernetes services.
 
 ## Prerequisites
 
-* Read the [Guide on How to Back up and Restore Databases Integrated with Scalar DB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md)
+* Read the [Scalar DL Backup Creation and Restoration](https://github.com/scalar-labs/scalardl/blob/master/docs/backup-restore.md)
 * Scalar DL must be deployed in a Kubernetes cluster
 * Cosmos DB account must be created with the backup policy `continuous` if you use Cosmos DB.
-* You must synchronize the clocks (moderately) between Ledger and Auditor servers by using clock synchronization mechanisms such as NTP if you use Auditor. 
+* DynamoDB schema must be created with scalardl schema loader (It enables PITR).
 
 ## Backup Creation
 
@@ -15,9 +15,9 @@ This section shows how to create a transactionally-consistent backup for Scalar 
 
 ### Requirements
 
-* You must wait at least 10 sec (based on clock drift) after pausing to create a backup.
-    * You must be able to identify a common restore point between the pausing based on the clock drift of the Ledger and Auditor.
-* You must identify a unique `Point In Time Restoration` for the ledger and auditor if you use both the ledger and audit services. 
+* You must enable Point In Time Restore in the backend database.
+* You must wait at least 10 sec after pausing to create a backup.
+* You must identify a unique `Point In Time Restoration` for the Ledger and Auditor if you use both the Ledger and Auditor. 
 
 ### Find SRV service URL
 
@@ -82,4 +82,4 @@ kubectl exec -i -t scalaradminutils -- ./bin/scalar-admin -c unpause -s <SRV_Ser
 
 ## Restore
 
-To restore the backup, you can follow [Guide on How to Back up and Restore Databases Integrated with Scalar DB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md)
+To restore the backup, you can follow [Scalar DL Backup Creation and Restoration](https://github.com/scalar-labs/scalardl/blob/master/docs/backup-restore.md#restore)
