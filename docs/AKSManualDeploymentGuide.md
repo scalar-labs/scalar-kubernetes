@@ -21,3 +21,10 @@ Prepare kube config file
 ```
 $ az aks get-credentials --resource-group <RESOURCE_GROUP_NAME> --name <AKS_CLUSTER_NAME>
 ```
+
+## Next steps
+
+Once the aks cluster is ready you can keep going by following:
+
+- [Manual deployment guide ScalarDL on Azure](ManualDeploymentGuideScalarDLOnAzure.md).
+- [Manual deployment guide ScalarDL on AWS](ManualDeploymentGuideScalarDLOnAWS.md).
