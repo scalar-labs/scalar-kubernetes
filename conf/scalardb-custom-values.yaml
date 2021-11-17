@@ -1,4 +1,17 @@
 envoy:
+  replicaCount: 3
+  
+  serviceMonitor:
+    enabled: false
+
+  prometheusRule:
+    enabled: false
+
+  grafanaDashboard:
+    enabled: false
+    
+  resources: {}
+    
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -10,6 +23,7 @@ envoy:
                   - scalardbpool
 
 scalardb:
+  replicaCount: 3
   storageConfiguration:
   
     #
@@ -28,6 +42,17 @@ scalardb:
     # storage: dynamo
     
     dbLogLevel: INFO
+    
+  serviceMonitor:
+    enabled: false
+
+  prometheusRule:
+    enabled: false
+
+  grafanaDashboard:
+    enabled: false
+    
+  resources: {}  
 
   affinity:
     nodeAffinity:
