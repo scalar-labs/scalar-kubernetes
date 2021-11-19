@@ -1,4 +1,4 @@
-# Example steps to Deploy Scalar DL on AWS
+**# Example steps to Deploy Scalar DL on AWS
 
 This guide assumes that you create the environment based on [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md).
 This document contains example steps for creating a Scalar DL environment in the AWS cloud.
@@ -9,7 +9,7 @@ Following are the resources to be created using this document.
 * Private DNS Zone for internal host lookup
 * Bastion Instance with a public IP
 * Database resource (any one of the following)
-  * Dynamo DB
+  * DynamoDB
   * MySQL server
   * PostgreSQL server
 * Kubernetes Cluster
@@ -58,7 +58,7 @@ The following steps help you to create a virtual private cloud.
 ```
 Note: 
 * Rds-01, Rds-02, Rds-03 is only needed if you use MySQL or PostgreSQL RDS instance as underlying database/storage for Scalar DL.
-* Create only one public subnet, a private subnet, Kubernetes subnet and Rds subnet If you use a single Availability Zone.  
+* Create only one public subnet, a private subnet, Kubernetes subnet, and Rds subnet If you use a single Availability Zone.  
 ```
 
 * After Adding the Subnets, select **Create Subnet**
@@ -509,12 +509,12 @@ Setup container insights to enable pod's performance matrix and logging, followi
 * Follow [setup cloudwatch agent to collect cluster metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-metrics.html)
 * Follow [setup fluentbit to send logs to Cloudwatch logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-logs-FluentBit.html)
 
-The following steps help you to access Kubernetes monitor.
+The following steps help you to access the Kubernetes monitor.
 
 * Open the Amazon [CloudWatch](https://console.aws.amazon.com/cloudwatch/home#logs:prefix=/aws/eks) service
 * In the navigation pane, select **Resources**
 
-The following steps help you to access Kubernetes logging.
+The following steps help you to access the Kubernetes logging.
 
 * Open the Amazon [CloudWatch](https://console.aws.amazon.com/cloudwatch/home#logs:prefix=/aws/eks) service
 * Filter log groups with `/aws/containerinsights/<cluster-name>/`
@@ -526,7 +526,7 @@ Remove the Scalar DL installation based on [manual deployment guide for AWS](./M
 
 Clean up other resources using the following steps
 
-To remove the **AKS cluster** you can use the following steps
+To remove the **AKS cluster**, you can use the following steps
 * Open the Amazon [EKS](https://console.aws.amazon.com/eks/home#/clusters) service
 * Select **Clusters** from the side navigation menu.
 * Select your cluster from the **Clusters** list.
@@ -535,7 +535,7 @@ To remove the **AKS cluster** you can use the following steps
     * Select **Compute** tab
     * Select the radio button on the left side of the node group name that you want to delete.
     * Select the **Delete** button on the top left of the **Node Groups** list.
-    * On the popup displayed type `node group name` in the **To confirm the deletion, type the Node Group name in the field.** input field.
+    * On the popup displayed, type the `node group name` in the **To confirm the deletion, type the Node Group name in the field.** input field.
     * Click on the **Delete** button to delete the node group.
 * To delete a cluster, return to **Clusters** list, select the radio button on the left side of your cluster.
 * Select the **Delete** from the top left.
@@ -543,14 +543,14 @@ To remove the **AKS cluster** you can use the following steps
 * Click on the **Delete** button to delete the EKS cluster. 
 
 
-To remove the **EC2** you can use the following steps.
+To remove the **EC2**, you can use the following steps.
 * Open the Amazon [EC2](https://console.aws.amazon.com/ec2/) service
 * In the navigation pane, Choose **Instances**
-* From the **Instances** list, select the checkbox on the left side of EC2 instance that you want to terminate.
+* From the **Instances** list, select the checkbox on the left side of the EC2 instance that you want to terminate.
 * From **Instance state** dropdown menu, select **Terminate instance**.
 * On the popup box displayed, select **Terminate** to terminate the EC2 instance.
 
-To remove the **Route 53** you can use the following steps.
+To remove the **Route 53**, you can use the following steps.
 * Open the Amazon [Route53](https://console.aws.amazon.com/route53/) service
 * In the navigation pane, choose **Hosted zones**
 * To delete hosted zone, you need to remove the additional record that was added.
@@ -563,7 +563,7 @@ To remove the **Route 53** you can use the following steps.
 * On the popup displayed, type `delete` in the **To confirm that you want to delete the hosted zone, enter delete in the field.** input field.
 * Click on the **Delete** button to delete the hosted zone.
 
-To remove the **Route tables** you can use the following steps.
+To remove the **Route tables**, you can use the following steps.
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
 * In the navigation pane, choose **Route Tables**
@@ -577,7 +577,7 @@ To remove the **Route tables** you can use the following steps.
 * On the popup displayed, type `delete` in the **To confirm the deletion, type delete in the field:** input field.
 * Click on the **Delete** button to delete the route table.
 
-To remove the **Nat gateway** you can use the following steps.
+To remove the **Nat gateway**, you can use the following steps.
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
 * In the navigation pane, Select **NAT Gateways**
@@ -587,7 +587,7 @@ To remove the **Nat gateway** you can use the following steps.
 * Click on the **Delete** button to delete the NAT gateway.
 
 
-To remove the **Internet gateway** you can use the following steps.
+To remove the **Internet gateway**, you can use the following steps.
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
 * In the navigation pane, Select **Internet Gateways**
@@ -600,7 +600,7 @@ To remove the **Internet gateway** you can use the following steps.
 * Click on the **Delete** button to delete the internet gateway.
 
 
-To remove the **Subnets** you can use the following steps.
+To remove the **Subnets**, you can use the following steps.
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
 * In the navigation pane, Select **Subnets**
@@ -609,7 +609,7 @@ To remove the **Subnets** you can use the following steps.
 * On the popup displayed, type `delete` in the **To confirm the deletion, type delete in the field:** input field.
 * Click on the **Delete** button to delete the subnet.
 
-To remove the **VPC** you can use the following steps.
+To remove the **VPC**, you can use the following steps.
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
 * In the navigation pane, Select **Your VPCs**
@@ -618,12 +618,10 @@ To remove the **VPC** you can use the following steps.
 * On the popup displayed, type `delete` in the **To confirm the deletion, type delete in the field:** input field.
 * Click on the **Delete** button to delete the VPC.
 
-To remove **IAM** role you can use the following steps.
+To remove the **IAM** role, you can use the following steps.
 * Open the Amazon [IAM](https://console.aws.amazon.com/iam/) service
 * In the navigation pane, select **Roles**
 * From the **Roles** list, select the checkbox to the left of the role that you want to delete.
 * Select the **Delete** button on the top left.
 * On the popup displayed, type the name of the role to be deleted in **To confirm the deletion, enter the role name in the text input field.** input box.
-* Select the **Delete** button on the popup to delete IAM role.
-
-
+* Select the **Delete** button on the popup to delete the IAM role.**
