@@ -1,9 +1,9 @@
 # Example steps to Deploy Scalar DL on AWS
 
-This guide assumes that you create the environment on the basis of [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md).
+This guide assumes that you create the environment based on [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md).
 This document contains example steps for creating a Scalar DL environment in the AWS cloud.
 
-Following are the resources to be created using this document
+Following are the resources to be created using this document.
 
 * An AWS VPC
 * Private DNS Zone for internal host lookup
@@ -18,7 +18,7 @@ Following are the resources to be created using this document
 
 Amazon Virtual Private Cloud (Amazon VPC) enables you to launch AWS resources into a virtual network that you've defined. This virtual network closely resembles a traditional network that you'd operate in your own data center, with the benefits of using the scalable infrastructure of AWS.
 
-The following steps help you to create a Virtual private cloud
+The following steps help you to create a virtual private cloud.
 
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
@@ -31,7 +31,7 @@ The following steps help you to create a Virtual private cloud
 ### Create Subnets
 * In the navigation pane, select **Subnets**
 * Select **Create subnet**
-* Select your **VPC ID** from drop down
+* Select your **VPC ID** from dropdown
 * On the **Subnet settings** section, configure subnets
   * Enter **Subnet name**
   * Select an **Availability Zone**
@@ -57,8 +57,8 @@ The following steps help you to create a Virtual private cloud
 
 ```
 Note: 
-* Rds-01, Rds-02 , Rds-03 is only needed if you are using MySQL or PostgreSQL RDS instance as underlying database/storage for Scalar DL.
-* Create only one public subnet, a private subnet, Kubernetes subnet and Rds subnet If you are using a single Availability Zone.  
+* Rds-01, Rds-02, Rds-03 is only needed if you use MySQL or PostgreSQL RDS instance as underlying database/storage for Scalar DL.
+* Create only one public subnet, a private subnet, Kubernetes subnet and Rds subnet If you use a single Availability Zone.  
 ```
 
 * After Adding the Subnets, select **Create Subnet**
@@ -67,7 +67,7 @@ Note:
 
 Internet Gateway is a highly available VPC component that allows communication between your VPC and the internet.
 
-The following steps help you to create an Internet Gateway
+The following steps help you to create an Internet Gateway.
 
 * In the navigation pane, choose **Internet Gateways**
 * Select **Create internet gateway**
@@ -91,11 +91,11 @@ Repeat the following steps to create NAT gateways for all public subnets (eg: pu
   * Select public subnet as **Subnet**
   * Select **Allocate Elastic IP**
   * Select **Create NAT gateway**
-    It will take some for the NAT gateway state become available.
+    It will take some for the NAT gateway state to become available.
 
 ### Create Public Route table
 
-A route table contains a set of rules, called routes, that are used to determine where network traffic from your subnet or gateway is directed.
+A route table contains a set of rules, called routes, used to determine where network traffic from your subnet or gateway is directed.
 
 Create Route table for Public subnets to access internet through internet gateway using following steps
 * In the navigation pane, choose **Route Tables**
@@ -205,7 +205,7 @@ A Bastion host is a server whose purpose is to provide access to a private netwo
   * Use default values for **TTL(seconds)** and **Routing policy**
   * Select **Create records**
 ```
-Note: If more than one bastion server is created enter Value and Record name accordingly 
+Note: If more than one bastion server is created, enter Value and Record name accordingly 
 ```
 
 # Create a backend Database
@@ -218,7 +218,7 @@ For DynamoDB Scalar Schema can be created directly during Scalar DL deployment.
 
 ## Create MySQL server
 
-To use MySQL as the database for the Scalar DL, create a RDS MySQL server using the following steps
+To use MySQL as the database for the Scalar DL, create an RDS MySQL server using the following steps.
 
 * Open the [Amazon RDS](https://console.aws.amazon.com/rds/) service
 * First create a DB subnet group for the RDS instance, follow the steps for creating DB subnet group
@@ -258,7 +258,7 @@ To use MySQL as the database for the Scalar DL, create a RDS MySQL server using 
 
 ## Create PostgreSQL server
 
-To use PostgreSQL as the database for the Scalar DL, create a RDS PostgreSQL server using the following steps
+To use PostgreSQL as the database for the Scalar DL, create an RDS PostgreSQL server using the following steps.
 
 * Open the [Amazon RDS](https://console.aws.amazon.com/rds/) service
 * First create a **DB subnet group** for the RDS instance, follow the steps for creating DB subnet group
@@ -300,7 +300,7 @@ To use PostgreSQL as the database for the Scalar DL, create a RDS PostgreSQL ser
 
 Kubernetes is an open-source container-orchestration system for automating computer application deployment, scaling, and management. Scalar-ledger and envoy services can be deployed as pods to a Kubernetes cluster. In AWS, we use Elastic Kubernetes Service (EKS) for it.
 
-The following steps help you to create Kubernetes cluster
+The following steps help you to create a Kubernetes cluster.
 
 * Open the Amazon [EKS](https://console.aws.amazon.com/eks/home#/clusters) service
 * Select **Create Cluster**
@@ -324,7 +324,7 @@ The following steps help you to create Kubernetes cluster
 
 ### Create Node Group
 
-The following steps help you to create Node Group `default`
+The following steps help you to create Node Group `default`.
 
 * On your **Kubernetes cluster** page, select **Configuration** tab
 * Select **Compute** tab
@@ -348,7 +348,7 @@ The following steps help you to create Node Group `default`
   * Select **Next**
 * On the **Review and Create** page, confirm the settings and select **Create**
 
-The following steps help you to create Node Group `scalardlpool` for Scalar DL deployment
+The following steps help you to create Node Group `scalardlpool` for Scalar DL deployment.
 
 * On your **Kubernetes cluster** page, select **Configuration** tab
 * Select **Compute** tab
@@ -375,9 +375,9 @@ The following steps help you to create Node Group `scalardlpool` for Scalar DL d
   * Select **Next**
 * On the **Review and create** page, confirm the settings and select **Create**
 
-#### Create IAM role for bastion to access the Kubernetes cluster
+#### Create an IAM role for bastion to access the Kubernetes cluster
 
-Create an IAM role for the bastion to access the EKS cluster from bastion using the following steps
+Create an IAM role for the bastion to access the EKS cluster from the bastion using the following steps
 
 * Open the Amazon [IAM](https://console.aws.amazon.com/iam/) service
 * In the navigation pane, select **Roles**
@@ -414,12 +414,12 @@ Note: Replace the arn of your Kubernetes cluster in place of  <ARN of kubernetes
 * On the **Review policy** page, enter a **Name** for the Policy
 * Select **Create policy**
 
-Attach Above policy to bastion server using following steps
+Attach the above policy to the bastion server using the following steps
 * Open the Amazon [EC2](https://console.aws.amazon.com/ec2/) service
 * Select your bastion server
 * Select **Actions** on top
 * Select **Security** and choose **Modify IAM role**
-* On the **Modify IAM role** page, select previously created Role
+* On the **Modify IAM role** page, select the previously created role
 * Click **Save**
 
 
@@ -427,7 +427,7 @@ Attach Above policy to bastion server using following steps
 * SSH to Bastion server
 Follow the _Prerequisites_ of _Configure AKS_ in the [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#prerequisites-1)
 
-* Create file `aws-auth-cm.yaml` with following content
+* Create file `aws-auth-cm.yaml` with the following content
 
 ```
 apiVersion: v1
@@ -466,11 +466,11 @@ kubectl apply -f aws-auth-cm.yaml
 
 ## Install Scalar DL
 
-Install Scalar DL to the AKS cluster on the basis of [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#step-4-install-scalar-dl)
+Install Scalar DL to the AKS cluster based on [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#step-4-install-scalar-dl)
 
 ### Confirm Scalar DL deployment
 
-Confirm the Scalar DL deployment on the basis of [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#confirm-scalar-dl-deployment)
+Confirm the Scalar DL deployment based on [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#confirm-scalar-dl-deployment)
 
 ### Deploy Scalar DL with Helm
 
@@ -478,7 +478,7 @@ Follow [Deploy Scalar DL with Helm](https://github.com/scalar-labs/scalar-kubern
 
 ## How to access Kubernetes Monitor
 
-The following steps help you to create an inline policy in `eksNodeRole` for pod logging
+The following steps help you to create an inline policy in `eksNodeRole` for pod logging.
 * Open the Amazon [IAM](https://console.aws.amazon.com/iam/) service
 * In the navigation pane select **Roles**
 * Select `eksNodeRole`
@@ -503,18 +503,18 @@ The following steps help you to create an inline policy in `eksNodeRole` for pod
 * On the **Review policy** page, enter a **Name** for the Policy
 * Select **Create policy**
 
-Setup container insights to enable pod's performance matrix and logging, following steps help you to setup container insights
+Setup container insights to enable pod's performance matrix and logging, following steps help you to set up container insights.
 
 * SSH to bastion server
 * Follow [setup cloudwatch agent to collect cluster metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-metrics.html)
 * Follow [setup fluentbit to send logs to Cloudwatch logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-logs-FluentBit.html)
 
-The following steps help you to access Kubernetes monitor
+The following steps help you to access Kubernetes monitor.
 
 * Open the Amazon [CloudWatch](https://console.aws.amazon.com/cloudwatch/home#logs:prefix=/aws/eks) service
-* In the navigation pane select **Resources**
+* In the navigation pane, select **Resources**
 
-The following steps help you to access Kubernetes logging
+The following steps help you to access Kubernetes logging.
 
 * Open the Amazon [CloudWatch](https://console.aws.amazon.com/cloudwatch/home#logs:prefix=/aws/eks) service
 * Filter log groups with `/aws/containerinsights/<cluster-name>/`
@@ -522,44 +522,44 @@ The following steps help you to access Kubernetes logging
 
 ## Clean up the resources
 
-Remove the Scalar DL installation on the basis of [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#uninstall-scalar-dl)
+Remove the Scalar DL installation based on [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#uninstall-scalar-dl)
 
-Clean up other resources using following steps
+Clean up other resources using the following steps
 
 To remove the **AKS cluster** you can use the following steps
 * Open the Amazon [EKS](https://console.aws.amazon.com/eks/home#/clusters) service
-* Select **Clusters** from side navigation menu.
-* Select your cluster from **Clusters** list.
+* Select **Clusters** from the side navigation menu.
+* Select your cluster from the **Clusters** list.
 * To delete **node groups**
     * On your **Kubernetes cluster** page, select **Configuration** tab
     * Select **Compute** tab
-    * Select the radio button on the left side of node group name that you want to delete.
-    * Select the **Delete** button on top left of **Node Groups** list.
-    * On the popup displayed type `node group name` in the **To confirm deletion, type the Node Group name in the field.** input field.
+    * Select the radio button on the left side of the node group name that you want to delete.
+    * Select the **Delete** button on the top left of the **Node Groups** list.
+    * On the popup displayed type `node group name` in the **To confirm the deletion, type the Node Group name in the field.** input field.
     * Click on the **Delete** button to delete the node group.
-* To delete cluster, return to **Clusters** list, select the radio button on the left side of your cluster.
-* Select the **Delete** from top left.
-* On the popup displayed, type `cluster name` in the **To confirm deletion, type the cluster name in the field.** input field.
-* Click on the **Delete** button to delete the eks cluster. 
+* To delete a cluster, return to **Clusters** list, select the radio button on the left side of your cluster.
+* Select the **Delete** from the top left.
+* On the popup displayed, type `cluster name` in the **To confirm the deletion, type the cluster name in the field.** input field.
+* Click on the **Delete** button to delete the EKS cluster. 
 
 
 To remove the **EC2** you can use the following steps.
 * Open the Amazon [EC2](https://console.aws.amazon.com/ec2/) service
 * In the navigation pane, Choose **Instances**
-* From **Instances** list, select the checkbox on the left side of EC2 instance that you want to terminate.
-* From **Instance state** drop down menu, select **Terminate instance**.
+* From the **Instances** list, select the checkbox on the left side of EC2 instance that you want to terminate.
+* From **Instance state** dropdown menu, select **Terminate instance**.
 * On the popup box displayed, select **Terminate** to terminate the EC2 instance.
 
 To remove the **Route 53** you can use the following steps.
 * Open the Amazon [Route53](https://console.aws.amazon.com/route53/) service
 * In the navigation pane, choose **Hosted zones**
 * To delete hosted zone, you need to remove the additional record that was added.
-    * Select the hosted zone from **Hosted zones** list.
-    * From **Records ** list, select the checkbox left of the additional record that is to be deleted.
-    * Select **Delete record** button on top left of **Records** list.
+    * Select the hosted zone from the **Hosted zones** list.
+    * From the **Records ** list, select the checkbox left of the additional record that is to be deleted.
+    * Select **Delete record** button on the top left of **Records** list.
     * On the popup displayed select the **Delete** button to delete the record.
-* Go back to the **Hosted zones** list, select the radio button on the left of zone that you want to delete.
-* Select the **Delete** button from the top left of list.
+* Go back to the **Hosted zones** list, select the radio button on the left side of the zone that you want to delete.
+* Select the **Delete** button from the top left of the list.
 * On the popup displayed, type `delete` in the **To confirm that you want to delete the hosted zone, enter delete in the field.** input field.
 * Click on the **Delete** button to delete the hosted zone.
 
@@ -567,23 +567,23 @@ To remove the **Route tables** you can use the following steps.
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
 * In the navigation pane, choose **Route Tables**
-* Select the **Route table I** of the route table you created.
+* Select the **Route table ID** of the route table you created.
 * On the details pane, select **Subnet association** tab
     * Select **Edit subnet association**
     * Uncheck the **Subnet Id** that are selected.
     * Select **Save associations**
 * Go back to route table list, select the check box near the route table you want to delete.
-* Select *Delete route table* option from **Actions** drop down menu on the top right section of the list.
-* On the popup displayed, type `delete` in the **To confirm deletion, type delete in the field:** input field.
+* Select *Delete route table* option from **Actions** dropdown menu on the top right section of the list.
+* On the popup displayed, type `delete` in the **To confirm the deletion, type delete in the field:** input field.
 * Click on the **Delete** button to delete the route table.
 
 To remove the **Nat gateway** you can use the following steps.
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
 * In the navigation pane, Select **NAT Gateways**
-* From the list on **NAT Gateways** , select the checkbox of the NAT gateway you created.
-* Select **Delete NAT gateway** from **Actions** drop down menu.
-* On the popup displayed, type `delete` in the **To confirm deletion, type delete in the field:** input field.
+* From the list on **NAT Gateways**, select the checkbox of the NAT gateway that you created.
+* Select **Delete NAT gateway** from **Actions** dropdown menu.
+* On the popup displayed, type `delete` in the **To confirm the deletion, type delete in the field:** input field.
 * Click on the **Delete** button to delete the NAT gateway.
 
 
@@ -591,12 +591,12 @@ To remove the **Internet gateway** you can use the following steps.
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
 * In the navigation pane, Select **Internet Gateways**
-* From the list on **Internet Gateways** , select the checkbox of the internet gateway you created.
-* To detach internet gateway from VPC before deleting it follow the below steps.
-    * Select **Detach from VPC** option from **Actions** drop down menu on the top right section of the list to detach internet gateway from VPC before deleting it.
-    * On the popup displayed, select **Detach internet gateway** button.
-* Select **Delete Internet gateway** from **Actions** drop down menu.
-* On the popup displayed, type `delete` in the **To confirm deletion, type delete in the field:** input field.
+* From the list on **Internet Gateways**, select the checkbox of the internet gateway you created.
+* To detach the internet gateway from VPC before deleting it follow the below steps.
+    * Select **Detach from VPC** option from **Actions** dropdown menu on the top right section of the list to detach internet gateway from VPC before deleting it.
+    * On the popup displayed, select the **Detach internet gateway** button.
+* Select **Delete Internet gateway** from **Actions** dropdown menu.
+* On the popup displayed, type `delete` in the **To confirm the deletion, type delete in the field:** input field.
 * Click on the **Delete** button to delete the internet gateway.
 
 
@@ -604,18 +604,18 @@ To remove the **Subnets** you can use the following steps.
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
 * In the navigation pane, Select **Subnets**
-* From the list on **Subnets** , select the checkbox of the subnets you created.
-* Select **Delete subnet** option from **Actions** drop down menu on the top right section of the list.
-* On the popup displayed type `delete` in the **To confirm deletion, type delete in the field:** input field.
+* From the list on **Subnets**, select the checkbox of the subnets you created.
+* Select **Delete subnet** option from **Actions** dropdown menu on the top right section of the list.
+* On the popup displayed, type `delete` in the **To confirm the deletion, type delete in the field:** input field.
 * Click on the **Delete** button to delete the subnet.
 
 To remove the **VPC** you can use the following steps.
 * Open the Amazon [VPC](https://console.aws.amazon.com/vpc/) service
 * On the top-right of the navigation bar, select the AWS Region from the dropdown list.
 * In the navigation pane, Select **Your VPCs**
-* From the list on **Your VPCs** , select the checkbox of the VPC you created.
-* Select **delete VPC** option from **Actions** drop down menu on the top right section of the list.
-* On the popup displayed type `delete` in the **To confirm deletion, type delete in the field:** input field.
+* From the list on **Your VPCs**, select the checkbox of the VPC you created.
+* Select **delete VPC** option from **Actions** dropdown menu on the top right section of the list.
+* On the popup displayed, type `delete` in the **To confirm the deletion, type delete in the field:** input field.
 * Click on the **Delete** button to delete the VPC.
 
 To remove **IAM** role you can use the following steps.
@@ -623,7 +623,7 @@ To remove **IAM** role you can use the following steps.
 * In the navigation pane, select **Roles**
 * From the **Roles** list, select the checkbox to the left of the role that you want to delete.
 * Select the **Delete** button on the top left.
-* On the popup displayed type the name of the role to be delete in **To confirm deletion, enter the role name in the text input field.** input box.
+* On the popup displayed, type the name of the role to be deleted in **To confirm the deletion, enter the role name in the text input field.** input box.
 * Select the **Delete** button on the popup to delete IAM role.
 
 
