@@ -88,7 +88,8 @@ Install the following tools on the bastion for controlling the AKS cluster:
 
 ## Step 4. Install Scalar DB server
 
-In this section, we will deploy the Scalar DB server on the AKS cluster using Helm charts.
+After creating a Kubernetes cluster, the next step is to deploy the Scalar DB server into the AKS cluster.
+In this section, we will deploy the Scalar DB server on the AKS cluster with [Helm charts](https://github.com/scalar-labs/helm-charts).
 
 ### Prerequisites
 
@@ -104,7 +105,7 @@ You must install Helm on your bastion to deploy helm-charts:
     
 2. Update the database configuration in  scalardb-custom-values.yaml  sections as specified in [configure Scalar DB guide](./ConfigureScalarDB.md).
 
-3. Run the Helm commands on the bastion to install the Scalar DB server on AKS.
+3. Run the Helm commands on the bastion machine to install the Scalar DB server on AKS.
 
    ```console
     # Add Helm charts
