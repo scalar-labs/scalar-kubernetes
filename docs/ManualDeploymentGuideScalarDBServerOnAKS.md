@@ -99,7 +99,7 @@ You must install Helm on your bastion to deploy helm-charts:
 
 ### Steps
 
-1. Download the following Scalar DB configuration files from [the scalar-kubernetes repository](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf). Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
+1. Download the following Scalar DB configuration files from the [scalar-kubernetes repository](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf). Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
     * scalardb-custom-values.yaml
     
 2. Update the database configuration in  scalardb-custom-values.yaml  sections as specified in [configure Scalar DB guide](./ConfigureScalarDB.md).
@@ -134,7 +134,7 @@ For more information on the container insights, you can follow the [official gui
 
 ## Step 6. Checklist for confirming Scalar DB server deployment
 
-You can check if the pods and the services are properly deployed by running the `kubectl get pods,services -o wide` command on the bastion.
+You can check if the pods and the services are deployed accurately by running the `kubectl get pods,services -o wide` command on the bastion.
 * You should confirm the status of all scalardb and envoy pods are `Running`.
 
 ```console
@@ -164,10 +164,10 @@ service/my-release-scalardb-metrics         ClusterIP   10.0.63.5      <none>   
 
 ## Clean up the resources
 
-### Uninstall Scalar DB server
+### Uninstall Scalar DB server Install Scalar DB server
 ```
-# Uninstall scalar DB server with a release name 'my-scalardb-sever'
-helm uninstall my-scalardb-sever
+# Uninstall scalar DB server with a release name 'my-release-scalardb'
+helm uninstall my-release-scalardb
 ```
 ### Clean up the other resources
 
