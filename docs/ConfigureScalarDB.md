@@ -3,38 +3,40 @@
 This guide explains how to create database schema and configure database properties in helm charts for Scalar DB server deployment.
 
 ## Create schema
-There are 2 methods to create the schema for the scalar DB server.
+There are two methods to create the schema for the scalar DB server.
 
 ### Using Scalar DB Schema Loader
 
 Scalar DB Schema Loader lets you create or delete a scalar DB schema based on a provided schema file.
 The released versions of `scalar DB schema loader` can be downloaded from [releases] page(https://github.com/scalar-labs/scalardb/releases).
 It is also possible to deploy it in a docker using a docker image pulled from [Scalar's container registry](https://github.com/orgs/scalar-labs/packages/container/package/scalardb-schema-loader) or building a [docker image](https://github.com/scalar-labs/scalardb/tree/master/schema-loader#docker) from the source.
-A scalar DB schema can be created/deleted using scalar DB schema loader by specifying general cli options in 2 ways.
+A scalar DB schema can be created/deleted using scalar DB schema loader by specifying general cli options in 2 ways, either by passing a configuration file or by passing options directly to the cli in command.
 
-* Pass a Scalar DB [configuration file](https://github.com/scalar-labs/scalardb/blob/master/conf/database.properties) and database/storage-specific options additionally.
-* Pass the options without a Scalar DB configuration.
+#### Using configuration file
+You can create a schema by passing a Scalar DB [configuration file](https://github.com/scalar-labs/scalardb/blob/master/conf/database.properties) and database/storage-specific options additionally.
+To create a cosmos DB schema using Scalar DB schema loader with Scalar DB schema loader by passing a config file to general cli using the command below.
 
-#### For Cosmos DB
-
-* To create a cosmos DB schema using Scalar DB schema loader with Scalar DB schema loader by passing a config file to general cli using the command below.
 ```console
 $ java -jar scalardb-schema-loader-<version>.jar --config <PATH_TO_CONFIG_FILE> -f schema.json
 ```
 
-* To create a cosmos DB schema using Scalar DB schema loader with Scalar DB schema loader by passing options to general cli using the command below.
+
+#### Passing options directly to cli
+
+You can create a schema by providing the options directly in the cli command.
+
+1. For Cosmos DB
+
+You can create a cosmos DB schema using Scalar DB schema loader by passing options to general cli using the command below.
+
 ```console
 $ java -jar scalardb-schema-loader-<version>.jar --cosmos -h <COSMOS_DB_ACCOUNT_URI> -p <COSMOS_DB_KEY> -f schema.json [-r BASE_RESOURCE_UNIT]
 ```
 
-#### For DyanmoDB
+2. For DyanmoDB
 
-* To create a dynamoDB schema using Scalar DB schema loader with Scalar DB schema loader by passing a config file to general cli using the command below.
-```console
-$ java -jar scalardb-schema-loader-<version>.jar --config <PATH_TO_CONFIG_FILE> -f schema.json
-```
+You can create a dynamoDB schema using Scalar DB schema loader by passing options to general cli using the command below.
 
-* To create a dynamoDB schema using Scalar DB schema loader with Scalar DB schema loader by passing options to general cli using the command below.
 ```console
 $ java -jar scalardb-schema-loader-<version>.jar --dynamo -u <AWS_ACCESS_KEY_ID> -p <AWS_ACCESS_SECRET_KEY> --region <REGION> -f schema.json [-r BASE_RESOURCE_UNIT]
 ```
@@ -63,7 +65,7 @@ To deploy the scalar DB server via helm charts, you need to configure the scalar
 ### Create Kubernetes Secrets
 
 Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key.
-This method is highly recommended for handling credentials in the production environment.
+This method is recommended highly for handling credentials in the production environment.
 
 First, you should create a Secret object. The key to store the username should be db-username and the key to store the password should be db-password.
 
