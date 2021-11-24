@@ -82,4 +82,5 @@ kubectl exec -i -t scalaradminutils -- ./bin/scalar-admin -c unpause -s <SRV_Ser
 
 ## Restore
 
-To restore the backup, you can follow [Scalar DL Backup Creation and Restoration](https://github.com/scalar-labs/scalardl/blob/master/docs/backup-restore.md#restore)
+To restore the backup, you must follow the [Restore Backup](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md#restore-backup) section.
+ 
