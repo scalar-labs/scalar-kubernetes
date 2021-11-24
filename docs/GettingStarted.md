@@ -15,7 +15,7 @@ This document describes how to deploy Scalar DL on Kubernetes Services.
 
 ### The directory where scalar-kubernetes is cloned
 
-Throughout the documentation, the directory of the cloned copy of scalar-kubernetes on your local machine is referred to as `${SCALAR_K8S_HOME}`. It is a good practice to set the environment variable before you run the commands.
+Throughout the documentation, the directory of the cloned copy of scalar-kubernetes on your local machine is referred to as `${SCALAR_K8S_HOME}`. It is a good idea to set the environment variable before you run the commands.
 
 ```console
 export SCALAR_K8S_HOME=/path/to/scalar-kubernetes
