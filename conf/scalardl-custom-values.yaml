@@ -2,13 +2,13 @@ envoy:
   replicaCount: 3
 
   prometheusRule:
-    enabled: true
+    enabled: false
 
   serviceMonitor:
-    enabled: true
+    enabled: false
 
   grafanaDashboard:
-    enabled: true
+    enabled: false
 
   service:
     type: LoadBalancer
@@ -86,13 +86,13 @@ ledger:
     # ledgerAuditorEnabled: true
 
   prometheusRule:
-    enabled: true
+    enabled: false
 
   serviceMonitor:
-    enabled: true
+    enabled: false
 
   grafanaDashboard:
-    enabled: true
+    enabled: false
 
   nodeSelector: {}
 
