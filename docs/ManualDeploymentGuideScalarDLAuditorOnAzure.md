@@ -62,28 +62,15 @@ so you need to create the peering for internal communication between the Auditor
 * Create the peering between the Ledger and Client Virtual Networks on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
 * Create the peering between the Auditor and Client Virtual Networks on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
 * Create the network security groups for Ledger and Auditor subnet on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/manage-network-security-group).
-* Add new Inbound rule to restrict the access to Ledger and Auditor.
+* Add new Inbound rule to restrict unwanted access to Ledger and Auditor. (By default, all subnets and ports are open between VNet after peering)
     * Add new Inbound rules to the Ledger Network Security Group to allow the Ledger Envoy LoadBalancer (50051, 50052) access from the Auditor and Client.
-      * Source = IP addresses
-      * Source IP addresses = Client/Auditor virtual network
-      * Source port range = *
-      * Destination = Any
-      * Service = Custom
-      * Destination port range = 50051,50052
-      * Priority number Allow < Priority number Deny
+        * You must set a higher priority than the Ledger inbound deny rule.
     * Add new Inbound rules to the Ledger Network Security Group to deny all access from the Auditor and Client.
-      * Source = IP addresses
-      * Source IP addresses = Client/Auditor virtual network
-      * Source port range = *
-      * Destination = IP addresses
-      * Destination IP addresses = Ledger virtual network
-      * Service = Custom
-      * Destination port range = 50051,50052
-      * Priority number Deny > Priority number Allow
+        * You must set a lower priority than the Ledger inbound allow rule.   
     * Add new Inbound rules to the Auditor Network Security Group to allow the Auditor Envoy LoadBalancer (40051, 40052) access from the Ledger and Client.
-      * Repeat the same logic by changing ports number
+        * You must set a higher priority than the auditor inbound deny rule.
     * Add new Inbound rules to the Auditor Network Security Group to deny all access from the Ledger and Client.
-      * Repeat the same logic by changing ports number
+        * You must set a lower priority than the auditor inbound allow rule.
 
 Note: - We expect you have created the Client Virtual Networks for your application deployment.
 
@@ -130,9 +117,6 @@ Note that they are going to be versioned in the future, so you might want to cha
     
     # Load Schema for Scalar Auditor install with a release name `load-audit-schema`
     helm upgrade --version <chart version> --install load-audit-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml --set schemaLoading.schemaType=auditor
-   
-    # Add monitor namespace
-    kubectl create ns monitoring 
 
     # Install Scalar Auditor with a release name `my-release-scalar-audit`
     helm upgrade --version <chart version> --install my-release-scalar-audit scalar-labs/scalardl-audit --namespace default -f scalardl-audit-custom-values.yaml
