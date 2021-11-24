@@ -22,3 +22,9 @@ Prepare kube config file
 ```
 $ aws eks --region <REGION_NAME> update-kubeconfig --name <EKS_CLUSTER_NAME>
 ```
+
+## Next steps
+
+Once the eks cluster is ready you can keep going by following:
+
+- [Manual deployment guide ScalarDL on AWS](ManualDeploymentGuideScalarDLOnAWS.md).
