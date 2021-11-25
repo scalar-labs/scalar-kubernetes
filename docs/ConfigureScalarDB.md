@@ -8,7 +8,7 @@ There are two methods to create the schema for the scalar DB server.
 ### Using Scalar DB Schema Loader
 
 Scalar DB Schema Loader lets you create or delete a scalar DB schema based on a provided schema file.
-The released versions of `scalar DB schema loader` can be downloaded from [releases] page(https://github.com/scalar-labs/scalardb/releases).
+The released versions of `scalar DB schema loader` can be downloaded from [releases](https://github.com/scalar-labs/scalardb/releases) page.
 It is also possible to deploy it in a docker using a docker image pulled from [Scalar's container registry](https://github.com/orgs/scalar-labs/packages/container/package/scalardb-schema-loader) or building a [docker image](https://github.com/scalar-labs/scalardb/tree/master/schema-loader#docker) from the source.
 A scalar DB schema can be created/deleted using scalar DB schema loader by specifying general cli options in 2 ways, either by passing a configuration file or by passing options directly to the cli in command.
 
@@ -78,7 +78,7 @@ First, you should create a Secret object. The key to store the username should b
     # username=<AWS_ACCESS_KEY_ID>
     # password=<AWS_ACCESS_SECRET_KEY>
 
-kubectl create secret generic scalardb --from-literal db-username=<username> --from-literal db-password=<password>
+kubectl create secret generic scalardb-secret --from-literal db-username=<username> --from-literal db-password=<password>
 ```
 
 Next, update each configuration file with `existingSecret` as key and Secret Object as value.
@@ -86,7 +86,8 @@ Next, update each configuration file with `existingSecret` as key and Secret Obj
 [scalardb-custom-values](../conf/scalardb-custom-values.yaml)
 
 ```yaml
-existingSecret: scalardb
+scalardb:
+  existingSecret: scalardb-secret
 ```
 
 Then, You should follow the remaining section and skip the credential details specified in the Kubernetes Secrets from the custom value files.
