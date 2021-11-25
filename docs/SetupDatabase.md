@@ -1,10 +1,10 @@
 # Set up a database
 
-This guide explains how to set up a database for Scalar DL.
+This guide explains how to set up a database for Scalar DL or Scalar DB.
 
 ## Cosmos DB
 
-In this section, you will set up a Cosmos DB for Scalar DL.
+In this section, you will set up a Cosmos DB for Scalar DL or Scalar DB.
 
 ### Requirements
 
