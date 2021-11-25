@@ -34,7 +34,7 @@ First, you should create a Secret object. The key to store the username should b
 kubectl create secret generic scalardb-secret --from-literal db-username=<username> --from-literal db-password=<password>
 ```
 
-Next, update [scalardb-custom-values](../conf/scalardb-custom-values.yaml)  configuration file with `existingSecret` as key and Secret Object as value.
+After creating the Secret Object, update [scalardb-custom-values](../conf/scalardb-custom-values.yaml)  configuration file with `existingSecret` as key and Secret Object as value.
 
 [scalardb-custom-values](../conf/scalardb-custom-values.yaml)
 
@@ -61,7 +61,7 @@ storage: cosmos
 
 To set up Scalar DB server for DynamoDB, update the following configuration in [scalardb-custom-values](../conf/scalardb-custom-values.yaml) file.
 
-* You can skip configuring the `password` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+* You can skip configuring the `username` and `password` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
 
 ```yaml
 contactPoints: <REGION>

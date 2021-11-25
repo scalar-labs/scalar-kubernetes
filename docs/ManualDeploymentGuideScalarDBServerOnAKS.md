@@ -53,7 +53,7 @@ In this step, we will set up a database.
 
 ### Steps
 
-* Follow [Set up a database guide](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/SetupDatabase.md) to set up a database for Scalar DB.
+* Follow [Set up a database guide](./SetupDatabase.md) to set up a database for Scalar DB. Please avoid the `Scale Performance` section in this guide as it is possible to set Request Units(RU) value when creating the schema for scalar DB server.
 
 ## Step 3. Configure AKS
 
