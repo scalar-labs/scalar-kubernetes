@@ -20,7 +20,7 @@ To deploy the scalar DB server via helm charts, you need to configure the scalar
 Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key.
 This method is recommended highly for handling credentials in the production environment.
 
-First, you should create a Secret object. The key to store the username should be db-username and the key to store the password should be db-password.
+You should create a Secret object. The key to store the username should be db-username and the key to store the password should be db-password.
 
 ```
 # Cosmos DB
@@ -50,7 +50,7 @@ Note:
 
 To set up Scalar DB server for Cosmos DB, update the following configuration in [scalardb-custom-values](../conf/scalardb-custom-values.yaml) file.
 
-* You can skip configuring the `password` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+* You can skip configuring the `password` if you set the Secret Object as per [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
 
 ```yaml
 contactPoints: <Cosmos DB account endpoint>
@@ -61,7 +61,7 @@ storage: cosmos
 
 To set up Scalar DB server for DynamoDB, update the following configuration in [scalardb-custom-values](../conf/scalardb-custom-values.yaml) file.
 
-* You can skip configuring the `username` and `password` while using the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+* You can skip configuring the `username` and `password` if you set the Secret Object as per [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
 
 ```yaml
 contactPoints: <REGION>
