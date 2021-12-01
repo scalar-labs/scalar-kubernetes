@@ -4,6 +4,9 @@ Scalar DL is a database-agnostic distributed ledger middleware containerized wit
 It can be deployed on various platforms and is recommended to be deployed on managed services for production to achieve high availability, scalability, and maintainability.
 This guide shows you how to manually deploy Scalar DL on a managed database service and a managed Kubernetes service in Azure as a starting point for deploying Scalar DL for production.
 
+Scalar DL Auditor is an optional component that manages the identical states of Ledger to help clients to detect Byzantine faults. 
+You can refer to the [Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) guide for more information.
+
 ## What we create
 
 ![image](images/azure-diagram.png)
@@ -108,6 +111,12 @@ You must install Helm on your bastion to deploy helm-charts:
 
 * You must have the authority to pull `scalar-ledger` and `scalardl-schema-loader` container images.
 * You must confirm that the replica count of the ledger and envoy pods in the `scalardl-custom-values.yaml` file is equal to the number of nodes in the `scalardlpool`.
+* You must enable auditor configurations in `scalardl-custom-values.yaml` file if you are planning to deploy an auditor.
+* You must create a `ledger-key` secret if you are planning to deploy an auditor.
+
+### Recommendations
+
+* You should enable `ledgerProofEnabled` in `scalardl-custom-values.yaml` file and create a kubernetes `ledger-key` secret for ledger deployment.
 
 ### Steps
 
@@ -117,43 +126,59 @@ You must install Helm on your bastion to deploy helm-charts:
 
 2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [configure Scalar DL guide](./ConfigureScalarDL.md).
 
-3. Create the docker-registry secret for pulling the Scalar DL images from GitHub Packages.
+3. Create the `docker-registry` secret for pulling the Scalar DL images from GitHub Packages.
     
    ```console
     kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
+4. (Optional if you do not intend to deploy an Auditor) Create a proper `ledger-key` secret to enable ledger proof. 
    
-4. Run the Helm commands on the bastion to install Scalar DL on AKS.
+   ```console
+   kubectl create secret generic ledger-keys --from-file=private-key=ledger-key.pem
+   ```
+5. Run the Helm commands on the bastion to install Scalar DL on AKS.
     
    ```console
     # Add Helm charts
-      helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
+    helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
     
     # List the Scalar charts.
-      helm search repo scalar-labs
+    helm search repo scalar-labs
     
     # Load Schema for Scalar DL install with a release name `load-schema`
-      helm upgrade --version <chart version> --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
+    helm upgrade --version <chart version> --install load-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml
    
     # Install Scalar DL with a release name `my-release-scalardl`
-      helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
+    helm upgrade --version <chart version> --install my-release-scalardl scalar-labs/scalardl --namespace default -f scalardl-custom-values.yaml
    ```
 
 Note:
 
 * The same commands can be used to upgrade the pods.
 * Release name `my-release-scalardl` should be changed at your convenience.
-* The `chart version` can be obtained from `helm search repo scalar-labs` output
+* The `chart version` can be obtained from `helm search repo scalar-labs` output.
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
 * Follow the [Maintain Scalar DL Pods](./MaintainPods-1.md) for maintaining Scalar DL pods with Helm.
 
-## Step 5. Monitor the cluster
+## Step 5. Deploy Scalar DL Auditor
+
+Scalar DL Auditor is an optional component to detect Byzantine faults. Using Auditor brings great benefit from the security perspective but it comes with extra processing costs. 
+
+### Requirements
+
+* You must deploy Scalar DL Ledger with Auditor support.
+
+### Steps
+
+* Follow the [Deploy Scalar DL Auditor on Azure](./ManualDeploymentGuideScalarDLAuditorOnAzure.md) guide.
+
+## Step 6. Monitor the cluster
 
 It is critical to actively monitor the overall health and performance of a cluster running in production.
 This section shows how to configure container insights for the AKS cluster, Container insights gives you performance visibility by collecting memory and processor metrics from controllers, nodes, and containers.
 Container insights collects container logs also for log monitoring.
-For more information on the container insights you can follow [official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview).
+For more information on the container insights you can follow the [official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview).
 
 ## Recommendations
 
@@ -163,7 +188,7 @@ For more information on the container insights you can follow [official guide](h
 
 * Enable monitoring of Azure Kubernetes Service on the basis of [the official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters).
 
-## Step 6. Checklist for confirming Scalar DL deployments
+## Step 7. Checklist for confirming Scalar DL deployments
 
 After the Scalar DL deployment, you need to confirm that deployment has been completed successfully. This section will help you to confirm the deployment.
 
@@ -175,7 +200,7 @@ After the Scalar DL deployment, you need to confirm that deployment has been com
     * You should confirm the status of all ledger and envoy pods are `Running`.
     * You should confirm the `EXTERNAL-IP` of Scalar DL envoy service is created.
     
-    ```console
+   ```console
     kubectl get pods,services -o wide
     NAME                                              READY   STATUS    RESTARTS   AGE     IP          NODE                                   NOMINATED NODE   READINESS GATES
     pod/load-schema-schema-loading-bgr4x              0/1     Completed 0          3m6s    10.2.0.51   aks-scalardlpool-16372315-vmss000001   <none>           <none>
@@ -223,6 +248,17 @@ You can uninstall Scalar DL with the following Helm commands:
     # Uninstall Scalar DL with a release name 'my-release-scalardl'
       helm uninstall my-release-scalardl
    ```
+
+You can uninstall Scalar DL Auditor with the following Helm commands:
+
+   ```console
+    # Uninstall loaded schema with a release name 'load-audit-schema'
+      helm uninstall load-audit-schema
+
+    # Uninstall Scalar DL Auditor with a release name 'my-release-scalar-audit'
+      helm uninstall my-release-scalardl-audit
+   ```
+
 ### Clean up the other resources
 
 You can remove the other resources via the web console or the command-line interface.

@@ -14,6 +14,7 @@ In this section, you will set up a Cosmos DB for Scalar DL.
 
 ### Recommendations
 
+* You should configure the backup policy as `Continuous` for Point-in-time-restore (PITR).
 * You should configure service endpoint on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-configure-vnet-service-endpoint) to restrict access to Cosmos DB for production.
 
 ### Steps
