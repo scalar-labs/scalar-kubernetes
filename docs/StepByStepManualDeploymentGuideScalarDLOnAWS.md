@@ -1,4 +1,4 @@
-**# Example steps to Deploy Scalar DL on AWS
+# Example steps to Deploy Scalar DL on AWS
 
 This guide assumes that you create the environment based on [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md).
 This document contains example steps for creating a Scalar DL environment in the AWS cloud.
@@ -363,7 +363,7 @@ The following steps help you to create Node Group `scalardlpool` for Scalar DL d
 * On the **Set compute and scaling configuration** page, configure the following options
   * Select **AMI type** as _Amazon Linux 2 (AL2_x86_64)_ from dropdown
   * Select **Capacity type** as _On-Demand_ from dropdown
-  * Select **instance types** as _m5.large_ from dropdown. Remove the default selection if it is a different size.
+  * Select **instance types** as _m5.xlarge_ from dropdown. Remove the default selection if it is a different size.
   * Enter **Disk size** as _64_
   * Select **Minimum size**, **Desired size** as 3 and **Maximum size** as 6 in **Node Group scaling configuration** section
   * Select **Next**
