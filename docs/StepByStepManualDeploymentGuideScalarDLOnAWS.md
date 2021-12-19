@@ -306,7 +306,7 @@ The following steps help you to create a Kubernetes cluster.
 * Select **Create Cluster**
 * On the **Configure cluster** page, configure the following options
   * Enter a **Name** for the cluster
-  * Select **Kubernetes version** as _1.18_ from dropdown
+  * Select **Kubernetes version** as _1.19 or any later versions_ from dropdown
   * Select `eksClusterRole` for **Cluster Service Role**, (if eksClusterRole is not created please follow [Creating the Amazon EKS cluster role](https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html]))
   * Select **Next**
 * On the **Specify networking** page, configure the following options
