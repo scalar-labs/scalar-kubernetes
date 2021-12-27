@@ -20,7 +20,7 @@ In this guide, we will create the following components.
 
 ## Prerequisites
 
-You must have required permissions as specified in [Cloud permissions document](./CloudPermissionsForScalarDBOnAKS.md) to create cloud resources to deploy the Scalar DB server on Azure.
+You must have the required permissions as specified in the [Cloud permissions document](./CloudPermissionsForScalarDBOnAKS.md) to create cloud resources to deploy the Scalar DB server on Azure.
 
 ## Step 1. Configure your network
 
@@ -28,7 +28,7 @@ Configure a secure network according to your organizational standard or as per t
 
 ### Requirements
 
-* You must create a virtual network with a subnet for bastion.
+* You must create a virtual network with a subnet for the bastion.
 * You must create 2 subnets for AKS.
 
 ### Recommendations
@@ -38,10 +38,10 @@ Configure a secure network according to your organizational standard or as per t
 
 ### Steps
 
-* Create a Resource group based on [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#create-resource-groups).
-* Create an Azure virtual network based on [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal) with the above requirements and recommendations.
+* Create a Resource group based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#create-resource-groups).
+* Create an Azure virtual network based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal) with the above requirements and recommendations.
 * Create subnets based on [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet) with the above requirements and recommendations.
-* Create a virtual machine to use as a bastion server based on [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal).
+* Create a virtual machine to use as a bastion server based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal).
 
 ## Step 2. Set up a database
 
@@ -89,7 +89,7 @@ Install the following tools on the bastion for controlling the AKS cluster:
 ## Step 4. Install Scalar DB server
 
 After creating a Kubernetes cluster, the next step is to deploy the Scalar DB server into the AKS cluster.
-In this section, we will deploy the Scalar DB server on the AKS cluster with [Helm charts](https://github.com/scalar-labs/helm-charts).
+We will deploy the Scalar DB server on the AKS cluster with [Helm charts](https://github.com/scalar-labs/helm-charts) in this section.
 
 ### Prerequisites
 
@@ -123,11 +123,11 @@ You must install Helm on your bastion to deploy helm-charts:
 It is critical to actively monitor the overall health and performance of a cluster running in production.
 This section shows how to configure container insights for the AKS cluster, Container insights give you performance visibility by collecting memory and processor metrics from controllers, nodes, and containers.
 Container insights collect container logs also for log monitoring.
-For more information on the container insights, you can follow the [official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview).
+For more information on container insights, you can follow the [official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview).
 
 ## Recommendations
 
-* You should configure alerting for the AKS cluster based on [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-metric-alerts#enable-alert-rules)
+* You should configure alerting for the AKS cluster based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-metric-alerts#enable-alert-rules)
 
 ### Steps
 
@@ -157,11 +157,11 @@ service/my-release-scalardb-metrics         ClusterIP   10.0.63.5      <none>   
 ```
 ### Confirm AKS cluster monitoring
 
-* Confirm the Cluster insights based on [Container insights](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview#how-do-i-access-this-feature) document.
+* Confirm the Cluster insights based on the [Container insights](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview#how-do-i-access-this-feature) document.
 
 ### Confirm database monitoring
 
-* Confirm the monitoring of Azure Cosmos DB based on [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db) document.
+* Confirm the monitoring of Azure Cosmos DB based on the [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db) document.
 
 ## Clean up the resources
 
