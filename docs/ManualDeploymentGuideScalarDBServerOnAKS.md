@@ -24,7 +24,7 @@ You must have the required permissions as specified in the [Cloud permissions do
 
 ## Step 1. Configure your network
 
-Configure a secure network according to your organizational standard or as per the application requirements. This section shows how to configure a secure network for Scalar DB server deployment.
+Configure a secure network according to your organizational standard or application requirements. This section shows how to configure a secure network for Scalar DB server deployment.
 
 ### Requirements
 
@@ -127,7 +127,7 @@ For more information on container insights, you can follow the [official guide](
 
 ## Recommendations
 
-* You should configure alerting for the AKS cluster based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-metric-alerts#enable-alert-rules)
+* You should configure alerting for the AKS cluster based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-metric-alerts#enable-alert-rules).
 
 ### Steps
 
