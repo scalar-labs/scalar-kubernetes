@@ -280,9 +280,9 @@ To use PostgreSQL as the database for the Scalar DL, create an RDS PostgreSQL se
   * Enter **DB instance identifier** (enter name for the database must be lowercase)
   * Enter **Master username** as _postgres_
   * Enter **Master password**
-  * Enter same password again to **Confirm password**
+  * Enter the same password again to **Confirm password**
 * Select **DB instance class**
-* Select **Storage type** as _General Purpose(SSD)_ from dropdown
+* Select **Storage type** as _General Purpose(SSD)_ from the dropdown
 * Enter **Allocated storage**
 * Click Tick on _Enable storage autoscaling_
 * Enter **Maximum storage threshold** as 1000
@@ -593,7 +593,7 @@ To remove the **Internet gateway**, you can use the following steps.
 * In the navigation pane, Select **Internet Gateways**
 * From the list on **Internet Gateways**, select the checkbox of the internet gateway you created.
 * To detach the internet gateway from VPC before deleting it follow the below steps.
-    * Select **Detach from VPC** option from the **Actions** dropdown menu on the top right section of the list to detach internet gateway from VPC before deleting it.
+    * Select **Detach from VPC** option from the **Actions** dropdown menu on the top right section of the list to detach the internet gateway from VPC before deleting it.
     * On the pop-up displayed, select the **Detach internet gateway** button.
 * Select **Delete Internet gateway** from the **Actions** dropdown menu.
 * On the pop-up displayed, type `delete` in the **To confirm the deletion, type delete in the field:** input field.
