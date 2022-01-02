@@ -75,7 +75,7 @@ Install the following tools on the bastion for controlling the AKS cluster:
 ### Recommendations
 
 * You should create 3 nodes in each node group for high availability in production.
-* You should configure `Autoscale` for the node pools If you want to scale the nodes.
+* You should configure `Autoscale` for the node pools if you want to scale the nodes.
 
 ### Steps
 
