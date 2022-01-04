@@ -42,7 +42,7 @@ metadata:
 spec:
   containers:
   - name: scalaradminutils
-    image: ghcr.io/scalar-labs/scalar-admin:1.0.0
+    image: ghcr.io/scalar-labs/scalar-admin:1.1.0
     command:
       - sleep
       - "3600"
