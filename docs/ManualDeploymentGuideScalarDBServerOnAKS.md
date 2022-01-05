@@ -29,7 +29,7 @@ Configure a secure network according to your organizational standard or applicat
 ### Requirements
 
 * You must create a virtual network with a subnet for the bastion.
-* You must create 2 subnets for AKS.
+* You must create 2 subnets for AKS, one subnet must be created with the name `k8s_ingress` to create an envoy load balancer.
 
 ### Recommendations
 
@@ -140,20 +140,20 @@ You can check if the pods and the services are deployed accurately by running th
 
 ```console
 kubectl get pods,services -o wide
-NAME                                             READY   STATUS    RESTARTS   AGE   IP            NODE                                   NOMINATED NODE   READINESS GATES
-pod/my-release-scalardb-5bc8c65447-jwlc4         1/1     Running   0          11s   10.43.40.18   aks-scalardbpool-67464374-vmss000001   <none>           <none>
-pod/my-release-scalardb-5bc8c65447-w978k         1/1     Running   0          11s   10.43.40.30   aks-scalardbpool-67464374-vmss000002   <none>           <none>
-pod/my-release-scalardb-5bc8c65447-wfbcq         1/1     Running   0          11s   10.43.40.5    aks-scalardbpool-67464374-vmss000000   <none>           <none>
-pod/my-release-scalardb-envoy-5b8f69c85c-kj78c   1/1     Running   0          11s   10.43.40.10   aks-scalardbpool-67464374-vmss000000   <none>           <none>
-pod/my-release-scalardb-envoy-5b8f69c85c-qstr6   1/1     Running   0          11s   10.43.40.29   aks-scalardbpool-67464374-vmss000002   <none>           <none>
-pod/my-release-scalardb-envoy-5b8f69c85c-xfrs9   1/1     Running   0          11s   10.43.40.19   aks-scalardbpool-67464374-vmss000001   <none>           <none>
+NAME                                            READY   STATUS    RESTARTS   AGE   IP            NODE                                   NOMINATED NODE   READINESS GATES
+pod/my-release-scalardb-556c8564b4-clm62        1/1     Running   0          12m   10.43.40.12   aks-scalardbpool-35245763-vmss000000   <none>           <none>
+pod/my-release-scalardb-556c8564b4-q98c5        1/1     Running   0          12m   10.43.40.28   aks-scalardbpool-35245763-vmss000002   <none>           <none>
+pod/my-release-scalardb-556c8564b4-vdzg2        1/1     Running   0          12m   10.43.40.22   aks-scalardbpool-35245763-vmss000001   <none>           <none>
+pod/my-release-scalardb-envoy-bb5695c48-4pjv7   1/1     Running   0          12m   10.43.40.10   aks-scalardbpool-35245763-vmss000000   <none>           <none>
+pod/my-release-scalardb-envoy-bb5695c48-69wsd   1/1     Running   0          12m   10.43.40.18   aks-scalardbpool-35245763-vmss000001   <none>           <none>
+pod/my-release-scalardb-envoy-bb5695c48-mz4vk   1/1     Running   0          12m   10.43.40.27   aks-scalardbpool-35245763-vmss000002   <none>           <none>
 
-NAME                                        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)               AGE   SELECTOR
-service/kubernetes                          ClusterIP   10.0.0.1       <none>        443/TCP               36m   <none>
-service/my-release-scalardb-envoy           ClusterIP   10.0.243.104   <none>        60051/TCP,50052/TCP   11s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
-service/my-release-scalardb-envoy-metrics   ClusterIP   10.0.1.246     <none>        9001/TCP              11s   app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
-service/my-release-scalardb-headless        ClusterIP   None           <none>        50051/TCP             11s   app.kubernetes.io/app=scalardb,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
-service/my-release-scalardb-metrics         ClusterIP   10.0.63.5      <none>        8080/TCP              11s   app.kubernetes.io/app=scalardb,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
+NAME                                        TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE     SELECTOR
+service/kubernetes                          ClusterIP      10.0.0.1       <none>        443/TCP                           4h55m   <none>
+service/my-release-scalardb-envoy           LoadBalancer   10.0.151.225   10.43.44.4    60051:31784/TCP,50052:30735/TCP   12m     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
+service/my-release-scalardb-envoy-metrics   ClusterIP      10.0.106.176   <none>        9001/TCP                          12m     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
+service/my-release-scalardb-headless        ClusterIP      None           <none>        50051/TCP                         12m     app.kubernetes.io/app=scalardb,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
+service/my-release-scalardb-metrics         ClusterIP      10.0.66.140    <none>        8080/TCP                          12m     app.kubernetes.io/app=scalardb,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
 ```
 ### Confirm AKS cluster monitoring
 
