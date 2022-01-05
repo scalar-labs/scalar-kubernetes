@@ -68,7 +68,7 @@ Install the following tools on the bastion for controlling the AKS cluster:
 ### Requirements
 
 * You must have an AKS cluster with Kubernetes version **1.19** or higher for Scalar DB deployment.
-* You must create a new `user node pool` for Scalar DB deployment.
+* You must create a new `user node pool` with the name `scalardbpool` for Scalar DB deployment.
 * You must create a Kubernetes cluster with `service principal` as the Authentication method.
 * You must create a Kubernetes cluster with `Azure CNI`.
 
@@ -100,10 +100,10 @@ You must install Helm on your bastion to deploy helm-charts:
 
 ### Steps
 
-1. Download the following Scalar DB configuration files from the [scalar-kubernetes repository](https://github.com/scalar-labs/scalar-kubernetes/tree/master/conf). Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
+1. Download the following Scalar DB configuration files from the [scalar-kubernetes repository](../conf). Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
     * scalardb-custom-values.yaml
     
-2. Update the database configuration in  scalardb-custom-values.yaml  sections as specified in [configure Scalar DB guide](./ConfigureScalarDB.md).
+2. Update the database configuration in  `scalardb-custom-values.yaml`  sections as specified in [configure Scalar DB guide](./ConfigureScalarDB.md).
 
 3. Run the Helm commands on the bastion machine to install the Scalar DB server on AKS.
 
