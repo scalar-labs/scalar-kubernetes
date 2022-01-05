@@ -63,3 +63,4 @@ scalardb:
                 operator: In
                 values:
                   - scalardbpool
+  existingSecret: ""
