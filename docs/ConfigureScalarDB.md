@@ -9,7 +9,7 @@ You can use the scalar DB schema loader to create the schema for the scalar DB s
 
 Scalar DB Schema Loader lets you create or delete a scalar DB schema based on a provided schema file.
 The released versions of the `scalar DB schema loader` can be downloaded from the [releases](https://github.com/scalar-labs/scalardb/releases) page.
-To create a schema for the scalar DB server using the scalar DB schema loader, please follow the instructions provided in this [file](https://github.com/scalar-labs/scalardb/blob/master/schema-loader/README.md).
+To create a schema for the scalar DB server using the scalar DB schema loader, please follow the instructions provided in this [guide](https://github.com/scalar-labs/scalardb/blob/master/schema-loader/README.md).
 
 ## Configure database properties
 
