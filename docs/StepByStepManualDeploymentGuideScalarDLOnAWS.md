@@ -314,7 +314,7 @@ The following steps help you to create a Kubernetes cluster.
   * Select **Subnets** as previously created Kubernetes subnets, private subnets and public subnets from the dropdown
   * Select _bastion_ **Security groups** from the dropdown
   * Select _Public and Private_ as **Cluster endpoint access**
-  * Select **Amazon VPC CNI** _v1.7.5-eksbuild.1_ from the dropdown
+  * Select **Amazon VPC CNI** _v1.7.5-eksbuild.1_ or higher from the dropdown
   * Select **Next**
 * On the **Configure logging page**, enable the following logs
   * _API server_
@@ -425,7 +425,7 @@ Attach the above policy to the bastion server using the following steps
 
 ## Setup Bastion
 * SSH to Bastion server
-Follow the _Prerequisites_ of _Configure AKS_ in the [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#prerequisites-1)
+Follow the _Prerequisites_ of _Configure EKS_ in the [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#prerequisites)
 
 * Create file `aws-auth-cm.yaml` with the following content
 
@@ -466,7 +466,7 @@ kubectl apply -f aws-auth-cm.yaml
 
 ## Install Scalar DL
 
-Install Scalar DL to the AKS cluster based on [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#step-4-install-scalar-dl)
+Install Scalar DL to the EKS cluster based on [manual deployment guide for AWS](./ManualDeploymentGuideScalarDLOnAWS.md#step-4-install-scalar-dl)
 
 ### Confirm Scalar DL deployment
 
@@ -526,7 +526,7 @@ Remove the Scalar DL installation based on [manual deployment guide for AWS](./M
 
 Clean up other resources using the following steps
 
-To remove the **AKS cluster**, you can use the following steps
+To remove the **EKS cluster**, you can use the following steps
 * Open the Amazon [EKS](https://console.aws.amazon.com/eks/home#/clusters) service
 * Select **Clusters** from the side navigation menu.
 * Select your cluster from the **Clusters** list.
