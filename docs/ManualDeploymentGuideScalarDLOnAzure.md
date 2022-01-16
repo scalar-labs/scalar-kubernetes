@@ -126,12 +126,12 @@ You must install Helm on your bastion to deploy helm-charts:
 
 2. Update the database configuration in `scalarLedgerConfiguration` and `schemaLoading` sections as specified in [configure Scalar DL guide](./ConfigureScalarDL.md).
 
-3. Create the docker-registry secret for pulling the Scalar DL images from GitHub Packages.
+3. Create the `docker-registry` secret for pulling the Scalar DL images from GitHub Packages.
     
    ```console
     kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>
     ```
-4. (Optional if you don't deploy an auditor) Create a proper ledger-key secret to enable ledger proof. 
+4. (Optional if you do not intend to deploy an Auditor) Create a proper `ledger-key` secret to enable ledger proof. 
    
    ```console
    kubectl create secret generic ledger-keys --from-file=private-key=ledger-key.pem
@@ -178,7 +178,7 @@ Scalar DL Auditor is an optional component to detect Byzantine faults. Using Aud
 It is critical to actively monitor the overall health and performance of a cluster running in production.
 This section shows how to configure container insights for the AKS cluster, Container insights gives you performance visibility by collecting memory and processor metrics from controllers, nodes, and containers.
 Container insights collects container logs also for log monitoring.
-For more information on the container insights you can follow [official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview).
+For more information on the container insights you can follow the [official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview).
 
 ## Recommendations
 

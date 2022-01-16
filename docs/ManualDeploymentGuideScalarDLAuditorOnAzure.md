@@ -12,13 +12,13 @@ In this guide, we will create the following components for auditor.
 * An Azure Virtual Network associated with a Resource Group.
 * An AKS cluster with 2 node pools.
 * A managed database service.
-* A Cosmos DB Account.
+    * A Cosmos DB Account.
 * A Bastion instance with a public IP.
 * Azure container insights.
 
 ## Prerequisites
 
-* Scalar DL Ledger deployment with auditor configuration completed.
+* Scalar DL Ledger deployment with Auditor configuration completed.
 
 ## Step 1. Create an environment
 
@@ -81,7 +81,7 @@ Note: - We expect you have created the Client Virtual Networks for your applicat
 You must install Helm on your bastion to deploy [helm-charts](https://github.com/scalar-labs/helm-charts):
 
 * [Helm](https://helm.sh/docs/intro/install/): Helm command-line tool to manage releases in the AKS cluster, Helm version 3.2.1 or latest is required. In this guide, it is used to deploy Scalar Auditor and Schema loading helm charts to the AKS cluster.
-* You must create a Github Personal Access Token (PAT) on the basis of Github official document with read:packages scope, it is used to access the `scalar-auditor` and `scalardl-schema-loader` container images from GitHub Packages.
+* You must create a Github Personal Access Token (PAT) on the basis of Github official document with `read:packages` scope, it is used to access the `scalar-auditor` and `scalardl-schema-loader` container images from GitHub Packages.
 
 ### Requirements
 
@@ -89,7 +89,7 @@ You must install Helm on your bastion to deploy [helm-charts](https://github.com
 
 ### Recommendations
 
-* You should confirm that the replica count of the Auditor and Envoy pods in the `scalardl-audit-custom-values.yaml` file is equal to the number of nodes in the scalardlpool.
+* You should confirm that the replica count of the Auditor and Envoy pods in the `scalardl-audit-custom-values.yaml` file is equal to the number of nodes in the `scalardlpool`.
 * You should keep an equal number of pods for Envoy, Ledger and Auditor.
 
 ### Steps
@@ -99,11 +99,11 @@ Note that they are going to be versioned in the future, so you might want to cha
     * scalardl-audit-custom-values.yaml
     * schema-loading-custom-values.yaml
 1. Update the database configuration in `scalarAuditorConfiguration` and `schemaLoading` sections as specified in the [Configure Scalar DL](ConfigureScalarDL.md) guide.
-1. Create the docker-registry secret for pulling the Scalar Auditor images from GitHub Packages.
+1. Create the `docker-registry` secret for pulling the Scalar Auditor images from GitHub Packages.
    ```console
    kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token> 
    ```
-1. Create the auditor-key secret for sign the request before sending it to Ledger and validate the request given from Ledger.
+1. Create the `auditor-key` secret for sign the request before sending it to Ledger and validate the request given from Ledger.
    ```console
    kubectl create secret generic auditor-keys --from-file=certificate=conf/auditor-cert.pem --from-file=private-key=conf/auditor-key.pem 
    ```
@@ -127,7 +127,7 @@ Note:
 * Release name `my-release-scalar-audit` can be changed at your convenience.
 * The chart version can be obtained from `helm search repo scalar-labs` output
 * `helm ls -a` command can be used to list currently installed releases.
-* You should confirm the load-audit-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar auditor.
+* You should confirm the load-audit-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar Auditor.
 * Follow the [Maintain Scalar DL Pods](./MaintainPods-1.md) for maintaining Scalar DL pods with Helm.
 * Register the certificate for the Ledger and Auditor before starting the client application.
     * Ledger needs to register its certificate to Auditor, and Auditor needs to register its certificate to Ledger.
@@ -140,10 +140,10 @@ Follow step 6 in the [Deploy Scalar DL on Azure](./ManualDeploymentGuideScalarDL
 
 ### Confirm Scalar DL Auditor deployment
 
-* Make sure the auditor schema is properly created in the underlying database service.
+* Make sure the Auditor schema is properly created in the underlying database service.
 * You can check if the pods and the services are properly deployed by running the `kubectl get pods,services -o wide` command on the bastion.
-    * You should confirm the status of all auditor and envoy pods are Running.
-    * You should confirm the EXTERNAL-IP of Scalar auditor envoy service is created.
+    * You should confirm the status of all Auditor and Envoy pods are Running.
+    * You should confirm the `EXTERNAL-IP` of Scalar DL Auditor envoy service is created.
     
    ```console
     $ kubectl get pod,services -o wide
