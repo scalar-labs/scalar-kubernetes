@@ -1,6 +1,6 @@
 # Scalar DL Backup Creation on Kubernetes
 
-This guide shows you how to create transactionally consistent Scalar DL backups on DynamoDB or Cosmos DB deployed on Kubernetes services.
+This guide shows you how to create and restore Scalar DL backups on Cosmos DB and DynamoDB without any data inconsistency.
 
 ## Prerequisites
 
@@ -83,5 +83,5 @@ kubectl exec -i -t scalaradminutils -- ./bin/scalar-admin -c unpause -s <SRV_Ser
 ## Restore
 
 To restore the backup, you must follow the [Restore Backup](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md#restore-backup) section.
-You must restore Scalar Ledger and Auditor tables with the same restore point if you use Ledger and Auditor.
+You must restore Scalar DL Ledger and Auditor tables with the same restore point if you use Ledger and Auditor.
  
