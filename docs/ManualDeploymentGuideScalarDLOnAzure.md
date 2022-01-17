@@ -156,7 +156,7 @@ Note:
 
 * The same commands can be used to upgrade the pods.
 * Release name `my-release-scalardl` should be changed at your convenience.
-* The `chart version` can be obtained from `helm search repo scalar-labs` output
+* The `chart version` can be obtained from `helm search repo scalar-labs` output.
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the load-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL.
 * Follow the [Maintain Scalar DL Pods](./MaintainPods-1.md) for maintaining Scalar DL pods with Helm.
@@ -171,7 +171,7 @@ Scalar DL Auditor is an optional component to detect Byzantine faults. Using Aud
 
 ### Steps
 
-* Follow the [Deploy Scalar Auditor on Azure](./ManualDeploymentGuideScalarDLAuditorOnAzure.md) guide.
+* Follow the [Deploy Scalar DL Auditor on Azure](./ManualDeploymentGuideScalarDLAuditorOnAzure.md) guide.
 
 ## Step 6. Monitor the cluster
 
@@ -249,13 +249,13 @@ You can uninstall Scalar DL with the following Helm commands:
       helm uninstall my-release-scalardl
    ```
 
-You can uninstall Scalar Auditor with the following Helm commands:
+You can uninstall Scalar DL Auditor with the following Helm commands:
 
    ```console
     # Uninstall loaded schema with a release name 'load-audit-schema'
       helm uninstall load-audit-schema
 
-    # Uninstall Scalar Auditor with a release name 'my-release-scalar-audit'
+    # Uninstall Scalar DL Auditor with a release name 'my-release-scalar-audit'
       helm uninstall my-release-scalardl-audit
    ```
 

@@ -80,7 +80,7 @@ Note: - We expect you have created the Client Virtual Networks for your applicat
 
 You must install Helm on your bastion to deploy [helm-charts](https://github.com/scalar-labs/helm-charts):
 
-* [Helm](https://helm.sh/docs/intro/install/): Helm command-line tool to manage releases in the AKS cluster, Helm version 3.2.1 or latest is required. In this guide, it is used to deploy Scalar Auditor and Schema loading helm charts to the AKS cluster.
+* [Helm](https://helm.sh/docs/intro/install/): Helm command-line tool to manage releases in the AKS cluster, Helm version 3.2.1 or latest is required. In this guide, it is used to deploy Scalar DL Auditor and Schema loading helm charts to the AKS cluster.
 * You must create a Github Personal Access Token (PAT) on the basis of Github official document with `read:packages` scope, it is used to access the `scalar-auditor` and `scalardl-schema-loader` container images from GitHub Packages.
 
 ### Requirements
@@ -99,7 +99,7 @@ Note that they are going to be versioned in the future, so you might want to cha
     * scalardl-audit-custom-values.yaml
     * schema-loading-custom-values.yaml
 1. Update the database configuration in `scalarAuditorConfiguration` and `schemaLoading` sections as specified in the [Configure Scalar DL](ConfigureScalarDL.md) guide.
-1. Create the `docker-registry` secret for pulling the Scalar Auditor images from GitHub Packages.
+1. Create the `docker-registry` secret for pulling the Scalar DL Auditor images from GitHub Packages.
    ```console
    kubectl create secret docker-registry reg-docker-secrets --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token> 
    ```
@@ -107,7 +107,7 @@ Note that they are going to be versioned in the future, so you might want to cha
    ```console
    kubectl create secret generic auditor-keys --from-file=certificate=conf/auditor-cert.pem --from-file=private-key=conf/auditor-key.pem 
    ```
-1. Run the Helm commands on the bastion to install Scalar Auditor on AKS.
+1. Run the Helm commands on the bastion to install Scalar DL Auditor on AKS.
    ```console
     # Add Helm charts
     helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
@@ -115,19 +115,19 @@ Note that they are going to be versioned in the future, so you might want to cha
     # List the Scalar charts.
     helm search repo scalar-labs
     
-    # Load Schema for Scalar Auditor install with a release name `load-audit-schema`
+    # Load Schema for Scalar DL Auditor install with a release name `load-audit-schema`
     helm upgrade --version <chart version> --install load-audit-schema scalar-labs/schema-loading --namespace default -f schema-loading-custom-values.yaml --set schemaLoading.schemaType=auditor
 
-    # Install Scalar Auditor with a release name `my-release-scalar-audit`
+    # Install Scalar DL Auditor with a release name `my-release-scalar-audit`
     helm upgrade --version <chart version> --install my-release-scalar-audit scalar-labs/scalardl-audit --namespace default -f scalardl-audit-custom-values.yaml
    ```
 
 Note:
 * The same commands can be used to upgrade the pods.
 * Release name `my-release-scalar-audit` can be changed at your convenience.
-* The chart version can be obtained from `helm search repo scalar-labs` output
+* The chart version can be obtained from `helm search repo scalar-labs` output.
 * `helm ls -a` command can be used to list currently installed releases.
-* You should confirm the load-audit-schema deployment has been completed with `kubectl get pods -o wide` before installing Scalar Auditor.
+* You should confirm the `load-audit-schema` deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL Auditor.
 * Follow the [Maintain Scalar DL Pods](./MaintainPods-1.md) for maintaining Scalar DL pods with Helm.
 * Register the certificate for the Ledger and Auditor before starting the client application.
     * Ledger needs to register its certificate to Auditor, and Auditor needs to register its certificate to Ledger.

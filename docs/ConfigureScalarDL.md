@@ -1,6 +1,6 @@
 # Configure Scalar DL
 
-This guide explains how to configure database properties in helm charts for Scalar DL deployment.
+This guide explains how to configure Scalar DL custom values in helm charts for Scalar DL deployment.
 
 ## Create Kubernetes Secrets
 
@@ -56,7 +56,7 @@ schemaLoading:
 
 #### Configure scalardl-custom-values 
 
-To deploy the Scalar Ledger on Cosmos DB, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
+To deploy the Scalar DL Ledger on Cosmos DB, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
 
 **With Kubernetes secrets**
 
@@ -87,7 +87,7 @@ To enable the Auditor service, you can follow the [Enable Auditor](#enable-audit
 
 #### Configure scalardl-audit-custom-values
 
-To deploy the Scalar Ledger on Cosmos DB, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
+To deploy the Scalar DL Auditor on Cosmos DB, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
 
 **With Kubernetes Secrets**
 
@@ -151,7 +151,7 @@ schemaLoading:
 
 #### Configure scalardl-custom-values
 
-To deploy the Scalar Ledger on Cosmos DB, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
+To deploy the Scalar DL Ledger on DynamoDB, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
 
 **With Kubernetes secrets**
 
@@ -184,7 +184,7 @@ To enable the Auditor service, you can follow the [Enable Auditor](#enable-audit
 
 #### Configure scalardl-audit-custom-values
 
-To deploy the Scalar Ledger on Cosmos DB, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
+To deploy the Scalar DL Auditor on DynamoDB, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
 
 **With Kubernetes secrets**
 
