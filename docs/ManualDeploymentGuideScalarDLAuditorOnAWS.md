@@ -48,13 +48,14 @@ In this guide, Ledger, Auditor, and Client applications are deployed on the priv
 so you need to add peering for internal communication between the Auditor, Ledger, and Client application.  
 
 ### Requirements
+
 * You must create peering between Ledger, Auditor, and Client VPCs to enable communication between private networks.
 * You must update Ledger, Auditor, and Client route tables for VPC peering connections.
 
 ### Recommendations
+
 * You should create Network ACLs for Ledger and Auditor VPCs.
-* You should set up the Network ACLs of the Ledger to restrict unused accesses.
-* You should set up the Network ACLs of the Auditor to restrict unused accesses.
+* You should set up the Network ACLs of the Ledger and Auditor to restrict unused accesses.
 
 ### Steps
 
