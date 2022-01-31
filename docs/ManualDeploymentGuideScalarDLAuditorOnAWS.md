@@ -20,16 +20,19 @@ In this guide, we will create the following components for Auditor.
 
 * Scalar DL Ledger deployment with Auditor configuration completed.
 
-## Step 1. Create an environment
+## Step 1. Create environment
 
 It is highly recommended to deploy Scalar DL Auditor in a different administrative domain from the one for Ledger in production because a single fully-privileged administrator can do any malicious activities in a single administrative domain.
 However, for ease of explanation, we deploy Auditor in the same administrative domain as Ledger (i.e., a different cluster on the same subscription) in this guide.
 
-You need to create a network, Scalar DL supported database and EKS service in a different administrative domain for Auditor deployment using the steps of creating a Ledger environment.
+You need to configure a network, Scalar DL supported database, and EKS service in a different administrative domain for Auditor deployment using the steps of creating a Ledger environment.
 
 ### Requirements
 
-* You must create a VPC for Auditor with a different IP address range that is not used by Ledger and Client.
+* You must create a VPC for Auditor with a different IP address range, that is not used by Ledger and Client.
+* You must configure your network.
+* You must set up a database.
+* You must configure EKS.
 
 ### Recommendations
 
@@ -45,12 +48,8 @@ In this guide, Ledger, Auditor, and Client applications are deployed on the priv
 so you need to add peering for internal communication between the Auditor, Ledger, and Client application.  
 
 ### Requirements
-* You must create peering between the Ledger and Auditor VPCs.
-* You must create peering between the Ledger and Client VPCs.
-* You must create peering between the Auditor and Client VPCs.
-* You must update Ledger route tables with Auditor and Client VPC peering connections.
-* You must update Auditor route tables with Ledger and Client VPC peering connections.
-* You must update Client route tables with Ledger and Auditor VPC peering connections.
+* You must create peering between Ledger, Auditor, and Client VPCs to enable communication between private networks.
+* You must update Ledger, Auditor, and Client route tables for VPC peering connections.
 
 ### Recommendations
 * You should create Network ACLs for Ledger and Auditor VPCs.
@@ -59,8 +58,11 @@ so you need to add peering for internal communication between the Auditor, Ledge
 
 ### Steps
 
-* Create peering between the Ledger, Auditor and Client VPCs based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html) with the above requirements.
-* Update route tables for VPC peering connection based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html) with the above requirements.
+* Create 3 peering connections between the Ledger, Auditor and Client VPCs based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html).
+    * Peering between Ledger and Auditor.
+    * Peering between Ledger and Client.
+    * Peering between Auditor and Client.
+* Update route tables for VPC peering connection based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html).
 * Add new Inbound and Outbound rule to restrict unwanted access to Ledger and Auditor.
     * Add new Inbound rules to the Ledger Network ACLs to allow the Ledger Envoy LoadBalancer (e.g., 50051 and 50052 by default) access from the Auditor and Client.
         * You must set high priority to this rule.
@@ -97,7 +99,7 @@ You must install Helm on your bastion to deploy [helm-charts](https://github.com
 ### Recommendations
 
 * You should set the replica count of the Auditor and Envoy pods in the `scalardl-audit-custom-values.yaml` file, which should be equal to the number of nodes in the `scalardlpool`. Otherwise, there is a chance for resource shortage for pod creation.
-* You should keep an equal number of pods for Envoy, Ledger and Auditor.
+* You should create an equal number of pods and Envoy pods for Ledger and Auditor for better performance.
 
 ### Steps
 
