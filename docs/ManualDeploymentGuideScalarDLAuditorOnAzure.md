@@ -1,7 +1,7 @@
 # Deploy Scalar DL Auditor on Azure
 
+Scalar DL Auditor is an optional component that manages the identical states of Ledger and helps Scalar DL clients to detect Byzantine faults.
 This guide shows you how to manually deploy Scalar DL Auditor on a managed database service and a managed Kubernetes service in Azure as part of deploying Scalar DL for production.
-If you have not deployed Scalar DL Ledger, please follow [Deploy Scalar DL on Azure](ManualDeploymentGuideScalarDLOnAzure.md) guide.
 
 ## What we create
 
@@ -20,16 +20,19 @@ In this guide, we will create the following components for auditor.
 
 * Scalar DL Ledger deployment with Auditor configuration completed.
 
-## Step 1. Create an environment
+## Step 1. Create environment
 
-Scalar DL Auditor component is implemented to detect Byzantine faults,
-it manages the identical states of Ledger so you need to deploy Ledger and Auditor in separate administrative domains. For more details, please refer to  [Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) guide.
+It is highly recommended to deploy Scalar DL Auditor in a different administrative domain from the one for Ledger in production because a single fully-privileged administrator can do any malicious activities in a single administrative domain.
+However, for ease of explanation, we deploy Auditor in the same administrative domain as Ledger (i.e., a different cluster on the same subscription) in this guide.
 
-In this guide, for ease of explanation, we deploy Auditor in a different cluster on the same subscription. However, it is highly recommended to deploy it in another administrative domain in production.
+You need to configure a network, Scalar DL supported database, and AKS service in a different administrative domain for Auditor deployment using the steps of creating a Ledger environment.
 
 ### Requirements
 
 * You must create subnets in a different address range than Ledger and Client.
+* You must configure your network.
+* You must set up a database.
+* You must configure AKS.
 
 ### Recommendations
 
@@ -41,10 +44,8 @@ In this guide, for ease of explanation, we deploy Auditor in a different cluster
 
 ## Step 2. Peer the Virtual Networks
 
-This section shows how to peer the virtual networks for Scalar DL deployment.
-
-In this guide, Ledger and Auditor are deployed on the private subnet of the different virtual networks, 
-so you need to create the peering for internal communication between the Auditor, Ledger and Client SDK(application). 
+In this guide, Ledger, Auditor, and Client applications are deployed on the private subnet of the different virtual networks,
+so you need to add peering for internal communication between the Auditor, Ledger, and Client application.
 
 ### Requirements
 
@@ -58,9 +59,10 @@ so you need to create the peering for internal communication between the Auditor
 
 ### Steps
 
-* Create the peering between the Ledger and Auditor Virtual Networks on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
-* Create the peering between the Ledger and Client Virtual Networks on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
-* Create the peering between the Auditor and Client Virtual Networks on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
+* Create 3 peering connections between the Ledger, Auditor and Client Virtual Networks on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering).
+    * Peering between Ledger and Auditor.
+    * Peering between Ledger and Client.
+    * Peering between Auditor and Client.
 * Create the network security groups for Ledger and Auditor subnet on the basis of [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/manage-network-security-group).
 * Add new Inbound rule to restrict unwanted access to Ledger and Auditor. (By default, all subnets and ports are open between VNet after peering)
     * Add new Inbound rules to the Ledger Network Security Group to allow the Ledger Envoy LoadBalancer (50051, 50052) access from the Auditor and Client.
@@ -89,8 +91,8 @@ You must install Helm on your bastion to deploy [helm-charts](https://github.com
 
 ### Recommendations
 
-* You should confirm that the replica count of the Auditor and Envoy pods in the `scalardl-audit-custom-values.yaml` file is equal to the number of nodes in the `scalardlpool`.
-* You should keep an equal number of pods for Envoy, Ledger and Auditor.
+* You should set the replica count of the Auditor and Envoy pods in the `scalardl-audit-custom-values.yaml` file, which should be equal to the number of nodes in the `scalardlpool`. Otherwise, there is a chance for resource shortage for pod creation.
+* You should create an equal number of pods and Envoy pods for Ledger and Auditor for better performance.
 
 ### Steps
 
