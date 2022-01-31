@@ -1,7 +1,7 @@
 # Deploy Scalar DL Auditor on AWS
 
+Scalar DL Auditor is an optional component that manages the identical states of Ledger and helps Scalar DL clients to detect Byzantine faults.
 This guide shows you how to manually deploy Scalar DL Auditor on a managed database service and a managed Kubernetes service in AWS as part of deploying Scalar DL for production.
-If you have not deployed Scalar DL Ledger, please follow [Deploy Scalar DL on AWS](./ManualDeploymentGuideScalarDLOnAWS.md) guide.
 
 ## What we create
 
@@ -22,14 +22,14 @@ In this guide, we will create the following components for Auditor.
 
 ## Step 1. Create an environment
 
-Scalar DL Auditor component is implemented to detect Byzantine faults,
-it manages the identical states of Ledger so you need to deploy Ledger and Auditor in separate administrative domains. For more details, please refer to [Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) guide.
+It is highly recommended to deploy Scalar DL Auditor in a different administrative domain from the one for Ledger in production because a single fully-privileged administrator can do any malicious activities in a single administrative domain.
+However, for ease of explanation, we deploy Auditor in the same administrative domain as Ledger (i.e., a different cluster on the same subscription) in this guide.
 
-In this guide, for ease of explanation, we deploy Auditor in a different cluster on the same subscription. However, it is highly recommended to deploy it in another administrative domain in production.
+You need to create a network, Scalar DL supported database and EKS service in a different administrative domain for Auditor deployment using the steps of creating a Ledger environment.
 
 ### Requirements
 
-* You must create VPCs with different CIDR ranges.
+* You must create a VPC for Auditor with a different IP address range that is not used by Ledger and Client.
 
 ### Recommendations
 
@@ -41,30 +41,28 @@ In this guide, for ease of explanation, we deploy Auditor in a different cluster
 
 ## Step 2. Peer the Virtual Networks
 
-This section shows how to peer the VPC for Scalar DL deployment.
-
-In this guide, Ledger and Auditor are deployed on the private subnet of the different VPCs, 
-so you need to add peering for internal communication between the Auditor, Ledger and Client SDK(application).  
+In this guide, Ledger, Auditor, and Client applications are deployed on the private subnet of the different VPCs, 
+so you need to add peering for internal communication between the Auditor, Ledger, and Client application.  
 
 ### Requirements
-
-* You must create 3 peering between 3 Virtual Networks.
+* You must create peering between the Ledger and Auditor VPCs.
+* You must create peering between the Ledger and Client VPCs.
+* You must create peering between the Auditor and Client VPCs.
+* You must update Ledger route tables with Auditor and Client VPC peering connections.
+* You must update Auditor route tables with Ledger and Client VPC peering connections.
+* You must update Client route tables with Ledger and Auditor VPC peering connections.
 
 ### Recommendations
 * You should create Network ACLs for Ledger and Auditor VPCs.
-* You should restrict all access from the Auditor and Client except scalardl envoy LoadBalancer ports (50051 and 50052) in the Ledger Network ACLs.
-* You should restrict all access from the Ledger and Client except scalardl auditor envoy LoadBalancer ports (40051 and 40052) in the Auditor Network ACLs.
+* You should set up the Network ACLs of the Ledger to restrict unused accesses.
+* You should set up the Network ACLs of the Auditor to restrict unused accesses.
 
 ### Steps
 
-* Create the peering between the Ledger and Auditor VPCs on the basis of [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html) with the above requirements.
-* Create the peering between the Ledger and Client VPCs on the basis of [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html) with the above requirements.
-* Create the peering between the Auditor and Client VPCs on the basis of [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html) with the above requirements.
-* Update Ledger route tables with Auditor and Client VPC peering connections based on [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html).
-* Update Auditor route tables with Ledger and Client VPC peering connections based on [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html).
-* Update Client route tables with Ledger and Auditor VPC peering connections based on [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html).
+* Create peering between the Ledger, Auditor and Client VPCs based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html) with the above requirements.
+* Update route tables for VPC peering connection based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html) with the above requirements.
 * Add new Inbound and Outbound rule to restrict unwanted access to Ledger and Auditor.
-    * Add new Inbound rules to the Ledger Network ACLs to allow the Ledger Envoy LoadBalancer (50051, 50052) access from the Auditor and Client.
+    * Add new Inbound rules to the Ledger Network ACLs to allow the Ledger Envoy LoadBalancer (e.g., 50051 and 50052 by default) access from the Auditor and Client.
         * You must set high priority to this rule.
     * Add new Inbound rules to the Ledger Network ACLs to allow ssh access from the internet.
         * You must set second priority to this rule.
@@ -72,7 +70,7 @@ so you need to add peering for internal communication between the Auditor, Ledge
         * You must set third priority to this rule.
     * Add new Outbound rules to the Ledger Network ACLs to allow all access to the internet.
     * Add Ledger private subnets to subnet associations of the Ledger Network ACLs.
-    * Add new Inbound rules to the Auditor Network ACLs to allow the Auditor Envoy LoadBalancer (40051, 40052) access from the Ledger and Client.
+    * Add new Inbound rules to the Auditor Network ACLs to allow the Auditor Envoy LoadBalancer (e.g., 40051, 40052 by default) access from the Ledger and Client.
         * You must set high priority to this rule.
     * Add new Inbound rules to the Auditor Network ACLs to allow ssh access from the internet.
         * You must set second priority to this rule.
@@ -98,7 +96,7 @@ You must install Helm on your bastion to deploy [helm-charts](https://github.com
 
 ### Recommendations
 
-* You should confirm that the replica count of the Auditor and Envoy pods in the `scalardl-audit-custom-values.yaml` file is equal to the number of nodes in the `scalardlpool`.
+* You should set the replica count of the Auditor and Envoy pods in the `scalardl-audit-custom-values.yaml` file, which should be equal to the number of nodes in the `scalardlpool`. Otherwise, there is a chance for resource shortage for pod creation.
 * You should keep an equal number of pods for Envoy, Ledger and Auditor.
 
 ### Steps
