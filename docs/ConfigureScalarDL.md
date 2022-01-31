@@ -27,7 +27,7 @@ kubectl create secret generic scalardl --from-literal db-username=<username> --f
 
 #### Configure schema-loading-custom-values
 
-To create the Scalar DL schema in Cosmos DB, you need to update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file.
+To create a Scalar DL schema in Cosmos DB, you need to update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file.
 
 **With Kubernetes secrets**
 
@@ -56,7 +56,7 @@ schemaLoading:
 
 #### Configure scalardl-custom-values 
 
-To deploy the Scalar DL Ledger on Cosmos DB, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
+To deploy Scalar DL Ledger on Cosmos DB, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
 
 **With Kubernetes secrets**
 
@@ -83,7 +83,7 @@ ledger:
     dbStorage: cosmos
 ```
 
-To enable the Auditor service, you can follow the [Enable Auditor](#enable-auditor) section.
+To enable Auditor service, you can follow the [Enable Auditor](#enable-auditor) section.
 
 #### Configure scalardl-audit-custom-values
 
@@ -94,7 +94,7 @@ To deploy the Scalar DL Auditor on Cosmos DB, you need to update the [scalardl-a
 If you have created the `scalardl` Kubernetes secret, you can use the following configuration.
 
 ```yaml
-audit:
+auditor:
   existingSecret: scalardl
   ....
   scalarAuditorConfiguration:
@@ -107,7 +107,7 @@ audit:
 If you have not created the `scalardl` Kubernetes secret, you can use the following configuration.
 
 ```yaml
-audit:
+auditor:
   ....
   scalarAuditorConfiguration:
     dbContactPoints: <Cosmos DB account endpoint>
@@ -191,7 +191,7 @@ To deploy the Scalar DL Auditor on DynamoDB, you need to update the [scalardl-au
 If you have created the `scalardl` Kubernetes secret, you can use the following configuration.
 
 ```yaml
-audit:
+auditor:
   existingSecret: scalardl
   ....
   scalarAuditorConfiguration:
@@ -204,7 +204,7 @@ audit:
 If you have not created the `scalardl` Kubernetes secret, you can use the following configuration.
 
 ```yaml
-audit:
+auditor:
   ....
   scalarAuditorConfiguration:
     dbStorage: dynamo
