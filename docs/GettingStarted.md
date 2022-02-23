@@ -37,7 +37,7 @@ scalar-kubernetes is a collection of scripts that deploys Scalar DL to a Kuberne
 
 scalar-kubernetes has Terraform scripts for creating a set of infrastructure on Azure using modules of [scalar-terraform](https://github.com/scalar-labs/scalar-terraform). It creates Azure Kubernetes Service (AKS) as well as a virtual network, database (Cassandra and Cosmos DB on Azure are supported) resources, and a monitoring/logging service using Prometheus, Grafana, and td-agent. For details, please refer to [How to Create Azure AKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/AKSScalarTerraformDeploymentGuide.md).
 
-Alternatively, you can use a Kubernetes cluster set up in your own way. For the examples to create Kubernetes services such as AKS on Azure or EKS on AWS manually, please refer to [How to Manually Create AKS Cluster for Scalar DL deployment](./AKSManualDeploymentGuide.md) and [How to Manually Create EKS Cluster for Scalar DL deployment](./EKSManualDeploymentGuide.md).
+Alternatively, you can use a Kubernetes cluster set up in your own way. For the examples to create Kubernetes services such as AKS on Azure or EKS on AWS manually, please refer to [How to Manually Create AKS Cluster for Scalar DL deployment](./ManualDeploymentGuideScalarDLOnAzure.md) and [How to Manually Create EKS Cluster for Scalar DL deployment](./ManualDeploymentGuideScalarDLOnAWS.md).
 
 ## Deploying Scalar DL on Kubernetes Service
 

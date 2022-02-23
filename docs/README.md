@@ -4,8 +4,8 @@
 * Create a Kubernetes cluster
   * [How to Create a Kubernetes cluster in Azure AKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/tree/master/docs/AKSScalarTerraformDeploymentGuide.md)
   * [How to Create a Kubernetes cluster in Amazon EKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/tree/master/docs/EKSScalarTerraformDeploymentGuide.md)
-  * [How to Manually Create AKS Cluster for Scalar DL deployment](./AKSManualDeploymentGuide.md)
-  * [How to Manually Create EKS Cluster for Scalar DL deployment](./EKSManualDeploymentGuide.md)
+  * [How to Manually Create AKS Cluster for Scalar DL deployment](./ManualDeploymentGuideScalarDLOnAzure.md)
+  * [How to Manually Create EKS Cluster for Scalar DL deployment](./ManualDeploymentGuideScalarDLOnAWS.md)
 * Deploy Scalar DL on a Kubernetes cluster
   * [How to install Kubernetes CLI and Helm on the bastion](./PrepareBastionTool.md)
   * [How to Deploy Scalar DL on Kubernetes with Ansible](./DeployScalarDLAnsible.md)
