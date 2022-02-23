@@ -1,14 +1,21 @@
-# Maintain Scalar DL pods 
+# Maintain Scalar DL pods
 
 This document shows how to maintain Scalar DL pods.
 
 ## Adjust the number of pods
 
-You can adjust the number of pods of Ledger and Envoy based on your requirements by updating the number of `replicaCount` as shown below to the desired number respectively in `scalardl-custom-values.yaml`.
+You can adjust the number of pods in Ledger, Auditor and Envoy based on your requirements by updating the number of `replicaCount` as shown below to the desired number respectively in `scalardl-custom-values.yaml` and `scalardl-audit-custom-values.yaml`.
+
 
 Ledger
 ```yaml
 ledger:
+  replicaCount: 6
+```
+
+Auditor
+```yaml
+auditor:
   replicaCount: 6
 ```
 
@@ -22,11 +29,23 @@ Note that the number of deployable pods depends on the number of available nodes
 
 ## Adjust the resource of pods
 
-You can adjust the resource of Ledger and Envoy pods based on your requirements by updating the following parts in `scalardl-custom-values.yaml`.
+You can adjust the resource of Ledger, Auditor and Envoy pods based on your requirements by updating the following parts in `scalardl-custom-values.yaml` and `scalardl-audit-custom-values.yaml`.
 
 Ledger
 ```yaml
 ledger:
+  resources:
+    requests:
+      cpu: 1500m
+      memory: 2Gi
+    limits:
+      cpu: 1600m
+      memory: 4Gi
+```
+
+Auditor
+```yaml
+auditor:
   resources:
     requests:
       cpu: 1500m
@@ -52,11 +71,11 @@ More information can be found in [the official document](https://kubernetes.io/d
 
 ## Expose Envoy endpoint to public
 
-Scalar DL supports both public and private endpoints. 
-A public endpoint allows you to access Scalar DL and deploy applications from outside the network. 
-A private endpoint allows you to access Scalar DL and deploy applications only from the same network as a Kubernetes cluster. 
+Scalar DL supports both public and private endpoints.
+A public endpoint allows you to access Scalar DL and deploy applications from outside the network.
+A private endpoint allows you to access Scalar DL and deploy applications only from the same network as a Kubernetes cluster.
 
-You can change the setting by updating the following annotation (`aws-load-balancer-internal` for AWS and `azure-load-balancer-internal` for Azure) In `scalardl-custom-values.yaml`, 
+You can change the setting by updating the following annotation (`aws-load-balancer-internal` for AWS and `azure-load-balancer-internal` for Azure) In `scalardl-custom-values.yaml`,
 
 ```yaml
 envoy:

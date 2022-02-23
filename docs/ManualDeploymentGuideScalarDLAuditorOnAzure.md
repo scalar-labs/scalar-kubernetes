@@ -130,7 +130,7 @@ Note:
 * The chart version can be obtained from `helm search repo scalar-labs` output.
 * `helm ls -a` command can be used to list currently installed releases.
 * You should confirm the `load-audit-schema` deployment has been completed with `kubectl get pods -o wide` before installing Scalar DL Auditor.
-* Follow the [Maintain Scalar DL Pods](./MaintainPods-1.md) for maintaining Scalar DL pods with Helm.
+* Follow the [Maintain Scalar DL Pods](./MaintainPods.md) for maintaining Scalar DL pods with Helm.
 * Register the certificate for the Ledger and Auditor before starting the client application.
     * Ledger needs to register its certificate to Auditor, and Auditor needs to register its certificate to Ledger.
 
