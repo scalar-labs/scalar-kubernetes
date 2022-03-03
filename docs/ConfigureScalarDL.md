@@ -18,8 +18,14 @@ You need to create a secret object with `db-username` and `db-password` to store
     # username=<AWS_ACCESS_KEY_ID>
     # password=<AWS_ACCESS_SECRET_KEY>
 
+# AWS RDS Databases(MySQL PostgreSQL, Oracle, SQL Server, Aurora), Azure Databases for MySQL, PostgreSQL
+   # username=<ACCOUNT_USERNAME>
+   # password=<ACCOUNT_PASSWORD>
+    
 kubectl create secret generic scalardl --from-literal db-username=<username> --from-literal db-password=<password>
 ```
+**Note**:- 
+* For Azure Database for MySQL use <ACCOUNT_USERNAME@HOST_NAME> instead of <ACCOUNT_USERNAME> as `username` value.
 
 ## Update Configuration Files 
 
@@ -214,6 +220,105 @@ auditor:
 ```
 
 To enable the Auditor service, you can follow the [Enable Auditor](#enable-auditor) section.
+
+### AWS RDS Databases(MySQL PostgreSQL, Oracle, SQL Server, Aurora), Azure Databases for MySQL, PostgreSQL
+
+#### Requirements
+
+* The JDBC connection URL (`JDBC_CONNECTION_URL`) format may vary according to the cloud service provider and database you choose. Please check the official documentation and confirm the connection URL format.
+* For `Azure Database for MySQL` use <ACCOUNT_USERNAME@HOST_NAME> instead of <ACCOUNT_USERNAME> for `username` and `dbUsername` values when updating the configuration files.
+
+#### Configure schema-loading-custom-values
+
+To create the Scalar DL schema in AWS RDS databases, you need to update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file.
+
+**With Kubernetes secrets**
+
+If you have created the `scalardl` Kubernetes secret, you can use the following configuration.
+
+```yaml
+schemaLoading:
+  existingSecret: scalardl
+
+  database: jdbc
+  contactPoints: <JDBC_CONNECTION_URL>
+```
+
+**Without Kubernetes secrets**
+
+If you have not created the `scalardl` Kubernetes secret, you can use the following configuration.
+
+```yaml
+schemaLoading:
+  database: jdbc
+  contactPoints: <JDBC_CONNECTION_URL>
+  username: <ACCOUNT_USERNAME>
+  password: <ACCOUNT_PASSWORD>
+```
+
+#### Configure scalardl-custom-values
+
+To deploy the Scalar DL Ledger on AWS RDS databases, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
+
+**With Kubernetes secrets**
+
+If you have created the `scalardl` Kubernetes secret, you can use the following configuration.
+
+```yaml
+ledger:
+  existingSecret: scalardl
+  ....
+  scalarLedgerConfiguration:
+    dbStorage: jdbc
+    dbContactPoints: <JDBC_CONNECTION_URL>
+```
+
+**Without Kubernetes secrets**
+
+If you have not created the `scalardl` Kubernetes secret, you can use the following configuration.
+
+```yaml
+ledger:
+  ....
+  scalarLedgerConfiguration:
+    dbStorage: jdbc
+    dbContactPoints: <JDBC_CONNECTION_URL>
+    dbUsername: <ACCOUNT_USERNAME>
+    dbPassword: <ACCOUNT_PASSWORD>
+```
+
+To enable the Auditor service, you can follow the [Enable Auditor](#enable-auditor) section.
+
+#### Configure scalardl-audit-custom-values
+
+To deploy the Scalar DL Auditor on any AWS RDS databases, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
+
+**With Kubernetes secrets**
+
+If you have created the `scalardl` Kubernetes secret, you can use the following configuration.
+
+```yaml
+auditor:
+  existingSecret: scalardl
+  ....
+  scalarAuditorConfiguration:
+    dbStorage: jdbc
+    dbContactPoints: <JDBC_CONNECTION_URL>
+```
+
+**Without Kubernetes secrets**
+
+If you have not created the `scalardl` Kubernetes secret, you can use the following configuration.
+
+```yaml
+auditor:
+  ....
+  scalarAuditorConfiguration:
+    dbStorage: jdbc
+    dbContactPoints: <JDBC_CONNECTION_URL>
+    dbUsername: <ACCOUNT_USERNAME>
+    dbPassword: <ACCOUNT_PASSWORD>
+```
 
 ### Enable Auditor 
 
