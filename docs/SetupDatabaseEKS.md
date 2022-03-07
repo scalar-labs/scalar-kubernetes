@@ -37,17 +37,17 @@ By default, monitoring is enabled on DynamoDB.
 
 More information can be found in [DynamoDB Metrics and Dimensions documentation](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html).
 
-## AWS RDS Databases (excluding Aurora)
+## AWS RDS for MySQL, PostgreSQL, Oracle, SQL Server
 
 Amazon Relational Database Service(RDS) is a cloud-based distributed relational database service by Amazon Web Services.
-It provides MySQL, PostgreSQL, Oracle, SQL Server, Maria DB databases.
+It provides MySQL, PostgreSQL, Oracle, SQL Server databases.
 Scalar DL and Scalar DB support the following AWS RDS databases.
 * AWS RDS for MySQL
 * AWS RDS for PostgreSQL
 * AWS RDS for Oracle
 * AWS RDS for SQL Server
 
-In this section, you will create an AWS RDS Database(Mysql/PostgreSQL/Oracle/SQL Server).
+In this section, you will create an AWS RDS for Mysql/PostgreSQL/Oracle/SQL Server.
 
 ### Recommendations
 
