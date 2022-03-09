@@ -1,6 +1,6 @@
-# Set up a database for Scalar DL/Scalar DB deployment on EKS
+# Set up a database for Scalar DB/Scalar DL deployment on EKS
 
-This guide explains how to set up a database for Scalar DL/Scalar DB deployment on EKS.
+This guide explains how to set up a database for Scalar DB/Scalar DL deployment on EKS.
 
 ## DynamoDB
 
@@ -39,7 +39,7 @@ More information can be found in [DynamoDB Metrics and Dimensions documentation]
 
 ## AWS RDS for MySQL, PostgreSQL, Oracle, SQL Server
 
-Amazon Relational Database Service(RDS) is a cloud-based distributed relational database service by Amazon Web Services.
+Amazon Relational Database Service(RDS) is a cloud-based distributed relational database service provided by Amazon Web Services.
 It provides MySQL, PostgreSQL, Oracle, SQL Server databases.
 Scalar DL and Scalar DB support the following AWS RDS databases.
 * AWS RDS for MySQL
@@ -47,13 +47,13 @@ Scalar DL and Scalar DB support the following AWS RDS databases.
 * AWS RDS for Oracle
 * AWS RDS for SQL Server
 
-In this section, you will create an AWS RDS for Mysql/PostgreSQL/Oracle/SQL Server.
+In this section, you will create an AWS RDS for MySQL/PostgreSQL/Oracle/SQL Server.
 
 ### Recommendations
 
-* Select SSD for storage.
-
-You can check the [official guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.html#CHAP_BestPractices.DiskPerformance) to learn more about AWS RDS best practices.
+* You should select either [General Purpose SSD storage](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#Concepts.Storage.GeneralSSD) or [Provisioned IOPS SSD storage](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS) for storage according to your requirements.
+    * You should select the storage type and amount of storage to ensure that adequate IOPS is available as per your requirements.
+* You should check the [official guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.html#CHAP_BestPractices.DiskPerformance) to learn more about AWS RDS best practices.
 
 ### Steps
 
@@ -66,7 +66,7 @@ You can also add read replicas to improve read-heavy database workloads.
 
 #### Autoscaling
 
-You can autoscale storage in RDS. You can also autoscale IOPS and storage to a threshold of your choice if you select `Provisioned IOPS SSD` as the `storage type`.
+You can autoscale storage in RDS. You can read more about it [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html). You can also autoscale IOPS to a threshold of your choice if you select `Provisioned IOPS SSD` as the `storage type`.
 
 ### Monitoring AWS RDS
 
@@ -76,11 +76,11 @@ You can follow the [official guide](https://docs.aws.amazon.com/AmazonRDS/latest
 ## AWS Aurora
 
 Amazon Aurora is a MySQL and PostgreSQL-compatible relational database built for the cloud.
-In this section, you will create an AWS Aurora Database(MySQL/PostgreSQL).
+In this section, you will create an AWS Aurora Database for MySQL/PostgreSQL.
 
 ### Recommendations
 
-You can check the best practices for AWS Aurora from the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.BestPractices.html).
+* You should check the best practices for AWS Aurora from the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.BestPractices.html).
 
 ### Steps
 
@@ -99,6 +99,3 @@ Autoscaling can be enabled in AWS Aurora if you have created the AWS Aurora clus
 
 By default, AWS Aurora Databases have monitoring enabled.
 You can check the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Monitoring.html) for more information.
-
-**Note**:-
-* Please note that Scalar DL and Scalar DB only support the AWS Aurora 3 version compatible with MySQL 8.
