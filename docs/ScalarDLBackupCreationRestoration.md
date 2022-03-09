@@ -1,13 +1,13 @@
 # Scalar DL Backup Creation on Kubernetes
 
-This guide shows you how to create and restore Scalar DL backups on Cosmos DB and DynamoDB without any data inconsistency.
+This guide shows you how to create and restore Scalar DL backups on Cosmos DB and DynamoDB without data inconsistencies.
 
 ## Prerequisites
 
-* Read the [Scalar DL Backup Creation and Restoration](https://github.com/scalar-labs/scalardl/blob/master/docs/backup-restore.md)
-* Scalar DL must be deployed in a Kubernetes cluster
-* Cosmos DB account must be created with the backup policy `continuous` if you use Cosmos DB.
-* DynamoDB schema must be created with scalardl schema loader (It enables PITR).
+* Read the Scalar DL backup creation and restoration guide, [see](https://github.com/scalar-labs/scalardl/blob/master/docs/backup-restore.md)
+* Scalar DL Ledger (and Auditor) must be deployed in a Kubernetes cluster
+* Cosmos DB account must be created with the backup policy `continuous` if you use Cosmos DB
+* DynamoDB tables must be created with point-in-time recovery (by default, scalardl-schema-loader enables PITR)
 
 ## Backup Creation
 
@@ -15,9 +15,9 @@ This section shows how to create a transactionally-consistent backup for Scalar 
 
 ### Requirements
 
-* You must enable Point In Time Restore in the backend database.
+* You must enable point-in-time recovery/restore in the backend database.
 * You must wait at least 10 sec after pausing to create a backup.
-* You must identify a unique `Point In Time Restoration` for the Ledger and Auditor if you use both the Ledger and Auditor. 
+* You must identify a unique `point-in-time recovery/restore` point for the Ledger and Auditor if you use both the Ledger and Auditor. 
 
 ### Find SRV service URL
 
@@ -64,7 +64,7 @@ kubectl get pods scalaradminutils
 
 ### Pause
 
-Use the following command to pause the Scalar DL service for few seconds
+Use the following command to pause the Scalar DL service for a few seconds
 
 ```console
 kubectl exec -i -t scalaradminutils -- ./bin/scalar-admin -c pause -s <SRV_Service_URL>
@@ -84,4 +84,3 @@ kubectl exec -i -t scalaradminutils -- ./bin/scalar-admin -c unpause -s <SRV_Ser
 
 To restore the backup, you must follow the [Restore Backup](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md#restore-backup) section.
 You must restore Scalar DL Ledger and Auditor tables with the same restore point if you use Ledger and Auditor.
- 
