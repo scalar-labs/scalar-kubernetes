@@ -5,7 +5,7 @@ This guide shows you how to create and restore Scalar DL backups on Cosmos DB an
 ## Prerequisites
 
 * Read the Scalar DL backup creation and restoration guide, [see](https://github.com/scalar-labs/scalardl/blob/master/docs/backup-restore.md)
-* Scalar DL Ledger (and Auditor) must be deployed in a Kubernetes cluster
+* Scalar DL Ledger (and Auditor) must be deployed in the Kubernetes cluster
 * Cosmos DB account must be created with the backup policy `continuous` if you use Cosmos DB
 * DynamoDB tables must be created with point-in-time recovery (by default, scalardl-schema-loader enables PITR)
 
@@ -16,7 +16,7 @@ This section shows how to create a transactionally-consistent backup for Scalar 
 ### Requirements
 
 * You must enable point-in-time recovery/restore in the backend database.
-* You must wait at least 10 sec after pausing to create a backup.
+* You must wait at least 10 sec (based on clock drift) after pausing to create a backup.
 * You must identify a unique `point-in-time recovery/restore` point for the Ledger and Auditor if you use both the Ledger and Auditor. 
 
 ### Find SRV service URL
@@ -74,7 +74,7 @@ Note:-
 
 ### Unpause
 
-Use the following command to unpause the Scalar DL service after finding a common restore point based on the clock drift of Ledger and Auditor
+Use the following command to unpause the Scalar DL service after finding a restore point.
 
 ```console
 kubectl exec -i -t scalaradminutils -- ./bin/scalar-admin -c unpause -s <SRV_Service_URL>
