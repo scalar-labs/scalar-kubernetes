@@ -1,6 +1,6 @@
-# Set up a database for Scalar DL/Scalar DB deployments in AKS
+# Set up a database for Scalar DB/Scalar DL deployments in AKS
 
-This guide explains how to set up a database for Scalar DL/Scalar DB deployments in AKS.
+This guide explains how to set up a database for Scalar DB/Scalar DL deployments in AKS.
 
 ## Cosmos DB
 
