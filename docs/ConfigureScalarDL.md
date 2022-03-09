@@ -19,8 +19,8 @@ You need to create a secret object with `db-username` and `db-password` to store
     # password=<AWS_ACCESS_SECRET_KEY>
 
 # JDBC Databases
-   # username=<ACCOUNT_USERNAME>
-   # password=<ACCOUNT_PASSWORD>
+   # username=<USERNAME>
+   # password=<PASSWORD>
     
 kubectl create secret generic scalardl --from-literal db-username=<username> --from-literal db-password=<password>
 ```
