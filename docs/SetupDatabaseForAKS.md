@@ -50,22 +50,24 @@ In this section, you will create an Azure Database for MySQL.
 
 ### Recommendations
 
-* You should choose Flexible or Single server deployment for Azure Database for MySQL. You can check the [official documentation](https://docs.microsoft.com/en-us/azure/mysql/select-right-deployment-type) to learn more about the differences between Flexible and Single server deployments.
+* You should choose Flexible or Single server deployment for Azure Database for MySQL. You can check the [official documentation](https://docs.microsoft.com/en-us/azure/mysql/select-right-deployment-type) to learn more.
 * You should select a deployment that suits your IOPS requirements.
     * For Single server deployments, IOPS is defined on the amount of storage provisioned(3 IOPS/GB).
     * For Flexible server deployments, additional IOPS can be provisioned and the maximum threshold will be defined by the storage and the database instance chosen.
 
 ### Steps
 
-You can follow [official documentation](https://docs.microsoft.com/en-us/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal) to create an Azure Database for MySQL server for Single server deployment.
-For creating a flexible server deployment for Azure Database for MySQL, you can follow this [official guide](https://docs.microsoft.com/en-us/azure/mysql/flexible-server/quickstart-create-server-portal).
+For creating an Azure Database for MySQL, 
+* For Single Server deployment, follow this [official documentation](https://docs.microsoft.com/en-us/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal).
+* For creating a flexible server deployment, follow this [official documentation](https://docs.microsoft.com/en-us/azure/mysql/flexible-server/quickstart-create-server-portal).
 
 ### Scale Performance
 
 **Scaling storage**:- You can enable the `storage auto grow` feature to automatically increase storage when it reaches a threshold without impacting the workload.
 
-You can scale resources based on the deployment you choose. For Single server deployment, you can refer to the [official documentation](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for scaling resources.
-For Flexible server deployments, additional IOPS can be provisioned. You can read more about it [here](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#iops).
+You can scale resources based on the deployment you choose.
+* For Single server deployment, you can refer to the [official documentation](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for scaling resources.
+* For Flexible server deployments, you can read more about scaling resources [here](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources).
 
 ### Monitoring Azure Database for MySQL
 
@@ -87,16 +89,17 @@ In this section, you will create an Azure Database for PostgreSQL.
 
 ### Steps
 
-You can follow the [official documentation](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal) to create an Azure Database for PostgreSQL server for Single server deployment.
-For creating a flexible server deployment for Azure Database for PostgreSQL, you can follow this [official guide](https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/quickstart-create-server-portal).
+For creating an Azure Database for PostgreSQL,
+* For Single server deployment, follow the [official documentation](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal).
+* For Flexible server deployment, follow this [official documentation](https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/quickstart-create-server-portal).
 
 ### Scale Performance
 
 **Scaling storage**:- You can enable the `storage auto grow` feature to automatically increase storage when it reaches a threshold without impacting the workload. Please note this feature is not yet available for Flexible server deployment for Azure Databases for PostgreSQL.
 
-You can scale resources based on the deployment you choose. For Single server deployment, you can refer to the [official documentation](https://docs.microsoft.com/en-gb/azure/postgresql/concepts-pricing-tiers#scale-resources) for scaling resources.
-For Flexible server deployments, additional IOPS can be provisioned. You can read more about maximum IOPS utilization [here](https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-compute-storage#maximum-iops-for-your-configuration).
-
+You can scale resources based on the deployment you choose. 
+* For Single server deployment, you can refer to the [official documentation](https://docs.microsoft.com/en-gb/azure/postgresql/concepts-pricing-tiers#scale-resources) for scaling resources.
+* For Flexible server deployment, you can read more about scaling resources [here](https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-compute-storage#scale-resources).
 
 ### Monitoring Azure Database for PostgreSQL
 
