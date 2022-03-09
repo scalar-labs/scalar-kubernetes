@@ -64,7 +64,7 @@ so you need to add peering for internal communication between the Auditor, Ledge
     * Peering between Ledger and Client.
     * Peering between Auditor and Client.
 * Update route tables for VPC peering connection based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html).
-* Add new Inbound and Outbound rule to restrict unwanted access to Ledger and Auditor.
+* Add new Inbound and Outbound rules to restrict unwanted access to Ledger and Auditor.
     * Add new Inbound rules to Ledger Network ACLs to allow ephemeral ports (1024–65535) to access Ledger Envoy LoadBalancer (e.g., 50051 and 50052 by default) from Auditor and Client.
         * You must set high priority to this rule.
     * Add new Inbound rules to Ledger Network ACLs to restrict all ports except ephemeral ports from Auditor and Client.
