@@ -16,8 +16,12 @@ This section shows how to create a transactionally-consistent backup for Scalar 
 ### Requirements
 
 * You must enable point-in-time recovery/restore in the backend database.
-* You must wait at least 10 sec (based on clock drift) after pausing to create a backup.
 * You must identify a unique `point-in-time recovery/restore` point for the Ledger and Auditor if you use both the Ledger and Auditor. 
+
+### Recommendations
+
+* You should pause a long enough time (e.g., 10 seconds) 
+* You should use mid-time of the paused duration as a restore point
 
 ### Find SRV service URL
 
