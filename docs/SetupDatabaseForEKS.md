@@ -73,18 +73,18 @@ You can autoscale storage in RDS. You can read more about it [here](https://docs
 By default, AWS RDS Databases have monitoring enabled.
 You can follow the [official guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html) to learn more about monitoring.
 
-## AWS Aurora
+## Amazon Aurora
 
 Amazon Aurora is a MySQL and PostgreSQL-compatible relational database built for the cloud.
-In this section, you will create an AWS Aurora Database for MySQL/PostgreSQL.
+In this section, you will create an Amazon Aurora Database for MySQL/PostgreSQL.
 
 ### Recommendations
 
-* You should check the best practices for AWS Aurora from the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.BestPractices.html).
+* You should check the best practices for Amazon Aurora from the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.BestPractices.html).
 
 ### Steps
 
-You can create an AWS Aurora cluster based on the [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html).
+You can create an Amazon Aurora cluster based on the [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html).
 
 ### Scale Performance
 
@@ -93,9 +93,9 @@ You can read more about this [here](https://docs.aws.amazon.com/AmazonRDS/latest
 
 #### Autoscaling
 
-Autoscaling can be enabled in AWS Aurora if you have created the AWS Aurora cluster with one primary instance and at least on Aurora Replica. You can read more about it [here](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html).
+Autoscaling can be enabled in Amazon Aurora if you have created the Amazon Aurora cluster with one primary instance and at least on Aurora Replica. You can read more about it [here](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html).
 
-### Monitor AWS Aurora
+### Monitor Amazon Aurora
 
-By default, AWS Aurora Databases have monitoring enabled.
+By default, Amazon Aurora Databases have monitoring enabled.
 You can check the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Monitoring.html) for more information.
