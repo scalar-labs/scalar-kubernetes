@@ -20,8 +20,8 @@ This section shows how to create a transactionally-consistent backup for Scalar 
 
 ### Recommendations
 
-* You should pause a long enough time (e.g., 10 seconds) 
-* You should use mid-time of the paused duration as a restore point
+* You should pause Scalar DL services for enough time (e.g., 10 seconds)  to create point-in-time recovery/restore
+* You should use mid-time of the paused duration as a restore point since clock synchronization cannot perfectly synchronize clocks between nodes
 
 ### Find SRV service URL
 
