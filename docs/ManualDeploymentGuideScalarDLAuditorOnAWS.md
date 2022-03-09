@@ -65,17 +65,17 @@ so you need to add peering for internal communication between the Auditor, Ledge
     * Peering between Auditor and Client.
 * Update route tables for VPC peering connection based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html).
 * Add new Inbound and Outbound rules to restrict unwanted access to Ledger and Auditor.
-    * Add new Inbound rules to Ledger Network ACLs to allow ephemeral ports (1024–65535) to access Ledger Envoy LoadBalancer (e.g., 50051 and 50052 by default) from Auditor and Client.
+    * Add new Inbound rules to Ledger Network ACLs to allow ephemeral ports (1024–65535) to access Ledger Envoy LoadBalancer (e.g., 50051 and 50052 by default) from the Auditor and Client.
         * You must set high priority to this rule.
-    * Add new Inbound rules to Ledger Network ACLs to restrict all ports except ephemeral ports from Auditor and Client.
+    * Add new Inbound rules to Ledger Network ACLs to restrict access to all ports except ephemeral ports from the Auditor and Client.
         * You must set the next priority to this rule.
     * Add new Inbound rules to Ledger Network ACLs to allow all access from the internet.
         * You must set the next priority to this rule.
     * Add new Outbound rules to the Ledger Network ACLs to allow all access to the internet.
     * Add all Ledger subnets to subnet associations of Ledger Network ACLs.
-    * Add new Inbound rules to Auditor Network ACLs to allow ephemeral ports (1024–65535) to access Auditor Envoy LoadBalancer (e.g., 40051 and 40052 by default) from Ledger and Client.
+    * Add new Inbound rules to Auditor Network ACLs to allow ephemeral ports (1024–65535) to access Auditor Envoy LoadBalancer (e.g., 40051 and 40052 by default) from the Ledger and Client.
         * You must set high priority to this rule.
-    * Add new Inbound rules to Auditor Network ACLs to restrict all ports except ephemeral ports from Ledger and Client.
+    * Add new Inbound rules to Auditor Network ACLs to restrict access to all ports except ephemeral ports from the Ledger and Client.
         * You must set the next priority to this rule.
     * Add new Inbound rules to Ledger Network ACLs to allow all access from the internet.
         * You must set the next priority to this rule.
