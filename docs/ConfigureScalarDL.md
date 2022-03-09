@@ -25,6 +25,9 @@ You need to create a secret object with `db-username` and `db-password` to store
 kubectl create secret generic scalardl --from-literal db-username=<username> --from-literal db-password=<password>
 ```
 
+**Note**:-
+* For Azure Database for MySQL use <USERNAME@HOSTNAME> instead of <USERNAME> for `username` value.
+
 ## Update Configuration Files 
 
 ### Cosmos DB
@@ -220,6 +223,16 @@ auditor:
 To enable the Auditor service, you can follow the [Enable Auditor](#enable-auditor) section.
 
 ### JDBC Databases
+
+The JDBC databases supported by Scalar DL are listed below.
+* AWS RDS for MySQL
+* AWS RDS for PostgreSQL
+* AWS RDS for Oracle
+* AWS RDS for SQL Server
+* Amazon Aurora MySQL
+* Amazon Aurora PostgreSQL
+* Azure Database for MySQL
+* Azure Database for PostgreSQL
 
 #### Configure schema-loading-custom-values
 
