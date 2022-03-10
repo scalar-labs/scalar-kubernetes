@@ -56,22 +56,22 @@ In this section, you will create an AWS RDS for MySQL/PostgreSQL/Oracle/SQL Serv
 
 ### Steps
 
-You can follow this [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html) to create a database instance.
+Follow this [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html) to create a database instance.
 
 ### Scale Performance
 
 You can scale up or scale down the instance and memory used. In addition, AWS also has the option to provide additional storage.
-You can also add read replicas to improve read-heavy database workloads.
+It is also possible to add read replicas to improve read-heavy database workloads.
 
 #### Autoscaling
 
-You can autoscale storage in RDS. You can read more about it [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html). You can also autoscale IOPS to a threshold of your choice if you select `Provisioned IOPS SSD` as the `storage type`.
+AWS RDS provides the option to autoscale storage. Read more about it [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html). It is also possible to autoscale IOPS to a threshold of your choice if you select `Provisioned IOPS SSD` as the `storage type`.
 
 ### Monitoring AWS RDS
 
 By default, AWS RDS Databases have monitoring enabled.
 
-You can follow the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html) to learn more about monitoring.
+Follow the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html) to learn more about monitoring.
 
 ## Amazon Aurora
 
@@ -84,7 +84,7 @@ In this section, you will create an Amazon Aurora Database for MySQL/PostgreSQL.
 
 ### Steps
 
-You can create an Amazon Aurora cluster based on the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html).
+To create an Amazon Aurora cluster, follow the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html).
 
 ### Scale Performance
 
