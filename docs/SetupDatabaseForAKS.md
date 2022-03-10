@@ -53,7 +53,7 @@ In this section, you will create an Azure Database for MySQL.
 * You should choose Flexible or Single server deployment for Azure Database for MySQL. You can check the [Azure documentation](https://docs.microsoft.com/en-us/azure/mysql/select-right-deployment-type) to learn more.
 * You should select a deployment that suits your IOPS requirements.
     * For Single server deployments, IOPS is defined on the amount of storage provisioned(3 IOPS/GB).
-    * For Flexible server deployments, additional IOPS can be provisioned and the maximum IOPS capacity will be defined by the storage and the database instance chosen.
+    * For Flexible server deployments, it is possible to scale IOPS and the maximum IOPS capacity will be defined by the amount of storage and the database instance chosen.
 
 ### Steps
 
@@ -85,7 +85,7 @@ In this section, you will create an Azure Database for PostgreSQL.
 * You should select Flexible or Single server deployment for Azure Database for PostgreSQL. You can refer to [Azure documentation](https://docs.microsoft.com/en-us/azure/postgresql/overview-postgres-choose-server-options) to check and compare which option suits you best.
 * You should select a deployment that suits your IOPS requirements.
     * For Single server deployments, IOPS is defined on the amount of storage provisioned(3 IOPS/GB).
-    * For Flexible server deployments, additional IOPS can be provisioned and the maximum IOPS capacity will be defined by the storage and the database instance chosen.
+    * For Flexible server deployments, it is possible to scale IOPS and the maximum IOPS capacity will be defined by the amount of storage and the database instance chosen.
 
 ### Steps
 
@@ -95,7 +95,7 @@ For creating an Azure Database for PostgreSQL,
 
 ### Scale Performance
 
-**Scaling storage**:- You can enable the `storage auto grow` feature to automatically increase storage when it reaches a threshold without impacting the workload. Please note this feature is not yet available for Flexible server deployment for Azure Databases for PostgreSQL.
+**Scaling storage**:- The `storage auto grow` feature to automatically increase storage when it reaches a threshold without impacting the workload. Please note this feature is not yet available for Flexible server deployment for Azure Databases for PostgreSQL.
 
 You can scale resources based on the deployment you choose. 
 * For Single server deployment, refer to the [Azure documentation](https://docs.microsoft.com/en-gb/azure/postgresql/concepts-pricing-tiers#scale-resources) for scaling resources.
