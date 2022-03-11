@@ -52,11 +52,11 @@ In this section, you will create an AWS RDS for MySQL/PostgreSQL/Oracle/SQL Serv
 
 * You should select either [General Purpose SSD storage](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#Concepts.Storage.GeneralSSD) or [Provisioned IOPS SSD storage](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS) for storage according to your requirements.
     * You should select the storage type and amount of storage to ensure that adequate IOPS is available as per your requirements.
-* You should check the [AWS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.html#CHAP_BestPractices.DiskPerformance) to learn more about AWS RDS best practices.
+* You should check the [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.html#CHAP_BestPractices.DiskPerformance) to learn more about AWS RDS best practices.
 
 ### Steps
 
-Follow this [AWS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html) to create a database instance.
+Follow this [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html) to create a database instance.
 
 ### Scale Performance
 You can scale up or scale down the instance and memory used. In addition, AWS also has the option to provide additional storage.
@@ -70,7 +70,7 @@ AWS RDS provides the option to autoscale storage. Read more about it [here](http
 
 By default, AWS RDS Databases have monitoring enabled.
 
-Follow the [AWS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html) to learn more about monitoring.
+Follow this [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html) to learn more about monitoring.
 
 ## Amazon Aurora
 
@@ -79,11 +79,11 @@ In this section, you will create an Amazon Aurora Database for MySQL/PostgreSQL.
 
 ### Recommendations
 
-* You should check the best practices for Amazon Aurora from the [AWS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.BestPractices.html).
+* You should check the best practices for Amazon Aurora from the [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.BestPractices.html).
 
 ### Steps
 
-To create an Amazon Aurora cluster, follow the [AWS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html).
+To create an Amazon Aurora cluster, follow the [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html).
 
 ### Scale Performance
 
@@ -92,10 +92,10 @@ Read more about this [here](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraU
 
 #### Autoscaling
 
-Autoscaling can be enabled in Amazon Aurora if you have created the Amazon Aurora cluster with one primary instance and at least on Aurora Replica. Read more about it [here](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html).
+Autoscaling can be enabled in Amazon Aurora if you have created the Amazon Aurora cluster with one primary instance and at least one Aurora Replica. Read more about it [here](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html).
 
 ### Monitor Amazon Aurora
 
 By default, Amazon Aurora Databases have monitoring enabled.
 
-Refer the [AWS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Monitoring.html) for more information.
+Refer the [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Monitoring.html) for more information.
