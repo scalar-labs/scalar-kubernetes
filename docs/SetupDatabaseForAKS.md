@@ -69,7 +69,7 @@ Resources can be scaled based on the deployment you select.
 * For Single server deployment, refer to the [Azure documentation](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for scaling resources.
 * For Flexible server deployments, read more about scaling resources [here](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources).
 
-### Monitoring Azure Database for MySQL
+### Monitor Azure Database for MySQL
 
 By default, Azure Database for MySQL servers has monitoring enabled.
 
@@ -100,7 +100,7 @@ You can scale resources based on the deployment you choose.
 * For Single server deployment, refer to the [Azure documentation](https://docs.microsoft.com/en-gb/azure/postgresql/concepts-pricing-tiers#scale-resources) for scaling resources.
 * For Flexible server deployment, read more about scaling resources [here](https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-compute-storage#scale-resources).
 
-### Monitoring Azure Database for PostgreSQL
+### Monitor Azure Database for PostgreSQL
 
 By default, Azure Database for PostgreSQL servers has monitoring enabled.
 
