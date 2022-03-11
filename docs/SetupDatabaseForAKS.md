@@ -1,6 +1,6 @@
-# Set up a database for Scalar DB/Scalar DL deployments in AKS
+# Set up a database for Scalar DB/Scalar DL deployment in AKS
 
-This guide explains how to set up a database for Scalar DB/Scalar DL deployments in AKS.
+This guide explains how to set up a database for Scalar DB/Scalar DL deployment in AKS.
 
 ## Cosmos DB
 
@@ -51,7 +51,7 @@ In this section, you will create an Azure Database for MySQL.
 ### Recommendations
 
 * You should choose Flexible or Single server deployment for Azure Database for MySQL. You can check the [Azure documentation](https://docs.microsoft.com/en-us/azure/mysql/select-right-deployment-type) to learn more.
-* You should select a deployment that suits your IOPS requirements.
+* You should select a deployment that meets your IOPS requirements.
     * For Single server deployments, IOPS is defined on the amount of storage provisioned(3 IOPS/GB).
     * For Flexible server deployments, it is possible to scale IOPS and the maximum IOPS capacity will be defined by the amount of storage and the database instance chosen.
 
