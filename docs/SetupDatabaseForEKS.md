@@ -83,7 +83,7 @@ In this section, you will create an Amazon Aurora Database for MySQL/PostgreSQL.
 
 ### Steps
 
-To create an Amazon Aurora cluster, follow the [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html).
+To create an Amazon Aurora cluster, follow this [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html).
 
 ### Scale Performance
 
