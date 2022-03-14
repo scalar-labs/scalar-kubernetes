@@ -15,11 +15,11 @@ In this section, you will create a Cosmos DB account.
 ### Recommendations
 
 * You should configure the backup policy as `Continuous` for Point-in-time-restore (PITR).
-* You should configure the service endpoint based on [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-configure-vnet-service-endpoint) to restrict access to Cosmos DB for production.
+* You should configure the service endpoint based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-configure-vnet-service-endpoint) to restrict access to Cosmos DB for production.
 
 ### Steps
 
-* Create an Azure Cosmos DB account based on [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal#create-an-azure-cosmos-db-account) with the above requirements.
+* Create an Azure Cosmos DB account based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal#create-an-azure-cosmos-db-account) with the above requirements.
 
 ### Scale Performance
 
