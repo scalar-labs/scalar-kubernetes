@@ -64,27 +64,27 @@ so you need to add peering for internal communication between the Auditor, Ledge
     * Peering between Ledger and Client.
     * Peering between Auditor and Client.
 * Update route tables for VPC peering connection based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html).
-* Add new Inbound and Outbound rules to restrict unwanted access to the Ledger.
-    * Add new Inbound rules to Ledger Network ACLs to allow ephemeral ports (1024–65535) to access Ledger Envoy LoadBalancer (e.g., 50051 and 50052 by default) from the Auditor and Client.
+* Add new Inbound and Outbound rules to Ledger Network ACLs to restrict unwanted access to the Ledger.
+    * Add new Inbound rules to allow ephemeral ports (1024–65535) to access Ledger Envoy LoadBalancer (e.g., 50051 and 50052 by default) from the Auditor and Client.
         * You must set high priority to these rules.
-    * Add new Inbound rules to Ledger Network ACLs to restrict all access from the Auditor and Client.
+    * Add new Inbound rules to restrict all access from the Auditor and Client.
         * You must set the next priority to these rules.
-    * Add a new Inbound rule to Ledger Network ACLs to allow all access from the same Ledger VPC
+    * Add a new Inbound rule to allow all access from the same Ledger VPC.
         * You must set the next priority to this rule.
-    * Add a new Inbound rule to Ledger Network ACLs to allow ephemeral ports (1024–65535) access from the internet.
+    * Add a new Inbound rule to allow ephemeral ports (1024–65535) access from the internet.
         * You must set the next priority to this rule.
-    * Add a new Outbound rule to Ledger Network ACLs to allow all access to the internet.
+    * Add a new Outbound rule to allow all access to the internet.
     * Add Ledger private subnets to subnet associations of the Ledger Network ACLs.
-* Add new Inbound and Outbound rules to restrict unwanted access to the Auditor.
-    * Add new Inbound rules to Auditor Network ACLs to allow ephemeral ports (1024–65535) to access Auditor Envoy LoadBalancer (e.g., 40051 and 40052 by default) from the Ledger and Client.
+* Add new Inbound and Outbound rules to Auditor Network ACLs to restrict unwanted access to the Auditor.
+    * Add new Inbound rules to allow ephemeral ports (1024–65535) to access Auditor Envoy LoadBalancer (e.g., 40051 and 40052 by default) from the Ledger and Client.
         * You must set high priority to these rules.
-    * Add new Inbound rules to Auditor Network ACLs to restrict all access from the Ledger and Client.
+    * Add new Inbound rules to restrict all access from the Ledger and Client.
         * You must set the next priority to these rules.
-    * Add a new Inbound rule to Auditor Network ACLs to allow all access from the same Auditor VPC.
+    * Add a new Inbound rule to allow all access from the same Auditor VPC.
         * You must set the next priority to this rule.
-    * Add a new Inbound rule to Auditor Network ACLs to allow ephemeral ports (1024–65535) access from the internet.
+    * Add a new Inbound rule to allow ephemeral ports (1024–65535) access from the internet.
         * You must set the next priority to this rule.
-    * Add a new Outbound rule to Auditor Network ACLs to allow all access to the internet.
+    * Add a new Outbound rule to allow all access to the internet.
     * Add Auditor private subnets to subnet associations of the Auditor Network ACLs.
 
 Note: - We expect you have created the Client VPC for your application deployment.
