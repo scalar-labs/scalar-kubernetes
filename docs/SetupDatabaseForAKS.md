@@ -61,8 +61,8 @@ For creating an Azure Database for MySQL,
 **Scaling resources**
 
 Resources can be scaled based on the deployment you select.
-* Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for scaling single server resources.
-* Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources) for scaling flexible server resources.
+* Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for scaling single server deployment resources.
+* Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources) for scaling flexible server deployment resources.
 
 **Scaling storage**
 
