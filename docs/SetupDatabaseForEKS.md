@@ -48,11 +48,6 @@ Scalar DL and Scalar DB support the following AWS RDS databases.
 
 In this section, you will create an AWS RDS for MySQL/PostgreSQL/Oracle/SQL Server.
 
-### Recommendations
-
-* You should select either [General Purpose SSD storage](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#Concepts.Storage.GeneralSSD) or [Provisioned IOPS SSD storage](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS) for storage according to your requirements.
-    * You should select the storage type and amount of storage to ensure that adequate IOPS is available as per your requirements.
-
 ### Steps
 
 Follow this [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html) to create a database instance.
@@ -63,7 +58,7 @@ It is also possible to add read replicas to improve read-heavy database workload
 
 #### Autoscaling
 
-AWS RDS provides the option to autoscale storage. Read more about it [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html). It is also possible to autoscale IOPS to a threshold of your choice if you select `Provisioned IOPS SSD` as the `storage type`.
+AWS RDS provides the option to autoscale storage. Read more about it in this [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html).
 
 ### Monitor AWS RDS
 
