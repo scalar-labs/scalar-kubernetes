@@ -50,7 +50,7 @@ In this section, you will create an AWS RDS for MySQL/PostgreSQL/Oracle/SQL Serv
 
 ### Steps
 
-Follow this [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html) to create a database instance.
+Follow this [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html) to create a database instance.
 
 ### Scale Performance
 You can scale up or scale down the instance and memory used. In addition, AWS also has the option to provide additional storage.
@@ -58,10 +58,10 @@ It is also possible to add read replicas to improve read-heavy database workload
 
 #### Autoscaling
 
-AWS RDS provides the option to autoscale storage. Read more about it in this [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html).
+AWS RDS provides the option to autoscale storage. Check the [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html) to learn more.
 
 ### Monitor AWS RDS
 
 By default, AWS RDS Databases have monitoring enabled.
 
-Follow this [AWS guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html) to learn more about monitoring.
+Follow this [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html) to learn more about monitoring.
