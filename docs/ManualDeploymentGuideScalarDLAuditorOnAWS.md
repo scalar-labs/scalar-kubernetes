@@ -70,7 +70,7 @@ so you need to add peering for internal communication between the Auditor, Ledge
     * Add a new Inbound rule to allow ephemeral ports 1024–65535 access from the internet.
         * You must set the next priority to this rule.
     * Add a new Outbound rule to allow all access to the internet.
-    * Add private subnets of Ledger and Auditor to subnet associations of the appropriate Network ACLs.
+    * Add private subnets of Ledger and Auditor to the subnet associations of the respective Network ACLs.
 
 Note: - We expect you have created the Client VPC for your application deployment.
 
