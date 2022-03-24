@@ -1,6 +1,7 @@
 # Set up a database for Scalar DB/Scalar DL deployment in AKS
 
 This guide explains how to set up a database for Scalar DB/Scalar DL deployment in AKS.
+Databases mentioned in this guide are provided by Azure.
 
 ## Cosmos DB
 
@@ -27,15 +28,15 @@ Cosmos DB performance can be adjusted using the following parameters.
 
 #### Request Units (RU)
 
-Request unit is a performance currency abstracting the system resources such as CPU, IOPS, and memory that are required to perform the database operations supported by Azure Cosmos DB.
+Request unit is a performance currency abstracting the system resources that are required to perform the database operations supported by Azure Cosmos DB.
 You can scale the throughput of Cosmos DB by specifying `cosmosBaseResourceUnit` (which applies to all the tables) in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml).
-Scalar schema tool abstracts Request Unit of Cosmos DB with RU. So please set the appropriate value.
+
 
 #### Autoscale
 
-Autoscale provisioned throughput in Azure Cosmos DB allows you to scale the throughput (RU/s) of your database or container automatically and instantly.
-The throughput is scaled based on the usage, without impacting the availability, latency, throughput, or performance of the workload.
-By default, the scalardl schema tool enables autoscale of RU for all tables: RU is scaled in or out between 10% and 100% of a specified RU depending on a workload.
+Autoscale provisioned throughput in Azure Cosmos DB allows you to scale the throughput (RU/s).
+You can read more about this from the [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/provision-throughput-autoscale).
+By default, the Scalar schema tool enables autoscale of RU for all tables.
 
 ### Monitor Cosmos DB
 
