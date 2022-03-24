@@ -8,7 +8,7 @@ In this section, you will create a Cosmos DB account.
 
 ### Requirements
 
-* You must create a Cosmos DB account with `Core(SQL)` API.
+* You must create a Cosmos DB account with the `Core(SQL)` API.
 * You must change Cosmos DB `Default consistency` to `Strong`.
 * You must use Capacity mode as `Provisioned throughput`.
 
