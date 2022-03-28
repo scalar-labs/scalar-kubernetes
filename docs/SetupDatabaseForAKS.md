@@ -48,9 +48,9 @@ For creating an Azure Database for MySQL,
 
 #### Scale Performance
 
-* Resources can be scaled based on the deployment you select.
-  * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for scaling single server resources.
-  * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources) for scaling flexible server resources.
+* You can scale resources like vCores, storage after the deployment from Azure portal or Azure CLI.
+  * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for learning more about scaling single server resources.
+  * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources) for learning more about scaling flexible server resources.
 
 Note:-
 
