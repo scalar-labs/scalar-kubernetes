@@ -23,11 +23,12 @@ In this section, you will create a Cosmos DB account.
 
 #### Scale Performance
 
-*  Update the `cosmosBaseResourceUnit` (which applies to all the tables) in [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml) to scale throughput of Cosmos DB (By default the value is 10).
+*  Update the `cosmosBaseResourceUnit` value in the [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml) to scale throughput of Cosmos DB, by default the value is 10.
 
 Note:-
-* By default, the scalar DL schema loader enables autoscale of [Request Units](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units) (RU) for all tables: RU is scaled in or out between 10% and 100% of a specified RU depending on a workload.
-* Autoscale provisioned throughput in Azure Cosmos DB allows you to scale the throughput (RU/s). You can read more about this from the [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/provision-throughput-autoscale).
+
+* The `cosmosBaseResourceUnit` value set in the [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml) applies to all tables.
+* By default, the scalar DL schema loader enables autoscale of [Request Units](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units) (RU) for all tables.
 
 
 ### Monitor Cosmos DB
@@ -41,19 +42,17 @@ More information can be found in [Monitor Azure Cosmos DB](https://docs.microsof
 In this section, you will create an Azure Database for MySQL.
 
 ### Steps
+
 You can choose Flexible or Single server deployment for Azure Database for MySQL, follow the [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/select-right-deployment-type) to learn more.
 For creating an Azure Database for MySQL, 
 * For Single Server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal).
 * For creating a flexible server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/flexible-server/quickstart-create-server-portal).
 
-#### Scale Performance
-
-* You can scale resources like vCores, storage after the deployment from Azure portal or Azure CLI.
-  * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for learning more about scaling single server resources.
-  * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources) for learning more about scaling flexible server resources.
-
 Note:-
 
+* You can scale resources like vCores, storage after the deployment from the Azure portal.
+  * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for learning more about scaling single server resources.
+  * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources) for learning more about scaling flexible server resources.
 * The `storage auto grow` feature automatically increases storage when it reaches a threshold without impacting the workload. It is enabled by default.
 
 ### Monitor Azure Database for MySQL
