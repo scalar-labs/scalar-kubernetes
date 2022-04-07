@@ -1,4 +1,4 @@
-``# Set up a database for Scalar DB/Scalar DL deployment in Azure
+# Set up a database for Scalar DB/Scalar DL deployment in Azure
 
 This guide explains how to set up a database for Scalar DB/Scalar DL deployment in Azure.
 
