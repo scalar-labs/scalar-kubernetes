@@ -23,9 +23,8 @@ In this section, you will create a Cosmos DB account.
 
 Optional steps:-
 
-* You can set up additional monitoring services, refer to the [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db) documentation to learn more.
-  * By default, monitoring (metrics) will be enabled in Cosmos DB.
-* For performance scaling, update the `cosmosBaseResourceUnit` value in the [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml) to scale the throughput of Cosmos DB.
+* Configure advanced monitoring services with [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db) guide, by default monitoring (metrics) will be enabled in Cosmos DB.
+* Update the `cosmosBaseResourceUnit` value in the [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml) to scale the throughput of Cosmos DB.
 
 Note:-
 
@@ -47,12 +46,11 @@ You can choose Flexible or Single server deployment for Azure Database for MySQL
 
 Optional steps:-
 
-* You can set up additional monitoring services on the Azure Database for MySQL server, refer to the [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/concepts-monitoring) to learn more.
-  * By default, monitoring (metrics) is enabled in Azure Database for MySQL.
-* You can scale resources like vCores and storage after the deployment from the Azure portal.
+* Configure advanced monitoring services with [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/concepts-monitoring), monitoring (metrics) is enabled in Azure Database for MySQL by default.
+* To scale resources like vCores and storage after the deployment from the Azure portal,
   * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for learning more about scaling single server resources.
   * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources) for learning more about scaling flexible server resources.
   
 Note:-
 
-* The [Storage auto-grow](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#storage-auto-grow) feature automatically increases storage without impacting the workload. It is enabled by default.
+* The [Storage auto-grow](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#storage-auto-grow) feature automatically increases storage without impacting the workload, is enabled by default in server configuration while creating an Azure Database for MySQL instance.
