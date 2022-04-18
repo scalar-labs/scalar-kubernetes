@@ -52,11 +52,6 @@ so you need to add peering for internal communication between the Auditor, Ledge
 * You must create peering between Ledger, Auditor, and Client VPCs to enable communication between private networks.
 * You must update Ledger, Auditor, and Client route tables for VPC peering connections.
 
-### Recommendations
-
-* You should create Network ACLs for Ledger and Auditor VPCs.
-* You should set up the Network ACLs of the Ledger and Auditor to restrict unused accesses.
-
 ### Steps
 
 * Create 3 peering connections between the Ledger, Auditor and Client VPCs based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html).
@@ -64,23 +59,6 @@ so you need to add peering for internal communication between the Auditor, Ledge
     * Peering between Ledger and Client.
     * Peering between Auditor and Client.
 * Update route tables for VPC peering connection based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-routing.html).
-* Add new Inbound and Outbound rule to restrict unwanted access to Ledger and Auditor.
-    * Add new Inbound rules to the Ledger Network ACLs to allow the Ledger Envoy LoadBalancer (e.g., 50051 and 50052 by default) access from the Auditor and Client.
-        * You must set high priority to this rule.
-    * Add new Inbound rules to the Ledger Network ACLs to allow ssh access from the internet.
-        * You must set second priority to this rule.
-    * Add new Inbound rules to Ledger Network ACLs to allow all access to Ledger VPC.
-        * You must set third priority to this rule.
-    * Add new Outbound rules to the Ledger Network ACLs to allow all access to the internet.
-    * Add Ledger private subnets to subnet associations of the Ledger Network ACLs.
-    * Add new Inbound rules to the Auditor Network ACLs to allow the Auditor Envoy LoadBalancer (e.g., 40051, 40052 by default) access from the Ledger and Client.
-        * You must set high priority to this rule.
-    * Add new Inbound rules to the Auditor Network ACLs to allow ssh access from the internet.
-        * You must set second priority to this rule.
-    * Add new Inbound rules to Auditor Network ACLs to allow all access to Auditor VPC.
-        * You must set third priority to this rule.
-    * Add new Outbound rules to the Auditor Network ACLs to allow all access to the internet.
-    * Add Auditor private subnets to subnet associations of the Auditor Network ACLs.
 
 Note: - We expect you have created the Client VPC for your application deployment.
 
