@@ -186,7 +186,7 @@ Scalar DL Auditor のインストール完了後、インストールが正常�
       scalardb.metadata
       ```
 
-* Kubernetes 上に Pod と Service リソースが正常にデプロイされているかどうかは、踏み台サーバー上で kubectl get pods,services -o wide コマンドを実行することで確認できます。
+* Kubernetes 上に Pod と Service リソースが正常にデプロイされているかどうかは、踏み台サーバー上で `kubectl get pods,services -o wide` コマンドを実行することで確認できます。
     * すべての Auditor と Envoy の Pod のステータスが `Running` であることを確認します。
     * Scalar DL Auditor Envoy サービスの `EXTERNAL-IP` が作成されていることを確認します。
    ```console
