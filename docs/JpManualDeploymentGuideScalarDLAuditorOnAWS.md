@@ -113,7 +113,7 @@ EKS クラスタを作成後、EKS クラスタに Scalar DL をデプロイし�
 ### 推奨事項
 
 * `scalardl-audit-custom-values.yaml` ファイルで設定されている Auditor と Envoy の Pod のレプリカ数 (replicaCount の設定値) を、Scalar DL 用のノードグループ内のノード数と同にすることを推奨します。
-    * デフォルトで提供されている `scalardl-audit-custom-values.yaml` では `podAntiAffinity` が設定さているため、Scalar DL 用のノードグループ内のノード 1つにつき、Auditor と Envoy が 1つ (1組) のみ動作します。
+    * デフォルトで提供されている `scalardl-audit-custom-values.yaml` では `podAntiAffinity` が設定されているため、Scalar DL 用のノードグループ内のノード 1つにつき、Auditor と Envoy が 1つ (1組) のみ動作します。
     * 1つのノード上で複数組の Auditor と Envoy を動作させる場合は、 `scalardl-audit-custom-values.yaml` 内の `podAntiAffinity` の設定を変更してください。
 
 ### 手順
