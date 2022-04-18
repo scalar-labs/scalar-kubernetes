@@ -40,7 +40,7 @@ You can choose Flexible or Single server deployment for Azure Database for MySQL
 * To create an Azure Database for MySQL, 
   * For Single Server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal).
   * For creating a flexible server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/flexible-server/quickstart-create-server-portal).
-* (Optional) Configure advanced monitoring services with the [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/concepts-monitoring), monitoring (metrics) is enabled in Azure Database for MySQL by default.
+* (Optional) Configure advanced monitoring services with the [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/concepts-monitoring), monitoring is enabled in Azure Database for MySQL by default.
 * (Optional) To scale resources like vCores and storage after the deployment,
   * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for learning more about scaling single server resources.
   * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources) for learning more about scaling flexible server resources.
