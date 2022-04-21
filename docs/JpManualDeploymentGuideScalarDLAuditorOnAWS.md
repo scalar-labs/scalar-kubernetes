@@ -1,7 +1,9 @@
 # AWS での Scalar DL Auditor 導入方法
 
-Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と同一の情報を管理するコンポーネントです。  
 本ガイドでは、Scalar DL Auditor を Amazon Web Services (AWS) のマネージド Kubernetes サービス (EKS) 上に手動でデプロイする方法を説明します。
+
+* Scalar DL Ledger は、改ざん検知可能なレコード (アセット) をデータベースに格納するコンポーネントです。詳細は、[Getting Started with Scalar DL](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md) のガイドを参照してください。また、AWS での Scalar DL Ledger の導入方法については[こちらのドキュメント](./docs/JpManualDeploymentGuideScalarDLOnAWS.md)を参照してください。
+* Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と同一の情報を管理するコンポーネントです。詳細は、[Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) のガイドを参照してください。
 
 ## 作成するコンポーネント
 
