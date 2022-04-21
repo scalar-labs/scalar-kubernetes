@@ -2,7 +2,7 @@
 
 Scalar DL は、データベースに依存しない分散型台帳ミドルウェアで、Docker コンテナとして提供されています。  
 様々なプラットフォームに展開可能ですが、高い可用性と拡張性、保守性を実現するために、本番環境ではマネージドサービス上に展開することが推奨されています。  
-本ガイドでは、Scalar DL Ledger を Amazon Web Services (AWS) のマネージドデータベースサービス (DynamoDB) とマネージド Kubernetes サービス (EKS) 上に手動でデプロイする方法を説明します。  
+本ガイドでは、Scalar DL Ledger を Amazon Web Services (AWS) のマネージド Kubernetes サービス (EKS) 上に手動でデプロイする方法を説明します。
 
 Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と同一の情報を管理するコンポーネントです。  
 詳細は、[Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) のガイドを参照してください。  
@@ -17,8 +17,8 @@ Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と
 * Scalar DL 用のノードグループを持つ EKS クラスタ
     * 最低 1 つのノードグループ (Scalar DL 専用のノードグループ) を作成します。
     * 他のコンテナ (アプリケーションコンテナ等) を同一クラスタ内にデプロイする場合は、アプリケーション用のノードグループを必要に応じて別途作成します。
-* マネージドデータベースサービス
-    * 本ガイドでは DynamoDB を利用します。
+* データベース
+    * Scalar DL が対応しているデータベースが必要です。
 * パブリック IP を持つ踏み台サーバー
     * EKS 用の VPC 内にパブリック IP を持つ踏み台サーバーを作成します。
     * 以下のように、EKS クラスタの各リソースにパブリックなアクセスが実施できる場合は、必須ではありません。
@@ -60,8 +60,7 @@ Scalar DL は、アプリケーションの機密性の高いデータを扱う�
 
 ### 要件
 
-* Scalar DL Ledger が対応しているデータベースが必要です。
-    * 本ガイドでは DynamoDB を利用します。
+* Scalar DL が対応しているデータベースが必要です。
 
 ### 手順
 
@@ -117,7 +116,7 @@ EKS クラスタを作成後、EKS クラスタに Scalar DL をデプロイし�
 ### 要件
 
 * GitHub Packages から `scalar-ledger` と `scalardl-schema-loader` のコンテナイメージを取得する権限が必要です。
-* Helm Charts 用の `scalardl-custom-values.yaml` ファイルでデータベース (DynamoDB) へ接続するためのプロパティを設定する必要があります。
+* Helm Charts 用の `scalardl-custom-values.yaml` ファイルでデータベースへ接続するためのプロパティを設定する必要があります。
 * Scalar DL Auditor を導入する場合は、`scalardl-custom-values.yaml` ファイル内で Auditor の利用に必要な設定 (`ledgerProofEnabled` 及び `ledgerAuditorEnabled`) を有効にする必要があります。
 * `ledgerProofEnabled` の設定を有効にする場合は、`ledger-keys` という名前の Secret リソース (Ledger 用の秘密鍵を含む Secret リソース) を作成する必要があります。
 
@@ -210,7 +209,7 @@ Scalar DL のインストール完了後、インストールが正常に完了�
 ### Scalar DL のデプロイメントを確認する
 
 * Ledger 用のスキーマ (テーブル) が、利用するデータベースに正しく作成されていることを確認します。
-    * DynamoDB を利用する場合、以下のテーブルが作成されます。
+    * データベース上に以下のテーブルが作成されます。
       ```console
       scalar.asset
       scalar.asset_metadata
@@ -222,6 +221,8 @@ Scalar DL のインストール完了後、インストールが正常に完了�
       coordinator.state
       scalardb.metadata
       ```
+    * 注意
+        * Cassandra を利用する場合、`scalardb.metadata` は作成されません。
 
 * Kubernetes 上に Pod と Service リソースが正常にデプロイされているかどうかは、踏み台サーバー上で `kubectl get pods,services -o wide` コマンドを実行することで確認できます。
     * すべての Ledger と Envoy の Pod のステータスが `Running` であることを確認します。
@@ -266,7 +267,7 @@ Scalar DL のインストール完了後、インストールが正常に完了�
 * Scalar DL
 * ノードグループ
 * EKS クラスタ
-* DynamoDB
+* データベース
 * 踏み台サーバー
 * NAT ゲートウェイ
 * VPC

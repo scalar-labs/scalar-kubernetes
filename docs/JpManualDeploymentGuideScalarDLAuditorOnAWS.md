@@ -1,7 +1,7 @@
 # AWS での Scalar DL Auditor 導入方法
 
 Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と同一の情報を管理するコンポーネントです。  
-本ガイドでは、Scalar DL Auditor を Amazon Web Services (AWS) のマネージドデータベースサービス (DynamoDB) とマネージド Kubernetes サービス (EKS) 上に手動でデプロイする方法を説明します。  
+本ガイドでは、Scalar DL Auditor を Amazon Web Services (AWS) のマネージド Kubernetes サービス (EKS) 上に手動でデプロイする方法を説明します。
 
 ## 作成するコンポーネント
 
@@ -13,8 +13,8 @@ Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と
 * Scalar DL 用のノードグループを持つ EKS クラスタ
     * 最低 1 つのノードグループ (Scalar DL 専用のノードグループ) を作成します。
     * 他のコンテナ (アプリケーションコンテナ等) を同一クラスタ内にデプロイする場合は、アプリケーション用のノードグループを必要に応じて別途作成します。
-* マネージドデータベースサービス
-    * 本ガイドでは DynamoDB を利用します。
+* データベース
+    * Scalar DL が対応しているデータベースが必要です。
 * パブリック IP を持つ踏み台サーバー
     * EKS 用の VPC 内にパブリック IP を持つ踏み台サーバーを作成します。
     * 以下のように、EKS クラスタの各リソースにパブリックなアクセスが実施できる場合は、必須ではありません。
@@ -34,7 +34,7 @@ Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と
 
 Scalar DL Auditor を利用する場合、1つの管理ドメインに対して全ての権限を持つ管理者はあらゆる悪意のある操作を行うことができてしまうため、本番環境では Ledger 用とは異なる管理ドメインに Auditor を導入することが強く推奨されます。しかし、本ガイドでは、説明を容易にするため、Ledger と同じ管理ドメイン (つまり、同じサブスクリプション上の別の EKS クラスタ) に Auditor を導入します。  
 
-Ledger 環境の作成手順を参考に、別の管理ドメインのネットワーク (VPC)、Auditor で利用するデータベース (DynamoDB)、EKS クラスタを構築し、Auditor を導入する必要があります。  
+Ledger 環境の作成手順を参考に、別の管理ドメインのネットワーク (VPC)、Auditor で利用するデータベース、EKS クラスタを構築し、Auditor を導入する必要があります。
 
 ### 要件
 
@@ -107,7 +107,7 @@ EKS クラスタを作成後、EKS クラスタに Scalar DL をデプロイし�
 ### 要件
 
 * GitHub Packages から `scalar-auditor` と `scalardl-schema-loader` のコンテナイメージを取得する権限が必要です。
-* Helm Charts 用の `scalardl-audit-custom-values.yaml` ファイルでデータベース (DynamoDB) へ接続するためのプロパティを設定する必要があります。
+* Helm Charts 用の `scalardl-audit-custom-values.yaml` ファイルでデータベースへ接続するためのプロパティを設定する必要があります。
 * Scalar DL Auditor を利用する場合は、`auditor-keys` という名前の Secret リソース (Auditor 用の秘密鍵と公開鍵を含む Secret リソース) を作成する必要があります。
 
 ### 推奨事項
@@ -175,7 +175,7 @@ Scalar DL Auditor のインストール完了後、インストールが正常�
 ### Scalar DL Auditor のデプロイメントを確認する
 
 * Auditor 用のスキーマ (テーブル) が、利用するデータベースに正しく作成されていることを確認します。
-    * DynamoDB を利用する場合、以下のテーブルが作成されます。
+    * データベース上に以下のテーブルが作成されます。
       ```console
       auditor.asset
       auditor.asset_lock
@@ -185,6 +185,8 @@ Scalar DL Auditor のインストール完了後、インストールが正常�
       auditor.request_proof
       scalardb.metadata
       ```
+    * 注意
+        * Cassandra を利用する場合、`scalardb.metadata` は作成されません。
 
 * Kubernetes 上に Pod と Service リソースが正常にデプロイされているかどうかは、踏み台サーバー上で `kubectl get pods,services -o wide` コマンドを実行することで確認できます。
     * すべての Auditor と Envoy の Pod のステータスが `Running` であることを確認します。
