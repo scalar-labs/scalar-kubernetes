@@ -8,7 +8,7 @@ By default, Amazon DynamoDB is available for all AWS users. You do not need to c
 Scalar schema loader [helm charts](https://github.com/scalar-labs/helm-charts/tree/main/charts/schema-loading) will help you to configure DynamoDB.
 
 * (Optional) You can scale the throughput of DynamoDB by setting the `dynamoBaseResourceUnit` value (which applies to all the tables) in the `schema-loading-custom-values.yaml` file.
-* (Optional)  Configure advanced monitoring services with [Azure official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring-automated-manual.html), by default monitoring is enabled in DynamoDB.
+* (Optional)  Configure advanced monitoring services with [Azure official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring-automated-manual.html), monitoring is enabled in DynamoDB by default.
 
 WARNING:
 
