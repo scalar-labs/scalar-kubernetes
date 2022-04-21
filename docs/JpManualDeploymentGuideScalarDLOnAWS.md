@@ -4,7 +4,7 @@ Scalar DL は、データベースに依存しない分散型台帳ミドルウ�
 様々なプラットフォームに展開可能ですが、高い可用性と拡張性、保守性を実現するために、本番環境ではマネージドサービス上に展開することが推奨されています。  
 本ガイドでは、Scalar DL Ledger を Amazon Web Services (AWS) のマネージドデータベースサービス (DynamoDB) とマネージド Kubernetes サービス (EKS) 上に手動でデプロイする方法を説明します。  
 
-Scalar DL Auditor は、Scalar DL Ledger の状態を管理し、クライアントがビザンチン障害を検出できるようにするオプションコンポーネントです。  
+Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と同一の情報を管理するコンポーネントです。  
 詳細は、[Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) のガイドを参照してください。  
 
 ## 作成するコンポーネント
@@ -174,7 +174,7 @@ EKS クラスタを作成後、EKS クラスタに Scalar DL をデプロイし�
 
 ## Step 5. Scalar DL Auditor を導入する
 
-Scalar DL Auditor は、ビザンチン障害を検出するためのオプションコンポーネントです。Auditor を使用すると、セキュリティの観点からは大きなメリットがありますが、追加でコストがかかります。
+Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と同一の情報を管理するコンポーネントです。Auditor を使用すると、セキュリティの観点からは大きなメリットがありますが、追加でコストがかかります。
 
 ### 要件
 

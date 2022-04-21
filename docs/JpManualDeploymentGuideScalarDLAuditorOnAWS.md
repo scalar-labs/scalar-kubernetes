@@ -1,6 +1,6 @@
 # AWS での Scalar DL Auditor 導入方法
 
-Scalar DL Auditor は、Ledger の状態を管理し、Scalar DL クライアントがビザンチン障害を検出できるようにするオプションコンポーネントです。  
+Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と同一の情報を管理するコンポーネントです。  
 本ガイドでは、Scalar DL Auditor を Amazon Web Services (AWS) のマネージドデータベースサービス (DynamoDB) とマネージド Kubernetes サービス (EKS) 上に手動でデプロイする方法を説明します。  
 
 ## 作成するコンポーネント
