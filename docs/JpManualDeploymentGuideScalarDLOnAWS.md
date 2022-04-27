@@ -1,12 +1,12 @@
 # AWS での Scalar DL 導入方法
 
 Scalar DL は、ビザンチン故障検知ミドルウェアです。
-Scalar DLは、データベース抽象化層であるScalar DBを用いているため様々なデータベース上で稼働し、Dockerコンテナとして提供されているため様々なプラットフォームに展開可能です。高い可用性と拡張性、保守性を実現するために、本番環境ではマネージドサービス上に展開することが推奨されています。  
+Scalar DLは、データベース抽象化層である Scalar DB を用いているため様々なデータベース上で稼働し、Docker コンテナとして提供されているため様々なプラットフォームに展開可能です。高い可用性と拡張性、保守性を実現するために、本番環境ではマネージドサービス上に展開することが推奨されています。  
 
 本ガイドでは、Scalar DL Ledger を Amazon Web Services (AWS) のマネージド Kubernetes サービス (EKS) 上に手動でデプロイする方法を説明します。
 
-* Scalar DL Ledger は、アプリケーションが管理するレコードをハッシュチェーン等を用いて台帳形式でデータベースに格納するコンポーネントです。詳細は、[Getting Started with Scalar DL](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md) のガイドを参照してください。
-* Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と同一の情報を管理するコンポーネントです。詳細は、[Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) のガイドを参照してください。また、AWS での Scalar DL Auditor の導入方法については[こちらのドキュメント](./docs/JpManualDeploymentGuideScalarDLAuditorOnAWS.md)を参照してください。
+* Scalar DL Ledger は、アプリケーションが管理するレコードをハッシュチェーン等を用いて台帳形式でデータベースに格納するコンポーネントです。使用方法は、[Getting Started with Scalar DL](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md) のガイドを参照してください。
+* Scalar DL Auditor は、Ledger が管理するデータベースと同等の情報を別の (管理ドメインの) データベースで管理するコンポーネントです。Auditor はシステムの要件等に応じて任意で導入するコンポーネントですが、Auditor を用いることにより、Ledger およびそれが管理するデータベース、もしくは Auditor およびそれが管理するデータベースのどちらが正しく動作する限り、データベースシステムにおけるビザンチン故障の検知を保証します。使用方法は、[Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) のガイドを参照してください。また、AWS での Scalar DL Auditor の導入方法については[こちらのドキュメント](./docs/JpManualDeploymentGuideScalarDLAuditorOnAWS.md)を参照してください。
 
 ## 作成するコンポーネント
 
@@ -174,7 +174,7 @@ EKS クラスタを作成後、EKS クラスタに Scalar DL をデプロイし�
 
 ## Step 5. Scalar DL Auditor を導入する
 
-Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と同一の情報を管理するコンポーネントです。Auditor を使用すると、セキュリティの観点からは大きなメリットがありますが、追加でコストがかかります。
+Auditor はシステムの要件等に応じて任意で導入するコンポーネントです。Auditor を用いると、ビザンチン故障の検知を保証できますが、Auditor 用のハードウェア資源が必要となり、また、トランザクションプロトコルが複雑化するため、Ledger 単体での使用と比較して性能が低下します。
 
 ### 要件
 

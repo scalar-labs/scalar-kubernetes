@@ -2,8 +2,8 @@
 
 本ガイドでは、Scalar DL Auditor を Amazon Web Services (AWS) のマネージド Kubernetes サービス (EKS) 上に手動でデプロイする方法を説明します。
 
-* Scalar DL Ledger は、改ざん検知可能なレコード (アセット) をデータベースに格納するコンポーネントです。詳細は、[Getting Started with Scalar DL](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md) のガイドを参照してください。また、AWS での Scalar DL Ledger の導入方法については[こちらのドキュメント](./docs/JpManualDeploymentGuideScalarDLOnAWS.md)を参照してください。
-* Scalar DL Auditor は、ビザンチン故障を検知するために Ledger と同一の情報を管理するコンポーネントです。詳細は、[Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) のガイドを参照してください。
+* Scalar DL Ledger は、アプリケーションが管理するレコードをハッシュチェーン等を用いて台帳形式でデータベースに格納するコンポーネントです。使用方法は、[Getting Started with Scalar DL](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md) のガイドを参照してください。また、AWS での Scalar DL Ledger の導入方法については[こちらのドキュメント](./docs/JpManualDeploymentGuideScalarDLOnAWS.md)を参照してください。
+* Scalar DL Auditor は、Ledger が管理するデータベースと同等の情報を別の (管理ドメインの) データベースで管理するコンポーネントです。Auditor はシステムの要件等に応じて任意で導入するコンポーネントですが、Auditor を用いることにより、Ledger およびそれが管理するデータベース、もしくは Auditor およびそれが管理するデータベースのどちらが正しく動作する限り、データベースシステムにおけるビザンチン故障の検知を保証します。使用方法は、[Getting Started with Scalar DL Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md) のガイドを参照してください。
 
 ## 作成するコンポーネント
 
@@ -84,7 +84,7 @@ Ledger、Auditor、及びクライアントアプリケーションを異なる 
     * Scalar DL にて必要な通信は以下の通りです。
         * クライアントから Ledger 用の Envoy (NLB) への通信 (例: デフォルトでは TCP/50051 及び TCP/50052)。
         * Auditor から Ledger 用の Envoy (NLB) への通信 (例: デフォルトでは TCP/50051 及び TCP/50052)。
-        * クライアントから Audior 用の Envoy (NLB) への通信 (例: デフォルトでは TCP/40051 及び TCP/40052)。
+        * クライアントから Auditor 用の Envoy (NLB) への通信 (例: デフォルトでは TCP/40051 及び TCP/40052)。
         * Ledger 用のワーカーノードからインターネット上 (GitHub Packages) への通信。
         * Auditor 用のワーカーノードからインターネット上 (GitHub Packages) への通信。
     * EKS クラスタの管理や動作の観点で、以下のような設定が必要にある場合もあるため、必要に応じて設定を実施してください。
