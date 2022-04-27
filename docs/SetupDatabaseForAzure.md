@@ -52,9 +52,11 @@ Note:-
 
 ## Azure Database for PostgreSQL
 
+Azure provides single and flexible server deployments for Azure Database for PostgreSQL, read the [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/overview-postgres-choose-server-options) to learn more.
+In this section, you will create an Azure Database for PostgreSQL server.
+
 ### Steps
 
-You need to choose Flexible or Single server deployment for Azure Database for PostgreSQL, read the [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/overview-postgres-choose-server-options) to learn more.
 * Create an Azure Database for PostgreSQL, 
   * For single server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal).
   * For flexible server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/quickstart-create-server-portal).
