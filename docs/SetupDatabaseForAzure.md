@@ -48,3 +48,25 @@ You can choose Flexible or Single server deployment for Azure Database for MySQL
 Note:-
 
 * The [Storage auto-grow](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#storage-auto-grow) feature automatically increases storage without impacting the workload and is enabled by default in server configuration while creating an Azure Database for MySQL instance.
+
+
+## Azure Database for PostgreSQL
+
+Azure provides single and flexible server deployments for Azure Database for PostgreSQL. Read the [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/overview-postgres-choose-server-options) to learn more.
+In this section, you will create an Azure Database for PostgreSQL server.
+
+### Steps
+
+You need to choose Flexible or Single server deployment for Azure Database for PostgreSQL.
+* Create an Azure Database for PostgreSQL, 
+  * For single server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal).
+  * For flexible server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/quickstart-create-server-portal).
+* (Optional) Configure advanced monitoring services with the [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/concepts-monitoring), monitoring is enabled in Azure Database for PostgreSQL by default.
+* (Optional) To scale resources like vCores and storage after the deployment,
+  * Read the [Azure official guide](https://docs.microsoft.com/en-gb/azure/postgresql/concepts-pricing-tiers#scale-resources) for learning more about scaling single server resources.
+  * Read the [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-compute-storage#scale-resources) for learning more about scaling flexible server resources.
+
+Note:-
+
+  * The [Storage auto-grow](https://docs.microsoft.com/en-gb/azure/postgresql/concepts-pricing-tiers#storage-auto-grow) feature automatically increases storage without impacting the workload and is enabled by default in server configuration while creating an Azure Database for PostgreSQL instance (not available in flexible server deployment as of now). 
+  
