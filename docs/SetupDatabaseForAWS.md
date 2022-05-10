@@ -17,3 +17,5 @@ By default, Amazon DynamoDB is available for all AWS users. You do not need to s
 Note:-
 
 * Scalar DL and Scalar DB schema loader sets the same value to both Read and Write Request Units (The default Read and Write Request Unit is 10).
+  
+* The Scalar DL and Scalar DB schema loader enable auto-scaling of Request Units for all tables by default.
