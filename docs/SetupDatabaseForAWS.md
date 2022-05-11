@@ -9,9 +9,10 @@ Amazon DynamoDB is available for all AWS users. You do not need to set up anythi
 ### Optional Steps
 
 * Configure advanced monitoring services with the [Azure official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring-automated-manual.html), monitoring is enabled in DynamoDB by default.
-* You can change the `Read/Write Capacity` of a DynamoDB table according to your requirement.
+* You can change the `Read/Write Capacity` of DynamoDB tables based on your requirements.
 
 Note:-
+
 * Scalar DB/DL schema loader will configure same Read/Write Capacity for all tables.
 
 ## AWS RDS for MySQL, PostgreSQL, Oracle, SQL Server
