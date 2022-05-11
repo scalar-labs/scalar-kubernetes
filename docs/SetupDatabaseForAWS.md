@@ -6,7 +6,7 @@ This guide explains how to set up a database for Scalar DB/Scalar DL deployment 
 
 Amazon DynamoDB is available for all AWS users. You do not need to set up anything manually.
 
-### Optional Steps
+### Optional steps
 
 * Configure advanced monitoring services with the [Azure official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring-automated-manual.html), monitoring is enabled in DynamoDB by default.
 * You can change the `Read/Write Capacity` of DynamoDB tables based on your requirements.
