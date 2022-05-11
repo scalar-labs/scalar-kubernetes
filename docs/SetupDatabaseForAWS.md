@@ -4,7 +4,7 @@ This guide explains how to set up a database for Scalar DB/Scalar DL deployment 
 
 ## DynamoDB
 
-By default, Amazon DynamoDB is available for all AWS users. You do not need to set up anything manually.
+Amazon DynamoDB is available for all AWS users. You do not need to set up anything manually.
 
 ### Steps
 
