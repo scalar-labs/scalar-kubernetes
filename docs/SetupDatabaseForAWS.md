@@ -13,7 +13,7 @@ Amazon DynamoDB is available for all AWS users. You do not need to set up anythi
 
 Note:-
 
-* Scalar DB/DL schema loader will configure same Read/Write Capacity for all tables.
+* Scalar DB/DL schema loader will configure the same Read/Write Capacity for all tables.
 
 ## AWS RDS for MySQL, PostgreSQL, Oracle, SQL Server
 
