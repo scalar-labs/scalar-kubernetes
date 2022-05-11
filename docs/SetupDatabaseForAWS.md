@@ -25,6 +25,6 @@ In this section, you will create an AWS RDS for MySQL/PostgreSQL/Oracle/SQL Serv
 
 Note:-
 * Baseline I/O performance for General Purpose SSD storage is 3 IOPS/GB, choose adequate storage to match your performance requirements.
-* If you choose `Provisioned IOPS SSD` as the `storage type`, you can set IOPS to a specified limit.
+* If you choose `Provisioned IOPS SSD` as the `storage type`, it will scale the IOPS up to a selected limit.
 
 
