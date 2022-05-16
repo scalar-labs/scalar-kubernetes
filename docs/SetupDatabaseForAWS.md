@@ -4,7 +4,7 @@ This guide explains how to set up a database for Scalar DB/Scalar DL deployment 
 
 ## DynamoDB
 
-Amazon DynamoDB is available for all AWS users. You do not need to set up anything manually.
+Amazon DynamoDB is readily available to use in AWS. You do not need to set up anything manually.
 
 ### Optional steps
 
@@ -25,7 +25,7 @@ In this section, you will create an AWS RDS for MySQL/PostgreSQL/Oracle/SQL Serv
 * (Optional) Configure advanced monitoring services with the [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html), monitoring is enabled by default on AWS RDS database instances.
 
 Note:-
-* Baseline I/O performance for General Purpose SSD storage is 3 IOPS/GB, choose adequate storage to match your performance requirements.
+* Baseline I/O performance for General Purpose SSD ( gp2 ) storage is 3 IOPS/GB, choose adequate storage to match your performance requirements.
 * If you choose `Provisioned IOPS SSD` as the `storage type`, it will scale the IOPS up to a selected limit.
 
 
