@@ -17,8 +17,6 @@ Note:-
 
 ## AWS RDS for MySQL, PostgreSQL, Oracle and SQL Server
 
-In this section, you will create an AWS RDS instance for MySQL/PostgreSQL/Oracle/SQL Server.
-
 ### Steps
 
 * Follow this [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html) to create an AWS RDS MySQL/PostgreSQL/Oracle/SQL Server database instance.
