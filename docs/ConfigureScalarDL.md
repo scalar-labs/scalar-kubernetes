@@ -28,13 +28,13 @@ kubectl create secret generic scalardl --from-literal db-username=<username> --f
 ```
 Note-:
 
-For Cosmos DB, use account name as `username` since we can't leave the `db-uername` property empty.
+For Cosmos DB, use the account name as `username` since we can't leave the `db-uername` property empty.
 
 ### Configure schema-loading-custom-values
 
 To create a Scalar DL schema in Cosmos DB, you need to update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file.
 You can refer to the [section](#kubernetes-secret-and-schema-loading-reference) to check which values are needed based on the database used.
-If any configuration property value is defined as `N/A` in the reference table for your database, you can remove that configuration property.
+If any configuration property value is defined as `N/A` in the reference table for your database, you can remove that property from the configuration file.
 
 **With Kubernetes secrets**
 
@@ -80,7 +80,7 @@ You can refer the table below to update the [scalardl-custom-values.yaml](../con
 
 To deploy Scalar DL Ledger on Cosmos DB, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
 You can refer to the [section](#ledger-and-auditor-reference) to check which values are needed based on the database used.
-If any configuration property value is defined as `N/A` in the reference table for your database, you can remove that configuration property.
+If any configuration property value is defined as `N/A` in the reference table for your database, you can remove that property from the configuration file.
 
 **With Kubernetes secrets**
 
@@ -112,7 +112,7 @@ ledger:
 
 To deploy the Scalar DL Auditor on Cosmos DB, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
 You can refer to the [section](#ledger-and-auditor-reference) to check which values are needed based on the database used.
-If any configuration property value is defined as `N/A` in the reference table for your database, you can exclude or remove that property.
+If any configuration property value is defined as `N/A` in the reference table for your database, you can remove that property from the configuration file.
 
 **With Kubernetes Secrets**
 
