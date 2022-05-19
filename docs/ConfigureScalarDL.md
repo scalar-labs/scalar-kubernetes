@@ -6,13 +6,13 @@ This guide explains how to configure Scalar DL custom values in helm charts for 
 
 ### Kubernetes Secrets and Schema Loading reference
 
-You can refer to the table below to get values to set create Kubernetes Secrets and update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file properties file according to the database you chose for deployment.
+You can refer to the table below to get values to create Kubernetes Secrets and update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file according to the database you chose
 
-| Database  | database | contactPoints              | username          | password                             | dynamoBaseResourceUnit | cosmosBaseResourceUnit | 
-|:----------|----------|----------------------------|-------------------|--------------------------------------|------------------------|------------------------|
-| DynamoDB  | dynamo   | REGION                     | AWS_ACCESS_KEY_ID | AWS_ACCESS_SECRET_KEY                | 10                     | N/A                    |
-| Cosmos DB | cosmos   | Cosmos DB account endpoint | N/A               | Cosmos DB account primary master key | N/A                    | 400                    |
-| JDBC      | jdbc     | JDBC_CONNECTION_URL        | USERNAME          | PASSWORD                             | N/A                    | N/A                    |
+| Database  | database | contactPoints              | username          | password                                      | dynamoBaseResourceUnit | cosmosBaseResourceUnit | 
+|:----------|----------|----------------------------|-------------------|-----------------------------------------------|------------------------|------------------------|
+| DynamoDB  | dynamo   | REGION                     | AWS_ACCESS_KEY_ID | AWS_ACCESS_SECRET_KEY                         | 10                     | N/A                    |
+| Cosmos DB | cosmos   | Cosmos DB account endpoint | N/A               | Cosmos DB account primary/secondary key | N/A                    | 400                    |
+| JDBC      | jdbc     | JDBC_CONNECTION_URL        | USERNAME          | PASSWORD                                      | N/A                    | N/A                    |
 
 
 ### Create Kubernetes Secrets
@@ -32,9 +32,9 @@ For Cosmos DB, use the account name as `username` since we can't leave the `db-u
 
 ### Configure schema-loading-custom-values
 
-To create a Scalar DL schema in Cosmos DB, you need to update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file.
+To create a Scalar DL schema in the database, you need to update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file.
 You can refer to the [section](#kubernetes-secret-and-schema-loading-reference) to check which values are needed based on the database used.
-If any configuration property value is defined as `N/A` in the reference table for your database, you can remove that property from the configuration file.
+If any configuration property value is defined as `N/A` in the reference table for your database, you need to remove that property from the configuration file.
 
 **With Kubernetes secrets**
 
@@ -72,15 +72,14 @@ You can refer the table below to update the [scalardl-custom-values.yaml](../con
 | Database  | dbStorage | dbContactPoints            | dbUsername        | dbPassword                           |
 |:----------|-----------|----------------------------|-------------------|--------------------------------------|
 | DynamoDB  | dynamo    | REGION                     | AWS_ACCESS_KEY_ID | AWS_ACCESS_SECRET_KEY                |
-| Cosmos DB | cosmos    | Cosmos DB account endpoint | N/A               | Cosmos DB account primary master key |
+| Cosmos DB | cosmos    | Cosmos DB account endpoint | N/A               | Cosmos DB account primary/secondary key |
 | JDBC      | jdbc      | JDBC_CONNECTION_URL        | USERNAME          | PASSWORD                             |
 
 
 ### Configure scalardl-custom-values
 
-To deploy Scalar DL Ledger on Cosmos DB, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
+To deploy Scalar DL Ledger, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
 You can refer to the [section](#ledger-and-auditor-reference) to check which values are needed based on the database used.
-If any configuration property value is defined as `N/A` in the reference table for your database, you can remove that property from the configuration file.
 
 **With Kubernetes secrets**
 
@@ -108,11 +107,14 @@ ledger:
     dbStorage: <dbStorage>
 ```
 
+Note:-
+
+For Cosmos DB, you need to remove `dbUsername` property as it is not required.
+
 ### Configure scalardl-audit-custom-values
 
-To deploy the Scalar DL Auditor on Cosmos DB, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
+To deploy the Scalar DL Auditor, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
 You can refer to the [section](#ledger-and-auditor-reference) to check which values are needed based on the database used.
-If any configuration property value is defined as `N/A` in the reference table for your database, you can remove that property from the configuration file.
 
 **With Kubernetes Secrets**
 
@@ -141,6 +143,10 @@ auditor:
     dbStorage: <dbStorage>
 ```
 
+Note:-
+
+For using Cosmos DB, you need to remove `dbUsername` property as it is not required.
+
 ## Enable Auditor
 
 ### Configure scalardl-custom-values
@@ -154,7 +160,7 @@ scalarLedgerConfiguration:
   ledgerAuditorEnabled: true
 ```
 
-#### Configure scalardl-audit-custom-values
+### Configure scalardl-audit-custom-values
 
 Configure the service endpoint of ledger-side envoy in the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
 
