@@ -28,7 +28,7 @@ kubectl create secret generic scalardl --from-literal db-username=<username> --f
 ```
 Note-:
 
-For Cosmos DB, use the account name as `username` since we can't leave the `db-uername` property empty.
+For Cosmos DB, use the Cosmos DB account name as `username`.
 
 ### Configure schema-loading-custom-values
 
