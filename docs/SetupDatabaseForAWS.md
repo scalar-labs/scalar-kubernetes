@@ -33,4 +33,4 @@ Note:-
 
 Note:-
 
-* Autoscaling can be enabled in Amazon Aurora if you have created the Amazon Aurora cluster with one primary instance and at least one Aurora Replica. Read more about it in [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html).
+* Autoscaling can be enabled in Amazon Aurora if you have created the Amazon Aurora cluster with one primary instance and at least one Aurora Replica. Read more about it in the [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html).
