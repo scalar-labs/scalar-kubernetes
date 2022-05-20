@@ -155,9 +155,9 @@ To enable the Auditor service, update the following configurations in the [scala
 
 ```yaml
 scalarLedgerConfiguration:
-  # To use Auditor
-  ledgerProofEnabled: true
-  ledgerAuditorEnabled: true
+   # To use Auditor
+   ledgerProofEnabled: true
+   ledgerAuditorEnabled: true
 ```
 
 ### Configure scalardl-audit-custom-values
