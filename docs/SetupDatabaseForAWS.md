@@ -30,7 +30,3 @@ Note:-
 * Follow this [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html) to create an Amazon Aurora cluster for MySQL/PostgreSQL.
 * (Optional) Follow this [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Performance.html) to manage performance and scaling for Aurora DB clusters and DB instances.
 * (Optional) Configure `Enhanced Monitoring` for Amazon Aurora from the [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Monitoring.OS.Enabling.html), monitoring is enabled on the Amazon Aurora cluster by default.
-
-Note:-
-
-* Autoscaling can be enabled in Amazon Aurora if you have created the Amazon Aurora cluster with one primary instance and at least one Aurora Replica. Read more about it in the [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html).
