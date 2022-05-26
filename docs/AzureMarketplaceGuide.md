@@ -20,8 +20,8 @@ Note that some Scalar products are licensed under commercial licenses, and the A
 1. Input your information.
 Note that `Company` is not required, but please enter it.
 
-1. Select a `Plan` you need from the pull-down.
-   * `Plan` means a combination of the container image and the license. Please select the `Plan` you use.
+1. Select a `Software plan` you need from the pull-down.
+   * `Software plan` means a combination of the container image and the license. Please select the `Software plan` you use.
 
 1. Select `Continue`.
    * After selecting the `Continue`, it automatically moves to the Azure Portal.
@@ -31,7 +31,7 @@ Note that `Company` is not required, but please enter it.
    * The container images of Scalar products will be copied to your private container registry.
 
 1. Repeat these steps as needed.
-   * You need several container images to run Scalar products on Kubernetes, but Azure Marketplace copies only one container image at a time. So, you need to subscribe to several plans (repeat subscribe operation) as needed.
+   * You need several container images to run Scalar products on Kubernetes, but Azure Marketplace copies only one container image at a time. So, you need to subscribe to several software plans (repeat subscribe operation) as needed.
    * Container images that you need are the following.
         * Scalar DB
             * Scalar DB Server Default (2vCPU, 4GiB Memory)
