@@ -9,7 +9,7 @@ You can refer to the table below to get values to create Kubernetes Secrets and 
 
 | Database  | storageType | contactPoints              | username       | password                                 | dynamoBaseResourceUnit | cosmosBaseResourceUnit | 
 |:----------|-------------|----------------------------|----------------|------------------------------------------|------------------------|------------------------|
-| DynamoDB  | dynamo      | REGION                     | AWS_ACCESS_KEY | AWS_ACCESS_SECRET_KEY                    | 10                     | N/A                    |
+| DynamoDB  | dynamo      | AWS_REGION                 | AWS_ACCESS_KEY | AWS_ACCESS_SECRET_KEY                    | 10                     | N/A                    |
 | Cosmos DB | cosmos      | Cosmos DB account endpoint | N/A            | Cosmos DB account primary/secondary key  | N/A                    | 400                    |
 | JDBC      | jdbc        | JDBC_CONNECTION_URL        | USERNAME       | PASSWORD                                 | N/A                    | N/A                    |
 
@@ -18,14 +18,15 @@ Note:-
 * JDBC denotes all relational databases supported by Scalar DL such as 
   * MySQL, PostgreSQL, Oracle DB and SQL Server 
   * AWS RDS for MySQL/PostgreSQL/Oracle/SQL Server
-  * Azure Database for MySQL/PostgreSQL.
+  * Amazon Aurora MySQL/PostgreSQL
+  * Azure Database for MySQL/PostgreSQL
 * For Azure Database for PostgreSQL, please add `/postgres` after the port number (example: `jdbc:postgresql://connection_endpoint:5432/postgres`) for `JDBC_CONNECTION_URL`.
 
 ## Create Kubernetes Secrets
 
 Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key.
 This optional method is recommended highly for handling credentials in the production environment.
-You can refer to the [section](#reference-table) to get the values for `username` and `password` for the database you chose.
+You can refer to the [reference section](#reference-table) to get the values for `username` and `password` for the database you chose.
 You need to create a secret object with `db-username` and `db-password` to store the username and password of the underlying database.
 
 
@@ -106,7 +107,7 @@ ledger:
 
 Note:-
 
-For Cosmos DB, you need to remove `username` property as it is not required.
+For Cosmos DB, you need to remove the `dbUsername` property as it is not required.
 
 ### Configure scalardl-audit-custom-values
 
@@ -142,7 +143,7 @@ auditor:
 
 Note:-
 
-For Cosmos DB, you need to remove the `username` property as it is not required.
+For Cosmos DB, you need to remove the `dbUsername` property as it is not required.
 
 ## Enable Auditor
 
