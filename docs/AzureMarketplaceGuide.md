@@ -1,9 +1,8 @@
-# How to use Scalar product containers from Microsoft Azure Marketplace
+# How to install Scalar products through Azure Marketplace
 
 Scalar products (Scalar DB, Scalar DL, and some tools) are provided in the Microsoft Azure Marketplace as container images. This guide explains how to use Scalar product container images from the Microsoft Azure Marketplace.
 
-* Note:
-    * Some Scalar products are licensed under a commercial license, and the Microsoft Azure Marketplace provides them as BYOL (Bring Your Own License). Please make sure you have the appropriate license.
+Note that some Scalar products are licensed under commercial licenses, and the Azure Marketplace provides them as BYOL (Bring Your Own License). Please make sure you have appropriate licenses.
 
 ## Get Scalar products from Microsoft Azure Marketplace
 
@@ -13,13 +12,13 @@ Scalar products (Scalar DB, Scalar DL, and some tools) are provided in the Micro
 
 1. Select `Get It Now`.
 
-1. Sign in to the Microsoft Azure Marketplace using your work email address
+1. Sign in to Azure Marketplace using your work email address
    * Please use the work email address that is used as an account of Microsoft Azure.
         * In the after steps, we will create a private container registry (Azure Container Registry).
    * If you have already signed in, this step will be skipped automatically.
 
 1. Input your information.
-   * `Company` is not required, but please input it.
+Note that `Company` is not required, but please enter it.
 
 1. Select a `Plan` you need from the pull-down.
    * `Plan` means a combination of the container image and the license. Please select the `Plan` you use.
@@ -27,12 +26,12 @@ Scalar products (Scalar DB, Scalar DL, and some tools) are provided in the Micro
 1. Select `Continue`.
    * After selecting the `Continue`, it automatically moves to the Azure Portal.
 
-1. Create the private container registry (Azure Container Registry).
+1. Create a private container registry (Azure Container Registry).
    * Follow the on-screen instructions, please create your private container registry.
-   * The Scalar product container image will be copied to your private container registry.
+   * The container images of Scalar products will be copied to your private container registry.
 
 1. Repeat these steps as needed.
-   * You need several container images to run Scalar products on Kubernetes, but Azure Marketplace copies only one container image, in one operation. So, you need to subscribe to several plans (repeat subscribe operation) as needed.
+   * You need several container images to run Scalar products on Kubernetes, but Azure Marketplace copies only one container image at a time. So, you need to subscribe to several plans (repeat subscribe operation) as needed.
    * Container images that you need are the following.
         * Scalar DB
             * Scalar DB Server Default (2vCPU, 4GiB Memory)
@@ -56,10 +55,10 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
    az login
    ```
 
-1. Create a `service principal` for authentication of your private container registry according to the [Azure Official Document (Azure Container Registry authentication with service principals)](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal).
-   * We use a `Service principal ID` and a `Service principal password` in the next step.
+1. Create a `service principal` for authentication to your private container registry according to the [Azure Official Document (Azure Container Registry authentication with service principals)](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal).
+   * We use the `Service principal ID` and the `Service principal password` in the next step.
 
-1. Create a `reg-acr-secrets` secret resource for pulling Scalar product images from your private container registry.
+1. Create a `reg-acr-secrets` secret resource for pulling the container images from your private container registry.
    ```console
    kubectl create secret docker-registry reg-acr-secrets \
      --docker-server=<your private container registry login server> \
@@ -67,7 +66,7 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
      --docker-password=<Service principal password>
    ```
 
-1. Update a custom values file of Helm Charts.
+1. Update the custom values file of the Helm Chart of a Scalar product you want to install.
    * You need to specify your private container registry and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.
    * Also, you need to specify the `reg-acr-secrets` as the value of `[].imagePullSecrets`.
    * Examples
@@ -137,7 +136,7 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
                  - name: "reg-acr-secrets"
              ```
 
-1. Deploy Scalar products using Helm Charts with the above custom values file.
+1. Deploy the Scalar product using the Helm Chart with the above custom values file.
    * Examples
        * Scalar DB
          ```console
@@ -160,7 +159,7 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
 
 If you deploy containers on the AKS (Azure Kubernetes Service), you don't need to create a `service principal` and `reg-acr-secrets`. Your private container registry (Azure Container Registry) can allow access from your AKS.
 
-1. Specify your private container registry (Azure Container Registry) when you create the AKS cluster.
+1. Specify your private container registry (Azure Container Registry) when you create an AKS cluster.
    * GUI (Azure Portal)
       * At the `Azure Container Registry` parameter in the `Integrations` tab, please specify your private container registry.
    * CLI ([az aks create](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-create) command)
@@ -169,10 +168,10 @@ If you deploy containers on the AKS (Azure Kubernetes Service), you don't need t
       * Also, you can configure Azure Container Registry integration for existing AKS clusters using [az aks update](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-update) command with `--attach-acr` flag.
       * Please refer to the [Azure Official Document](https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration) for more details.
 
-1. Update a custom values file of Helm Charts.
+1. Update the custom values file of the Helm Chart of a Scalar product you want to install.
    * You need to specify your private container registry and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.
    * You do NOT need to specify the `reg-acr-secrets` as the value of `[].imagePullSecrets`, because your private container registry (Azure Container Registry) allows access from your AKS nodes.
    * Examples
       * Please refer to the `Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts` section of this document.
 
-1. Deploy Scalar products using Helm Charts with the above custom values file.
+1. Deploy the Scalar product using the Helm Chart with the above custom values file.
