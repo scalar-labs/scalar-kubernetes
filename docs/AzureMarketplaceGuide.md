@@ -10,20 +10,20 @@ Note that some Scalar products are licensed under commercial licenses, and the A
    * [Scalar DB](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardb)
    * [Scalar DL](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardl)
 
-1. Select *Get It Now*.
+1. Select **Get It Now**.
 
 1. Sign in to Azure Marketplace using your work email address.  
    Please use the work email address that is used as an account of Microsoft Azure.  
    If you have already signed in, this step will be skipped automatically.
 
 1. Input your information.  
-Note that *Company* is not required, but please enter it.
+Note that **Company** is not required, but please enter it.
 
-1. Select a *Software plan* you need from the pull-down.  
-   *Software plan* means a combination of the container image and the license. Please select the *Software plan* you use.
+1. Select a **Software plan** you need from the pull-down.  
+   **Software plan** means a combination of the container image and the license. Please select the *Software plan* you use.
 
-1. Select *Continue*.  
-   After selecting the *Continue*, it automatically moves to the Azure Portal.
+1. Select **Continue**.  
+   After selecting the **Continue**, it automatically moves to the Azure Portal.
 
 1. Create a private container registry (Azure Container Registry).  
    Follow the on-screen instructions, please create your private container registry.  
@@ -38,7 +38,7 @@ Note that *Company* is not required, but please enter it.
         * Scalar DL
             * Scalar DL Ledger Default (2vCPU, 4GiB Memory)
             * Scalar DL Auditor Default (2vCPU, 4GiB Memory)
-                * The *Scalar DL Auditor* is optional. If you use the *Scalar DL Auditor*, subscribe to it.
+                * The **Scalar DL Auditor** is optional. If you use the **Scalar DL Auditor**, subscribe to it.
             * Scalar DL Schema Loader
             * Scalar DL Envoy
 
@@ -54,8 +54,8 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
    az login
    ```
 
-1. Create a *service principal* for authentication to your private container registry according to the [Azure Official Document (Azure Container Registry authentication with service principals)](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal).  
-   We use the *Service principal ID* and the *Service principal password* in the next step.
+1. Create a **service principal** for authentication to your private container registry according to the [Azure Official Document (Azure Container Registry authentication with service principals)](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal).  
+   We use the **Service principal ID** and the **Service principal password** in the next step.
 
 1. Create a `reg-acr-secrets` secret resource for pulling the container images from your private container registry.
    ```console
@@ -160,7 +160,7 @@ If you deploy containers on the AKS (Azure Kubernetes Service), you don't need t
 
 1. Specify your private container registry (Azure Container Registry) when you create an AKS cluster.
    * GUI (Azure Portal)  
-     At the *Azure Container Registry* parameter in the *Integrations* tab, please specify your private container registry.
+     At the **Azure Container Registry** parameter in the **Integrations** tab, please specify your private container registry.
    * CLI ([az aks create](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-create) command)  
      Please specify `--attach-acr` flag with the name of your private container registry. Also, you can configure Azure Container Registry integration for existing AKS clusters using [az aks update](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-update) command with `--attach-acr` flag. Please refer to the [Azure Official Document](https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration) for more details.
 
@@ -168,6 +168,6 @@ If you deploy containers on the AKS (Azure Kubernetes Service), you don't need t
    You need to specify your private container registry and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
    You do NOT need to specify the `reg-acr-secrets` as the value of `[].imagePullSecrets`, because your private container registry (Azure Container Registry) allows access from your AKS nodes.
    * Examples  
-     Please refer to the *Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts* section of this document.
+     Please refer to the **Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts** section of this document.
 
 1. Deploy the Scalar product using the Helm Chart with the above custom values file.
