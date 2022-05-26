@@ -45,6 +45,88 @@ Note that **Company** is not required, but please enter it.
 Now, you can pull the container images of the Scalar products from your private container registry.
 Please refer to the [Azure Container Registry documentation](https://docs.microsoft.com/en-us/azure/container-registry/) for more details about the Azure Container Registry.
 
+## Deploy containers on AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts
+
+1. Specify your private container registry (Azure Container Registry) when you create an AKS cluster.
+   * GUI (Azure Portal)  
+     At the **Azure Container Registry** parameter in the **Integrations** tab, please specify your private container registry.
+   * CLI ([az aks create](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-create) command)  
+     Please specify `--attach-acr` flag with the name of your private container registry. Also, you can configure Azure Container Registry integration for existing AKS clusters using [az aks update](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-update) command with `--attach-acr` flag. Please refer to the [Azure Official Document](https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration) for more details.
+
+1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
+   You need to specify your private container registry and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
+   * Examples
+       * Scalar DB
+           * Scalar DB Server (scalardb-custom-values.yaml)
+             ```yaml
+             envoy:
+               image:
+                 repository: "example.azurecr.io/scalarinc/scalardb-envoy"
+                 version: "1.2.0"
+             
+             ...
+             
+             scalardb:
+               image:
+                 repository: "example.azurecr.io/scalarinc/scalardb-server"
+                 tag: "3.5.2"
+             ```
+       * Scalar DL
+           * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
+             ```yaml
+             envoy:
+               image:
+                 repository: "example.azurecr.io/scalarinc/scalardl-envoy"
+                 version: "1.2.0"
+             
+             ...
+             
+             ledger:
+               image:
+                 repository: "example.azurecr.io/scalarinc/scalar-ledger"
+                 version: "3.4.0"
+             ```
+           * Scalar DL Auditor (scalardl-auditor-custom-values.yaml)
+             ```yaml
+             envoy:
+               image:
+                 repository: "example.azurecr.io/scalarinc/scalardl-envoy"
+                 version: "1.2.0"
+             
+             ...
+             
+             auditor:
+               image:
+                 repository: "example.azurecr.io/scalarinc/scalar-auditor"
+                 version: "3.4.0"
+             ```
+           * Scalar DL Schema Loader (schema-loader-custom-values.yaml)
+             ```yaml
+             schemaLoading:
+               image:
+                 repository: "example.azurecr.io/scalarinc/scalardl-schema-loader"
+                 version: "3.4.0"
+             ```
+
+1. Deploy the Scalar product using the Helm Chart with the above custom values file.
+   * Examples
+       * Scalar DB
+         ```console
+         helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
+         ```
+       * Scalar DL Ledger
+         ```console
+         helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
+         ```
+       * Scalar DL Auditor
+         ```console
+         helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
+         ```
+       * Scalar DL Schema Loader
+         ```console
+         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-custom-values.yaml
+         ```
+
 ## Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts
 
 1. Install the `az` command according to the [Azure Official Document (How to install the Azure CLI)](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
@@ -136,38 +218,5 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
              ```
 
 1. Deploy the Scalar product using the Helm Chart with the above custom values file.
-   * Examples
-       * Scalar DB
-         ```console
-         helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
-         ```
-       * Scalar DL Ledger
-         ```console
-         helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
-         ```
-       * Scalar DL Auditor
-         ```console
-         helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
-         ```
-       * Scalar DL Schema Loader
-         ```console
-         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-custom-values.yaml
-         ```
-
-## Deploy containers on AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts
-
-If you deploy containers on AKS (Azure Kubernetes Service), you don't need to create a **service principal** and `reg-acr-secrets`. Your private container registry (Azure Container Registry) allows access from your AKS.
-
-1. Specify your private container registry (Azure Container Registry) when you create an AKS cluster.
-   * GUI (Azure Portal)  
-     At the **Azure Container Registry** parameter in the **Integrations** tab, please specify your private container registry.
-   * CLI ([az aks create](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-create) command)  
-     Please specify `--attach-acr` flag with the name of your private container registry. Also, you can configure Azure Container Registry integration for existing AKS clusters using [az aks update](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-update) command with `--attach-acr` flag. Please refer to the [Azure Official Document](https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration) for more details.
-
-1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
-   You need to specify your private container registry and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
-   You do NOT need to specify the `reg-acr-secrets` as the value of `[].imagePullSecrets`, because your private container registry (Azure Container Registry) allows access from your AKS nodes.
    * Examples  
-     Please refer to the **Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts** section of this document.
-
-1. Deploy the Scalar product using the Helm Chart with the above custom values file.
+     Please refer to the **Deploy containers on AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts** section of this document.
