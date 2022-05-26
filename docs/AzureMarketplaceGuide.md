@@ -1,6 +1,6 @@
 # How to install Scalar products through Azure Marketplace
 
-Scalar products (Scalar DB, Scalar DL, and some tools) are provided in the Microsoft Azure Marketplace as container images. This guide explains how to use Scalar product container images from the Microsoft Azure Marketplace.
+Scalar products (Scalar DB, Scalar DL, and their tools) are provided in Azure Marketplace as container offers. This guide explains how to install Scalar products through Azure Marketplace.
 
 Note that some Scalar products are licensed under commercial licenses, and the Azure Marketplace provides them as BYOL (Bring Your Own License). Please make sure you have appropriate licenses.
 
@@ -156,7 +156,7 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
 
 ## Deploy containers on AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts
 
-If you deploy containers on the AKS (Azure Kubernetes Service), you don't need to create a `service principal` and `reg-acr-secrets`. Your private container registry (Azure Container Registry) can allow access from your AKS.
+If you deploy containers on AKS (Azure Kubernetes Service), you don't need to create a **service principal** and `reg-acr-secrets`. Your private container registry (Azure Container Registry) allows access from your AKS.
 
 1. Specify your private container registry (Azure Container Registry) when you create an AKS cluster.
    * GUI (Azure Portal)  
