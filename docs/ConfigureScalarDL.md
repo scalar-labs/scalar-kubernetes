@@ -14,10 +14,12 @@ You can refer to the table below to get values to create Kubernetes Secrets and 
 | JDBC      | jdbc        | JDBC_CONNECTION_URL        | USERNAME       | PASSWORD                                 | N/A                    | N/A                    |
 
 Note:- 
+
 * JDBC denotes all relational databases supported by Scalar DL such as 
   * MySQL, PostgreSQL, Oracle DB and SQL Server 
   * AWS RDS for MySQL/PostgreSQL/Oracle/SQL Server
   * Azure Database for MySQL/PostgreSQL.
+* For Azure Database for PostgreSQL, please add `/postgres` after the port number (example: `jdbc:postgresql://connection_endpoint:5432/postgres`) for `JDBC_CONNECTION_URL`.
 
 ## Create Kubernetes Secrets
 
