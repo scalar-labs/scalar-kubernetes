@@ -1,6 +1,6 @@
 # How to use Scalar product containers from Microsoft Azure Marketplace
 
-Scalar products (Scalar DB, Scalar DL, and some tools) are provided in the Microsoft Azure Marketplace as container images. This guide explains how to use Scalar product container images from the Microsoft Azure Marketplace.  
+Scalar products (Scalar DB, Scalar DL, and some tools) are provided in the Microsoft Azure Marketplace as container images. This guide explains how to use Scalar product container images from the Microsoft Azure Marketplace.
 
 * Note:
     * Some Scalar products are licensed under a commercial license, and the Microsoft Azure Marketplace provides them as BYOL (Bring Your Own License). Please make sure you have the appropriate license.
@@ -44,8 +44,8 @@ Scalar products (Scalar DB, Scalar DL, and some tools) are provided in the Micro
             * Scalar DL Schema Loader
             * Scalar DL Envoy
 
-Now, you can pull the Scalar product container images from your private container registry.  
-Please refer to the [Azure Container Registry documentation](https://docs.microsoft.com/en-us/azure/container-registry/) for details of the Azure Container Registry.  
+Now, you can pull the Scalar product container images from your private container registry.
+Please refer to the [Azure Container Registry documentation](https://docs.microsoft.com/en-us/azure/container-registry/) for details of the Azure Container Registry.
 
 ## Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts
 
@@ -113,7 +113,7 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
              ```yaml
              envoy:
                image:
-                 repository: "example.azurecr.io/scalarinc/calardl-envoy"
+                 repository: "example.azurecr.io/scalarinc/scalardl-envoy"
                  version: "1.2.0"
                imagePullSecrets:
                  - name: "reg-acr-secrets"
@@ -158,7 +158,7 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
 
 ## Deploy containers on AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts
 
-If you deploy containers on the AKS (Azure Kubernetes Service), you don't need to create a `service principal` and `reg-acr-secrets`.  Your private container registry (Azure Container Registry) can allow access from your AKS.
+If you deploy containers on the AKS (Azure Kubernetes Service), you don't need to create a `service principal` and `reg-acr-secrets`. Your private container registry (Azure Container Registry) can allow access from your AKS.
 
 1. Specify your private container registry (Azure Container Registry) when you create the AKS cluster.
    * GUI (Azure Portal)
