@@ -14,7 +14,6 @@ Note that some Scalar products are licensed under commercial licenses, and the A
 
 1. Sign in to Azure Marketplace using your work email address
    * Please use the work email address that is used as an account of Microsoft Azure.
-        * In the after steps, we will create a private container registry (Azure Container Registry).
    * If you have already signed in, this step will be skipped automatically.
 
 1. Input your information.
