@@ -42,8 +42,8 @@ Note that **Company** is not required, but please enter it.
             * Scalar DL Schema Loader
             * Scalar DL Envoy
 
-Now, you can pull the Scalar product container images from your private container registry.
-Please refer to the [Azure Container Registry documentation](https://docs.microsoft.com/en-us/azure/container-registry/) for details of the Azure Container Registry.
+Now, you can pull the container images of the Scalar products from your private container registry.
+Please refer to the [Azure Container Registry documentation](https://docs.microsoft.com/en-us/azure/container-registry/) for more details about the Azure Container Registry.
 
 ## Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts
 
