@@ -83,6 +83,7 @@ Install the following tools on the bastion for controlling the AKS cluster:
 * You should use Kubernetes node size `Standard D2s v3` for Scalar DL node pool.
 * You should create 3 nodes in each node group for high availability in production.
 * You should configure `Autoscale` for the node pools If you want to scale the nodes.
+* You should allow AKS cluster to pull containers from your private container registry (Azure Container Registry) if you use Azure Marketplace to get Scalar products. Please refer to [this guide](./AzureMarketplaceGuide.md) for more details of the Azure Marketplace.
 
 ### Steps
 
