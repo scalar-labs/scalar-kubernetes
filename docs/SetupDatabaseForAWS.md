@@ -27,4 +27,4 @@ Note:-
 ### Steps
 
 * Follow this [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html) to create an Amazon Aurora cluster for MySQL/PostgreSQL.
-* (Optional) Configure `Enhanced Monitoring` for Amazon Aurora from the [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Monitoring.OS.Enabling.html), monitoring is enabled on the Amazon Aurora cluster by default.
+* (Optional) Configure advanced monitoring services with the [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/MonitoringOverview.html), monitoring is enabled on the Amazon Aurora cluster by default.
