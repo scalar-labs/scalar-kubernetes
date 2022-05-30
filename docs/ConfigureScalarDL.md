@@ -20,7 +20,6 @@ Note:-
   * AWS RDS for MySQL/PostgreSQL/Oracle/SQL Server
   * Amazon Aurora MySQL/PostgreSQL
   * Azure Database for MySQL/PostgreSQL
-* For Azure Database for PostgreSQL, please add `/postgres` after the port number (example: `jdbc:postgresql://connection_endpoint:5432/postgres`) for `JDBC_CONNECTION_URL`.
 
 ## Create Kubernetes Secrets
 
