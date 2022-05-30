@@ -22,7 +22,7 @@ Note:-
 * Follow this [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html) to create an AWS RDS MySQL/PostgreSQL/Oracle/SQL Server database instance.
 * (Optional) Configure advanced monitoring services with the [AWS official guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html), monitoring is enabled by default on AWS RDS database instances.
 
-## Amazon Aurora for MySQL, PostgreSQL
+## Amazon Aurora for MySQL and PostgreSQL
 
 ### Steps
 
