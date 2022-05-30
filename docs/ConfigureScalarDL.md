@@ -5,7 +5,7 @@ This guide explains how to configure Scalar DL custom values in helm charts for 
 
 ## Reference Table
 
-You can refer to the table below to get values to create Kubernetes Secrets and update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file according to the database you chose
+You can refer to the table below to get values to create Kubernetes Secrets and update the configuration files for Scalar DL deployment according to the database you chose.
 
 | Database  | storageType | contactPoints              | username       | password                                 | dynamoBaseResourceUnit | cosmosBaseResourceUnit | 
 |:----------|-------------|----------------------------|----------------|------------------------------------------|------------------------|------------------------|
@@ -25,7 +25,7 @@ Note:-
 
 Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key.
 This optional method is recommended highly for handling credentials in the production environment.
-You can refer to the [reference section](#reference-table) to get the values for `username` and `password` for the database you chose.
+You can refer to the [reference table](#reference-table) section to get the values for `username` and `password` for the database you chose.
 You need to create a secret object with `db-username` and `db-password` to store the username and password of the underlying database.
 
 
@@ -41,8 +41,8 @@ For Cosmos DB, use the Cosmos DB account name as `username`.
 ### Configure schema-loading-custom-values
 
 To create a Scalar DL schema in the database, you need to update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file.
-You can refer to the [section](#reference-table) to check which values are needed based on the database used.
-If any configuration property value is defined as `N/A` in the reference table for your database, you need to remove that property from the configuration file.
+You can refer to the [reference table](#reference-table) section to check which values are needed based on the database used.
+If any configuration property value is defined as `N/A` in the [reference table](#reference-table) section for your database, you must remove that property from the configuration file.
 
 **With Kubernetes secrets**
 
@@ -76,7 +76,7 @@ schemaLoading:
 ### Configure scalardl-custom-values
 
 To deploy Scalar DL Ledger, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
-You can refer to the [section](#reference-table) to check which values are needed based on the database used.
+You can refer to the [reference table](#reference-table) section to check which values are needed based on the database used.
 
 **With Kubernetes secrets**
 
@@ -111,7 +111,7 @@ For Cosmos DB, you need to remove the `dbUsername` property as it is not require
 ### Configure scalardl-audit-custom-values
 
 To deploy the Scalar DL Auditor, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
-You can refer to the [section](#reference-table) to check which values are needed based on the database used.
+You can refer to the [reference table](#reference-table) section to check which values are needed based on the database used.
 
 **With Kubernetes Secrets**
 
