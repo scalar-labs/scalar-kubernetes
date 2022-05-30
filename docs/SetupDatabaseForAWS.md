@@ -8,7 +8,7 @@ Amazon DynamoDB is available for use in AWS by default. You do not need to set u
 
 ### Optional steps
 
-* Configure advanced monitoring services with the [Azure official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring-automated-manual.html), monitoring is enabled in DynamoDB by default.
+* Configure advanced monitoring services with the [AWS official guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring-automated-manual.html), monitoring is enabled in DynamoDB by default.
 * You should change the `Read/Write Capacity` of DynamoDB tables based on your requirements.
 
 Note:-
