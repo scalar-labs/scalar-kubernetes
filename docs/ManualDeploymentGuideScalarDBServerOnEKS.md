@@ -12,7 +12,7 @@ In this guide, we will create the following components.
 
 * A VPC with NAT gateway
 * An EKS cluster with two Kubernetes node groups
-* A Scalar DB supported managed database service.
+* A managed database service supported by Scalar DB.
 * A Bastion instance with a public IP
 * Amazon CloudWatch
 
