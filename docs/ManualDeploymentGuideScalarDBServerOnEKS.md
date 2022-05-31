@@ -59,6 +59,7 @@ This section shows how to create an EKS cluster and 2 managed node groups (one f
 Install the following tools on your bastion for controlling the EKS cluster:
 * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html): In this guide, AWS CLI is used to create a kubeconfig file to access the EKS cluster.
 * [kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html): Kubernetes command-line tool to manage EKS cluster. Kubectl 1.19 or higher is required.
+* [eksctl](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html): eksctl is a simple command line utility for creating and managing Kubernetes clusters on Amazon EKS.
 
 ### Requirements
 
