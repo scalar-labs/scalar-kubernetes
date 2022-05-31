@@ -36,7 +36,7 @@ Configure a secure network according to your organizational standard or applicat
 
 ### Steps
 
-* Create an Amazon VPC based on the [AWS official guide](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html) with the above requirements and recommendations.
+* Create an Amazon VPC based on the [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/creating-a-vpc.html) with the above requirements and recommendations.
 
 ## Step 2. Set up a database
 
@@ -57,8 +57,8 @@ This section shows how to create an EKS cluster and 2 managed node groups (one f
 ### Prerequisites
 
 Install the following tools on your bastion for controlling the EKS cluster:
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html): In this guide, AWS CLI is used to create a kubeconfig file to access the EKS cluster.
-* [kubectl](https://kubernetes.io/docs/tasks/tools/): Kubernetes command-line tool to manage EKS cluster. Kubectl 1.19 or higher is required.
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html): In this guide, AWS CLI is used to create a kubeconfig file to access the EKS cluster.
+* [kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html): Kubernetes command-line tool to manage EKS cluster. Kubectl 1.19 or higher is required.
 
 ### Requirements
 
