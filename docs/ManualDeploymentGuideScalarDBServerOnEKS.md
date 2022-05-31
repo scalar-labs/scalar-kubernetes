@@ -24,6 +24,7 @@ Configure a secure network according to your organizational standard or applicat
 ### Requirements
 
 * You must create VPC with public NAT gateways on private networks. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
+  * Internet access is required to pull Scalar DB server image for Kuberenetes deployment.
 * You must create at least 2 subnets for the EKS cluster in different availability zones. It is mandatory to create an EKS cluster.
 
 ### Recommendations
@@ -75,11 +76,7 @@ Install the following tools on your bastion for controlling the EKS cluster:
 
 * Create an Amazon EKS cluster based on the [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html).
 * Create a managed node group based on the [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) with the above requirements and recommendations.
-* Configure kubectl to connect to your Kubernetes cluster using the `aws eks update-kubeconfig` command.
-
-   ```console
-   aws eks --region <region-code> update-kubeconfig --name <cluster_name>
-   ```
+* Configure kubectl to connect to your Kubernetes cluster by following the [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html).
 
 ## Step 4. Install Scalar DB server
 
