@@ -24,8 +24,8 @@ Configure a secure network according to your organizational standard or applicat
 ### Requirements
 
 * You must create VPC with public NAT gateways on private networks. NAT gateway is necessary to enable internet access for Kubernetes node group subnets.
-  * Internet access is required to pull Scalar DB server image for Kuberenetes deployment.
-* You must create at least 2 subnets for the EKS cluster in different availability zones. It is mandatory to create an EKS cluster.
+  * Internet access is required to pull Scalar DB server image for Kubernetes deployment.
+* You must follow this [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html) when creating subnets for EKS.
 
 ### Recommendations
 
