@@ -32,7 +32,6 @@ Configure a secure network according to your organizational standard or applicat
 * You should create private subnets for the Kubernetes cluster for production.
 * You should create a bastion server to manage the Kubernetes cluster.
 * You should create 3 subnets in 3 availability zones for the Kubernetes cluster for higher availability.
-* You should choose public subnets when creating an EKS cluster for public access.
 * You should create subnets with the prefix at least `/24` for the Kubernetes cluster to work without issues even after scaling.
 
 ### Steps
