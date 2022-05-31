@@ -124,12 +124,15 @@ It is critical to actively monitor the overall health and performance of the clu
 You can use Container Insights to collect performance metrics and Fluent Bit to collect logs of the EKS cluster.
 This section shows how to configure monitoring and logging for your EKS cluster.
 
+### Requirements
+
+* You must create a CloudWatch Logs policy with the required policy by following this [AWS official guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-prerequisites.html). 
+
 ### Recommendations
 
 * You should enable monitoring for EKS in production.
 * You should configure the cloudwatch agent in the EKS cluster for collecting metrics from pods.
 * You should configure Fluent Bit in the EKS cluster for collecting logs from pods.
-    * You should create a CloudWatch Logs policy with `CreateLogGroup`, `CreateLogStream`, and `PutLogEvents` permissions and attach the policy to the Node instance role.
 
 ### Steps
 
