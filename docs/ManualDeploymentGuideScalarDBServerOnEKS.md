@@ -52,7 +52,7 @@ In this section, you will set up a database for the Scalar DB server.
 
 ## Step 3. Configure EKS
 
-This section shows how to create an EKS cluster and 2 managed node groups(one for Scalar DB server and envoy and one for logs and metrics collection) for the Scalar DB server and monitor agent deployment.
+This section shows how to create an EKS cluster and 2 managed node groups (one for Scalar DB server and envoy and one for logs and metrics collection) for the Scalar DB server and monitor agent deployment.
 
 ### Prerequisites
 
@@ -100,7 +100,7 @@ The following steps show how to install the Scalar DB server on EKS:
    Note that they may be versioned in the future, so you might want to change the branch to use a proper version.
     * scalardb-custom-values.yaml
 
-2. Update the database configuration in scalardb-custom-values.yaml  sections as specified in [configure Scalar DB guide](./ConfigureScalarDB.md).
+2. Update the database configuration in scalardb-custom-values.yaml sections as specified in [configure Scalar DB guide](./ConfigureScalarDB.md).
 3. Run the Helm commands on the bastion server to install the Scalar DB server on EKS
 
    ```console
