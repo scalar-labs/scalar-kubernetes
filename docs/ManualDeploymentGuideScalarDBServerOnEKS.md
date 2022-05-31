@@ -12,8 +12,7 @@ In this guide, we will create the following components.
 
 * A VPC with NAT gateway
 * An EKS cluster with two Kubernetes node groups
-* A managed database service
-    * DynamoDB
+* A Scalar DB supported managed database service.
 * A Bastion instance with a public IP
 * Amazon CloudWatch
 
@@ -179,7 +178,7 @@ When you need to remove the resources you created, remove them in the following 
 * Scalar DB server
 * Managed node group
 * EKS cluster
-* DynamoDB
+* Scalar DB supported managed database service
 * Bastion server
 * NAT gateway
 * VPC
