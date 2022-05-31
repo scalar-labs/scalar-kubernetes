@@ -65,7 +65,7 @@ Install the following tools on your bastion for controlling the EKS cluster:
 
 * You must create a Kubernetes cluster with version 1.19 or higher for Scalar DB server deployment.
 * You must create a node group with the label, key as `agentpool` and value as `scalardbpool` for Scalar DB server deployment.
-* You must add a rule in the EKS security group to **enable HTTPS access (Port 443)** to the private EKS cluster from the bastion server.
+* You must add set the EKS security group by following the [AWS official guide](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html).
 
 ### Recommendations
 
@@ -166,7 +166,7 @@ service/my-release-scalardb-metrics         ClusterIP      172.20.11.48   <none>
 
 ### Confirm Database monitoring
 
-* Confirm the database metrics are available in CloudWatch metrics.
+* Ensure the database monitoring of your database is enabled and confirm the database metrics are available.
 
 ## Clean up the resources
 
