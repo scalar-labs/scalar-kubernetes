@@ -13,13 +13,10 @@ You can refer to the table below to get values to create Kubernetes Secrets and 
 | Cosmos DB | cosmos      | Cosmos DB account endpoint | N/A            | Cosmos DB account primary/secondary key  | N/A                    | 400                    |
 | JDBC      | jdbc        | JDBC_CONNECTION_URL        | USERNAME       | PASSWORD                                 | N/A                    | N/A                    |
 
-Note:- 
+Note:
 
 * JDBC denotes all relational databases supported by Scalar DL such as 
-  * MySQL, PostgreSQL, Oracle DB and SQL Server 
-  * AWS RDS for MySQL/PostgreSQL/Oracle/SQL Server
-  * Amazon Aurora MySQL/PostgreSQL
-  * Azure Database for MySQL/PostgreSQL
+  * MySQL, PostgreSQL, Oracle DB and SQL Server
 
 ## Create Kubernetes Secrets
 
@@ -32,7 +29,7 @@ You need to create a secret object with `db-username` and `db-password` to store
 ```
 kubectl create secret generic scalardl --from-literal db-username=<username> --from-literal db-password=<password>
 ```
-Note-:
+Note:
 
 For Cosmos DB, use the Cosmos DB account name as `username`.
 
@@ -104,7 +101,7 @@ ledger:
     dbStorage: <storageType>
 ```
 
-Note:-
+Note:
 
 For Cosmos DB, you need to remove the `dbUsername` property as it is not required.
 
@@ -140,7 +137,7 @@ auditor:
     dbStorage: <storageType>
 ```
 
-Note:-
+Note:
 
 For Cosmos DB, you need to remove the `dbUsername` property as it is not required.
 
