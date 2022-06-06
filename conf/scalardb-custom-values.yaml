@@ -22,9 +22,9 @@ envoy:
 
   tolerations:
     - effect: NoSchedule
-        key: kubernetes.io/app
-        operator: Equal
-        value: scalardbpool
+      key: kubernetes.io/app
+      operator: Equal
+      value: scalardbpool
 
   affinity:
     nodeAffinity:
