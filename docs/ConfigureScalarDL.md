@@ -15,8 +15,7 @@ You can refer to the table below to get values to create Kubernetes Secrets and 
 
 Note:
 
-* JDBC denotes all relational databases supported by Scalar DL such as 
-  * MySQL, PostgreSQL, Oracle DB and SQL Server
+* JDBC denotes all relational databases supported by Scalar DL such as MySQL, PostgreSQL, Oracle Database, SQL Server, and Amazon Aurora.
 
 ## Create Kubernetes Secrets
 
