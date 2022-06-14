@@ -43,7 +43,7 @@ envoy:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - scalardb
+                    - scalardb-server
                 - key: app.kubernetes.io/app
                   operator: In
                   values:
@@ -106,11 +106,11 @@ scalardb:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - scalardb
+                    - scalardb-server
                 - key: app.kubernetes.io/app
                   operator: In
                   values:
-                    - ledger
+                    - scalardb
             topologyKey: kubernetes.io/hostname
           weight: 50
   existingSecret: ""
