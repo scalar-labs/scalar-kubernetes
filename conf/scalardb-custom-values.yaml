@@ -43,7 +43,7 @@ envoy:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - scalardb-server
+                    - scalardb
                 - key: app.kubernetes.io/app
                   operator: In
                   values:
@@ -106,7 +106,7 @@ scalardb:
                 - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - scalardb-server
+                    - scalardb
                 - key: app.kubernetes.io/app
                   operator: In
                   values:
