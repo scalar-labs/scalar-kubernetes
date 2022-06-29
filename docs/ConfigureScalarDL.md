@@ -22,15 +22,14 @@ Note:
 Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key.
 This optional method is recommended highly for handling credentials in the production environment.
 You can refer to the [reference table](#reference-table) section to get the values for `username` and `password` for the database you chose.
-You need to create a secret object with `db-username` and `db-password` to store the username and password of the underlying database.
-
+You need to create a secret object with key names `db-username` and `db-password` to store the username and password of the underlying database.
 
 ```
 kubectl create secret generic scalardl --from-literal db-username=<username> --from-literal db-password=<password>
 ```
 Note:
 
-For Cosmos DB, use the Cosmos DB account name as `username`.
+For Cosmos DB, use a dummy username like `dummy-user` for `db-username` as there is no username property for Cosmos DB.
 
 ## Update Configuration Files
 
