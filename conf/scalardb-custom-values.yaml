@@ -19,7 +19,13 @@ envoy:
       service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
 
   resources: {}
-    
+
+  tolerations:
+    - effect: NoSchedule
+      key: kubernetes.io/app
+      operator: Equal
+      value: scalardbpool
+
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -29,11 +35,26 @@ envoy:
                 operator: In
                 values:
                   - scalardbpool
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - scalardb
+                - key: app.kubernetes.io/app
+                  operator: In
+                  values:
+                    - envoy
+            topologyKey: kubernetes.io/hostname
+          weight: 50
 
 scalardb:
   replicaCount: 3
   storageConfiguration:
-  
+
     #
     # Cosmos DB
     #
@@ -48,9 +69,9 @@ scalardb:
     # username: <AWS_ACCESS_KEY_ID>
     # password: <AWS_ACCESS_SECRET_KEY>
     # storage: dynamo
-    
+
     dbLogLevel: INFO
-    
+
   serviceMonitor:
     enabled: false
 
@@ -59,8 +80,14 @@ scalardb:
 
   grafanaDashboard:
     enabled: false
-    
-  resources: {}  
+
+  resources: {}
+
+  tolerations:
+    - effect: NoSchedule
+      key: kubernetes.io/app
+      operator: Equal
+      value: scalardbpool
 
   affinity:
     nodeAffinity:
@@ -71,4 +98,19 @@ scalardb:
                 operator: In
                 values:
                   - scalardbpool
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - scalardb
+                - key: app.kubernetes.io/app
+                  operator: In
+                  values:
+                    - scalardb
+            topologyKey: kubernetes.io/hostname
+          weight: 50
   existingSecret: ""
