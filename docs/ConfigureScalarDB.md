@@ -15,22 +15,27 @@ To create a schema for the scalar DB server using the scalar DB schema loader, p
 
 To deploy the scalar DB server via helm charts, you need to configure the scalar DB server according to the database selection.
 
+### Reference Table
+
+You can refer to the table below to get values to create Kubernetes Secrets and update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file according to the database you chose
+
+| Database  | storageType | contactPoints              | username       | password                                 | dynamoBaseResourceUnit | cosmosBaseResourceUnit | 
+|:----------|-------------|----------------------------|----------------|------------------------------------------|------------------------|------------------------|
+| DynamoDB  | dynamo      | AWS_REGION                 | AWS_ACCESS_KEY | AWS_ACCESS_SECRET_KEY                    | 10                     | N/A                    |
+| Cosmos DB | cosmos      | Cosmos DB account endpoint | N/A            | Cosmos DB account primary/secondary key  | N/A                    | 400                    |
+| JDBC      | jdbc        | JDBC_CONNECTION_URL        | USERNAME       | PASSWORD                                 | N/A                    | N/A                    |
+
+Note:
+* JDBC denotes all relational databases supported by Scalar DL such as MySQL, PostgreSQL, Oracle Database, SQL Server, and Amazon Aurora.
+
 ### Create Kubernetes Secrets
 
 Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key.
-This method is recommended highly for handling credentials in the production environment.
-
-You may create a Secret object for storing database credentials. The key to store the username should be `db-username` and the key to store the password should be `db-password`.
+This optional method is recommended highly for handling credentials in the production environment.
+You can refer to the [section](#reference-table) to get the values for `username` and `password` for the database you chose.
+You need to create a secret object with `db-username` and `db-password` to store the username and password of the underlying database.
 
 ```
-# Cosmos DB
-    # username=<Account name>
-    # password=<Cosmos DB account primary master key>
-
-# DynamoDB
-    # username=<AWS_ACCESS_KEY_ID>
-    # password=<AWS_ACCESS_SECRET_KEY>
-
 kubectl create secret generic scalardb-secret --from-literal db-username=<username> --from-literal db-password=<password>
 ```
 
@@ -38,34 +43,30 @@ After creating the Secret Object, update [scalardb-custom-values](../conf/scalar
 
 [scalardb-custom-values](../conf/scalardb-custom-values.yaml)
 
-```yaml
-scalardb:
-  existingSecret: scalardb-secret
-```
+  ```yaml
+  scalardb:
+    ....
+    ....
+    existingSecret: scalardb-secret
+  ```
 
 Note:
-* Kubernetes secrets option to add database credentials as `existingSecret` may not be available with the current version. It will be added in future releases.
 
-### Cosmos DB
+* Kubernetes secrets option to add database credentials as `existingSecret` may not be available with the current version. It will be added in future releases.
+* For Cosmos DB, use a dummy username like `dummy-user` for `db-username` as there is no username property for Cosmos DB.
+
+### Configure scalardb-custom-values
 
 To set up Scalar DB server for Cosmos DB, update the following configuration in [scalardb-custom-values](../conf/scalardb-custom-values.yaml) file.
 
-* You can skip configuring the `password` if you set the Secret Object as per [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
+  ```yaml
+  storageConfiguration:
+    contactPoints: <contactPoints>
+    username: <username>
+    password: <password>
+    storage: <storageType>
+  ```
 
-```yaml
-contactPoints: <Cosmos DB account endpoint>
-password: <Cosmos DB account primary master key>
-storage: cosmos
-```
-### DynamoDB
+Note:-
 
-To set up Scalar DB server for DynamoDB, update the following configuration in [scalardb-custom-values](../conf/scalardb-custom-values.yaml) file.
-
-* You can skip configuring the `username` and `password` if you set the Secret Object as per [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
-
-```yaml
-contactPoints: <REGION>
-username: <AWS_ACCESS_KEY_ID>
-password: <AWS_ACCESS_SECRET_KEY>
-storage: dynamo
-```
+* You can skip configuring the `username` and `password` if you set the Secret Object as per the [Create Kubernetes Secrets](#create-kubernetes-secrets) section.
