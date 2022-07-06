@@ -15,8 +15,7 @@ In this guide, we will create the following components.
 
 * A VPC with NAT gateway
 * An EKS cluster with two Kubernetes node groups
-* A managed database service
-    * DynamoDB
+  A managed database service supported by Scalar DL.
 * A Bastion instance with a public IP
 * Amazon CloudWatch
 
@@ -52,7 +51,7 @@ In this section, you will set up a database for Scalar DL.
 
 ### Steps
 
-* Follow [Set up a database guide](./SetupDatabase.md) to set up a database for Scalar DL.
+* Follow [Set up a database guide](./SetupDatabaseForAWS.md) to set up a database for Scalar DL.
 
 ## Step 3. Configure EKS
 

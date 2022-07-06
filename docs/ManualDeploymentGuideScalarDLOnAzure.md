@@ -15,8 +15,7 @@ In this guide, we will create the following components.
 
 * An Azure Virtual Network associated with a Resource Group.
 * An AKS cluster with 2 node pools.
-* A managed database service.
-    * A Cosmos DB Account.
+  A managed database service supported by Scalar DL.
 * A Bastion instance with a public IP.
 * Azure container insights.
 
@@ -57,7 +56,7 @@ In this section, you will set up a database for Scalar DL.
 
 ### Steps
 
-* Follow [Set up a database guide](./SetupDatabase.md) to set up a database for Scalar DL.
+* Follow [Set up a database guide](./SetupDatabaseForAzure.md) to set up a database for Scalar DL.
 
 ## Step 3. Configure AKS
 
