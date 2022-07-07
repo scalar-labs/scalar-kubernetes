@@ -2,32 +2,42 @@
 
 This guide explains how to configure Scalar DL custom values in helm charts for Scalar DL deployment.
 
+
+## Reference Table
+
+You can refer to the table below to get values to create Kubernetes Secrets and update the configuration files for Scalar DL deployment according to the database you chose.
+
+| Database  | storageType | contactPoints              | username       | password                                 | dynamoBaseResourceUnit | cosmosBaseResourceUnit | 
+|:----------|-------------|----------------------------|----------------|------------------------------------------|------------------------|------------------------|
+| DynamoDB  | dynamo      | AWS_REGION                 | AWS_ACCESS_KEY | AWS_ACCESS_SECRET_KEY                    | 10                     | N/A                    |
+| Cosmos DB | cosmos      | Cosmos DB account endpoint | N/A            | Cosmos DB account primary/secondary key  | N/A                    | 400                    |
+| JDBC      | jdbc        | JDBC_CONNECTION_URL        | USERNAME       | PASSWORD                                 | N/A                    | N/A                    |
+
+Note:
+
+* JDBC denotes all relational databases supported by Scalar DL such as MySQL, PostgreSQL, Oracle Database, SQL Server, and Amazon Aurora.
+
 ## Create Kubernetes Secrets
 
-Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. 
-This optional method is highly recommended for handling credentials in the production environment.
-
-You need to create a secret object with `db-username` and `db-password` to store the username and password of the underlying database.
+Kubernetes Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key.
+This optional method is recommended highly for handling credentials in the production environment.
+You can refer to the [reference table](#reference-table) section to get the values for `username` and `password` for the database you chose.
+You need to create a secret object with key names `db-username` and `db-password` to store the username and password of the underlying database.
 
 ```
-# Cosmos DB
-    # username=<Account name>
-    # password=<Cosmos DB account primary master key>
-
-# DynamoDB
-    # username=<AWS_ACCESS_KEY_ID>
-    # password=<AWS_ACCESS_SECRET_KEY>
-
 kubectl create secret generic scalardl --from-literal db-username=<username> --from-literal db-password=<password>
 ```
+Note:
 
-## Update Configuration Files 
+For Cosmos DB, use a dummy username like `dummy-user` for `db-username` as there is no username property for Cosmos DB.
 
-### Cosmos DB
+## Update Configuration Files
 
-#### Configure schema-loading-custom-values
+### Configure schema-loading-custom-values
 
-To create a Scalar DL schema in Cosmos DB, you need to update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file.
+To create a Scalar DL schema in the database, you need to update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file.
+You can refer to the [reference table](#reference-table) section to check which values are needed based on the database used.
+If any configuration property value is defined as `N/A` in the [reference table](#reference-table) section for your database, you must remove that property from the configuration file.
 
 **With Kubernetes secrets**
 
@@ -36,10 +46,12 @@ If you have created the `scalardl` Kubernetes secret, you can use the following 
 ```yaml
 schemaLoading:
   existingSecret: scalardl
-
-  database: cosmos
-  contactPoints: <Cosmos DB account endpoint>
-  cosmosBaseResourceUnit: 400
+  
+  database: <storageType>
+  contactPoints: <contactPoints>
+  cosmosBaseResourceUnit: <cosmosBaseResourceUnit>
+  dynamoBaseResourceUnit: <dynamoBaseResourceUnit>
+  
 ```
 
 **Without Kubernetes secrets**
@@ -48,15 +60,18 @@ If you have not created the `scalardl` Kubernetes secret, you can use the follow
 
 ```yaml
 schemaLoading:
-  database: cosmos
-  contactPoints: <Cosmos DB account endpoint>
-  password: <Cosmos DB account primary master key>
-  cosmosBaseResourceUnit: 400
+  database: <storageType>
+  contactPoints: <contactPoints>
+  username: <username>
+  password: <password>
+  cosmosBaseResourceUnit: <cosmosBaseResourceUnit>
+  dynamoBaseResourceUnit: <dynamoBaseResourceUnit>
 ```
 
-#### Configure scalardl-custom-values 
+### Configure scalardl-custom-values
 
-To deploy Scalar DL Ledger on Cosmos DB, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
+To deploy Scalar DL Ledger, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
+You can refer to the [reference table](#reference-table) section to check which values are needed based on the database used.
 
 **With Kubernetes secrets**
 
@@ -67,8 +82,8 @@ ledger:
   existingSecret: scalardl
   ....
   scalarLedgerConfiguration:
-    dbContactPoints: <Cosmos DB account endpoint>
-    dbStorage: cosmos
+    dbContactPoints: <contactPoints>
+    dbStorage: <storageType>
 ```
 **Without Kubernetes secrets**
 
@@ -78,16 +93,20 @@ If you have not created the `scalardl` Kubernetes secret, you can use the follow
 ledger:
   ....
   scalarLedgerConfiguration:
-    dbContactPoints: <Cosmos DB account endpoint>
-    dbPassword: <Cosmos DB account primary master key>
-    dbStorage: cosmos
+    dbContactPoints: <contactPoints>
+    dbUsername: <username>
+    dbPassword: <password>
+    dbStorage: <storageType>
 ```
 
-To enable Auditor service, you can follow the [Enable Auditor](#enable-auditor) section.
+Note:
 
-#### Configure scalardl-audit-custom-values
+For Cosmos DB, you need to remove the `dbUsername` property as it is not required.
 
-To deploy the Scalar DL Auditor on Cosmos DB, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
+### Configure scalardl-audit-custom-values
+
+To deploy the Scalar DL Auditor, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
+You can refer to the [reference table](#reference-table) section to check which values are needed based on the database used.
 
 **With Kubernetes Secrets**
 
@@ -98,8 +117,8 @@ auditor:
   existingSecret: scalardl
   ....
   scalarAuditorConfiguration:
-    dbContactPoints: <Cosmos DB account endpoint>
-    dbStorage: cosmos
+    dbContactPoints: <contactPoints>
+    dbStorage: <storageType>
 ```
 
 **Without Kubernetes secrets**
@@ -110,114 +129,19 @@ If you have not created the `scalardl` Kubernetes secret, you can use the follow
 auditor:
   ....
   scalarAuditorConfiguration:
-    dbContactPoints: <Cosmos DB account endpoint>
-    dbPassword: <Cosmos DB account primary master key>
-    dbStorage: cosmos
+    dbContactPoints: <contactPoints>
+    dbUsername: <username>
+    dbPassword: <password>
+    dbStorage: <storageType>
 ```
 
-To enable the Auditor service, you can follow the [Enable Auditor](#enable-auditor) section.
+Note:
 
-### DynamoDB
+For Cosmos DB, you need to remove the `dbUsername` property as it is not required.
 
-#### Configure schema-loading-custom-values
+## Enable Auditor
 
-To create the Scalar DL schema in DynamoDB, you need to update the [schema-loading-custom-values.yaml](../conf/schema-loading-custom-values.yaml) file.
-
-**With Kubernetes secrets**
-
-If you have created the `scalardl` Kubernetes secret, you can use the following configuration.
-
-```yaml
-schemaLoading:
-  existingSecret: scalardl
-
-  database: dynamo
-  contactPoints: <REGION>
-  dynamoBaseResourceUnit: 10
-```
-
-**Without Kubernetes secrets**
-
-If you have not created the `scalardl` Kubernetes secret, you can use the following configuration.
-
-```yaml
-schemaLoading:
-  database: dynamo
-  contactPoints: <REGION>
-  username: <AWS_ACCESS_KEY_ID>
-  password: <AWS_ACCESS_SECRET_KEY>
-  dynamoBaseResourceUnit: 10
-```
-
-#### Configure scalardl-custom-values
-
-To deploy the Scalar DL Ledger on DynamoDB, you need to update the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
-
-**With Kubernetes secrets**
-
-If you have created the `scalardl` Kubernetes secret, you can use the following configuration.
-
-```yaml
-ledger:
-  existingSecret: scalardl
-  ....
-  scalarLedgerConfiguration:
-    dbStorage: dynamo
-    dbContactPoints: <REGION>
-```
-
-**Without Kubernetes secrets**
-
-If you have not created the `scalardl` Kubernetes secret, you can use the following configuration.
-
-```yaml
-ledger:
-  ....
-  scalarLedgerConfiguration:
-    dbStorage: dynamo
-    dbContactPoints: <REGION>
-    dbUsername: <AWS_ACCESS_KEY_ID>
-    dbPassword: <AWS_ACCESS_SECRET_KEY>
-```
-
-To enable the Auditor service, you can follow the [Enable Auditor](#enable-auditor) section.
-
-#### Configure scalardl-audit-custom-values
-
-To deploy the Scalar DL Auditor on DynamoDB, you need to update the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
-
-**With Kubernetes secrets**
-
-If you have created the `scalardl` Kubernetes secret, you can use the following configuration.
-
-```yaml
-auditor:
-  existingSecret: scalardl
-  ....
-  scalarAuditorConfiguration:
-    dbStorage: dynamo
-    dbContactPoints: <REGION>
-```
-
-**Without Kubernetes secrets**
-
-If you have not created the `scalardl` Kubernetes secret, you can use the following configuration.
-
-```yaml
-auditor:
-  ....
-  scalarAuditorConfiguration:
-    dbStorage: dynamo
-    dbContactPoints: <REGION>
-    dbUsername: <AWS_ACCESS_KEY_ID>
-    dbPassword: <AWS_ACCESS_SECRET_KEY>
-```
-
-To enable the Auditor service, you can follow the [Enable Auditor](#enable-auditor) section.
-
-### Enable Auditor 
-
-#### Configure scalardl-custom-values
+### Configure scalardl-custom-values
 
 To enable the Auditor service, update the following configurations in the [scalardl-custom-values.yaml](../conf/scalardl-custom-values.yaml) file.
 
@@ -228,7 +152,7 @@ scalarLedgerConfiguration:
    ledgerAuditorEnabled: true
 ```
 
-#### Configure scalardl-audit-custom-values
+### Configure scalardl-audit-custom-values
 
 Configure the service endpoint of ledger-side envoy in the [scalardl-audit-custom-values.yaml](../conf/scalardl-audit-custom-values.yaml) file.
 
