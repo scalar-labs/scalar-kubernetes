@@ -38,6 +38,12 @@ prometheusRule:
 grafanaDashboard:
   enabled: false
 
+tolerations:
+  - effect: NoSchedule
+    key: kubernetes.io/app
+    operator: Equal
+    value: scalardbgraphqlpool
+
 resources: {}
 
 affinity:
@@ -49,5 +55,16 @@ affinity:
               operator: In
               values:
                 - scalardbgraphqlpool
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/app
+                operator: In
+                values:
+                  - scalardb-graphql
+          topologyKey: kubernetes.io/hostname
+        weight: 50
 
 existingSecret: ""
