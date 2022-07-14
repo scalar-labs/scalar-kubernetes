@@ -11,8 +11,7 @@ In this guide, we will create the following components for Auditor.
 
 * A VPC with NAT gateway
 * An EKS cluster with two Kubernetes node groups
-* A managed database service
-    * DynamoDB
+  A managed database service supported by Scalar DL.
 * A Bastion instance with a public IP
 * Amazon CloudWatch
 

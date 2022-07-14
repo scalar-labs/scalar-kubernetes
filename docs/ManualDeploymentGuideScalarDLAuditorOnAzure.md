@@ -11,8 +11,7 @@ In this guide, we will create the following components for auditor.
 
 * An Azure Virtual Network associated with a Resource Group.
 * An AKS cluster with 2 node pools.
-* A managed database service.
-    * A Cosmos DB Account.
+  A managed database service supported by Scalar DL.
 * A Bastion instance with a public IP.
 * Azure container insights.
 
