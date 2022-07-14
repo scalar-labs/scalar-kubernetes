@@ -69,6 +69,7 @@ Install the following tools on the bastion for controlling the AKS cluster:
 
 * You must have an AKS cluster with Kubernetes version **1.19** or higher for Scalar DB deployment.
 * You must create a new `user node pool` with the name `scalardbpool` for Scalar DB deployment.
+* You must add Taints `kubernetes.io/app=scalardbpool:NoSchedule` to each worker node.
 * You must create a Kubernetes cluster with `service principal` as the Authentication method.
 * You must create a Kubernetes cluster with `Azure CNI`.
 

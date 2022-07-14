@@ -68,6 +68,8 @@ Install the following tools on your bastion for controlling the EKS cluster:
 * You must create a Kubernetes cluster with version 1.19 or higher for Scalar DL deployment.
 * You must create a node group with the label, key as `agentpool` and value as `scalardlpool` for Scalar DL deployment.
 * You must add a rule in the EKS security group to **enable HTTPS access (Port 443)** to the private EKS cluster from the bastion server.
+* You must add Taints `kubernetes.io/app=scalardlpool:NoSchedule` to each worker node.
+    * You need to add the Taints using the `kubectl taint node` command after you created the cluster since EKS does not support adding Taints with key `kubernetes.io/app` to the node group.
 
 ### Recommendations
 

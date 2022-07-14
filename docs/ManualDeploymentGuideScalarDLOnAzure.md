@@ -72,6 +72,7 @@ Install the following tools on the bastion for controlling the AKS cluster:
 
 * You must have an AKS cluster with Kubernetes version **1.19** or higher for Scalar DL deployment.
 * You must create a new `user node pool` with the name `scalardlpool` for Scalar DL deployment.
+* You must add Taints `kubernetes.io/app=scalardlpool:NoSchedule` to each worker node.
 * You must create a Kubernetes cluster with `service principal` as the Authentication method.
 * You must create a Kubernetes cluster with `Azure CNI`.
 * You must select the subnet other than `k8s_ingress` subnet for creating the AKS cluster.
