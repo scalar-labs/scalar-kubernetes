@@ -1,4 +1,4 @@
-# Deploy Scalar DB server on Azure
+# Deploy Scalar DB Server on Azure
 
 Scalar DB server is a gRPC server that implements the Scalar DB interface.
 We can deploy the Scalar DB server on any Kubernetes service.
