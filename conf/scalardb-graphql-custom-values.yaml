@@ -2,7 +2,8 @@ replicaCount: 3
 
 scalarDbGraphQlConfiguration:
   #
-  # DynamoDB
+  # Specify the configuration of a database you use.
+  # The following is the example configuration of DynamoDB.
   #
   # contactPoints: <REGION>
   # username: <AWS_ACCESS_KEY_ID>
