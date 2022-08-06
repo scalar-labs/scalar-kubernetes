@@ -1,0 +1,71 @@
+replicaCount: 3
+
+scalarDbGraphQlConfiguration:
+  #
+  # Specify the configuration of a database you use.
+  # The following is the example configuration of DynamoDB.
+  #
+  # contactPoints: <REGION>
+  # username: <AWS_ACCESS_KEY_ID>
+  # password: <AWS_ACCESS_SECRET_KEY>
+  # storage: dynamo
+
+  logLevel: INFO
+  path: /graphql
+  namespaces: "<comma-separated namespace list>"
+  graphiql: "true"
+
+ingress:
+  enabled: true
+  className: alb
+  annotations:
+    # ALB
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=60
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /graphql?query=%7B__typename%7D
+  hosts:
+    - host: ""
+      paths:
+        - path: /graphql
+          pathType: Exact
+
+serviceMonitor:
+  enabled: false
+
+prometheusRule:
+  enabled: false
+
+grafanaDashboard:
+  enabled: false
+
+tolerations:
+  - effect: NoSchedule
+    key: kubernetes.io/app
+    operator: Equal
+    value: scalardbgraphqlpool
+
+resources: {}
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: agentpool
+              operator: In
+              values:
+                - scalardbgraphqlpool
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/app
+                operator: In
+                values:
+                  - scalardb-graphql
+          topologyKey: kubernetes.io/hostname
+        weight: 50
+
+existingSecret: ""
