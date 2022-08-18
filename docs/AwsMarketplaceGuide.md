@@ -17,12 +17,12 @@ Note that some Scalar products are licensed under commercial licenses, and the A
    If you have already signed in, this step will be skipped automatically.
 
 1. Read the **Terms and Conditions** and select **Accept Terms**.  
-   It takes some time. If it's done, you can see the current date in the **Effective date** column.
-   Also, you can see our product on the [Manage subscriptions](https://us-east-1.console.aws.amazon.com/marketplace/home#/subscriptions) page of AWS Console.
+   It takes some time. When it's done, you can see the current date in the **Effective date** column.
+   Also, you can see our products on the [Manage subscriptions](https://us-east-1.console.aws.amazon.com/marketplace/home#/subscriptions) page of AWS Console.
 
 ## **[BYOL]** Deploy containers on EKS (Amazon Elastic Kubernetes Service) from AWS Marketplace using Scalar Helm Charts
 
-If you subscribe to Scalar products in AWS Marketplace, you can pull container images of Scalar products from the private container registry ([ECR](https://aws.amazon.com/ecr/)) of AWS Marketplace. This section explains how to deploy Scalar products on your [EKS](https://aws.amazon.com/eks/) Cluster from the private container registry of AWS Marketplace.
+If you subscribe to Scalar products in AWS Marketplace, you can pull the container images of Scalar products from the private container registry ([ECR](https://aws.amazon.com/ecr/)) of AWS Marketplace. This section explains how to deploy Scalar products on your [EKS](https://aws.amazon.com/eks/) cluster from the private container registry.
 
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
    You need to specify the private container registry (ECR) of AWS Marketplace and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
@@ -86,7 +86,7 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull container i
                  version: "3.4.1"
              ```
 
-1. Deploy the Scalar product using the Helm Chart with the above custom values file.
+1. Deploy the Scalar products using the Helm Chart with the above custom values files.
    * Examples
        * Scalar DB
          ```console
@@ -202,6 +202,6 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull container i
                  - name: "reg-ecr-mp-secrets"
              ```
 
-1. Deploy the Scalar product using the Helm Chart with the above custom values file.
+1. Deploy the Scalar products using the Helm Chart with the above custom values files.
    * Examples  
      Please refer to the **[BYOL] Deploy containers on EKS (Amazon Elastic Kubernetes Service) from AWS Marketplace using Scalar Helm Charts** section of this document.
