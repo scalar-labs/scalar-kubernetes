@@ -26,88 +26,88 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull the contain
 
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
    You need to specify the private container registry (ECR) of AWS Marketplace and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
-   * Examples
-       * Scalar DB
-           * Scalar DB Server (scalardb-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-envoy"
-                 version: "1.2.0"
-             
-             ...
-             
-             scalardb:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-server"
-                 tag: "3.5.2"
-             ```
-       * Scalar DL
-           * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger-envoy"
-                 version: "1.2.0"
-             
-             ...
-             
-             ledger:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
-                 version: "3.4.1"
-             ```
-           * Scalar DL Auditor (scalardl-auditor-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor-envoy"
-                 version: "1.2.0"
-             
-             ...
-             
-             auditor:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
-                 version: "3.4.1"
-             ```
-           * Scalar DL Schema Loader for Ledger (schema-loader-ledger-custom-values.yaml)
-             ```yaml
-             schemaLoading:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-ledger"
-                 version: "3.4.1"
-             ```
-           * Scalar DL Schema Loader for Auditor (schema-loader-auditor-custom-values.yaml)
-             ```yaml
-             schemaLoading:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-auditor"
-                 version: "3.4.1"
-             ```
+   * Scalar DB Examples
+      * Scalar DB Server (scalardb-custom-values.yaml)
+        ```yaml
+        envoy:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-envoy"
+            version: "1.2.0"
+        
+        ...
+        
+        scalardb:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-server"
+            tag: "3.5.2"
+        ```
+   * Scalar DL Examples
+      * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
+        ```yaml
+        envoy:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger-envoy"
+            version: "1.2.0"
+        
+        ...
+        
+        ledger:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
+            version: "3.4.1"
+        ```
+      * Scalar DL Auditor (scalardl-auditor-custom-values.yaml)
+        ```yaml
+        envoy:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor-envoy"
+            version: "1.2.0"
+        
+        ...
+        
+        auditor:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
+            version: "3.4.1"
+        ```
+      * Scalar DL Schema Loader for Ledger (schema-loader-ledger-custom-values.yaml)
+        ```yaml
+        schemaLoading:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-ledger"
+            version: "3.4.1"
+        ```
+      * Scalar DL Schema Loader for Auditor (schema-loader-auditor-custom-values.yaml)
+        ```yaml
+        schemaLoading:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-auditor"
+            version: "3.4.1"
+        ```
 
 1. Deploy the Scalar products using the Helm Chart with the above custom values files.
-   * Examples
-       * Scalar DB
-         ```console
-         helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
-         ```
-       * Scalar DL Ledger
-         ```console
-         helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
-         ```
-       * Scalar DL Auditor
-         ```console
-         helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
-         ```
-       * Scalar DL Schema Loader (Ledger)
-         ```console
-         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
-         ```
-       * Scalar DL Schema Loader (Auditor)
-         ```console
-         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
-         ```
+   * Scalar DB Examples
+      * Scalar DB Server
+        ```console
+        helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
+        ```
+   * Scalar DL Examples
+      * Scalar DL Ledger
+        ```console
+        helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
+        ```
+      * Scalar DL Auditor
+        ```console
+        helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
+        ```
+      * Scalar DL Schema Loader (Ledger)
+        ```console
+        helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-ledger-custom-values.yaml
+        ```
+      * Scalar DL Schema Loader (Auditor)
+        ```console
+        helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-auditor-custom-values.yaml
+        ```
 
 ## **[BYOL]** Deploy containers on Kubernetes other than EKS from AWS Marketplace using Scalar Helm Charts
 
@@ -126,81 +126,80 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull the contain
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
    You need to specify the private container registry (ECR) of AWS Marketplace and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
    Also, you need to specify the `reg-ecr-mp-secrets` as the value of `[].imagePullSecrets`.
-   * Examples
-       * Scalar DB
-           * Scalar DB Server (scalardb-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-envoy"
-                 version: "1.2.0"
-               imagePullSecrets:
-                 - name: "reg-ecr-mp-secrets"
-             
-             ...
-             
-             scalardb:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-server"
-                 tag: "3.5.2"
-               imagePullSecrets:
-                 - name: "reg-ecr-mp-secrets"
-             ```
-       * Scalar DL
-           * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger-envoy"
-                 version: "1.2.0"
-               imagePullSecrets:
-                 - name: "reg-ecr-mp-secrets"
-             
-             ...
-             
-             ledger:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
-                 version: "3.4.1"
-               imagePullSecrets:
-                 - name: "reg-ecr-mp-secrets"
-             ```
-           * Scalar DL Auditor (scalardl-auditor-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor-envoy"
-                 version: "1.2.0"
-               imagePullSecrets:
-                 - name: "reg-ecr-mp-secrets"
-             
-             ...
-             
-             auditor:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
-                 version: "3.4.1"
-               imagePullSecrets:
-                 - name: "reg-ecr-mp-secrets"
-             ```
-           * Scalar DL Schema Loader for Ledger (schema-loader-ledger-custom-values.yaml)
-             ```yaml
-             schemaLoading:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-ledger"
-                 version: "3.4.1"
-               imagePullSecrets:
-                 - name: "reg-ecr-mp-secrets"
-             ```
-           * Scalar DL Schema Loader for Auditor (schema-loader-auditor-custom-values.yaml)
-             ```yaml
-             schemaLoading:
-               image:
-                 repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-auditor"
-                 version: "3.4.1"
-               imagePullSecrets:
-                 - name: "reg-ecr-mp-secrets"
-             ```
+   * Scalar DB Examples
+       * Scalar DB Server (scalardb-custom-values.yaml)
+         ```yaml
+         envoy:
+           image:
+             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-envoy"
+             version: "1.2.0"
+           imagePullSecrets:
+             - name: "reg-ecr-mp-secrets"
+         
+         ...
+         
+         scalardb:
+           image:
+             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-server"
+             tag: "3.5.2"
+           imagePullSecrets:
+             - name: "reg-ecr-mp-secrets"
+         ```
+   * Scalar DL Examples
+       * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
+         ```yaml
+         envoy:
+           image:
+             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger-envoy"
+             version: "1.2.0"
+           imagePullSecrets:
+             - name: "reg-ecr-mp-secrets"
+         
+         ...
+         
+         ledger:
+           image:
+             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-ledger"
+             version: "3.4.1"
+           imagePullSecrets:
+             - name: "reg-ecr-mp-secrets"
+         ```
+       * Scalar DL Auditor (scalardl-auditor-custom-values.yaml)
+         ```yaml
+         envoy:
+           image:
+             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor-envoy"
+             version: "1.2.0"
+           imagePullSecrets:
+             - name: "reg-ecr-mp-secrets"
+         
+         ...
+         
+         auditor:
+           image:
+             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalar-auditor"
+             version: "3.4.1"
+           imagePullSecrets:
+             - name: "reg-ecr-mp-secrets"
+         ```
+       * Scalar DL Schema Loader for Ledger (schema-loader-ledger-custom-values.yaml)
+         ```yaml
+         schemaLoading:
+           image:
+             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-ledger"
+             version: "3.4.1"
+           imagePullSecrets:
+             - name: "reg-ecr-mp-secrets"
+         ```
+       * Scalar DL Schema Loader for Auditor (schema-loader-auditor-custom-values.yaml)
+         ```yaml
+         schemaLoading:
+           image:
+             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardl-schema-loader-auditor"
+             version: "3.4.1"
+           imagePullSecrets:
+             - name: "reg-ecr-mp-secrets"
+         ```
 
 1. Deploy the Scalar products using the Helm Chart with the above custom values files.
    * Examples  
