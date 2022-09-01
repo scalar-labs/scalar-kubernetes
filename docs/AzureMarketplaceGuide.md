@@ -35,6 +35,8 @@ Note that **Company** is not required, but please enter it.
         * Scalar DB
             * Scalar DB Server Default (2vCPU, 4GiB Memory)
             * Scalar DB Server Envoy Proxy
+            * Scalar DB GraphQL Server (optional)
+            * Scalar DB SQL Server (optional)
         * Scalar DL
             * Scalar DL Ledger Default (2vCPU, 4GiB Memory)
             * Scalar DL Auditor Default (2vCPU, 4GiB Memory)
@@ -55,77 +57,87 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
 
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
    You need to specify your private container registry and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
-   * Examples
-       * Scalar DB
-           * Scalar DB Server (scalardb-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalardb-envoy"
-                 version: "1.2.0"
-             
-             ...
-             
-             scalardb:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalardb-server"
-                 tag: "3.5.2"
-             ```
-       * Scalar DL
-           * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalardl-envoy"
-                 version: "1.2.0"
-             
-             ...
-             
-             ledger:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalar-ledger"
-                 version: "3.4.0"
-             ```
-           * Scalar DL Auditor (scalardl-auditor-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalardl-envoy"
-                 version: "1.2.0"
-             
-             ...
-             
-             auditor:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalar-auditor"
-                 version: "3.4.0"
-             ```
-           * Scalar DL Schema Loader (schema-loader-custom-values.yaml)
-             ```yaml
-             schemaLoading:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalardl-schema-loader"
-                 version: "3.4.0"
-             ```
+   * Scalar DB Examples
+      * Scalar DB Server (scalardb-custom-values.yaml)
+        ```yaml
+        envoy:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardb-envoy"
+            version: "1.2.0"
+        
+        ...
+        
+        scalardb:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardb-server"
+            tag: "3.5.2"
+        ```
+      * Scalar DB GraphQL Server (scalardb-graphql-custom-values.yaml)
+        ```yaml
+        image:
+          repository: "example.azurecr.io/scalarinc/scalardb-graphql"
+          tag: "3.6.0"
+        ```
+   * Scalar DL Examples
+      * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
+        ```yaml
+        envoy:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardl-envoy"
+            version: "1.2.0"
+        
+        ...
+        
+        ledger:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalar-ledger"
+            version: "3.4.0"
+        ```
+      * Scalar DL Auditor (scalardl-auditor-custom-values.yaml)
+        ```yaml
+        envoy:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardl-envoy"
+            version: "1.2.0"
+        
+        ...
+        
+        auditor:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalar-auditor"
+            version: "3.4.0"
+        ```
+      * Scalar DL Schema Loader (schema-loader-custom-values.yaml)
+        ```yaml
+        schemaLoading:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardl-schema-loader"
+            version: "3.4.0"
+        ```
 
 1. Deploy the Scalar product using the Helm Chart with the above custom values file.
-   * Examples
-       * Scalar DB
-         ```console
-         helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
-         ```
-       * Scalar DL Ledger
-         ```console
-         helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
-         ```
-       * Scalar DL Auditor
-         ```console
-         helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
-         ```
-       * Scalar DL Schema Loader
-         ```console
-         helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-custom-values.yaml
-         ```
+   * Scalar DB Examples
+      * Scalar DB Server
+        ```console
+        helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
+        ```
+      * Scalar DB GraphQL Server
+        ```console
+        helm install scalardb-graphql scalar-labs/scalardb-graphql -f scalardb-graphql-custom-values.yaml
+        ```
+   * Scalar DL Examples
+      * Scalar DL Ledger
+        ```console
+        helm install scalardl-ledger scalar-labs/scalardl -f ./scalardl-ledger-custom-values.yaml
+        ```
+      * Scalar DL Auditor
+        ```console
+        helm install scalardl-auditor scalar-labs/scalardl-audit -f ./scalardl-auditor-custom-values.yaml
+        ```
+      * Scalar DL Schema Loader
+        ```console
+        helm install schema-loader scalar-labs/schema-loading -f ./schema-loader-custom-values.yaml
+        ```
 
 ## Deploy containers on Kubernetes other than AKS (Azure Kubernetes Service) from your private container registry using Scalar Helm Charts
 
@@ -150,72 +162,79 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
    You need to specify your private container registry and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
    Also, you need to specify the `reg-acr-secrets` as the value of `[].imagePullSecrets`.
-   * Examples
-       * Scalar DB
-           * Scalar DB Server (scalardb-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalardb-envoy"
-                 version: "1.2.0"
-               imagePullSecrets:
-                 - name: "reg-acr-secrets"
-             
-             ...
-             
-             scalardb:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalardb-server"
-                 tag: "3.5.2"
-               imagePullSecrets:
-                 - name: "reg-acr-secrets"
-             ```
-       * Scalar DL
-           * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalardl-envoy"
-                 version: "1.2.0"
-               imagePullSecrets:
-                 - name: "reg-acr-secrets"
-
-             ...
-             
-             ledger:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalar-ledger"
-                 version: "3.4.0"
-               imagePullSecrets:
-                 - name: "reg-acr-secrets"
-             ```
-           * Scalar DL Auditor (scalardl-auditor-custom-values.yaml)
-             ```yaml
-             envoy:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalardl-envoy"
-                 version: "1.2.0"
-               imagePullSecrets:
-                 - name: "reg-acr-secrets"
-             
-             ...
-             
-             auditor:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalar-auditor"
-                 version: "3.4.0"
-               imagePullSecrets:
-                 - name: "reg-acr-secrets"
-             ```
-           * Scalar DL Schema Loader (schema-loader-custom-values.yaml)
-             ```yaml
-             schemaLoading:
-               image:
-                 repository: "example.azurecr.io/scalarinc/scalardl-schema-loader"
-                 version: "3.4.0"
-               imagePullSecrets:
-                 - name: "reg-acr-secrets"
-             ```
+   * Scalar DB Examples
+      * Scalar DB Server (scalardb-custom-values.yaml)
+        ```yaml
+        envoy:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardb-envoy"
+            version: "1.2.0"
+          imagePullSecrets:
+            - name: "reg-acr-secrets"
+        
+        ...
+        
+        scalardb:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardb-server"
+            tag: "3.5.2"
+          imagePullSecrets:
+            - name: "reg-acr-secrets"
+        ```
+      * Scalar DB GraphQL Server (scalardb-graphql-custom-values.yaml)
+        ```yaml
+        image:
+          repository: "example.azurecr.io/scalarinc/scalardb-graphql"
+          tag: "3.6.0"
+        imagePullSecrets:
+          - name: "reg-acr-secrets"
+        ```
+   * Scalar DL Examples
+      * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
+        ```yaml
+        envoy:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardl-envoy"
+            version: "1.2.0"
+          imagePullSecrets:
+            - name: "reg-acr-secrets"
+        
+        ...
+        
+        ledger:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalar-ledger"
+            version: "3.4.0"
+          imagePullSecrets:
+            - name: "reg-acr-secrets"
+        ```
+      * Scalar DL Auditor (scalardl-auditor-custom-values.yaml)
+        ```yaml
+        envoy:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardl-envoy"
+            version: "1.2.0"
+          imagePullSecrets:
+            - name: "reg-acr-secrets"
+        
+        ...
+        
+        auditor:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalar-auditor"
+            version: "3.4.0"
+          imagePullSecrets:
+            - name: "reg-acr-secrets"
+        ```
+      * Scalar DL Schema Loader (schema-loader-custom-values.yaml)
+        ```yaml
+        schemaLoading:
+          image:
+            repository: "example.azurecr.io/scalarinc/scalardl-schema-loader"
+            version: "3.4.0"
+          imagePullSecrets:
+            - name: "reg-acr-secrets"
+        ```
 
 1. Deploy the Scalar product using the Helm Chart with the above custom values file.
    * Examples  
