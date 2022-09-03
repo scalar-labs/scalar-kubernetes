@@ -7,9 +7,9 @@ Note that some Scalar products are licensed under commercial licenses, and the A
 ## Subscribe to Scalar products from AWS Marketplace
 
 1. Access to the AWS Marketplace.
-   * [Scalar DB (BYOL)]() // TODO: Add URL of Marketplace page after it's published
-   * [Scalar DL Ledger (BYOL)]() // TODO: Add URL of Marketplace page after it's published
-   * [Scalar DL Auditor (BYOL)]() // TODO: Add URL of Marketplace page after it's published
+   * [Scalar DB (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2)
+   * [Scalar DL Ledger (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)
+   * [Scalar DL Auditor (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6)
 
 1. Select **Continue to Subscribe**.
 
@@ -40,6 +40,12 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull the contain
           image:
             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-server"
             tag: "3.5.2"
+        ```
+      * Scalar DB GraphQL Server (scalardb-graphql-custom-values.yaml)
+        ```yaml
+        image:
+          repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-graphql"
+          tag: "3.6.0"
         ```
    * Scalar DL Examples
       * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
@@ -90,6 +96,10 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull the contain
       * Scalar DB Server
         ```console
         helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
+        ```
+      * Scalar DB GraphQL Server
+        ```console
+        helm install scalardb-graphql scalar-labs/scalardb-graphql -f scalardb-graphql-custom-values.yaml
         ```
    * Scalar DL Examples
       * Scalar DL Ledger
@@ -144,6 +154,14 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull the contain
              tag: "3.5.2"
            imagePullSecrets:
              - name: "reg-ecr-mp-secrets"
+         ```
+       * Scalar DB GraphQL Server (scalardb-graphql-custom-values.yaml)
+         ```yaml
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-graphql"
+           tag: "3.6.0"
+         imagePullSecrets:
+           - name: "reg-ecr-mp-secrets"
          ```
    * Scalar DL Examples
        * Scalar DL Ledger (scalardl-ledger-custom-values.yaml)
