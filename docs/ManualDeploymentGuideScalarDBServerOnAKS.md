@@ -1,178 +1,72 @@
-# Deploy Scalar DB Server on Azure
+# Deploy Scalar DB Server on AKS
 
-Scalar DB server is a gRPC server that implements the Scalar DB interface.
-We can deploy the Scalar DB server on any Kubernetes service.
-This guide will help you to deploy a Scalar DB server in azure AKS.
+Scalar DB Server is a gRPC server that implements Scalar DB interface. With Scalar DB Server, you can use Scalar DB features from multiple programming languages that are supported by gRPC.  
+
+We can deploy Scalar DB Server on any Kubernetes services. This document explains how to deploy Scalar DB Server on AKS.  
 
 ## What we create
 
+In this guide, we create the following environment on your Azure account.  
+
 ![image](images/scalardbserver-aks-diagram.png)
 
-In this guide, we will create the following components.
+// TODO: Update the figure based on the latest document
 
-* An Azure Virtual Network associated with a Resource Group.
-* An AKS cluster with 2 node pools.
-* A managed database service.
-    * A Cosmos DB Account.
-* A Bastion instance with a public IP.
-* Azure container insights.
+## Step 1. Subscribe to Scalar DB Server in Azure Marketplace
 
+You can get the Scalar DB Server container image from [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardb). First, you need to subscribe to it. Please refer to the following document to subscribe to Scalar DB Server in Azure Marketplace.  
 
-## Prerequisites
+* [How to install Scalar products through Azure Marketplace](./AzureMarketplaceGuide.md)
 
-You must have the required permissions as specified in the [Cloud permissions document](./CloudPermissionsForScalarDBOnAKS.md) to create cloud resources to deploy the Scalar DB server on Azure.
+Note: Please see the **Get Scalar products from Microsoft Azure Marketplace** section in the above document.  
 
-## Step 1. Configure your network
+## Step 2. Set up a database for Scalar DB Server
 
-Configure a secure network according to your organizational standard or application requirements. This section shows how to configure a secure network for Scalar DB server deployment.
+Scalar DB supports [several databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md). You need to prepare a database before you deploy Scalar DB Server.  
 
-### Requirements
+Please refer to the following document for more details.  
 
-* You must create a virtual network with a subnet for the bastion.
-* You must create 2 subnets for AKS, one subnet must be created with the name `k8s_ingress` to create an envoy load balancer.
+* [Set up a database for Scalar DB/Scalar DL deployment in Azure](./SetupDatabaseForAzure.md)
 
-### Recommendations
+## Step 3. Create AKS Cluster
 
-* You should create a bastion server to manage the Kubernetes cluster for production or you can use VPN to access from the local machine.
-* You should create subnets for AKS with a prefix of at least `/22`.
+Create AKS Cluster for the deployment of Scalar DB Server. Please refer to the following document for more details.  
 
-### Steps
+* [Create AKS Cluster for Scalar Products]() // TODO: Create a new document
 
-* Create a Resource group based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#create-resource-groups).
-* Create an Azure virtual network based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal) with the above requirements and recommendations.
-* Create subnets based on [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet) with the above requirements and recommendations.
-* Create a virtual machine to use as a bastion server based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal).
+## Step 4. Create bastion server
 
-## Step 2. Set up a database
+For executing some tools to deploy and manage Scalar DB Server on AKS, you need to prepare a bastion server in the same VNet of the AKS Cluster you created in **Step 3**. Please refer to the following document for more details.  
 
-In this step, we will set up a database.
+* [Create bastion server]() // TODO: Create a new document
 
-### Requirements
+## Step 5. Preparing custom values file of Helm 
 
-* You must have a database that Scalar DB supports.
+You need to configure your custom values file for Helm Chart of Scalar DB Server based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
 
-### Steps
+* [Configure custom values file of Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
 
-* Follow [Set up a database guide](./SetupDatabase.md) to set up a database for Scalar DB. Please avoid the `Scale Performance` section in this guide as it is possible to set Request Units(RU) value when creating the schema for the scalar DB server.
+## Step 6. Deploy Scalar DB Server using Scalar Helm Chart
 
-## Step 3. Configure AKS
+Deploy Scalar DB Server on your AKS Cluster using Scalar Helm Chart. Please refer to the following document for more details.  
 
-This section shows how to configure a Kubernetes service for Scalar DB server deployment.
+* [Deploy Scalar Products using Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
 
-### Prerequisites
+## Step 7. Check the status of Scalar DB Server deployment
 
-Install the following tools on the bastion for controlling the AKS cluster:
-* Install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=dnf): In this guide, Azure CLI is used to create a kubeconfig file to access the AKS cluster.
-* Install [Kubectl](https://kubernetes.io/docs/tasks/tools/):  Kubernetes command-line tool to manage AKS cluster. Kubectl 1.19 or higher is required.
+After deploying Scalar DB Server on your AKS Cluster, you need to check the status of each component. Please refer to the following document for more details.  
 
-### Requirements
+* [What you might want to check on a regular basis](./RegularCheck.md) // TODO: Update existing document
 
-* You must have an AKS cluster with Kubernetes version **1.19** or higher for Scalar DB deployment.
-* You must create a new `user node pool` with the name `scalardbpool` for Scalar DB deployment.
-* You must add Taints `kubernetes.io/app=scalardbpool:NoSchedule` to each worker node.
-* You must create a Kubernetes cluster with `service principal` as the Authentication method.
-* You must create a Kubernetes cluster with `Azure CNI`.
+## Step 8. Monitoring for Scalar DB Server deployment
 
-### Recommendations
+After deploying Scalar DB Server on your AKS Cluster, you need to monitor each component and collect logs. Please refer to the following document for more details.  
 
-* You should create 3 nodes in each node group for high availability in production.
-* You should configure `Autoscale` for the node pools if you want to scale the nodes.
+* [Kubernetes Monitor Guide](./K8sMonitorGuide.md) // TODO: Update existing document
+* [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) // TODO: Update existing document
 
-### Steps
+---
 
-* Create an AKS cluster based on [Azure official guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal#create-an-aks-cluster) with the above requirements and recommendations.
-* Configure kubectl to connect to your Kubernetes cluster using the `az aks get-credentials` command.
+## Uninstall Scalar DB Server on AKS
 
-    ```console
-    az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
-    ```
-
-## Step 4. Install Scalar DB server
-
-After creating a Kubernetes cluster, the next step is to deploy the Scalar DB server into the AKS cluster.
-We will deploy the Scalar DB server on the AKS cluster with [Helm charts](https://github.com/scalar-labs/helm-charts) in this section.
-
-### Prerequisites
-
-You must install Helm on your bastion to deploy helm-charts:
-
-* [Helm](https://helm.sh/docs/intro/install/): Helm command-line tool to manage releases in the AKS cluster, Helm version 3.2.1 or latest is required.
-  In this guide, it is used to deploy Scalar DB server helm charts to the AKS cluster.
-
-### Steps
-
-1. Download the following Scalar DB configuration files from the [scalar-kubernetes repository](../conf). Note that they are going to be versioned in the future, so you might want to change the branch to use a proper version.
-    * scalardb-custom-values.yaml
-    
-2. Update the database configuration in  `scalardb-custom-values.yaml`  sections as specified in [configure Scalar DB guide](./ConfigureScalarDB.md).
-
-3. Run the Helm commands on the bastion machine to install the Scalar DB server on AKS.
-
-   ```console
-    # Add Helm charts
-      helm repo add scalar-labs https://scalar-labs.github.io/helm-charts
-    
-    # List the Scalar charts.
-      helm search repo scalar-labs
-    
-    # Install Scalar DB with a release name `my-release-scalardb`
-      helm upgrade --version <chart version> --install my-release-scalardb scalar-labs/scalardb --namespace default -f scalardb-custom-values.yaml
-   ```
-
-## Step 5. Monitor the cluster
-
-It is critical to actively monitor the overall health and performance of a cluster running in production.
-This section shows how to configure container insights for the AKS cluster, Container insights give you performance visibility by collecting memory and processor metrics from controllers, nodes, and containers.
-Container insights collect container logs also for log monitoring.
-For more information on container insights, you can follow the [official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview).
-
-## Recommendations
-
-* You should configure alerting for the AKS cluster based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-metric-alerts#enable-alert-rules).
-
-### Steps
-
-* Enable monitoring of Azure Kubernetes Service based on [the official guide](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters).
-
-## Step 6. Checklist for confirming Scalar DB server deployment
-
-You can check if the pods and the services are deployed accurately by running the `kubectl get pods,services -o wide` command on the bastion.
-* You should confirm the status of all scalardb and envoy pods are `Running`.
-
-```console
-kubectl get pods,services -o wide
-NAME                                            READY   STATUS    RESTARTS   AGE   IP            NODE                                   NOMINATED NODE   READINESS GATES
-pod/my-release-scalardb-556c8564b4-clm62        1/1     Running   0          12m   10.43.40.12   aks-scalardbpool-35245763-vmss000000   <none>           <none>
-pod/my-release-scalardb-556c8564b4-q98c5        1/1     Running   0          12m   10.43.40.28   aks-scalardbpool-35245763-vmss000002   <none>           <none>
-pod/my-release-scalardb-556c8564b4-vdzg2        1/1     Running   0          12m   10.43.40.22   aks-scalardbpool-35245763-vmss000001   <none>           <none>
-pod/my-release-scalardb-envoy-bb5695c48-4pjv7   1/1     Running   0          12m   10.43.40.10   aks-scalardbpool-35245763-vmss000000   <none>           <none>
-pod/my-release-scalardb-envoy-bb5695c48-69wsd   1/1     Running   0          12m   10.43.40.18   aks-scalardbpool-35245763-vmss000001   <none>           <none>
-pod/my-release-scalardb-envoy-bb5695c48-mz4vk   1/1     Running   0          12m   10.43.40.27   aks-scalardbpool-35245763-vmss000002   <none>           <none>
-
-NAME                                        TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                           AGE     SELECTOR
-service/kubernetes                          ClusterIP      10.0.0.1       <none>        443/TCP                           4h55m   <none>
-service/my-release-scalardb-envoy           LoadBalancer   10.0.151.225   10.43.44.4    60051:31784/TCP,50052:30735/TCP   12m     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
-service/my-release-scalardb-envoy-metrics   ClusterIP      10.0.106.176   <none>        9001/TCP                          12m     app.kubernetes.io/app=envoy,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
-service/my-release-scalardb-headless        ClusterIP      None           <none>        50051/TCP                         12m     app.kubernetes.io/app=scalardb,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
-service/my-release-scalardb-metrics         ClusterIP      10.0.66.140    <none>        8080/TCP                          12m     app.kubernetes.io/app=scalardb,app.kubernetes.io/instance=my-release-scalardb,app.kubernetes.io/name=scalardb
-```
-### Confirm AKS cluster monitoring
-
-* Confirm the Cluster insights based on the [Container insights](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview#how-do-i-access-this-feature) document.
-
-### Confirm database monitoring
-
-* Confirm the monitoring of Azure Cosmos DB based on the [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db) document.
-
-## Clean up the resources
-
-### Uninstall Scalar DB server Install Scalar DB server
-```
-# Uninstall scalar DB server with a release name 'my-release-scalardb'
-helm uninstall my-release-scalardb
-```
-### Clean up the other resources
-
-You can remove the other resources via the web console or the command-line interface.
-
-For more detail about the command-line interface, please take a look at [the official document]( https://docs.microsoft.com/en-us/cli/azure/).
+If you want to uninstall the environment you created in the above steps, please uninstall/remove resources in the reverse order of creation.  // TODO: Add delete steps in each document
