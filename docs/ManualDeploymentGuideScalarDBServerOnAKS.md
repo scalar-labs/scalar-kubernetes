@@ -26,7 +26,7 @@ Scalar DB supports [several databases](https://github.com/scalar-labs/scalardb/b
 
 Please refer to the following document for more details.  
 
-* [Set up a database for Scalar DB/Scalar DL deployment in Azure](./SetupDatabaseForAzure.md)
+* [Set up a database for Scalar DB/Scalar DL deployment in Azure](./SetupDatabaseForAzure.md) // TODO: Update existing document
 
 ## Step 3. Create AKS Cluster
 
@@ -40,7 +40,7 @@ For executing some tools to deploy and manage Scalar DB Server on AKS, you need 
 
 * [Create bastion server]() // TODO: Create a new document
 
-## Step 5. Preparing custom values file of Helm 
+## Step 5. Prepare custom values file of Helm
 
 You need to configure your custom values file for Helm Chart of Scalar DB Server based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
 
