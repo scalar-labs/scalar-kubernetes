@@ -36,11 +36,11 @@ Create an AKS cluster for the deployment of Scalar DB Server. Please refer to th
 
 ## Step 4. Create a bastion server
 
-For executing some tools to deploy and manage Scalar DB Server on AKS, you need to prepare a bastion server in the same VNet of the AKS Cluster you created in **Step 3**. Please refer to the following document for more details.  
+For executing some tools to deploy and manage Scalar DB Server on AKS, you need to prepare a bastion server in the same VNet of the AKS cluster you created in **Step 3**. Please refer to the following document for more details.  
 
-* [Create bastion server]() // TODO: Create a new document
+* [Create a bastion server]() // TODO: Create a new document
 
-## Step 5. Prepare custom values file of Helm
+## Step 5. Prepare a custom values file of Helm
 
 You need to configure a custom values file for the Helm Chart of Scalar DB Server based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
 
@@ -54,13 +54,13 @@ Deploy Scalar DB Server on your AKS cluster using Scalar Helm Chart. Please refe
 
 ## Step 7. Check the status of Scalar DB Server deployment
 
-After deploying Scalar DB Server on your AKS Cluster, you need to check the status of each component. Please refer to the following document for more details.  
+After deploying Scalar DB Server on your AKS cluster, you need to check the status of each component. Please refer to the following document for more details.  
 
 * [What you might want to check on a regular basis](./RegularCheck.md) // TODO: Update existing document
 
 ## Step 8. Monitoring for Scalar DB Server deployment
 
-After deploying Scalar DB Server on your AKS Cluster, you need to monitor each component and collect logs. Please refer to the following document for more details.  
+After deploying Scalar DB Server on your AKS cluster, it is recommended to monitor the deployed components and collect their logs, especially in production. Please refer to the following document for more details.  
 
 * [Kubernetes Monitor Guide](./K8sMonitorGuide.md) // TODO: Update existing document
 * [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) // TODO: Update existing document
@@ -69,4 +69,4 @@ After deploying Scalar DB Server on your AKS Cluster, you need to monitor each c
 
 ## Uninstall Scalar DB Server on AKS
 
-If you want to uninstall the environment you created in the above steps, please uninstall/remove resources in the reverse order of creation.  // TODO: Add delete steps in each document
+If you want to uninstall the environment you created, please uninstall/remove resources in the reverse order of creation.  // TODO: Add delete steps in each document

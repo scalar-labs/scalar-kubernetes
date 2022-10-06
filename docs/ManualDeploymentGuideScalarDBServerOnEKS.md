@@ -1,6 +1,6 @@
 # Deploy Scalar DB Server on EKS
 
-Scalar DB Server is a gRPC server that implements Scalar DB interface. With Scalar DB Server, you can use Scalar DB features from multiple programming languages that are supported by gRPC.  
+Scalar DB Server is a gRPC server that implements the Scalar DB interface. With Scalar DB Server, you can use Scalar DB features from multiple programming languages that are supported by gRPC.  
 
 We can deploy Scalar DB Server on any Kubernetes services. This document explains how to deploy Scalar DB Server on EKS.  
 
@@ -28,39 +28,39 @@ Please refer to the following document for more details.
 
 * [Set up a database for Scalar DB/Scalar DL deployment on AWS](./SetupDatabaseForAWS.md) // TODO: Update existing document
 
-## Step 3. Create EKS Cluster
+## Step 3. Create an EKS cluster
 
-Create EKS Cluster for the deployment of Scalar DB Server. Please refer to the following document for more details.  
+Create an EKS cluster for the deployment of Scalar DB Server. Please refer to the following document for more details.  
 
-* [Create EKS Cluster for Scalar Products]() // TODO: Create a new document
+* [Create an EKS cluster for Scalar Products]() // TODO: Create a new document
 
-## Step 4. Create bastion server
+## Step 4. Create a bastion server
 
-For executing some tools to deploy and manage Scalar DB Server on EKS, you need to prepare a bastion server in the same VPC of the EKS Cluster you created in **Step 3**. Please refer to the following document for more details.  
+For executing some tools to deploy and manage Scalar DB Server on EKS, you need to prepare a bastion server in the same VPC of the EKS cluster you created in **Step 3**. Please refer to the following document for more details.  
 
-* [Create bastion server]() // TODO: Create a new document
+* [Create a bastion server]() // TODO: Create a new document
 
 ## Step 5. Prepare a custom values file of Helm
 
-You need to configure your custom values file for Helm Chart of Scalar DB Server based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
+You need to configure a custom values file for the Helm Chart of Scalar DB Server based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
 
-* [Configure custom values file of Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
+* [Configure a custom values file of Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
 
 ## Step 6. Deploy Scalar DB Server using Scalar Helm Chart
 
-Deploy Scalar DB Server on your EKS Cluster using Scalar Helm Chart. Please refer to the following document for more details.  
+Deploy Scalar DB Server on your EKS cluster using Scalar Helm Chart. Please refer to the following document for more details.  
 
 * [Deploy Scalar Products using Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
 
 ## Step 7. Check the status of Scalar DB Server deployment
 
-After deploying Scalar DB Server on your EKS Cluster, you need to check the status of each component. Please refer to the following document for more details.  
+After deploying Scalar DB Server on your EKS cluster, you need to check the status of each component. Please refer to the following document for more details.  
 
 * [What you might want to check on a regular basis](./RegularCheck.md) // TODO: Update existing document
 
 ## Step 8. Monitoring for Scalar DB Server deployment
 
-After deploying Scalar DB Server on your EKS Cluster, it is recommended to monitor the deployed components and collect their logs, especially in production. Please refer to the following document for more details.  
+After deploying Scalar DB Server on your EKS cluster, it is recommended to monitor the deployed components and collect their logs, especially in production. Please refer to the following document for more details.  
 
 * [Kubernetes Monitor Guide](./K8sMonitorGuide.md) // TODO: Update existing document
 * [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) // TODO: Update existing document
