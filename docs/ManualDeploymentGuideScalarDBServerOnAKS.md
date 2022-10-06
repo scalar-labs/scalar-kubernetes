@@ -1,4 +1,4 @@
-# Deploy Scalar DB Server on AKS
+# Deploy Scalar DB Server on AKS (Azure Kubernetes Service)
 
 Scalar DB Server is a gRPC server that implements the Scalar DB interface. With Scalar DB Server, you can use Scalar DB features from multiple programming languages that are supported by gRPC.  
 
