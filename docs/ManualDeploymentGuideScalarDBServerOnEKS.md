@@ -40,7 +40,7 @@ For executing some tools to deploy and manage Scalar DB Server on EKS, you need 
 
 * [Create bastion server]() // TODO: Create a new document
 
-## Step 5. Prepare custom values file of Helm
+## Step 5. Prepare a custom values file of Helm
 
 You need to configure your custom values file for Helm Chart of Scalar DB Server based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
 
@@ -60,7 +60,7 @@ After deploying Scalar DB Server on your EKS Cluster, you need to check the stat
 
 ## Step 8. Monitoring for Scalar DB Server deployment
 
-After deploying Scalar DB Server on your EKS Cluster, you need to monitor each component and collect logs. Please refer to the following document for more details.  
+After deploying Scalar DB Server on your EKS Cluster, it is recommended to monitor the deployed components and collect their logs, especially in production. Please refer to the following document for more details.  
 
 * [Kubernetes Monitor Guide](./K8sMonitorGuide.md) // TODO: Update existing document
 * [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) // TODO: Update existing document
@@ -69,4 +69,4 @@ After deploying Scalar DB Server on your EKS Cluster, you need to monitor each c
 
 ## Uninstall Scalar DB Server on EKS
 
-If you want to uninstall the environment you created in the above steps, please uninstall/remove resources in the reverse order of creation.  // TODO: Add delete steps in each document
+If you want to uninstall the environment you created, please uninstall/remove resources in the reverse order of creation.  // TODO: Add delete steps in each document

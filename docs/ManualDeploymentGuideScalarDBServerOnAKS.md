@@ -1,6 +1,6 @@
 # Deploy Scalar DB Server on AKS
 
-Scalar DB Server is a gRPC server that implements Scalar DB interface. With Scalar DB Server, you can use Scalar DB features from multiple programming languages that are supported by gRPC.  
+Scalar DB Server is a gRPC server that implements the Scalar DB interface. With Scalar DB Server, you can use Scalar DB features from multiple programming languages that are supported by gRPC.  
 
 We can deploy Scalar DB Server on any Kubernetes services. This document explains how to deploy Scalar DB Server on AKS.  
 
@@ -28,13 +28,13 @@ Please refer to the following document for more details.
 
 * [Set up a database for Scalar DB/Scalar DL deployment in Azure](./SetupDatabaseForAzure.md) // TODO: Update existing document
 
-## Step 3. Create AKS Cluster
+## Step 3. Create an AKS cluster
 
-Create AKS Cluster for the deployment of Scalar DB Server. Please refer to the following document for more details.  
+Create an AKS cluster for the deployment of Scalar DB Server. Please refer to the following document for more details.  
 
-* [Create AKS Cluster for Scalar Products]() // TODO: Create a new document
+* [Create an AKS cluster for Scalar Products]() // TODO: Create a new document
 
-## Step 4. Create bastion server
+## Step 4. Create a bastion server
 
 For executing some tools to deploy and manage Scalar DB Server on AKS, you need to prepare a bastion server in the same VNet of the AKS Cluster you created in **Step 3**. Please refer to the following document for more details.  
 
@@ -42,13 +42,13 @@ For executing some tools to deploy and manage Scalar DB Server on AKS, you need 
 
 ## Step 5. Prepare custom values file of Helm
 
-You need to configure your custom values file for Helm Chart of Scalar DB Server based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
+You need to configure a custom values file for the Helm Chart of Scalar DB Server based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
 
-* [Configure custom values file of Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
+* [Configure a custom values file of Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
 
 ## Step 6. Deploy Scalar DB Server using Scalar Helm Chart
 
-Deploy Scalar DB Server on your AKS Cluster using Scalar Helm Chart. Please refer to the following document for more details.  
+Deploy Scalar DB Server on your AKS cluster using Scalar Helm Chart. Please refer to the following document for more details.  
 
 * [Deploy Scalar Products using Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
 
