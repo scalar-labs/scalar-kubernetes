@@ -2,9 +2,9 @@
 
 This document explains how to create an AKS cluster for the Scalar DB and Scalar DL deployment. Please refer to the following document for the step overview to deploy each product.
 
-* [Deploy Scalar DB Server on AKS](./ManualDeploymentGuideScalarDBServerOnAKS.md)
-* [Deploy Scalar DL Ledger on AKS](./ManualDeploymentGuideScalarDLOnAKS.md)
-* [Deploy Scalar DL Ledger and Scalar DL Auditor on AKS](./ManualDeploymentGuideScalarDLAuditorOnAKS.md)
+* [Deploy Scalar DB Server on AKS (Azure Kubernetes Service)](./ManualDeploymentGuideScalarDBServerOnAKS.md)
+* [Deploy Scalar DL Ledger on AKS (Azure Kubernetes Service)](./ManualDeploymentGuideScalarDLOnAKS.md)
+* [Deploy Scalar DL Ledger and Scalar DL Auditor on AKS (Azure Kubernetes Service)](./ManualDeploymentGuideScalarDLAuditorOnAKS.md)
 
 ## Steps
 

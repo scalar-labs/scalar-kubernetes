@@ -2,9 +2,9 @@
 
 This document explains how to create an EKS cluster for the Scalar DB and Scalar DL deployment. Please refer to the following document for the step overview to deploy each product.
 
-* [Deploy Scalar DB Server on EKS](./ManualDeploymentGuideScalarDBServerOnEKS.md)
-* [Deploy Scalar DL Ledger on EKS](./ManualDeploymentGuideScalarDLOnEKS.md)
-* [Deploy Scalar DL Ledger and Scalar DL Auditor on EKS](./ManualDeploymentGuideScalarDLAuditorOnEKS.md)
+* [Deploy Scalar DB Server on Amazon EKS (Amazon Elastic Kubernetes Service)](./ManualDeploymentGuideScalarDBServerOnEKS.md)
+* [Deploy Scalar DL Ledger on Amazon EKS (Amazon Elastic Kubernetes Service)](./ManualDeploymentGuideScalarDLOnEKS.md)
+* [Deploy Scalar DL Ledger and Scalar DL Auditor on Amazon EKS (Amazon Elastic Kubernetes Service)](./ManualDeploymentGuideScalarDLAuditorOnEKS.md)
 
 ## Steps
 
