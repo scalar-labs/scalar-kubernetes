@@ -41,31 +41,35 @@ grafanaDashboard:
 
 tolerations:
   - effect: NoSchedule
-    key: kubernetes.io/app
+    key: scalar-labs.com/dedicated-node
     operator: Equal
-    value: scalardbgraphqlpool
+    value: scalardb
 
-resources: {}
+resources:
+  requests:
+    cpu: 2000m
+    memory: 4Gi
+  limits:
+    cpu: 2000m
+    memory: 4Gi
 
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
         - matchExpressions:
-            - key: agentpool
+            - key: scalar-labs.com/dedicated-node
               operator: In
               values:
-                - scalardbgraphqlpool
+                - scalardb
   podAntiAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-      - podAffinityTerm:
-          labelSelector:
-            matchExpressions:
-              - key: app.kubernetes.io/app
-                operator: In
-                values:
-                  - scalardb-graphql
-          topologyKey: kubernetes.io/hostname
-        weight: 50
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/app
+              operator: In
+              values:
+                - scalardb-graphql
+        topologyKey: kubernetes.io/hostname
 
 existingSecret: ""
