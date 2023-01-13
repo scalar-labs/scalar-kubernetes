@@ -35,6 +35,6 @@ You can check if tools are installed as follows.
   ```
 
 Also, you can check if your kubeconfig is properly configured as follows. If you see a URL response, kubectl is correctly configured to access your cluster.
-```
+```console
 kubectl cluster-info
 ```
