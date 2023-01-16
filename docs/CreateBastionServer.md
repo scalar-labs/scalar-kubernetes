@@ -8,7 +8,7 @@ It is recommended to create a Kubernetes cluster for Scalar products on a privat
 
 ## Install tools
 
-Please install the following two tools on the bastion server according to each official document.
+Please install the following tools on the bastion server according to their official documents.
 
 * [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 * [helm](https://helm.sh/docs/intro/install/)
@@ -23,7 +23,7 @@ If you use AKS (Azure Kubernetes Service), you must install the **Azure CLI** ac
 
 ## Check installation
 
-You can check if tools are installed as follows.
+You can check if the tools are installed as follows.
 
 * kubectl
   ```console
@@ -34,7 +34,7 @@ You can check if tools are installed as follows.
   helm version
   ```
 
-Also, you can check if your kubeconfig is properly configured as follows. If you see a URL response, kubectl is correctly configured to access your cluster.
+You can also check if your kubeconfig is properly configured as follows. If you see a URL response, kubectl is correctly configured to access your cluster.
 ```console
 kubectl cluster-info
 ```
