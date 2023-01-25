@@ -1,0 +1,195 @@
+defaultRules:
+  # -- Default PrometheusRules are not enabled
+  create: false
+
+alertmanager:
+
+  # -- alertmanager is enabled
+  enabled: true
+
+  # -- Use load balancer
+  # service:
+  #   type: LoadBalancer
+
+  # -- Use ingress
+  # ingress:
+  #   enabled: true
+
+  # --  Only check own namespace
+  alertmanagerConfigNamespaceSelector: null
+
+grafana:
+
+  # -- grafana is enabled
+  enabled: true
+
+  # -- Use load balancer
+  # service:
+  #   type: LoadBalancer
+  #   port: 3000
+
+  # -- Use ingress
+  # ingress:
+  #   enabled: true
+
+  # -- Default Grafana dashboards are not enabled
+  defaultDashboardsEnabled: false
+
+  sidecar:
+    datasources:
+      enabled: true
+      defaultDatasourceEnabled: false
+      label: grafana_datasource
+      labelValue: "1"
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+    # -- Resource limits & requests
+    resources: {}
+    # requests:
+    #   memory: 400Mi
+
+  # -- Grafana's primary configuration
+  grafana.ini:
+    security:
+      # -- allow Grafana to be embedded (not set the X-Frame-Options header)
+      # -- If you use Scalar Manager, you need to set allow_embedding to true.
+      # -- https://grafana.com/docs/grafana/latest/administration/configuration/#allow_embedding
+      allow_embedding: false
+
+  # -- Additional data source configurations
+  additionalDataSources:
+  - name: Prometheus
+    type: prometheus
+    uid: prometheus
+    url: http://scalar-monitoring-kube-pro-prometheus.monitoring.svc.cluster.local:9090/
+    access: proxy
+    editable: false
+    isDefault: false
+    jsonData:
+      timeInterval: 30s
+  # - name: Loki
+  #   type: loki
+  #   uid: loki
+  #   url: http://scalar-logging-loki.monitoring.svc.cluster.local:3100/
+  #   access: proxy
+  #   editable: false
+  #   isDefault: false
+
+kubeApiServer:
+  # -- Scraping kube-apiserver is disabled
+  enabled: false
+
+kubeControllerManager:
+  # -- Scraping kube-controller-manager is disabled
+  enabled: false
+
+coreDns:
+  # -- Scraping CoreDNS is disabled
+  enabled: false
+
+kubeEtcd:
+  # -- Scraping etcd is disabled
+  enabled: false
+
+kubeScheduler:
+  # -- Scraping kube-scheduler is disabled
+  enabled: false
+
+kubeProxy:
+  # -- Scraping kube-proxy is disabled
+  enabled: false
+
+kubelet:
+  # -- Scraping kubelet is disabled
+  enabled: false
+
+kubeStateMetrics:
+  # -- kube-state-metrics is disabled
+  enabled: false
+
+nodeExporter:
+  # -- node-exporter is disabled
+  enabled: false
+
+prometheusOperator:
+  # -- Prometheus Operator is enabled
+  enabled: true
+
+  admissionWebhooks:
+    patch:
+      # -- Resource limits & requests
+      resources: {}
+      # requests:
+      #   memory: 400Mi
+
+  namespaces:
+    # -- Only check own namespace
+    releaseNamespace: true
+
+  kubeletService:
+    # -- kubelet service for scraping kubelets is disabled
+    enabled: false
+
+  ## -- Resource limits & requests
+  resources: {}
+  # requests:
+  #   memory: 400Mi
+
+prometheus:
+
+  # -- Prometheus is enabled
+  enabled: true
+
+  # -- Use load balancer
+  # service:
+  #   type: LoadBalancer
+
+  # -- Use ingress
+  # ingress:
+  #   enabled: true
+
+  prometheusSpec:
+    # -- All PrometheusRules are enabled
+    ruleSelectorNilUsesHelmValues: false
+
+    # -- Only check own namespace
+    ruleNamespaceSelector: {}
+
+    # -- All ServiceMonitors are enabled
+    serviceMonitorSelectorNilUsesHelmValues: false
+
+    # --  Only check own namespace
+    serviceMonitorNamespaceSelector: {}
+
+    # -- All PodMonitors are enabled
+    podMonitorSelectorNilUsesHelmValues: false
+
+    # -- Only check own namespace
+    podMonitorNamespaceSelector: {}
+
+    # -- All Probes are enabled
+    probeSelectorNilUsesHelmValues: false
+
+    # -- Only check own namespace
+    probeNamespaceSelector: {}
+
+    ## -- Resource limits & requests
+    resources: {}
+    # requests:
+    #   memory: 400Mi
+
+    ## -- Prometheus StorageSpec for persistent data
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
+    storageSpec: {}
+    ## Using PersistentVolumeClaim
+    ##
+    #  volumeClaimTemplate:
+    #    spec:
+    #      storageClassName: gluster
+    #      accessModes: ["ReadWriteOnce"]
+    #      resources:
+    #        requests:
+    #          storage: 50Gi
+    #    selector: {}
