@@ -1,72 +1,176 @@
-# Set up a database for Scalar DB/Scalar DL deployment in Azure
+# Set up a database for ScalarDB/ScalarDL deployment on Azure
 
-This guide explains how to set up a database for Scalar DB/Scalar DL deployment in Azure.
+This guide explains how to set up a database for ScalarDB/ScalarDL deployment on Azure.
 
-## Cosmos DB
+## Azure Cosmos DB for NoSQL
 
-In this section, you will create a Cosmos DB account.
+### Authentication method
 
-### Requirements
+When you use Cosmos DB for NoSQL, you must set `COSMOS_DB_URI` and `COSMOS_DB_KEY` in the ScalarDB/ScalarDL properties file as follows.
 
-* You must create a Cosmos DB account with the `Core(SQL)` API.
-* You must change Cosmos DB `Default consistency` to `Strong`.
-* You must use Capacity mode as `Provisioned throughput`.
+```properties
+scalar.db.contact_points=<COSMOS_DB_URI>
+scalar.db.password=<COSMOS_DB_KEY>
+scalar.db.storage=cosmos
+```
 
-### Recommendations
+Please refer to the following document for more details on the properties for Cosmos DB for NoSQL.
 
-* You should configure the backup policy as `Continuous` for Point-in-time-restore (PITR).
-* You should configure the service endpoint based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-configure-vnet-service-endpoint) to restrict access to Cosmos DB for production.
+* [Getting Started with ScalarDB on Cosmos DB](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-cosmosdb.md)
 
-### Steps
+### Required configuration/steps
 
-* Create an Azure Cosmos DB account based on the [Azure official guide](https://docs.microsoft.com/en-us/azure/cosmos-db/create-cosmosdb-resources-portal#create-an-azure-cosmos-db-account) with the above requirements.
-* (Optional) Configure advanced monitoring services with [Monitor Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/monitor-cosmos-db) guide, by default monitoring (metrics) will be enabled in Cosmos DB.
-* (Optional) Update the `cosmosBaseResourceUnit` value in the [schema-loading-custom-values](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/schema-loading-custom-values.yaml) to scale the throughput of Cosmos DB.
+#### Create an Azure Cosmos DB account
 
-Note:-
+You must create an Azure Cosmos DB account with the NoSQL (core) API. You must set the **Capacity mode** as **Provisioned throughput** when you create it. Please refer to the official document for more details.
 
-* The [scalardl-schema-loader](https://github.com/scalar-labs/scalardl-schema-loader) applies the `cosmosBaseResourceUnit` value (the default value is 10) to all tables.
-* The scalardl-schema-loader enables autoscale of [Request Units](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units) (RU) for all tables.
+* [Quickstart: Create an Azure Cosmos DB account, database, container, and items from the Azure portal](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/quickstart-portal)
 
+#### Configure a default consistency configuration
+
+You must set the **Default consistency level** as **Strong**. Please refer to the official document for more details.
+
+* [Configure the default consistency level](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/how-to-manage-consistency#config/ure-the-default-consistency-level)
+
+### Optional configurations/steps
+
+#### Configure backup configurations (Recommended in the production environment)
+
+You can configure **Backup modes** as **Continuous backup mode** for PITR. Please refer to the official document for more details.
+
+* [Backup modes](https://learn.microsoft.com/en-us/azure/cosmos-db/online-backup-and-restore#backup-modes)
+
+#### Configure monitoring (Recommended in the production environment)
+
+You can configure the monitoring of Cosmos DB using its native feature. Please refer to the official document for more details.
+
+* [Monitor Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/monitor)
+
+#### Enable service endpoint (Recommended in the production environment)
+
+You can configure the Azure Cosmos DB account to allow access only from a specific subnet of a virtual network (VNet). Please refer to the official document for more details.
+
+* [Configure access to Azure Cosmos DB from virtual networks (VNet)](https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-configure-vnet-service-endpoint)
+
+#### Configure the Request Units (Optional based on your environment)
+
+You can configure the **Request Units** of Cosmos DB based on your requirements. Please refer to the official document for more details on the request units.
+
+* [Request Units in Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/request-units)
+
+You can configure Request Units using ScalarDB/DL Schema Loader when you create a table. Please refer to the following document for more details on how to configure Request Units (RU) using ScalarDB/DL Schema Loader.
+
+* [ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md)
 
 ## Azure Database for MySQL
 
-In this section, you will create an Azure Database for MySQL.
+### Authentication method
 
-### Steps
+When you use Azure Database for MySQL, you must set `JDBC_URL`, `USERNAME`, and `PASSWORD` in the ScalarDB/ScalarDL properties file as follows.
 
-You can choose Flexible or Single server deployment for Azure Database for MySQL, follow the [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/select-right-deployment-type) to learn more.
+```properties
+scalar.db.contact_points=<JDBC_URL>
+scalar.db.username=<USERNAME>
+scalar.db.password=<PASSWORD>
+scalar.db.storage=jdbc
+```
 
-* To create an Azure Database for MySQL, 
-  * For Single Server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/quickstart-create-mysql-server-database-using-azure-portal).
-  * For creating a flexible server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/flexible-server/quickstart-create-server-portal).
-* (Optional) Configure advanced monitoring services with the [Azure official guide](https://docs.microsoft.com/en-us/azure/mysql/concepts-monitoring), monitoring is enabled in Azure Database for MySQL by default.
-* (Optional) To scale resources like vCores and storage after the deployment,
-  * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#scale-resources) for learning more about scaling single server resources.
-  * Follow the [Azure official guide](https://docs.microsoft.com/en-gb/azure/mysql/flexible-server/concepts-compute-storage#scale-resources) for learning more about scaling flexible server resources.
-  
-Note:-
+Please refer to the following document for more details on the properties for Azure Database for MySQL (JDBC databases).
 
-* The [Storage auto-grow](https://docs.microsoft.com/en-gb/azure/mysql/concepts-pricing-tiers#storage-auto-grow) feature automatically increases storage without impacting the workload and is enabled by default in server configuration while creating an Azure Database for MySQL instance.
+* [Getting Started with ScalarDB on JDBC databases](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-jdbc.md)
 
+### Required configuration/steps
+
+#### Create a database server
+
+You must create a database server. Please refer to the official document for more details.
+
+* [Quickstart: Use the Azure portal to create an Azure Database for MySQL Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/quickstart-create-server-portal)
+
+You can choose **Single Server** or **Flexible Server** for your deployment. However, Flexible Server is recommended in Azure. This document assumes that you use Flexible Server. Please refer to the official documents for more details on the deployment models.
+
+* [What is Azure Database for MySQL?](https://learn.microsoft.com/en-us/azure/mysql/single-server/overview#deployment-models)
+
+### Optional configurations/steps
+
+#### Configure backup configurations (Optional based on your environment)
+
+Azure Database for MySQL gets a backup by default. You do not need to enable the backup feature manually.
+
+If you want to change some backup configurations like the backup retention period, you can configure it. Please refer to the official document for more details.
+
+* [Backup and restore in Azure Database for MySQL Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/concepts-backup-restore)
+
+#### Configure monitoring (Recommended in the production environment)
+
+You can configure the monitoring of Azure Database for MySQL using its native feature. Please refer to the official document for more details.
+
+* [Monitor Azure Database for MySQL Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/concepts-monitoring)
+
+#### Disable public access (Recommended in the production environment)
+
+You can configure **Private access (VNet Integration)** as a **Connectivity method**. Please refer to the official document for more details.
+
+* [Connectivity and networking concepts for Azure Database for MySQL - Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/concepts-networking)
+
+You can access the database server from the Scalar product pods on your AKS cluster as follows.
+
+* Create the database server on the same VNet as your AKS cluster.
+* Connect the VNet for the database server and the VNet for the AKS cluster for the Scalar product deployment using [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview). (// TODO: We need to test this feature with Scalar products.)
 
 ## Azure Database for PostgreSQL
 
-Azure provides single and flexible server deployments for Azure Database for PostgreSQL. Read the [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/overview-postgres-choose-server-options) to learn more.
-In this section, you will create an Azure Database for PostgreSQL server.
+### Authentication method
 
-### Steps
+When you use Azure Database for PostgreSQL, you must set `JDBC_URL`, `USERNAME`, and `PASSWORD` in the ScalarDB/ScalarDL properties file as follows.
 
-You need to choose Flexible or Single server deployment for Azure Database for PostgreSQL.
-* Create an Azure Database for PostgreSQL, 
-  * For single server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal).
-  * For flexible server deployment, follow this [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/quickstart-create-server-portal).
-* (Optional) Configure advanced monitoring services with the [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/concepts-monitoring), monitoring is enabled in Azure Database for PostgreSQL by default.
-* (Optional) To scale resources like vCores and storage after the deployment,
-  * Read the [Azure official guide](https://docs.microsoft.com/en-gb/azure/postgresql/concepts-pricing-tiers#scale-resources) for learning more about scaling single server resources.
-  * Read the [Azure official guide](https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-compute-storage#scale-resources) for learning more about scaling flexible server resources.
+```properties
+scalar.db.contact_points=<JDBC_URL>
+scalar.db.username=<USERNAME>
+scalar.db.password=<PASSWORD>
+scalar.db.storage=jdbc
+```
 
-Note:-
+Please refer to the following document for more details on the properties for Azure Database for PostgreSQL (JDBC databases).
 
-  * The [Storage auto-grow](https://docs.microsoft.com/en-gb/azure/postgresql/concepts-pricing-tiers#storage-auto-grow) feature automatically increases storage without impacting the workload and is enabled by default in server configuration while creating an Azure Database for PostgreSQL instance (not available in flexible server deployment as of now). 
-  
+* [Getting Started with ScalarDB on JDBC databases](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-jdbc.md)
+
+### Required configuration/steps
+
+#### Create a database server
+
+You must create a database server. Please refer to the official document for more details.
+
+* [Quickstart: Create an Azure Database for PostgreSQL - Flexible Server in the Azure portal](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/quickstart-create-server-portal)
+
+You can choose **Single Server** or **Flexible Server** for your deployment. However, Flexible Server is recommended in Azure. This document assumes that you use Flexible Server. Please refer to the official documents for more details on the deployment models.
+
+* [What is Azure Database for PostgreSQL?](https://learn.microsoft.com/en-us/azure/postgresql/single-server/overview#deployment-models)
+
+### Optional configurations/steps
+
+#### Configure backup configurations (Optional based on your environment)
+
+Azure Database for PostgreSQL gets a backup by default. You do not need to enable the backup feature manually.
+
+If you want to change some backup configurations like the backup retention period, you can configure it. Please refer to the official document for more details.
+
+* [Backup and restore in Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-backup-restore)
+
+#### Configure monitoring (Recommended in the production environment)
+
+You can configure the monitoring of Azure Database for PostgreSQL using its native feature. Please refer to the official document for more details.
+
+* [Monitor metrics on Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-monitoring)
+
+
+#### Disable public access (Recommended in the production environment)
+
+You can configure **Private access (VNet Integration)** as a **Connectivity method**. Please refer to the official document for more details.
+
+* [Networking overview for Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-networking)
+
+You can access the database server from the Scalar product pods on your AKS cluster as follows.
+
+* Create the database server on the same VNet as your AKS cluster.
+* Connect the VNet for the database server and the VNet for the AKS cluster for the Scalar product deployment using [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview). (// TODO: We need to test this feature with Scalar products.)
