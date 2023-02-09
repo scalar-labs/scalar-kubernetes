@@ -25,7 +25,7 @@ DynamoDB is available for use in AWS by default. You do not need to set up anyth
 
 ### Optional configurations/steps
 
-#### Enable pint in time recovery (Recommended in the production environment)
+#### Enable point-in-time recovery (Recommended in the production environment)
 
 You can enable PITR as a backup/restore method for DynamoDB. If you use [ScalarDB Schema Loader](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md) for creating schema, it enables the PITR feature for tables by default. Please refer to the official document for more details.
 
