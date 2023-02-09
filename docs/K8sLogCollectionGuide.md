@@ -1,4 +1,4 @@
-# Logging Scalar products on the Kubernetes cluster
+# Collecting logs from Scalar products on a Kubernetes cluster
 
 This document explains how to deploy Grafana Loki and Promtail on Kubernetes with Helm. After following this document, you can collect logs of Scalar products on your Kubernetes environment.
 
