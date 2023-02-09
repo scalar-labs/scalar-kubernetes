@@ -40,17 +40,25 @@ You can configure **Backup modes** as **Continuous backup mode** for PITR. Pleas
 
 * [Backup modes](https://learn.microsoft.com/en-us/azure/cosmos-db/online-backup-and-restore#backup-modes)
 
+It is recommended since the continuous backup mode automatically and continuously gets backups so that we can reduce the downtime (pause duration) of backup operations. Please refer to the following document for more details on how to backup/restore the Scalar product data.
+
+* [Backup restore guide for Scalar products](./BackupRestoreGuide.md)
+
 #### Configure monitoring (Recommended in the production environment)
 
 You can configure the monitoring of Cosmos DB using its native feature. Please refer to the official document for more details.
 
 * [Monitor Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/monitor)
 
+It is recommended since the metrics and logs help you to investigate some issues in the production environment when they happen.
+
 #### Enable service endpoint (Recommended in the production environment)
 
 You can configure the Azure Cosmos DB account to allow access only from a specific subnet of a virtual network (VNet). Please refer to the official document for more details.
 
 * [Configure access to Azure Cosmos DB from virtual networks (VNet)](https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-configure-vnet-service-endpoint)
+
+It is recommended since the private internal connections not via WAN can make a system more secure.
 
 #### Configure the Request Units (Optional based on your environment)
 
@@ -101,11 +109,17 @@ If you want to change some backup configurations like the backup retention perio
 
 * [Backup and restore in Azure Database for MySQL Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/concepts-backup-restore)
 
+Please refer to the following document for more details on how to backup/restore the Scalar product data.
+
+* [Backup restore guide for Scalar products](./BackupRestoreGuide.md)
+
 #### Configure monitoring (Recommended in the production environment)
 
 You can configure the monitoring of Azure Database for MySQL using its native feature. Please refer to the official document for more details.
 
 * [Monitor Azure Database for MySQL Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/concepts-monitoring)
+
+It is recommended since the metrics and logs help you to investigate some issues in the production environment when they happen.
 
 #### Disable public access (Recommended in the production environment)
 
@@ -117,6 +131,8 @@ You can access the database server from the Scalar product pods on your AKS clus
 
 * Create the database server on the same VNet as your AKS cluster.
 * Connect the VNet for the database server and the VNet for the AKS cluster for the Scalar product deployment using [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview). (// TODO: We need to test this feature with Scalar products.)
+
+It is recommended since the private internal connections not via WAN can make a system more secure.
 
 ## Azure Database for PostgreSQL
 
@@ -157,12 +173,17 @@ If you want to change some backup configurations like the backup retention perio
 
 * [Backup and restore in Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-backup-restore)
 
+Please refer to the following document for more details on how to backup/restore the Scalar product data.
+
+* [Backup restore guide for Scalar products](./BackupRestoreGuide.md)
+
 #### Configure monitoring (Recommended in the production environment)
 
 You can configure the monitoring of Azure Database for PostgreSQL using its native feature. Please refer to the official document for more details.
 
 * [Monitor metrics on Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-monitoring)
 
+It is recommended since the metrics and logs help you to investigate some issues in the production environment when they happen.
 
 #### Disable public access (Recommended in the production environment)
 
@@ -174,3 +195,5 @@ You can access the database server from the Scalar product pods on your AKS clus
 
 * Create the database server on the same VNet as your AKS cluster.
 * Connect the VNet for the database server and the VNet for the AKS cluster for the Scalar product deployment using [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview). (// TODO: We need to test this feature with Scalar products.)
+
+It is recommended since the private internal connections not via WAN can make a system more secure.

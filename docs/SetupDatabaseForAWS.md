@@ -31,11 +31,17 @@ You can enable PITR as a backup/restore method for DynamoDB. If you use [ScalarD
 
 * [Point-in-time recovery for DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html)
 
+It is recommended since the point-in-time recovery feature automatically and continuously gets backups so that you can reduce the downtime (pause duration) of backup operations. Please refer to the following document for more details on how to backup/restore Scalar product data.
+
+* [Backup restore guide for Scalar products](./BackupRestoreGuide.md)
+
 #### Configure monitoring (Recommended in the production environment)
 
 You can configure the monitoring and logging of DynamoDB using its native feature. Please refer to the official document for more details.
 
 * [Monitoring and logging](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring.html)
+
+It is recommended since the metrics and logs help you to investigate some issues in the production environment when they happen.
 
 #### Use VPC endpoint (Recommended in the production environment)
 
@@ -43,6 +49,8 @@ You can configure the monitoring and logging of DynamoDB using its native featur
 // TODO: We need to test this feature with Scalar products.
 
 * [Using Amazon VPC endpoints to access DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/vpc-endpoints-dynamodb.html)
+
+It is recommended since the private internal connections not via WAN can make a system more secure.
 
 #### Configure Read/Write Capacity (Optional based on your environment)
 
@@ -87,6 +95,10 @@ You can enable automated backups. Please refer to the official document for more
 
 * [Working with backups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html)
 
+It is recommended since the automated backups feature enables a point-in-time recovery feature. It can recover data to a specific point in time. It can reduce the downtime (pause duration) of backup operations when you use multi databases under Scalar products. Please refer to the following document for more details on how to backup/restore the Scalar product data.
+
+* [Backup restore guide for Scalar products](./BackupRestoreGuide.md)
+
 #### Configure monitoring (Recommended in the production environment)
 
 You can configure the monitoring and logging of RDS using its native feature. Please refer to the official documents for more details.
@@ -94,12 +106,16 @@ You can configure the monitoring and logging of RDS using its native feature. Pl
 * [Monitoring metrics in an Amazon RDS instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html)
 * [Monitoring events, logs, and streams in an Amazon RDS DB instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitor_Logs_Events.html)
 
+It is recommended since the metrics and logs help you to investigate some issues in the production environment when they happen.
+
 #### Disable public access (Recommended in the production environment)
 
 Public access is disabled by default. You can access the RDS database instance from the Scalar product pods on your EKS cluster as follows.
 
 * Create the RDS database instance on the same VPC as your EKS cluster.
 * Connect the VPC for the RDS and the VPC for the EKS cluster for the Scalar product deployment using [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html). (// TODO: We need to test this feature with Scalar products.)
+
+It is recommended since the private internal connections not via WAN can make a system more secure.
 
 ## Amazon Aurora MySQL and Amazon Aurora PostgreSQL
 
@@ -136,6 +152,10 @@ If you want to change some backup configurations like the backup retention perio
 
 * [Backing up and restoring an Amazon Aurora DB cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/BackupRestoreAurora.html)
 
+Please refer to the following document for more details on how to backup/restore the Scalar product data.
+
+* [Backup restore guide for Scalar products](./BackupRestoreGuide.md)
+
 #### Configure monitoring (Recommended in the production environment)
 
 You can configure the monitoring and logging of Amazon Aurora using its native feature. Please refer to the official documents for more details.
@@ -143,9 +163,13 @@ You can configure the monitoring and logging of Amazon Aurora using its native f
 * [Monitoring metrics in an Amazon Aurora cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/MonitoringAurora.html)
 * [Monitoring events, logs, and streams in an Amazon Aurora DB cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_Monitor_Logs_Events.html)
 
+It is recommended since the metrics and logs help you to investigate some issues in the production environment when they happen.
+
 #### Disable public access (Recommended in the production environment)
 
 Public access is disabled by default. You can access the Amazon Aurora DB cluster from the Scalar product pods on your EKS cluster as follows.
 
 * Create the Amazon Aurora DB cluster on the same VPC as your EKS cluster.
 * Connect the VPC for the Amazon Aurora DB cluster and the VPC for the EKS cluster for the Scalar product deployment using [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html). (// TODO: We need to test this feature with Scalar products.)
+
+It is recommended since the private internal connections not via WAN can make a system more secure.
