@@ -13,7 +13,7 @@ Please check the Kubernetes namespaces:
 
 What to check:
 
-* `STATUS` is all `Running` (ScalarDL Schema Loader is `Completed`)
+* `STATUS` is all `Running`
 * Pods are evenly distributed on the different nodes
 
 ```console
