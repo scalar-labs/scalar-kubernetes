@@ -40,7 +40,7 @@ You can configure **Backup modes** as **Continuous backup mode** for PITR. Pleas
 
 * [Backup modes](https://learn.microsoft.com/en-us/azure/cosmos-db/online-backup-and-restore#backup-modes)
 
-It is recommended since the continuous backup mode automatically and continuously gets backups so that we can reduce the downtime (pause duration) of backup operations. Please refer to the following document for more details on how to backup/restore the Scalar product data.
+It is recommended since the continuous backup mode automatically and continuously gets backups so that we can reduce downtime (pause duration) for backup operations. Please refer to the following document for more details on how to backup/restore the Scalar product data.
 
 * [Backup restore guide for Scalar products](./BackupRestoreGuide.md)
 
