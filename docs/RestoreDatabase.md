@@ -109,6 +109,29 @@ Note that Azure Cosmos DB for NoSQL restores data with another account by PITR. 
 
    The restored account has a default value of **default consistency level**. So, you must configure the **default consistency level** to **STRONG** according to the official document [Configure the default consistency level](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/how-to-manage-consistency#configure-the-default-consistency-level).
 
+1. Update database.properties for Schema Loader based on the newly restored account.
+
+   ScalarDB/ScalarDL tables use stored procedures of Cosmos DB for NoSQL. However, the PITR feature of Cosmos DB for NoSQL doesn't restore stored procedures. So, you must create stored procedures in all tables. You can do it using ScalarDB/ScalarDL Schema Loader. To recreate stored procedures, you must update database.properties for Schema Loader based on the newly restored account to access it.
+
+1. Repair tables.
+
+   You can recreate stored procedures using the `--repair-all` flag of ScalarDB/ScalarDL Schema Loader as follows.
+
+   * ScalarDB tables
+     ```console
+     java -jar scalardb-schema-loader-<version>.jar --config /path/to/<your database.properties> -f /path/to/<your schema.json file> [--coordinator] --repair-all 
+     ```
+   * ScalarDL Ledger tables
+     ```console
+     helm install repair-schema-ledger scalar-labs/schema-loading -n <namespace> -f /path/to/<your custom values file for ScalarDL Schema Loader for Ledger> --set "schemaLoading.commandArgs={--repair-all}"
+     ```
+   * ScalarDL Auditor tables
+     ```console
+     helm install repair-schema-auditor scalar-labs/schema-loading -n <namespace> -f /path/to/<your custom values file for ScalarDL Schema Loader for Auditor> --set "schemaLoading.commandArgs={--repair-all}"
+     ```
+
+   Please refer to the [Repair tables](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md#repair-tables) for more details on ScalarDB Schema Loader.
+
 1. Update the table configuration if you need.
 
    Please check some configurations of the restored account according to the following document.
