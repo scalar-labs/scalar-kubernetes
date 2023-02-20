@@ -63,7 +63,7 @@ Amazon DynamoDB restores data with another name table by PITR. So, you must addi
 #### Steps
 
 1. Create a backup
-   1. Select the mid-time of paused duration as the restore point.
+   1. Select the mid-time of paused duration as the restore point
    1. Restore with PITR of table A to another table B
    1. Take a backup of the restored table B (assume the backup is named backup B)
    1. Remove table B 
@@ -72,6 +72,8 @@ Amazon DynamoDB restores data with another name table by PITR. So, you must addi
 
    * [Restoring a DynamoDB table to a point in time](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.Tutorial.html)
    * [Backing up a DynamoDB table](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Backup.Tutorial.html)
+
+   You can do this **Create a backup** step as a part of backup operations in the [Backup NoSQL database guide](./BackupNoSQL.md#backup-operations-create-the-period-for-restoring).
 
 1. Restore from the backup
    1. Remove table A
@@ -83,11 +85,11 @@ Amazon DynamoDB restores data with another name table by PITR. So, you must addi
 
    * [Backing up and restoring DynamoDB tables with DynamoDB: How it works](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CreateBackup.html)
 
-   Especially, if you use ScalarDB Schema Loader to create tables, it sets the auto scaling policies by default. So, you must set auto scaling to restored tables manually. Please refer to the following official document for more details on how to set auto scaling.
+   Especially, if you use ScalarDB Schema Loader of ScalarDL Schema Loader to create tables, it enables auto scaling by default. So, you must set auto scaling to restored tables manually. Please refer to the following official document for more details on how to set auto scaling.
 
    * [Enabling DynamoDB auto scaling on existing tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.Console.html#AutoScaling.Console.ExistingTable)
 
-   Also, please check some configurations of restored tables according to the following document.
+   Also, after restoring, the point-in-time recovery is disabled and the Read/Write Capacity is reset to the default value. You must set these configurations if you need. Please check some configurations of restored tables according to the following document.
 
    * [Set up a database for ScalarDB/ScalarDL deployment on AWS (Amazon DynamoDB)](./SetupDatabaseForAWS.md#amazon-dynamodb)
 

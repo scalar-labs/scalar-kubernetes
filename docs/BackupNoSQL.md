@@ -46,6 +46,8 @@ In this guide, we assume that using the automatic backup and PITR feature. So, w
 
    **If the two values are compared and different, you must re-try the backup operation all over again.** This is because, if some pods are added or restarted, those pods run with a `unpause` state. The `unpause` state pods cause data inconsistency in the backup data.
 
+1. (DynamoDB only) You need to do additional operations to create a backup if you use the PITR feature of DynamoDB since it restores data with another name table by PITR. You should these additional steps after you complete this creating **period** steps. Please refer to the [Restore database guide](./RestoreDatabase.md#amazon-dynamodb) for more details on these steps.
+
 ## Multiple databases backup
 
 If you use more than two databases under the Scalar products using [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md), you must pause all Scalar products at the same time and create the same **period** for multiple databases.
