@@ -1,60 +1,131 @@
-# How to collect logs from Kubernetes applications
+# Collecting logs from Scalar products on a Kubernetes cluster
 
-`scalar-kubernetes` uses Fluent Bit to collect logs from the applications of Kubernetes cluster. This document explains how to deploy Fluent Bit on Kubernetes with Ansible. After following the doc, you will be able to see collected logs in the monitor server.
+This document explains how to deploy Grafana Loki and Promtail on Kubernetes with Helm. After following this document, you can collect logs of Scalar products on your Kubernetes environment.
 
-## Requirements
+If you use a managed Kubernetes cluster and you want to use the cloud service features for monitoring and logging, please refer to the following document.
 
-* Have completed [How to create Azure AKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/AKSScalarTerraformDeploymentGuide.md)
-  * Make sure the monitor server is up and running.
-  * Make sure you generated the ssh.cfg file in `${SCALAR_TERRAFORM_EXAMPLES}/azure/network`
-* There is the `inventory.ini` file in `${SCALAR_K8S_CONFIG_DIR}`. Please refer to [Prepare Ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory).
+* [Logging and monitoring on Amazon EKS](https://docs.aws.amazon.com/prescriptive-guidance/latest/implementing-logging-monitoring-cloudwatch/amazon-eks-logging-monitoring.html)
+* [Monitoring Azure Kubernetes Service (AKS) with Azure Monitor](https://learn.microsoft.com/en-us/azure/aks/monitor-aks)
 
-### Set up Fluent Bit Metrics for Prometheus
+## Prerequisites
 
-Fluent Bit comes with a built-in HTTP server that can be used to monitor the internal information and the metrics of each running plugin. More information about this feature can be found on the [official website](https://docs.fluentbit.io/manual/administration/monitoring)
+* Create a Kubernetes cluster.
+    * [Create an EKS cluster for Scalar products](./CreateEKSClusterForScalarProducts.md)
+    * [Create an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md)
+* Create a Bastion server and set `kubeconfig`.
+    * [Create a bastion server](./CreateBastionServer.md)
+* Deploy Prometheus Operator (we use Grafana to explore collected logs)
+    * [Monitoring Scalar products on the Kubernetes cluster](./K8sMonitorGuide.md)
 
-Please make sure the monitor resources are created with [Kubernetes Monitor Guide](./K8sMonitorGuide.md).
+## Add the grafana helm repository
 
-By default, the Prometheus service monitor is created, you can deactivate it by setting `fluent_activate_metrics` to `no` in vars.
-
-## Deploy Fluent Bit
-
-Now let's deploy Fluent Bit to Kubernetes.
-
-```console
-$ cd ${SCALAR_K8S_HOME}
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-fluentbit.yml
-
-PLAY [Deploy Fluentbit in Kubernetes] *************************************************************************************************************************************************************************
-
-TASK [Fluentbit : Create folder on remote server] *************************************************************************************************************************************************************
-ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com] => (item=/home/centos/manifests)
-ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com] => (item=/home/centos/manifests/fluentbit)
-
-...
-
-TASK [Fluentbit : Deploy ServiceMonitor for Fluentbit] *******************************************************************************************************************************************************
-ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
-
-PLAY RECAP ****************************************************************************************************************************************************************************************************
-bastion                    : ok=7    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-```
-
-## View log in Monitor server
-
-Connect on the monitor server.
+This document uses Helm for the deployment of Prometheus Operator.
 
 ```console
-cd ${SCALAR_TERRAFORM_EXAMPLES}/azure/network
-ssh -F ssh.cfg monitor.internal.scalar-labs.com
+helm repo add grafana https://grafana.github.io/helm-charts
+```
+```console
+helm repo update
 ```
 
-The Kubernetes log are located under `/log/kubernetes/` directory.
+## Prepare a custom values file
+
+Please get the sample file [scalar-loki-stack-custom-values.yaml](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalar-loki-stack-custom-values.yaml) for loki-stack. For the logging of Scalar products, this sample file's configuration is recommended.
+
+### Set nodeSelector in the custom values file (Recommended in the production environment)
+
+In the production environment, it is recommended to add labels to the worker node for Scalar products as follows.
+
+* [EKS - Add a label to the worker node that is used for nodeAffinity](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateEKSClusterForScalarProducts.md#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
+* [AKS - Add a label to the worker node that is used for nodeAffinity](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateAKSClusterForScalarProducts.md#add-a-label-to-the-worker-node-that-is-used-for-nodeaffinity)
+
+Since the promtail pods deployed in this document collect only Scalar product logs, it is sufficient to deploy promtail pods only on the worker node where Scalar products are running. So, you should set nodeSelector in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add labels to your Kubernetes worker node.
+
+* Scalar DB Example
+  ```yaml
+  promtail:
+    nodeSelector:
+      scalar-labs.com/dedicated-node: scalardb
+  ```
+* Scalar DL Ledger Example
+  ```yaml
+  promtail:
+    nodeSelector:
+      scalar-labs.com/dedicated-node: scalardl-ledger
+  ```
+* Scalar DL Auditor Example
+  ```yaml
+  promtail:
+    nodeSelector:
+      scalar-labs.com/dedicated-node: scalardl-auditor
+  ```
+
+### Set tolerations in the custom values file (Recommended in the production environment)
+
+In the production environment, it is recommended to add taints to the worker node for Scalar products as follows.
+
+* [EKS - Add taint to the worker node that is used for toleration](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateEKSClusterForScalarProducts.md#add-taint-to-the-worker-node-that-is-used-for-toleration)
+* [AKS - Add taint to the worker node that is used for toleration](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/CreateAKSClusterForScalarProducts.md#add-taint-to-the-worker-node-that-is-used-for-toleration)
+
+Since promtail pods are deployed as DaemonSet, you must set tolerations in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add taints to your Kubernetes worker node.
+
+* Scalar DB Example
+  ```yaml
+  promtail:
+    tolerations:
+      - effect: NoSchedule
+        key: scalar-labs.com/dedicated-node
+        operator: Equal
+        value: scalardb
+  ```
+* Scalar DL Ledger Example
+  ```yaml
+  promtail:
+    tolerations:
+      - effect: NoSchedule
+        key: scalar-labs.com/dedicated-node
+        operator: Equal
+        value: scalardl-ledger
+  ```
+* Scalar DL Auditor Example
+  ```yaml
+  promtail:
+    tolerations:
+      - effect: NoSchedule
+        key: scalar-labs.com/dedicated-node
+        operator: Equal
+        value: scalardl-auditor
+  ```
+
+## Deploy Loki and Promtail
+
+It is recommended to deploy Loki and Promtail on the same namespace `monitoring` as Prometheus and Grafana. You have already created the `monitoring` namespace in the document [Monitoring Scalar products on the Kubernetes cluster](./K8sMonitorGuide.md).
 
 ```console
-$ tree
-.
-└── 2020
-    └── 06-15
-        └── kube.log
+helm install scalar-logging-loki grafana/loki-stack -n monitoring -f scalar-loki-stack-custom-values.yaml
 ```
+
+## Check if Loki and Promtail are deployed
+
+If the Loki and Promtail pods are deployed properly, you can see the `STATUS` is `Running` using the `kubectl get pod -n monitoring` command. Since promtail pods are deployed as DaemonSet, the number of promtail pods depends on the number of Kubernetes nodes. In the following example, there are three worker nodes for Scalar products in the Kubernetes cluster.
+
+```
+$ kubectl get pod -n monitoring
+NAME                                 READY   STATUS    RESTARTS   AGE
+scalar-logging-loki-0                1/1     Running   0          35m
+scalar-logging-loki-promtail-2fnzn   1/1     Running   0          32m
+scalar-logging-loki-promtail-2pwkx   1/1     Running   0          30m
+scalar-logging-loki-promtail-gfx44   1/1     Running   0          32m
+```
+
+## View log in Grafana dashboard
+
+You can see the collected logs in the Grafana dashboard as follows.
+
+1. Access the Grafana dashboard
+1. Go to the `Explore` page
+1. Select `Loki` from the top left pull-down
+1. Set conditions to query logs
+1. Select the `Run query` button at the top right
+
+Please refer to the [Monitoring Scalar products on the Kubernetes cluster](./K8sMonitorGuide.md) for more details on how to access the Grafana dashboard.

@@ -1,85 +1,142 @@
-# Kubernetes Monitor Guide
+# Monitoring Scalar products on a Kubernetes cluster
 
-This document explains how to deploy Prometheus operator on Kubernetes with Ansible. After following the doc, you will be able to use Grafana, Alertmanager, and Prometheus inside Kubernetes.
+This document explains how to deploy Prometheus Operator on Kubernetes with Helm. After following this document, you can use Prometheus, Alertmanager, and Grafana for monitoring Scalar products on your Kubernetes environment.
 
-## Requirements
+If you use a managed Kubernetes cluster and you want to use the cloud service features for monitoring and logging, please refer to the following document.
 
-* Have completed [How to create Azure AKS with scalar-terraform](https://github.com/scalar-labs/scalar-terraform/blob/master/docs/AKSScalarTerraformDeploymentGuide.md)
-* `inventory.ini` file in `${SCALAR_K8S_CONFIG_DIR}`. Please refer to [Prepare Ansible inventory](./PrepareBastionTool.md#prepare-ansible-inventory)
-* Able to communicate with the Kubernetes API from your local machine. Please refer to [How to do port-forwarding to Kubnernetes API in scalar-terraform network](./PortForwardingToK8sAPIInScalarTerraformNetwork.md).
+* [Logging and monitoring on Amazon EKS](https://docs.aws.amazon.com/prescriptive-guidance/latest/implementing-logging-monitoring-cloudwatch/amazon-eks-logging-monitoring.html)
+* [Monitoring Azure Kubernetes Service (AKS) with Azure Monitor](https://learn.microsoft.com/en-us/azure/aks/monitor-aks)
 
-## Deploy Prometheus
+## Prerequisites
 
-Let's deploy the Prometheus component inside Kubernetes with Ansible playbook `playbook-deploy-prometheus.yaml`.
+* Create a Kubernetes cluster.
+    * [Create an EKS cluster for Scalar products](./CreateEKSClusterForScalarProducts.md)
+    * [Create an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md)
+* Create a Bastion server and set `kubeconfig`.
+    * [Create a bastion server](./CreateBastionServer.md)
 
-Note that the deployment is run on the bastion host with Ansible, and the port-forwarding is not needed yet.
+## Add the prometheus-community helm repository
 
-```console
-$ cd ${SCALAR_K8S_HOME}
-$ ansible-playbook -i ${SCALAR_K8S_CONFIG_DIR}/inventory.ini playbooks/playbook-deploy-prometheus.yml
-
-PLAY [Deploy Prometheus in Kubernetes] ************************************************************************************************************************************************************************
-
-TASK [prometheus : Create folder on remote server] ************************************************************************************************************************************************************
-ok: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
-
-...
-
-TASK [prometheus : Deploy prometheus with helm] ***************************************************************************************************************************************************************
-changed: [bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com]
-
-PLAY RECAP ****************************************************************************************************************************************************************************************************
-bastion-example-k8s-azure-by2-ot4.eastus.cloudapp.azure.com : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-```
-
-## How to access
-
-Open an SSH connection to the bastion to start the port-forwarding.
+This document uses Helm for the deployment of Prometheus Operator.
 
 ```console
-cd ${SCALAR_K8S_CONFIG_DIR}
-ssh -F ssh.cfg bastion
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 ```
-
-You can have a look at Kubernetes service in the `monitoring` namespace to find the Kubernetes service name for Grafana, Prometheus and Alertmanager.
-
 ```console
-$ kubectl get svc -n monitoring
-NAME                                      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
-alertmanager-operated                     ClusterIP   None           <none>        9093/TCP,9094/TCP,9094/UDP   66m
-prometheus-grafana                        ClusterIP   10.42.48.7     <none>        80/TCP                       66m
-prometheus-kube-prometheus-alertmanager   ClusterIP   10.42.49.41    <none>        9093/TCP                     66m
-prometheus-kube-prometheus-operator       ClusterIP   10.42.49.54    <none>        443/TCP                      66m
-prometheus-kube-prometheus-prometheus     ClusterIP   10.42.50.204   <none>        9090/TCP                     66m
-prometheus-kube-state-metrics             ClusterIP   10.42.51.231   <none>        8080/TCP                     66m
-prometheus-operated                       ClusterIP   None           <none>        9090/TCP                     66m
-prometheus-prometheus-node-exporter       ClusterIP   10.42.49.0     <none>        9100/TCP                     66m
+helm repo update
 ```
 
-Now let's access to Prometheus component on your local machine. Follow the 3 sections below to access to Grafana, Prometheus and Alertmanager.
+## Prepare a custom values file
 
-### For Grafana on port 8080
+Please get the sample file [scalar-prometheus-custom-values.yaml](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalar-prometheus-custom-values.yaml) for kube-prometheus-stack. For the monitoring of Scalar products, this sample file's configuration is recommended.
 
-```console
-$ kubectl port-forward -n monitoring svc/prometheus-grafana 8080:80
-Forwarding from 127.0.0.1:8080 -> 3000
-Forwarding from [::1]:8080 -> 3000
+In this sample file, the Service resources are not exposed to access from outside of a Kubernetes cluster. If you want to access dashboards from outside of your Kubernetes cluster, you must set `*.service.type` to `LoadBalancer` or `*.ingress.enabled` to `true`.
+
+Please refer to the following official document for more details on the configurations of kube-prometheus-stack.
+
+* [kube-prometheus-stack - Configuration](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack#configuration)
+
+## Deploy Prometheus Operator
+
+Scalar products assume the Prometheus Operator is deployed in the `monitoring` namespace by default. So, please create the namespace `monitoring` and deploy Prometheus Operator in the `monitoring` namespace.
+
+1. Create a namespace `monitoring` on Kubernetes.
+   ```console
+   kubectl create namespace monitoring
+   ```
+
+1. Deploy the kube-prometheus-stack.
+   ```console
+   helm install scalar-monitoring prometheus-community/kube-prometheus-stack -n monitoring -f scalar-prometheus-custom-values.yaml
+   ```
+
+## Check if the Prometheus Operator is deployed
+
+If the Prometheus Operator (includes Prometheus, Alertmanager, and Grafana) pods are deployed properly, you can see the `STATUS` is `Running` using the `kubectl get pod -n monitoring` command.
+
+```
+$ kubectl get pod -n monitoring
+NAME                                                     READY   STATUS    RESTARTS   AGE
+alertmanager-scalar-monitoring-kube-pro-alertmanager-0   2/2     Running   0          55s
+prometheus-scalar-monitoring-kube-pro-prometheus-0       2/2     Running   0          55s
+scalar-monitoring-grafana-cb4f9f86b-jmkpz                3/3     Running   0          62s
+scalar-monitoring-kube-pro-operator-865bbb8454-9ppkc     1/1     Running   0          62s
 ```
 
-By default, all grafana instances generated by the [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml) chart will use `prom-operator` as the grafana admin password.
+## Deploy (or Upgrade) Scalar products using Helm Charts
 
-### For Alert-manager on port 9093
+1. To enable Prometheus monitoring for Scalar products, you must set `true` to the following configurations in the custom values file.
 
-```console
-$ kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-alertmanager 9093:9093
-Forwarding from 127.0.0.1:9093 -> 9093
-Forwarding from [::1]:9093 -> 9093
-```
+   * Configurations
+       * `*.prometheusRule.enabled`
+       * `*.grafanaDashboard.enabled`
+       * `*.serviceMonitor.enabled`
 
-### For Prometheus on port 9090
+   Please refer to the following documents for more details on the custom values file of each Scalar product.
 
-```console
-$ kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9090
-Forwarding from 127.0.0.1:9090 -> 9090
-Forwarding from [::1]:9090 -> 9090
-```
+   * [ScalarDB Server](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardb.md#prometheusgrafana-configurations)
+   * [ScalarDB GraphQL](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardb-graphql.md#prometheusgrafana-configurations)
+   * [ScalarDL Ledger](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-ledger.md#prometheusgrafana-configurations)
+   * [ScalarDL Auditor](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-auditor.md#prometheusgrafana-configurations)
+
+1. Deploy (or Upgrade) Scalar products using Helm Charts with the above custom values file.
+
+   Please refer to the following documents for more details on how to deploy/upgrade Scalar products.
+
+   * [ScalarDB Server](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb.md)
+   * [ScalarDB GraphQL](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-graphql.md)
+   * [ScalarDL Ledger](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardl-ledger.md)
+   * [ScalarDL Auditor](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardl-auditor.md)
+
+## How to access dashboards
+
+When you set `*.service.type` to `LoadBalancer` or `*.ingress.enabled` to `true`, you can access dashboards via Service or Ingress of Kubernetes. The concrete implementation and access method depend on the Kubernetes cluster. If you use a managed Kubernetes cluster, please refer to the cloud provider's official document for more details.
+
+* EKS
+    * [Network load balancing on Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/network-load-balancing.html)
+    * [Application load balancing on Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html)
+* AKS
+    * [Use a public standard load balancer in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/load-balancer-standard)
+    * [Create an ingress controller in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/ingress-basic)
+
+## Access the dashboard from your local machine (For testing purposes only / Not recommended in the production environment)
+
+You can access each dashboard from your local machine using the `kubectl port-forward` command.
+
+1. Port forwarding to each service from your local machine.
+   * Prometheus
+     ```console
+     kubectl port-forward -n monitoring svc/scalar-monitoring-kube-pro-prometheus 9090:9090
+     ```
+   * Alertmanager
+     ```console
+     kubectl port-forward -n monitoring svc/scalar-monitoring-kube-pro-alertmanager 9093:9093
+     ```
+   * Grafana
+     ```console
+     kubectl port-forward -n monitoring svc/scalar-monitoring-grafana 3000:3000
+     ```
+
+1. Access each Dashboard.
+   * Prometheus
+     ```console
+     http://localhost:9090/
+     ```
+   * Alertmanager
+     ```console
+     http://localhost:9093/
+     ```
+   * Grafana
+     ```console
+     http://localhost:3000/
+     ```
+       * Note:
+           * You can see the user and password of Grafana as follows.
+               * user
+                 ```console
+                 kubectl get secrets scalar-monitoring-grafana -n monitoring -o jsonpath='{.data.admin-user}' | base64 -d
+                 ```
+               * password
+                 ```console
+                 kubectl get secrets scalar-monitoring-grafana -n monitoring -o jsonpath='{.data.admin-password}' | base64 -d
+                 ```
