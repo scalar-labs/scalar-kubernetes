@@ -27,7 +27,7 @@ This guide explains how to restore ScalarDB/ScalarDL data on a Kubernetes enviro
 
    If you use NoSQL or multiple databases, it is recommended to specify the mid-time of the **period** that you created in the document [Backup NoSQL database guide](./BackupNoSQL.md).
 
-1. Update database.properties based on the newly restored database.
+1. Update database.properties/ledger.properties/auditor.properties based on the newly restored database.
 
    The PITR feature restores databases as another instance. So, you must update endpoint information in the custom values file of Scalar products to access the newly restored databases.
 
@@ -146,9 +146,10 @@ Note that Amazon RDS restores data with another database instance by PITR. So, y
 
 1. Restore the database instance.
 
-   Please refer to the following official document for more details on how to restore the Amazon RDS instance with PITR.
+   Please refer to the following official documents for more details on how to restore the Amazon RDS instance with PITR.
 
    * [Restoring a DB instance to a specified time](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html)
+   * [Restoring a Multi-AZ DB cluster to a specified time](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.MultiAZDBCluster.html)
 
 1. Update the table configuration if you need.
 
@@ -167,6 +168,12 @@ Note that Amazon Aurora restores data with another database cluster by PITR. So,
    Please refer to the following official document for more details on how to restore the Amazon Aurora cluster with PITR.
 
    * [Restoring a DB cluster to a specified time](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-pitr.html)
+
+1. Add a replica (reader) to make the database cluster a Multi-AZ cluster if you need.
+
+   The PITR feature of Amazon Aurora cannot restore the database cluster with Multi-AZ configuration. If you want to restore the database cluster as a Multi-AZ cluster, you must add a reader after restoring the database cluster. Please refer to the following official document for more details on how to add a reader.
+
+   * [Adding Aurora Replicas to a DB cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-replicas-adding.html)
 
 1. Update the table configuration if you need.
 
