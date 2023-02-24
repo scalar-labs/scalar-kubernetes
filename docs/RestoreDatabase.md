@@ -85,7 +85,7 @@ Amazon DynamoDB restores data with another name table by PITR. So, you must addi
 
    * [Backing up and restoring DynamoDB tables with DynamoDB: How it works](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CreateBackup.html)
 
-   Especially, if you use ScalarDB Schema Loader of ScalarDL Schema Loader to create tables, it enables auto scaling by default. So, you must set auto scaling to restored tables manually. Please refer to the following official document for more details on how to set auto scaling.
+   Especially, if you use ScalarDB Schema Loader or ScalarDL Schema Loader to create tables, it enables auto scaling by default. So, you must set auto scaling to the restored tables manually. Please refer to the following official document for more details on how to set auto scaling.
 
    * [Enabling DynamoDB auto scaling on existing tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.Console.html#AutoScaling.Console.ExistingTable)
 
@@ -112,6 +112,14 @@ Note that Azure Cosmos DB for NoSQL restores data with another account by PITR. 
 1. Update database.properties for Schema Loader based on the newly restored account.
 
    ScalarDB/ScalarDL tables use stored procedures of Cosmos DB for NoSQL. However, the PITR feature of Cosmos DB for NoSQL doesn't restore stored procedures. So, you must create stored procedures in all tables. You can do it using ScalarDB/ScalarDL Schema Loader. To recreate stored procedures, you must update database.properties for Schema Loader based on the newly restored account to access it.
+
+   For ScalarDB tables, please refer to the following document for more details on how to configure database.properties for ScalarDB Schema Loader.
+
+   * [Getting Started with ScalarDB on Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-cosmosdb.md)
+
+   For ScalarDL tables, please refer to the following document for more details on how to configure the custom values file for ScalarDL Schema Loader.
+
+   * [Configure a custom values file for ScalarDL Schema Loader](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-schema-loader.md)
 
 1. Repair tables.
 
@@ -189,7 +197,7 @@ Note that Azure Database for MySQL/PostgreSQL restores data with another server 
 
 1. Restore the database server.
 
-   Please refer to the following official document for more details on how to restore the kkkAzure Database for MySQL/PostgreSQL server with PITR.
+   Please refer to the following official document for more details on how to restore the Azure Database for MySQL/PostgreSQL server with PITR.
 
    * [Point-in-time restore of a Azure Database for MySQL Flexible Server using Azure portal](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/how-to-restore-server-portal)
    * [Backup and restore in Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-backup-restore)

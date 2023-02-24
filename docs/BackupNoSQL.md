@@ -4,9 +4,9 @@ If you use a NoSQL database or multiple databases, you must **pause** the Scalar
 
 * [A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md)
 
-In this guide, we assume that using the automatic backup and PITR feature. So, we create a **period** where there are no ongoing transactions for restoring. You can restore data using PITR to the point-in-time in this **period**. Otherwise (if you restore data point-in-time out of this **period**), the restored data becomes inconsistent data and Scalar products don't work properly.
+In this guide, we assume that using the automatic backup and PITR feature. So, we create a **period** where there are no ongoing transactions for restoration. You can restore data using PITR to the point-in-time in this **period**. Otherwise (if you restore data to point-in-time out of this **period**), the restored data becomes inconsistent data and Scalar products don't work properly.
 
-## Backup operations (create the **period** for restoring)
+## Backup operations (create the **period** for restoration)
 
 1. Check the pod status before backup.
 
@@ -22,7 +22,7 @@ In this guide, we assume that using the automatic backup and PITR feature. So, w
 
 1. Check the pause completed time.
 
-   You must note the pause completed time to decide the concrete **period** that you can recover data using the PITR feature.
+   You must note the pause completed time to decide the concrete **period** that you can restore data using the PITR feature.
 
 1. Take a backup using the backup feature of each database.
 
@@ -34,7 +34,7 @@ In this guide, we assume that using the automatic backup and PITR feature. So, w
 
 1. Check the unpause started time.
 
-   You must note the unpause started time to decide the concrete **period** that you can recover data using the PITR feature.
+   You must note the unpause started time to decide the concrete **period** that you can restore data using the PITR feature.
 
 1. Check the pod status after backup.
 
@@ -44,7 +44,7 @@ In this guide, we assume that using the automatic backup and PITR feature. So, w
    * The Scalar product pod status is `Running` in the `STATUS` column.
    * The restart counts of each pod in the `RESTARTS` column (You must compare these restart counts with the restart counts before the backup).
 
-   **If the two values are compared and different, you must re-try the backup operation all over again.** This is because, if some pods are added or restarted, those pods run with a `unpause` state. The `unpause` state pods cause data inconsistency in the backup data.
+   **If the two values are different, you must re-try the backup operation all over again.** This is because, if some pods are added or restarted, those pods run with a `unpause` state. The `unpause` state pods cause data inconsistency in the backup data.
 
 1. (DynamoDB only) You need to do additional operations to create a backup if you use the PITR feature of DynamoDB since it restores data with another name table by PITR. You should these additional steps after you complete this creating **period** steps. Please refer to the [Restore database guide](./RestoreDatabase.md#amazon-dynamodb) for more details on these steps.
 

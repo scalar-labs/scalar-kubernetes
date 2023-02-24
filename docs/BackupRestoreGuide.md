@@ -26,7 +26,7 @@ If you use a NoSQL database, please refer to the following document for more det
 
 * [Backup NoSQL database guide](./BackupNoSQL.md)
 
-Also, if you use multiple databases under the Scalar products using [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md), you must do the backup operations according to this document.
+Also, if you use multiple databases under the Scalar products using [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md), you must do the backup operations according to the above document.
 
 #### Using single RDB
 
