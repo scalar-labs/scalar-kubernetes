@@ -56,24 +56,31 @@ envoy:
 
 scalardb:
   replicaCount: 3
+
   storageConfiguration:
-
-    #
-    # Cosmos DB
-    #
-    # contactPoints: <Cosmos DB account endpoint>
-    # password: <Cosmos DB account primary master key>
-    # storage: cosmos
-
-    #
-    # DynamoDB
-    #
-    # contactPoints: <REGION>
-    # username: <AWS_ACCESS_KEY_ID>
-    # password: <AWS_ACCESS_SECRET_KEY>
-    # storage: dynamo
-
     dbLogLevel: INFO
+
+  databaseProperties: |
+    # # Cosmo DB for NoSQL
+    # # The Cosmos DB for NoSQL URI
+    # scalar.db.contact_points=<COSMOS_DB_FOR_NOSQL_URI>
+    #
+    # # The Cosmos DB for NoSQL key
+    # scalar.db.password=<COSMOS_DB_FOR_NOSQL_KEY>
+    #
+    # # Cosmos DB for NoSQL storage implementation
+    # scalar.db.storage=cosmos
+
+    # # DynamoDB
+    # # The AWS region
+    # scalar.db.contact_points=<REGION>
+    #
+    # # The AWS access key ID and secret access key
+    # scalar.db.username=<ACCESS_KEY_ID>
+    # scalar.db.password=<SECRET_ACCESS_KEY>
+    #
+    # # DynamoDB storage implementation
+    # scalar.db.storage=dynamo
 
   serviceMonitor:
     enabled: false

@@ -62,23 +62,42 @@ auditor:
 
   scalarAuditorConfiguration:
 
+  auditorProperties: |
+    # # Cosmo DB for NoSQL
+    # # The Cosmos DB for NoSQL URI
+    # scalar.db.contact_points=<COSMOS_DB_FOR_NOSQL_URI>
     #
-    # Cosmos DB
+    # # The Cosmos DB for NoSQL key
+    # scalar.db.password=<COSMOS_DB_FOR_NOSQL_KEY>
     #
-    # dbContactPoints: <Cosmos DB account endpoint>
-    # dbPassword: <Cosmos DB account primary master key>
-    # dbStorage: cosmos
+    # # Cosmos DB for NoSQL storage implementation
+    # scalar.db.storage=cosmos
 
+    # # DynamoDB
+    # # The AWS region
+    # scalar.db.contact_points=<REGION>
     #
-    # DynamoDB
+    # # The AWS access key ID and secret access key
+    # scalar.db.username=<ACCESS_KEY_ID>
+    # scalar.db.password=<SECRET_ACCESS_KEY>
     #
-    # dbStorage: dynamo
-    # dbContactPoints: <REGION>
-    # dbUsername: <AWS_ACCESS_KEY_ID>
-    # dbPassword: <AWS_ACCESS_SECRET_KEY>
+    # # DynamoDB storage implementation
+    # scalar.db.storage=dynamo
 
-    # To use Auditor
-    # auditorLedgerHost: <the service endpoint of ledger-side envoy>
+    # # Auditor configurations
+    # scalar.dl.auditor.ledger.host=<Host name to access ScalarDL Ledger pods>
+    # scalar.dl.auditor.private_key_path=/keys/private-key
+    # scalar.dl.auditor.cert_path=/keys/certificate
+
+  extraVolumes:
+    - name: auditor-keys
+      secret:
+        secretName: auditor-keys
+
+  extraVolumeMounts:
+    - name: auditor-keys
+      mountPath: /keys
+      readOnly: true
 
   prometheusRule:
     enabled: false

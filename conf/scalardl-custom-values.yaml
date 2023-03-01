@@ -60,26 +60,42 @@ ledger:
   imagePullSecrets:
     - name: reg-docker-secrets
 
-  scalarLedgerConfiguration:
+  ledgerProperties: |
+    # # Cosmo DB for NoSQL
+    # # The Cosmos DB for NoSQL URI
+    # scalar.db.contact_points=<COSMOS_DB_FOR_NOSQL_URI>
+    #
+    # # The Cosmos DB for NoSQL key
+    # scalar.db.password=<COSMOS_DB_FOR_NOSQL_KEY>
+    #
+    # # Cosmos DB for NoSQL storage implementation
+    # scalar.db.storage=cosmos
 
+    # # DynamoDB
+    # # The AWS region
+    # scalar.db.contact_points=<REGION>
     #
-    # Cosmos DB
+    # # The AWS access key ID and secret access key
+    # scalar.db.username=<ACCESS_KEY_ID>
+    # scalar.db.password=<SECRET_ACCESS_KEY>
     #
-    # dbContactPoints: <Cosmos DB account endpoint>
-    # dbPassword: <Cosmos DB account primary master key>
-    # dbStorage: cosmos
+    # # DynamoDB storage implementation
+    # scalar.db.storage=dynamo
 
-    #
-    # DynamoDB
-    #
-    # dbStorage: dynamo
-    # dbContactPoints: <REGION>
-    # dbUsername: <AWS_ACCESS_KEY_ID>
-    # dbPassword: <AWS_ACCESS_SECRET_KEY>
+    # # Ledger configurations to use Auditor
+    # scalar.dl.ledger.proof.enabled=true
+    # scalar.dl.ledger.auditor.enabled=true
+    # scalar.dl.ledger.proof.private_key_path=/keys/private-key
 
-    # To use Auditor
-    # ledgerProofEnabled: true
-    # ledgerAuditorEnabled: true
+  extraVolumes:
+    - name: ledger-keys
+      secret:
+        secretName: ledger-keys
+
+  extraVolumeMounts:
+    - name: ledger-keys
+      mountPath: /keys
+      readOnly: true
 
   prometheusRule:
     enabled: false
