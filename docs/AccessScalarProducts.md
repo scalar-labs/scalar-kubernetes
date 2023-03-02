@@ -1,10 +1,90 @@
 # Access Scalar products on a Kubernetes environment
 
-This document explains how to access Scalar products on a Kubernetes environment.
+This document explains how to access Scalar products on a Kubernetes environment. On a Kubernetes environment, you can access Scalar products via Scalar Envoy. To access this Scalar Envoy via service resource of Kubernetes named as `<helm release name>-envoy`. There are several ways to access this `<helm release name>-envoy` service resource as follows.
 
-## Access Scalar products via Load Balancer (Recommended in the production environment)
+* Access `<helm release name>-envoy` directly from **inside** of the same Kubernetes cluster as Scalar products.
+* Access `<helm release name>-envoy` via a Load Balancer from **outside** of the Kubernetes cluster.
+* Access `<helm release name>-envoy` from a bastion server using the `kubectl port-forward` command (testing purpose only).
 
-On a Kubernetes environment, you can access Scalar products via Scalar Envoy. And, in the production environment, it is recommended to use a Load Balancer provided by each cloud service to access Scalar Envoy on the managed Kubernetes cluster.
+Also, the resource name `<helm release name>-envoy` is decided based on the helm release name. You can see the helm release name using the `helm list` command.
+
+```console
+$ helm list -n ns-scalar
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS                                                       CHART                    APP VERSION
+scalardb                ns-scalar       1               2023-02-09 19:31:40.527130674 +0900 JST deployed                                                     scalardb-2.5.0           3.8.0
+scalardl-auditor        ns-scalar       1               2023-02-09 19:32:03.008986045 +0900 JST deployed                                                     scalardl-audit-2.5.1     3.7.1
+scalardl-ledger         ns-scalar       1               2023-02-09 19:31:53.459548418 +0900 JST deployed                                                     scalardl-4.5.1           3.7.1
+```
+
+You can also see the envoy service name `<helm release name>-envoy` directly using the `kubectl get service` command.
+
+```console
+$ kubectl get service -n ns-scalar
+NAME                             TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                           AGE
+scalardb-envoy                   LoadBalancer   10.99.245.143    <pending>     60051:31110/TCP                   2m2s
+scalardb-envoy-metrics           ClusterIP      10.104.56.87     <none>        9001/TCP                          2m2s
+scalardb-headless                ClusterIP      None             <none>        60051/TCP                         2m2s
+scalardb-metrics                 ClusterIP      10.111.213.194   <none>        8080/TCP                          2m2s
+scalardl-auditor-envoy           LoadBalancer   10.111.141.43    <pending>     40051:31553/TCP,40052:31171/TCP   99s
+scalardl-auditor-envoy-metrics   ClusterIP      10.104.245.188   <none>        9001/TCP                          99s
+scalardl-auditor-headless        ClusterIP      None             <none>        40051/TCP,40053/TCP,40052/TCP     99s
+scalardl-auditor-metrics         ClusterIP      10.105.119.158   <none>        8080/TCP                          99s
+scalardl-ledger-envoy            LoadBalancer   10.96.239.167    <pending>     50051:32714/TCP,50052:30857/TCP   109s
+scalardl-ledger-envoy-metrics    ClusterIP      10.97.204.18     <none>        9001/TCP                          109s
+scalardl-ledger-headless         ClusterIP      None             <none>        50051/TCP,50053/TCP,50052/TCP     109s
+scalardl-ledger-metrics          ClusterIP      10.104.216.189   <none>        8080/TCP                          109s
+```
+
+## Access Scalar products via service resources directly from inside of the Kubernetes cluster
+
+If you deploy your application (client) on the same Kubernetes cluster as Scalar products (e.g., you deploy your application on another node group/pool on the same Kubernetes cluster), the application can access Scalar products using service resources of Kubernetes. The format of the service resource name (FQDN) is `<helm release name>-envoy.<namespace>.svc.cluster.local`.
+
+* Example (if you deploy Scalar products on the `ns-scalar` namespace)
+  * ScalarDB Server
+    ```console
+    scalardb-envoy.ns-scalar.svc.cluster.local
+    ```
+  * ScalarDL Ledger
+    ```console
+    scalardl-ledger-envoy.ns-scalar.svc.cluster.local
+    ```
+  * ScalarDL Auditor
+    ```console
+    scalardl-auditor-envoy.ns-scalar.svc.cluster.local
+    ```
+
+If you use the service resource of Kubernetes, you need to set the above FQDN in the properties file for the application (client) as follows.
+
+* Client properties file for ScalarDB Server
+  ```properties
+  scalar.db.contact_points=<helm release name>-envoy.<namespace>.svc.cluster.local
+  scalar.db.contact_port=60051
+  scalar.db.storage=grpc
+  scalar.db.transaction_manager=grpc
+  ```
+* Client properties file for ScalarDL Ledger
+  ```properties
+  scalar.dl.client.server.host=<helm release name>-envoy.<namespace>.svc.cluster.local
+  scalar.dl.ledger.server.port=50051
+  scalar.dl.ledger.server.privileged_port=50052
+  ```
+* Client properties file for ScalarDL Ledger and ScalarDL Auditor (Auditor mode)
+  ```properties
+  # Ledger
+  scalar.dl.client.server.host=<helm release name>-envoy.<namespace>.svc.cluster.local
+  scalar.dl.ledger.server.port=50051
+  scalar.dl.ledger.server.privileged_port=50052
+  
+  # Auditor
+  scalar.dl.client.auditor.enabled=true
+  scalar.dl.client.auditor.host=<helm release name>-envoy.<namespace>.svc.cluster.local
+  scalar.dl.auditor.server.port=40051
+  scalar.dl.auditor.server.privileged_port=40052
+  ```
+
+## Access Scalar products via Load Balancers from outside of the Kubernetes cluster
+
+If you deploy your application (client) on another environment than the Kubernetes cluster for Scalar products (e.g., you deploy your application on another  Kubernetes cluster, container platform, or server), the application can access Scalar products using a Load Balancer provided by each cloud service.
 
 You can create the Load Balancer to set `envoy.service.type` to `LoadBalancer` in your custom values file. When you create it, you can access Scalar Envoy (A service resource of Kubernetes) via created Load Balancer. You can also configure the Load Balancer configurations using annotations. Please refer to the following document for more details on how to configure your custom values file.
 
