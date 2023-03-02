@@ -95,13 +95,13 @@ Amazon DynamoDB restores data with another name table by PITR. So, you must addi
 
 ### Azure Cosmos DB for NoSQL
 
-Note that Azure Cosmos DB for NoSQL restores data with another account by PITR. So, you must update the endpoint configuration in the custom values file.
+Note that Azure Cosmos DB restores data with another account by PITR. So, you must update the endpoint configuration in the custom values file.
 
 #### Steps
 
 1. Restore the account.
 
-   Please refer to the following official document for more details on how to restore the Azure Cosmos DB for NoSQL account with PITR.
+   Please refer to the following official document for more details on how to restore the Azure Cosmos DB account with PITR.
 
    * [Restore an Azure Cosmos DB account that uses continuous backup mode](https://learn.microsoft.com/en-us/azure/cosmos-db/restore-account-continuous-backup)
 
@@ -111,7 +111,7 @@ Note that Azure Cosmos DB for NoSQL restores data with another account by PITR. 
 
 1. Update database.properties for Schema Loader based on the newly restored account.
 
-   ScalarDB/ScalarDL tables use stored procedures of Cosmos DB for NoSQL. However, the PITR feature of Cosmos DB for NoSQL doesn't restore stored procedures. So, you must create stored procedures in all tables. You can do it using ScalarDB/ScalarDL Schema Loader. To recreate stored procedures, you must update database.properties for Schema Loader based on the newly restored account to access it.
+   ScalarDB implements the Cosmos DB adapter by using its stored procedures, which are installed when creating schemas with ScalarDB/ScalarDL Schema Loader. However, the PITR feature of Cosmos DB doesn't restore stored procedures. So, you need to re-install the required stored procedures for all tables after restoration. You can do it using ScalarDB/ScalarDL Schema Loader with the `--repair-all` option.
 
    For ScalarDB tables, please refer to the following document for more details on how to configure database.properties for ScalarDB Schema Loader.
 
