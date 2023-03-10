@@ -1,13 +1,10 @@
-# Restore database guide
+# Restore databases in a Kubernetes environment
 
 This guide explains how to restore ScalarDB/ScalarDL data on a Kubernetes environment. We assume you use the managed databases provided by cloud services as a backend database of ScalarDB/ScalarDL.
 
-## Restore operations
+## Procedure to restore databases
 
-1. Scale in the Scalar product pods to **0** for stopping requests from Scalar products to backend databases.
-
-   You can scale in the Scalar product pods to 0 using the `--set *.replicaCount=0` flag of the helm command.
-
+1. Scale in ScalarDB or ScalarDL pods to **0** to stop requests to the backend databases. You can scale in the pods to **0** by using the `--set *.replicaCount=0` flag in the helm command.
    * ScalarDB Server
      ```console
      helm upgrade <release name> scalar-labs/scalardb -n <namespace> -f /path/to/<your custom values file for ScalarDB Server> --set scalardb.replicaCount=0
@@ -20,27 +17,17 @@ This guide explains how to restore ScalarDB/ScalarDL data on a Kubernetes enviro
      ```console
      helm upgrade <release name> scalar-labs/scalardl-audit -n <namespace> -f /path/to/<your custom values file for ScalarDL Auditor> --set auditor.replicaCount=0
      ```
+2. Restore the databases by using the point-in-time recovery (PITR) feature. 
 
-1. Restore databases.
+   For details on how to restore the databases based on your managed database, please refer to the [Supplemental procedures to restore databases based on managed database](./RestoreDatabase.md#supplemental-procedures-to-restore-databases-based-on-managed-database) section in this guide.
 
-   Restore the database data using the PITR feature. Please refer to the [Restore databases](./RestoreDatabase.md#restore-databases) section in this document.
+   If you are using NoSQL or multiple databases, you should specify the middle point of the pause duration period that you created when following the backup procedure in [Back up a NoSQL database in a Kubernetes environment](./BackupNoSQL.md).
+3. Update **database.properties**, **ledger.properties**, or **auditor.properties** based on the newly restored database. 
+   
+   Because the PITR feature restores databases as another instance, you must update the endpoint information in the custom values file of ScalarDB or ScalarDL to access the newly restored databases. For details on how to configure the custom values file, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
 
-   If you use NoSQL or multiple databases, it is recommended to specify the mid-time of the **period** that you created in the document [Backup NoSQL database guide](./BackupNoSQL.md).
-
-1. Update database.properties/ledger.properties/auditor.properties based on the newly restored database.
-
-   The PITR feature restores databases as another instance. So, you must update endpoint information in the custom values file of Scalar products to access the newly restored databases.
-
-   Please refer to the following document for more details on how to configure the custom values file.
-
-   * [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md)
-
-   Note that if you use Amazon DynamoDB, it restores data with another table name instead of another instance. In other words, the endpoint is not changed by restoring data. Instead, you need to restore and rename tables in Amazon DynamoDB. Please refer to the [Amazon DynamoDB](./RestoreDatabase.md#amazon-dynamodb) section in this document.
-
-1. Scale out the Scalar product pods to more than 1 to start accepting requests from clients.
-
-   You can scale out the Scalar product pods using the `--set *.replicaCount=N` flag of the helm command.
-
+   Please note that, if you are using Amazon DynamoDB, your data will be restored with another table name instead of another instance. In other words, the endpoint will not change after restoring the data. Instead, you will need to restore the data by renaming the tables in Amazon DynamoDB. For details on how to restore data with the same table name, please see the [Amazon DynamoDB](./RestoreDatabase.md#amazon-dynamodb) section in this guide.
+4. Scale out the ScalarDB or ScalarDL pods to **1** or more to start accepting requests from clients by using the `--set *.replicaCount=N` flag in the helm command.
    * ScalarDB Server
      ```console
      helm upgrade <release name> scalar-labs/scalardb -n <namespace> -f /path/to/<your custom values file for ScalarDB Server> --set scalardb.replicaCount=3
@@ -54,76 +41,57 @@ This guide explains how to restore ScalarDB/ScalarDL data on a Kubernetes enviro
      helm upgrade <release name> scalar-labs/scalardl-audit -n <namespace> -f /path/to/<your custom values file for ScalarDL Auditor> --set auditor.replicaCount=3
      ```
 
-## Restore databases
+## Supplemental procedures to restore data based on managed database
 
 ### Amazon DynamoDB
 
-Amazon DynamoDB restores data with another name table by PITR. So, you must additional operations to restore data with the same table name.
+When using the PITR feature, Amazon DynamoDB restores data with another name table. Therefore, you must follow additional steps to restore data with the same table name.
 
 #### Steps
 
-1. Create a backup
-   1. Select the mid-time of paused duration as the restore point
-   1. Restore with PITR of table A to another table B
-   1. Take a backup of the restored table B (assume the backup is named backup B)
-   1. Remove table B 
+1. Create a backup.
+   1. Select the middle point of the pause duration period as the restore point.
+   2. Use PITR to restore table A to table B.
+   3. Perform a backup of the restored table B. Then, confirm the backup is named appropriately for backup B.
+   4. Remove table B.
 
-   Please refer to the following official documents for more details on how to restore DynamoDB tables with PITR and how to take a backup of DynamoDB tables manually.
+   For details on how to restore DynamoDB tables by using PITR and how to perform a backup of DynamoDB tables manually, see the following official documentation from Amazon:
 
    * [Restoring a DynamoDB table to a point in time](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.Tutorial.html)
    * [Backing up a DynamoDB table](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Backup.Tutorial.html)
 
-   You can do this **Create a backup** step as a part of backup operations in the [Backup NoSQL database guide](./BackupNoSQL.md#backup-operations-create-the-period-for-restoring).
+   You can do this **Create a backup** step as a part of backup operations in the [Back up a NoSQL database in a Kubernetes environment](./BackupNoSQL.md#create-a-period-to-restore-data-and-perform-a-backup).
 
-1. Restore from the backup
-   1. Remove table A
-   1. Create a table named A with backup B
+2. Restore from the backup.
+   1. Remove table A.
+   2. Create a table named A by using backup B.
 
-1. Update the table configuration if you need.
+3. Update the table configuration if necessary, depending on your environment.
 
-   As described in the following document, some configurations (e.g., auto scaling policies) are not set after restoring. So, you need to set those configurations manually if you need.
+   Some configurations, like autoscaling policies, are not set after restoring, so you may need to manually set those configurations depending on your needs. For details, see the official documentation from Amazon at [Backing up and restoring DynamoDB tables with DynamoDB: How it works](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CreateBackup.html).
 
-   * [Backing up and restoring DynamoDB tables with DynamoDB: How it works](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CreateBackup.html)
+   For example, if you are using ScalarDB Schema Loader or ScalarDL Schema Loader to create tables, autoscaling is enabled by default. Therefore, you will need to manually enable autoscaling for the restored tables in DynamoDB. For details on how to enable autoscaling in DynamoDB, see the official documentation from Amazon at [Enabling DynamoDB auto scaling on existing tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.Console.html#AutoScaling.Console.ExistingTable).
 
-   Especially, if you use ScalarDB Schema Loader or ScalarDL Schema Loader to create tables, it enables auto scaling by default. So, you must set auto scaling to the restored tables manually. Please refer to the following official document for more details on how to set auto scaling.
-
-   * [Enabling DynamoDB auto scaling on existing tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.Console.html#AutoScaling.Console.ExistingTable)
-
-   Also, after restoring, the point-in-time recovery is disabled and the Read/Write Capacity is reset to the default value. You must set these configurations if you need. Please check some configurations of restored tables according to the following document.
-
-   * [Set up a database for ScalarDB/ScalarDL deployment on AWS (Amazon DynamoDB)](./SetupDatabaseForAWS.md#amazon-dynamodb)
+   In addition, after restoring the databases, the PITR feature will be disabled and the read/write capacity mode is reset to the default value. If necessary, depending on your environment, you will need to manually set these configurations. For some configurations for restored tables, see [Set up a database for ScalarDB/ScalarDL deployment on AWS (Amazon DynamoDB)](./SetupDatabaseForAWS.md#amazon-dynamodb).
 
 ### Azure Cosmos DB for NoSQL
 
-Note that Azure Cosmos DB restores data with another account by PITR. So, you must update the endpoint configuration in the custom values file.
+When using the PITR feature, Azure Cosmos DB restores data by using another account. Therefore, you must update the endpoint configuration in the custom values file.
 
 #### Steps
 
-1. Restore the account.
+1. Restore the account. For details on how to restore an Azure Cosmos DB account by using PITR, see [Restore an Azure Cosmos DB account that uses continuous backup mode](https://learn.microsoft.com/en-us/azure/cosmos-db/restore-account-continuous-backup).
 
-   Please refer to the following official document for more details on how to restore the Azure Cosmos DB account with PITR.
+2. Change the **default consistency level** for the restored account from the default value to **Strong**. For details on how to change this value, see the official documentation from Microsoft a [Configure the default consistency level](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/how-to-manage-consistency#configure-the-default-consistency-level).
 
-   * [Restore an Azure Cosmos DB account that uses continuous backup mode](https://learn.microsoft.com/en-us/azure/cosmos-db/restore-account-continuous-backup)
+3. Update **database.properties** for ScalarDB Schema Loader or ScalarDL Schema Loader based on the newly restored account.
 
-1. Configure a **default consistency level** to **STRONG**.
+   ScalarDB implements the Cosmos DB adapter by using its stored procedures, which are installed when creating schemas by using ScalarDB Schema Loader or ScalarDL Schema Loader. However, the PITR feature in Cosmos DB does not restore stored procedures, so you will need to reinstall the required stored procedures for all tables after restoration. You can reinstall the required stored procedures by using the `--repair-all` option in ScalarDB Schema Loader or ScalarDL Schema Loader.
+   * **ScalarDB tables:** For details on how to configure **database.properties** for ScalarDB Schema Loader, see [Getting Started with ScalarDB on Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-cosmosdb.md).
 
-   The restored account has a default value of **default consistency level**. So, you must configure the **default consistency level** to **STRONG** according to the official document [Configure the default consistency level](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/how-to-manage-consistency#configure-the-default-consistency-level).
+   * **ScalarDL tables:** For details on how to configure the custom values file for ScalarDL Schema Loader, see [Configure a custom values file for ScalarDL Schema Loader](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-schema-loader.md).
 
-1. Update database.properties for Schema Loader based on the newly restored account.
-
-   ScalarDB implements the Cosmos DB adapter by using its stored procedures, which are installed when creating schemas with ScalarDB/ScalarDL Schema Loader. However, the PITR feature of Cosmos DB doesn't restore stored procedures. So, you need to re-install the required stored procedures for all tables after restoration. You can do it using ScalarDB/ScalarDL Schema Loader with the `--repair-all` option.
-
-   For ScalarDB tables, please refer to the following document for more details on how to configure database.properties for ScalarDB Schema Loader.
-
-   * [Getting Started with ScalarDB on Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-cosmosdb.md)
-
-   For ScalarDL tables, please refer to the following document for more details on how to configure the custom values file for ScalarDL Schema Loader.
-
-   * [Configure a custom values file for ScalarDL Schema Loader](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-schema-loader.md)
-
-1. Repair tables.
-
-   You can recreate stored procedures using the `--repair-all` flag of ScalarDB/ScalarDL Schema Loader as follows.
+4. Re-create the stored procedures by using the `--repair-all` flag in ScalarDB Schema Loader or ScalarDL Schema Loader as follows:
 
    * ScalarDB tables
      ```console
@@ -138,73 +106,48 @@ Note that Azure Cosmos DB restores data with another account by PITR. So, you mu
      helm install repair-schema-auditor scalar-labs/schema-loading -n <namespace> -f /path/to/<your custom values file for ScalarDL Schema Loader for Auditor> --set "schemaLoading.commandArgs={--repair-all}"
      ```
 
-   Please refer to the [Repair tables](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md#repair-tables) for more details on ScalarDB Schema Loader.
+   For more details on repairing tables in ScalarDB Schema Loader, see [Repair tables](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md#repair-tables).
 
-1. Update the table configuration if you need.
-
-   Please check some configurations of the restored account according to the following document.
-
-   * [Set up a database for ScalarDB/ScalarDL deployment on Azure (Azure Cosmos DB for NoSQL)](./SetupDatabaseForAzure.md#azure-cosmos-db-for-nosql)
+5. Update the table configuration if necessary, depending on your environment. For some configurations for restored accounts, see [Set up a database for ScalarDB/ScalarDL deployment on Azure (Azure Cosmos DB for NoSQL)](./SetupDatabaseForAzure.md#azure-cosmos-db-for-nosql).
 
 ### Amazon RDS
 
-Note that Amazon RDS restores data with another database instance by PITR. So, you must update the endpoint configuration in the custom values file.
+When using the PITR feature, Amazon RDS restores data by using another database instance. Therefore, you must update the endpoint configuration in the custom values file.
 
 #### Steps
 
-1. Restore the database instance.
-
-   Please refer to the following official documents for more details on how to restore the Amazon RDS instance with PITR.
-
+1. Restore the database instance. For details on how to restore the Amazon RDS instance by using PITR, see the following official documentation from Amazon:
    * [Restoring a DB instance to a specified time](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html)
    * [Restoring a Multi-AZ DB cluster to a specified time](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.MultiAZDBCluster.html)
 
-1. Update the table configuration if you need.
-
-   Please check some configurations of the restored database instance according to the following document.
-
-   * [Set up a database for ScalarDB/ScalarDL deployment on AWS (Amazon RDS for MySQL, PostgreSQL, Oracle, and SQL Server)](./SetupDatabaseForAWS.md#amazon-rds-for-mysql-postgresql-oracle-and-sql-server)
+2. Update the table configuration if necessary, depending on your environment. For some configurations for the restored database instance, see [Set up a database for ScalarDB/ScalarDL deployment on AWS (Amazon RDS for MySQL, PostgreSQL, Oracle, and SQL Server)](./SetupDatabaseForAWS.md#amazon-rds-for-mysql-postgresql-oracle-and-sql-server).
 
 ### Amazon Aurora
 
-Note that Amazon Aurora restores data with another database cluster by PITR. So, you must update the endpoint configuration in the custom values file.
+When using the PITR feature, Amazon Aurora restores data by using another database cluster. Therefore, you must update the endpoint configuration in the custom values file.
 
 #### Steps
 
-1. Restore the database cluster.
+1. Restore the database cluster. For details on how to restore an Amazon Aurora cluster by using PITR. see the official documentation from Amazon at [Restoring a DB cluster to a specified time](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-pitr.html).
 
-   Please refer to the following official document for more details on how to restore the Amazon Aurora cluster with PITR.
+2. Add a replica (reader) to make the database cluster a Multi-AZ cluster if necessary, depending on your environment.
 
-   * [Restoring a DB cluster to a specified time](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-pitr.html)
+   The PITR feature in Amazon Aurora cannot restore a database cluster by using a Multi-AZ configuration. If you want to restore the database cluster as a Multi-AZ cluster, you must add a reader after restoring the database cluster. For details on how to add a reader, see the official documentation from Amazon at [Adding Aurora Replicas to a DB cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-replicas-adding.html).
 
-1. Add a replica (reader) to make the database cluster a Multi-AZ cluster if you need.
-
-   The PITR feature of Amazon Aurora cannot restore the database cluster with Multi-AZ configuration. If you want to restore the database cluster as a Multi-AZ cluster, you must add a reader after restoring the database cluster. Please refer to the following official document for more details on how to add a reader.
-
-   * [Adding Aurora Replicas to a DB cluster](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-replicas-adding.html)
-
-1. Update the table configuration if you need.
-
-   Please check some configurations of the restored database cluster according to the following document.
-
-   * [Set up a database for ScalarDB/ScalarDL deployment on AWS (Amazon Aurora MySQL and Amazon Aurora PostgreSQL)](./SetupDatabaseForAWS.md#amazon-aurora-mysql-and-amazon-aurora-postgresql)
+3. Update the table configuration if necessary, depending on your environment. For some configurations for the restored database cluster, see [Set up a database for ScalarDB/ScalarDL deployment on AWS (Amazon Aurora MySQL and Amazon Aurora PostgreSQL)](./SetupDatabaseForAWS.md#amazon-aurora-mysql-and-amazon-aurora-postgresql).
 
 ### Azure Database for MySQL/PostgreSQL
 
-Note that Azure Database for MySQL/PostgreSQL restores data with another server by PITR. So, you must update the endpoint configuration in the custom values file.
+When using the PITR feature, Azure Database for MySQL/PostgreSQL restores data by using another server. Therefore, you must update the endpoint configuration in the custom values file.
 
 #### Steps
 
-1. Restore the database server.
-
-   Please refer to the following official document for more details on how to restore the Azure Database for MySQL/PostgreSQL server with PITR.
+1. Restore the database server. For details on how to restore an Azure Database for MySQL/PostgreSQL server by using PITR, see the following:
 
    * [Point-in-time restore of a Azure Database for MySQL Flexible Server using Azure portal](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/how-to-restore-server-portal)
    * [Backup and restore in Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-backup-restore)
 
-1. Update the table configuration if you need.
-
-   Please check some configurations of the restored database server according to the following document.
+2. Update the table configuration if necessary, depending on your environment. For some configurations for the restored database server, see the following:
 
    * [Set up a database for ScalarDB/ScalarDL deployment on Azure (Azure Database for MySQL)](./SetupDatabaseForAzure.md#azure-database-for-mysql)
    * [Set up a database for ScalarDB/ScalarDL deployment on Azure (Azure Database for PostgreSQL)](./SetupDatabaseForAzure.md#azure-database-for-postgresql)

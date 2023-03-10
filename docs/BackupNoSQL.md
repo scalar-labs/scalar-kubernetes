@@ -1,12 +1,10 @@
-# Backup NoSQL database guide
+# Back up a NoSQL database in a Kubernetes environment
 
 If you use a NoSQL database or multiple databases, you must **pause** the Scalar products to create a transactionally-consistent backup. This guide explains concrete steps of how to create the transactionally-consistent backup of managed databases with the Scalar products on a Kubernetes environment. Please refer to the following document if you want to know more details on the backup way of Scalar products.
 
-* [A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md)
+In this guide, we assume that you are using the automatic backup and point-in-time recovery (PITR) features. Therefore, we must create a period where there are no ongoing transactions for restoration. You can then restore data to that specific period by using PITR. If you restore data to a time without creating a period where there are no ongoing transactions, the restored data could be transactionally inconsistent, causing ScalarDB or Scalar DL to not work properly with the data.
 
-In this guide, we assume that using the automatic backup and PITR feature. So, we create a **period** where there are no ongoing transactions for restoration. You can restore data using PITR to the point-in-time in this **period**. Otherwise (if you restore data to point-in-time out of this **period**), the restored data becomes inconsistent data and Scalar products don't work properly.
-
-## Backup operations (create the **period** for restoration)
+## Create a period to restore data, and perform a backup
 
 1. Check the pod status before backup.
 
@@ -45,22 +43,21 @@ In this guide, we assume that using the automatic backup and PITR feature. So, w
    * The restart counts of each pod in the `RESTARTS` column (You must compare these restart counts with the restart counts before the backup).
 
    **If the two values are different, you must re-try the backup operation all over again.** This is because, if some pods are added or restarted, those pods run with a `unpause` state. The `unpause` state pods cause data inconsistency in the backup data.
+8. **(Amazon DynamoDB only)** If you use the PITR feature in DynamoDB, you will need to perform additional steps to create a backup because the feature restores data with another name table by using PITR. For details on the additional steps after creating the exact period in which you can restore the data, please see [Restore databases in a Kubernetes environment](./RestoreDatabase.md#amazon-dynamodb).
 
-1. (DynamoDB only) You need to do additional operations to create a backup if you use the PITR feature of DynamoDB since it restores data with another name table by PITR. You should these additional steps after you complete this creating **period** steps. Please refer to the [Restore database guide](./RestoreDatabase.md#amazon-dynamodb) for more details on these steps.
-
-## Multiple databases backup
+## Back up multiple databases
 
 If you use more than two databases under the Scalar products using [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md), you must pause all Scalar products at the same time and create the same **period** for multiple databases.
 
-To keep consistency between multiple databases, you must restore multiple databases to the same point-in-time data using the PITR feature.
+To ensure consistency between multiple databases, you must restore the databases to the same point in time by using the PITR feature.
 
-## How to use scalar-admin on a Kubernetes environment
+## Details on using `scalar-admin`
 
 ### Check the Kubernetes resource name
 
-You must specify the SRV service URL to the `-s (--srv-service-url)` flag. In the Kubernetes environment, the format of the SRV service URL is `_my-port-name._my-port-protocol.my-svc.my-namespace.svc.cluster.local`.
+You must specify the SRV service URL to the `-s (--srv-service-url)` flag. In Kubernetes environments, the format of the SRV service URL is `_my-port-name._my-port-protocol.my-svc.my-namespace.svc.cluster.local`.
 
-If you use Scalar Helm Chart to deploy Scalar products, the `my-svc` and `my-namespace` are variable depending on the environment. You must specify the Headless Service name as `my-svc` and the namespace as `my-namespace`.
+If you use Scalar Helm Charts to deploy ScalarDB or ScalarDL, the `my-svc` and `my-namespace` may vary depending on your environment. You must specify the headless service name as `my-svc` and the namespace as `my-namespace`.
 
 * Example
   * ScalarDB Server
@@ -76,7 +73,7 @@ If you use Scalar Helm Chart to deploy Scalar products, the `my-svc` and `my-nam
     _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
 
-The Headless Service name `<helm release name>-headless` is decided based on the helm release name. You can see the helm release name using the `helm list` command.
+The helm release name decides the headless service name `<helm release name>-headless`. You can see the helm release name by running the `helm list` command.
 
 ```console
 $ helm list -n ns-scalar
@@ -86,7 +83,7 @@ scalardl-auditor        ns-scalar       1               2023-02-09 19:32:03.0089
 scalardl-ledger         ns-scalar       1               2023-02-09 19:31:53.459548418 +0900 JST deployed                                                     scalardl-4.5.1           3.7.1
 ```
 
-You can also see the Headless Service name `<helm release name>-headless` directly using the `kubectl get service` command.
+You can also see the headless service name `<helm release name>-headless` by running the `kubectl get service` command.
 
 ```console
 $ kubectl get service -n ns-scalar
@@ -107,7 +104,7 @@ scalardl-ledger-metrics          ClusterIP      10.104.216.189   <none>        8
 
 ### Pause
 
-You can send the pause request to Scalar product pods on the Kubernetes environment.
+You can send a pause request to ScalarDB or ScalarDL pods in a Kubernetes environment.
 
 * Example
   * ScalarDB Server
@@ -125,7 +122,7 @@ You can send the pause request to Scalar product pods on the Kubernetes environm
 
 ### Unpause
 
-You can send the unpause request to Scalar product pods on the Kubernetes environment.
+You can send an unpause request to ScalarDB or ScalarDL pods in a Kubernetes environment.
 
 * Example
   * ScalarDB Server
