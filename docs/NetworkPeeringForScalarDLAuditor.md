@@ -1,35 +1,34 @@
-# Create network peering for Scalar DL Auditor mode
+# Configure Scalar DL Auditor mode for network peering
 
-This document explains how to connect several private networks for ScalarDL Auditor mode. To make ScalarDL Auditor mode work properly, ScalarDL Ledger and ScalarDL Auditor need to connect with each other. 
+This document explains how to connect multiple private networks for ScalarDL Auditor mode to perform network peering. For ScalarDL Auditor mode to work properly, you must connect ScalarDL Ledger to ScalarDL Auditor.
 
-## Private network you must connect
+## Private networks to connect
 
-Depending on your application (client) deployment, you must connect several private networks.
+Depending on your application (client) deployment, you must connect multiple private networks.
 
 ### Connect two private networks
 
-If you deploy your application on the same private network as ScalarDL Ledger or ScalarDL Auditor, you must connect two private networks.
+If you deploy your application (client) on the same private network as ScalarDL Ledger or ScalarDL Auditor, you must connect two private networks.
 
 * [ScalarDL Ledger network] <-> [ScalarDL Auditor network]
 
 ### Connect three private networks
 
-If you deploy your application (client) on another private network than ScalarDL Ledger or ScalarDL Auditor, you must connect three private networks.
+If you deploy your application (client) on a separate private network away from ScalarDL Ledger or ScalarDL Auditor, you must connect three private networks.
 
 * [ScalarDL Ledger network] <-> [ScalarDL Auditor network]
-* [ScalarDL Ledger network] <-> [Application (client) network]
-* [ScalarDL Auditor network] <-> [Application (client) network]
+* [ScalarDL Ledger network] <-> [application (client) network]
+* [ScalarDL Auditor network] <-> [application (client) network]
 
 ## Network requirements
 
 ### IP address ranges
 
-To avoid conflicting IP addresses between several private networks, you must create several private networks with different IP address ranges.
+To avoid conflicting IP addresses between the private networks, you must have private networks with different IP address ranges. For example:
 
-* Example
-    * Private network for ScalarDL Ledger -> 10.1.0.0/16
-    * Private network for ScalarDL Auditor -> 10.2.0.0/16
-    * Private network for application (client) -> 10.3.0.0/16
+* **Private network for ScalarDL Ledger:** 10.1.0.0/16
+* **Private network for ScalarDL Auditor:** 10.2.0.0/16
+* **Private network for application (client):** 10.3.0.0/16
 
 ### Connections
 
@@ -47,16 +46,13 @@ The connections (ports) that are used between ScalarDL Ledger, ScalarDL Auditor,
     * 40051/TCP (Load balancing for Scalar DL Auditor)
     * 40052/TCP (Load balancing for Scalar DL Auditor)
 
-## How to peer the private networks
+Private-network peering
 
-### AWS (VPC peering)
+### Amazon VPC peering
 
-Please refer to the following official document for more details on how to peer the VPCs in the AWS environment.
+For details on how to peer virtual private clouds (VPCs) in an Amazon Web Services (AWS) environment, see the official documentation from Amazon at [Create a VPC peering connection](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html).
 
-* [Create a VPC peering connection](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html)
+### Azure VNet peering
 
-### Azure (Virtual network peering)
+For details on how to peer virtual networks in an Azure environment, see the official documentation from Microsoft at [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview).
 
-Please refer to the following official document for more details on how to peer the VNets in the Azure environment.
-
-* [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview)
