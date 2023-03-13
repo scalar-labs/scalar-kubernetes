@@ -87,11 +87,11 @@ When using the Kubernetes service resource, you must set the above FQDN in the p
 
 If you deploy your application (client) in an environment outside the Kubernetes cluster for ScalarDB or ScalarDL (for example, if you deploy your application [client] on another Kubernetes cluster, container platform, or server), the application can access ScalarDB or ScalarDL by using a load balancer that each cloud service provides.
 
-You can create the Load Balancer to set `envoy.service.type` to `LoadBalancer` in your custom values file. When you create it, you can access Scalar Envoy (A service resource of Kubernetes) via created Load Balancer. You can also configure the Load Balancer configurations using annotations. Please refer to the following document for more details on how to configure your custom values file.
+You can create a load balancer by setting `envoy.service.type` to `LoadBalancer` in your custom values file. After configuring the custom values file, you can use Scalar Envoy through a Kubernetes service resource by using the load balancer. You can also set the load balancer configurations by using annotations.
 
-* [Service configurations](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-envoy.md#service-configurations)
+For more details on how to configure your custom values file, see [Service configurations](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-envoy.md#service-configurations).
 
-If you use the Load Balancer, you need to set the FQDN or IP address of the Load Balancer in the properties file for the application (client) as follows.
+When using a load balancer, you must set the FQDN or IP address of the load balancer in the properties file for the application (client) as follows.
 
 * **Client properties file for ScalarDB Server**
     ```properties
