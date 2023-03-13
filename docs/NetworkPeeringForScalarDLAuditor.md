@@ -32,19 +32,21 @@ To avoid conflicting IP addresses between the private networks, you must have pr
 
 ### Connections
 
-The connections (ports) that are used between ScalarDL Ledger, ScalarDL Auditor, and the client by default are the following. You must allow these connections between each private network. Note that if you change the listening port of ScalarDL in a configuration file ([ledger|auditor].properties) from default, you must allow the connections using the port you configured.
+The default network ports for connecting ScalarDL Ledger, ScalarDL Auditor, and the application (client) by default are as follows. You must allow these connections between each private network.
 
-* Scalar DL Ledger
-    * 50051/TCP (Accept the requests from a client and Auditor)
-    * 50052/TCP (Accept the privileged requests from a client and Auditor)
-* Scalar DL Auditor
-    * 40051/TCP (Accept the requests from a client and Ledger)
-    * 40052/TCP (Accept the privileged requests from a client and Ledger)
-* Scalar Envoy (Used with Scalar DL Ledger and Scalar DL Auditor)
-    * 50051/TCP (Load balancing for Scalar DL Ledger)
-    * 50052/TCP (Load balancing for Scalar DL Ledger)
-    * 40051/TCP (Load balancing for Scalar DL Auditor)
-    * 40052/TCP (Load balancing for Scalar DL Auditor)
+* **ScalarDL Ledger**
+    * **50051/TCP:** Accept requests from an application (client) and ScalarDL Auditor via Scalar Envoy.
+    * **50052/TCP:** Accept privileged requests from an application (client) and ScalarDL Auditor via Scalar Envoy.
+* **ScalarDL Auditor**
+    * **40051/TCP:** Accept requests from an application (client) and ScalarDL Ledger via Scalar Envoy.
+    * **40052/TCP:** Accept privileged requests from an application (client) and ScalarDL Ledger via Scalar Envoy.
+* **Scalar Envoy** (used with ScalarDL Ledger and ScalarDL Auditor)
+    * **50051/TCP:** Accept requests for ScalarDL Ledger from an application (client) and ScalarDL Auditor.
+    * **50052/TCP:** Accept privileged requests for ScalarDL Ledger from an application (client) and ScalarDL Auditor.
+    * **40051/TCP:** Accept requests for ScalarDL Auditor from an application (client) and ScalarDL Ledger.
+    * **40052/TCP:** Accept privileged requests for ScalarDL Auditor from an application (client) and ScalarDL Ledger.
+
+Note that, if you change the listening port for ScalarDL in the configuration file (ledger.properties or auditor.properties) from the default, you must allow the connections by using the port that you configured.
 
 Private-network peering
 
