@@ -1,53 +1,35 @@
 # Back up a NoSQL database in a Kubernetes environment
 
-If you use a NoSQL database or multiple databases, you must **pause** the Scalar products to create a transactionally-consistent backup. This guide explains concrete steps of how to create the transactionally-consistent backup of managed databases with the Scalar products on a Kubernetes environment. Please refer to the following document if you want to know more details on the backup way of Scalar products.
+This guide explains how to create a transactionally consistent backup of managed databases that ScalarDB or ScalarDL uses in a Kubernetes environment. Please note that, when using a NoSQL database or multiple databases, you **must** pause ScalarDB or ScalarDL when creating a transactionally consistent backup.
+
+For details on how ScalarDB backs up databases, see [A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md).
 
 In this guide, we assume that you are using the automatic backup and point-in-time recovery (PITR) features. Therefore, we must create a period where there are no ongoing transactions for restoration. You can then restore data to that specific period by using PITR. If you restore data to a time without creating a period where there are no ongoing transactions, the restored data could be transactionally inconsistent, causing ScalarDB or Scalar DL to not work properly with the data.
 
 ## Create a period to restore data, and perform a backup
 
-1. Check the pod status before backup.
-
-   You must check the following four points using the `kubectl get pod` command before you start the backup operation.
-   * The number of Scalar product pods (You must compare this number with the number after the backup).
-   * The Scalar product pod names in the `NAME` column (You must compare these pod names with the pod names after the backup).
-   * The Scalar product pod status is `Running` in the `STATUS` column.
-   * The restart counts of each pod in the `RESTARTS` column (You must compare these restart counts with the restart counts after the backup).
-
-1. Pause Scalar Product pods using `scalar-admin`.
-
-   Please refer to the [How to use scalar-admin on a Kubernetes environment](./BackupNoSQL.md#how-to-use-scalar-admin-on-a-kubernetes-environment) section in this document for more details on the pause operation.
-
-1. Check the pause completed time.
-
-   You must note the pause completed time to decide the concrete **period** that you can restore data using the PITR feature.
-
-1. Take a backup using the backup feature of each database.
-
-   If you enable the automatic backup and PITR feature, all you have to do is wait for about 10 seconds since the managed databases take backup automatically. This 10 seconds period is the **period** that we can restore data by PITR.
-
-1. Unpause Scalar Product pods using `scalar-admin`.
-
-   Please refer to the [How to use scalar-admin on a Kubernetes environment](./BackupNoSQL.md#how-to-use-scalar-admin-on-a-kubernetes-environment) section in this document for more details on the unpause operation.
-
-1. Check the unpause started time.
-
-   You must note the unpause started time to decide the concrete **period** that you can restore data using the PITR feature.
-
-1. Check the pod status after backup.
-
-   You must check the following four points using the `kubectl get pod` command after you finish the backup operation.
-   * The number of Scalar product pods (You must compare this number with the number before the backup).
-   * The Scalar product pod names in the `NAME` column (You must compare these pod names with the pod names before the backup).
-   * The Scalar product pod status is `Running` in the `STATUS` column.
-   * The restart counts of each pod in the `RESTARTS` column (You must compare these restart counts with the restart counts before the backup).
-
-   **If the two values are different, you must re-try the backup operation all over again.** This is because, if some pods are added or restarted, those pods run with a `unpause` state. The `unpause` state pods cause data inconsistency in the backup data.
+1. Check the following four points by running the `kubectl get pod` command before starting the backup operation:
+   * **The number of ScalarDB or ScalarDL pods.** Write down the number of pods so that you can compare that number with the number of pods after performing the backup.
+   * **The ScalarDB or ScalarDL pod names in the `NAME` column.** Write down the pod names so that you can compare those names with the pod names after performing the backup.
+   * **The ScalarDB or ScalarDL pod status is `Running` in the `STATUS` column.** Confirm that the pods are running before proceeding with the backup. You will need to pause the pods in the next step.
+   * **The restart count of each pod in the `RESTARTS` column.** Write down the restart count of each pod so that you can compare the count with the restart counts after performing the backup.
+2. Pause the ScalarDB or ScalarDL pods by using `scalar-admin`. For details on how to pause the pods, see the [Details on using `scalar-admin`](./BackupNoSQL.md#details-on-using-scalar-admin) section in this guide.
+3. Write down the `pause completed` time. You will need to refer to that time when restoring the data by using the PITR feature.
+4. Back up each database by using the backup feature. If you have enabled the automatic backup and PITR features, the managed databases will perform back up automatically. Please note that you should wait for approximately 10 seconds so that you can create a sufficiently long period to avoid a clock skew issue between the client clock and the database clock. This 10-second period is the exact period in which you can restore data by using the PITR feature.
+5. Unpause ScalarDB or ScalarDL pods by using `scalar-admin`. For details on how to unpause the pods, see the [Details on using `scalar-admin`](./BackupNoSQL.md#details-on-using-scalar-admin) section in this guide.
+6. Check the `unpause started` time. You must check the `unpause started` time to confirm the exact period in which you can restore data by using the PITR feature.
+7. Check the pod status after performing the backup. You must check the following four points by using the `kubectl get pod` command after the backup operation is completed.
+   * **The number of ScalarDB or ScalarDL pods.** Confirm this number matches the number of pods that you wrote down before performing the backup.
+   * **The ScalarDB or ScalarDL pod names in the `NAME` column.** Confirm the names match the pod names that you wrote down before performing the backup.
+   * **The ScalarDB or ScalarDL pod status is `Running` in the `STATUS` column.**
+   * **The restart count of each pod in the `RESTARTS` column.** Confirm the counts match the restart counts that you wrote down before performing the backup
+   
+   **If any of the two values are different, you must retry the backup operation from the beginning.** The reason for the different values may be caused by some pods being added or restarted while performing the backup. In such case, those pods will run in the `unpause` state. Pods in the `unpause` state will cause the backup data to be transactionally inconsistent.
 8. **(Amazon DynamoDB only)** If you use the PITR feature in DynamoDB, you will need to perform additional steps to create a backup because the feature restores data with another name table by using PITR. For details on the additional steps after creating the exact period in which you can restore the data, please see [Restore databases in a Kubernetes environment](./RestoreDatabase.md#amazon-dynamodb).
 
 ## Back up multiple databases
 
-If you use more than two databases under the Scalar products using [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md), you must pause all Scalar products at the same time and create the same **period** for multiple databases.
+If you have two or more databases that the [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md) feature uses, you must pause all instances of ScalarDB or ScalarDL and create the same period where no ongoing transactions exist in the databases.
 
 To ensure consistency between multiple databases, you must restore the databases to the same point in time by using the PITR feature.
 
