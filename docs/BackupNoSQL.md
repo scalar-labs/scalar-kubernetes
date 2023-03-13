@@ -138,9 +138,9 @@ You can send an unpause request to ScalarDB or ScalarDL pods in a Kubernetes env
     kubectl run scalar-admin-unpause --image=ghcr.io/scalar-labs/scalar-admin:<tag> --restart=Never -it -- -c unpause -s _scalardl-auditor-admin._tcp.<helm release name>-headless.<namespace>.svc.cluster.local
     ```
 
-### Check the pause completed time and unpause started time
+### Check the `pause completed` time and `unpause started` time
 
-The scalar-admin pods output the **pause completed time** and **unpause started time** to the stdout. You can also see those times using the `kubectl logs` command.
+The `scalar-admin` pods output the `pause completed` time and `unpause started` time to stdout. You can also see those times by running the `kubectl logs` command.
 
 ```console
 kubectl logs scalar-admin-pause
