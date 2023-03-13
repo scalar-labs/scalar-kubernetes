@@ -130,7 +130,7 @@ The concrete implementation of the load balancer and access method depend on the
 
 ## Run client requests to ScalarDB or ScalarDL from a bastion server (for testing purposes only; not recommended in a production environment)
 
-You can access Scalar products from a bastion server using the `kubectl port-forward` command. If you create a ScalarDL Auditor mode environment, you need to access two Kubernetes clusters from one bastion server to access ScalarDL this way.
+You can run client requests to ScalarDB or ScalarDL from a bastion server by running the `kubectl port-forward` command. If you create a ScalarDL Auditor mode environment, however, you must run two `kubectl port-forward` commands with different kubeconfig files from one bastion server to access two Kubernetes clusters.
 
 1. **(ScalarDL Auditor mode only)** In the bastion server for ScalarDL Ledger, configure an existing kubeconfig file or add a new kubeconfig file to access the Kubernetes cluster for ScalarDL Auditor. For details on how to configure the kubeconfig file of each managed Kubernetes cluster, see [Configure kubeconfig](./CreateBastionServer.md#configure-kubeconfig).
 2. Configure port forwarding to each service from the bastion server.
