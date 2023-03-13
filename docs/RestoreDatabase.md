@@ -1,6 +1,6 @@
 # Restore databases in a Kubernetes environment
 
-This guide explains how to restore ScalarDB/ScalarDL data on a Kubernetes environment. We assume you use the managed databases provided by cloud services as a backend database of ScalarDB/ScalarDL.
+This guide explains how to restore databases that ScalarDB or ScalarDL uses in a Kubernetes environment. Please note that this guide assumes that you are using a managed database from a cloud services provider as the backend database for ScalarDB or ScalarDL.
 
 ## Procedure to restore databases
 
