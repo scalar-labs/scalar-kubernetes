@@ -1,8 +1,6 @@
 # Back up an RDB in a Kubernetes environment
 
-This guide explains how to backup single RDB data with Scalar products on a Kubernetes environment. We assume that you use managed databases provided by cloud service.
-
-Even if you use RDB, you must follow the [Backup NoSQL database guide](./BackupNoSQL.md) when you use more than two RDBs under the Scalar products using [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md).
+If you have two or more RDBs that the [Multi-storage Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/multi-storage-transactions.md) or [Two-phase Commit Transactions](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md) feature uses, you must follow the instructions in [Back up a NoSQL database in a Kubernetes environment](./BackupNoSQL.md) instead.
 
 ## Perform a backup
 
