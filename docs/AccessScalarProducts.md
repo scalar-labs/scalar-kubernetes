@@ -1,6 +1,6 @@
 # Expose ScalarDB or ScalarDL in a Kubernetes cluster environment
 
-This document explains how to expose ScalarDB or ScalarDL in a Kubernetes cluster environment. To expose ScalarDB or ScalarDL, you can use Scalar Envoy via a Kubernetes service resource named `<HELM_RELEASE_NAME>-envoy`. You can use `<HELM_RELEASE_NAME>-envoy` in several ways, such as:
+This document explains how to make ScalarDB or ScalarDL deployed in a Kubernetes cluster environment available from applications. To make ScalarDB or ScalarDL available from applications, you can use Scalar Envoy via a Kubernetes service resource named `<HELM_RELEASE_NAME>-envoy`. You can use `<HELM_RELEASE_NAME>-envoy` in several ways, such as:
 
 * Directly from inside the same Kubernetes cluster as ScalarDB or ScalarDL.
 * Via a load balancer from outside the Kubernetes cluster.
@@ -83,7 +83,7 @@ When using the Kubernetes service resource, you must set the above FQDN in the p
     scalar.dl.auditor.server.privileged_port=40052
     ```
 
-## Expose ScalarDB or ScalarDL via load balancers to run application (client) requests from outside the Kubernetes cluster
+## Run application (client) requests to ScalarDB or ScalarDL via load balancers from outside the Kubernetes cluster
 
 If you deploy your application (client) in an environment outside the Kubernetes cluster for ScalarDB or ScalarDL (for example, if you deploy your application [client] on another Kubernetes cluster, container platform, or server), the application can access ScalarDB or ScalarDL by using a load balancer that each cloud service provides.
 
