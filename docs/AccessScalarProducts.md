@@ -1,4 +1,4 @@
-# Expose ScalarDB or ScalarDL in a Kubernetes cluster environment
+# Make ScalarDB or ScalarDL deployed in a Kubernetes cluster environment available from applications
 
 This document explains how to make ScalarDB or ScalarDL deployed in a Kubernetes cluster environment available from applications. To make ScalarDB or ScalarDL available from applications, you can use Scalar Envoy via a Kubernetes service resource named `<HELM_RELEASE_NAME>-envoy`. You can use `<HELM_RELEASE_NAME>-envoy` in several ways, such as:
 
