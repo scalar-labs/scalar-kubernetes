@@ -45,7 +45,7 @@ This guide explains how to restore databases that ScalarDB or ScalarDL uses in a
 
 ### Amazon DynamoDB
 
-When using the PITR feature, Amazon DynamoDB restores data with another name table. Therefore, you must follow additional steps to restore data with the same table name.
+When using the PITR feature, Amazon DynamoDB restores data with another table name. Therefore, you must follow additional steps to restore data with the same table name.
 
 #### Steps
 

@@ -20,7 +20,7 @@ This guide explains how to backup and restore ScalarDB or ScalarDL data in a Kub
 
 For details on how to back up and restore databases used with ScalarDB in a transactionally consistent way, see [A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md).
 
-## Perform a back up
+## Perform a backup
 
 ### Confirm the type of database and number of databases you are using
 

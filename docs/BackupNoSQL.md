@@ -1,10 +1,10 @@
 # Back up a NoSQL database in a Kubernetes environment
 
-This guide explains how to create a transactionally consistent backup of managed databases that ScalarDB or ScalarDL uses in a Kubernetes environment. Please note that, when using a NoSQL database or multiple databases, you **must** pause ScalarDB or ScalarDL when creating a transactionally consistent backup.
+This guide explains how to create a transactionally consistent backup of managed databases that ScalarDB or ScalarDL uses in a Kubernetes environment. Please note that, when using a NoSQL database or multiple databases, you **must** pause ScalarDB or ScalarDL to create a transactionally consistent backup.
 
 For details on how ScalarDB backs up databases, see [A Guide on How to Backup and Restore Databases Used Through ScalarDB](https://github.com/scalar-labs/scalardb/blob/master/docs/backup-restore.md).
 
-In this guide, we assume that you are using the automatic backup and point-in-time recovery (PITR) features. Therefore, we must create a period where there are no ongoing transactions for restoration. You can then restore data to that specific period by using PITR. If you restore data to a time without creating a period where there are no ongoing transactions, the restored data could be transactionally inconsistent, causing ScalarDB or Scalar DL to not work properly with the data.
+In this guide, we assume that you are using point-in-time recovery (PITR) or its equivalent features. Therefore, we must create a period where there are no ongoing transactions for restoration. You can then restore data to that specific period by using PITR. If you restore data to a time without creating a period where there are no ongoing transactions, the restored data could be transactionally inconsistent, causing ScalarDB or ScalarDL to not work properly with the data.
 
 ## Create a period to restore data, and perform a backup
 
@@ -25,7 +25,7 @@ In this guide, we assume that you are using the automatic backup and point-in-ti
    * **The restart count of each pod in the `RESTARTS` column.** Confirm the counts match the restart counts that you wrote down before performing the backup
    
    **If any of the two values are different, you must retry the backup operation from the beginning.** The reason for the different values may be caused by some pods being added or restarted while performing the backup. In such case, those pods will run in the `unpause` state. Pods in the `unpause` state will cause the backup data to be transactionally inconsistent.
-8. **(Amazon DynamoDB only)** If you use the PITR feature in DynamoDB, you will need to perform additional steps to create a backup because the feature restores data with another name table by using PITR. For details on the additional steps after creating the exact period in which you can restore the data, please see [Restore databases in a Kubernetes environment](./RestoreDatabase.md#amazon-dynamodb).
+8. **(Amazon DynamoDB only)** If you use the PITR feature of DynamoDB, you will need to perform additional steps to create a backup because the feature restores data with another name table by using PITR. For details on the additional steps after creating the exact period in which you can restore the data, please see [Restore databases in a Kubernetes environment](./RestoreDatabase.md#amazon-dynamodb).
 
 ## Back up multiple databases
 
