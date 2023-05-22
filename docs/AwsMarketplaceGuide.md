@@ -1,6 +1,6 @@
 # How to install Scalar products through AWS Marketplace
 
-Scalar products (ScalarDB, ScalarDL, and their tools) are provided in AWS Marketplace as Container Image. This guide explains how to install Scalar products through AWS Marketplace.
+Scalar products (ScalarDB, ScalarDL, and their tools) are available in the AWS Marketplace as container images. This guide explains how to install Scalar products through the AWS Marketplace.
 
 Note that some Scalar products are licensed under commercial licenses, and the AWS Marketplace provides them as Pay-As-You-Go and BYOL (Bring Your Own License). If you select Pay-As-You-Go, AWS charges you our product license fee. If you select BYOL, please make sure you have appropriate licenses.
 
@@ -24,7 +24,7 @@ Note that some Scalar products are licensed under commercial licenses, and the A
 
 ## **[Pay-As-You-Go]** Deploy containers on EKS (Amazon Elastic Kubernetes Service) from AWS Marketplace using Scalar Helm Charts
 
-If you subscribe to Scalar products in AWS Marketplace, you can pull the container images of Scalar products from the private container registry ([ECR](https://aws.amazon.com/ecr/)) of AWS Marketplace. This section explains how to deploy Pay-As-You-Go Scalar products on your [EKS](https://aws.amazon.com/eks/) cluster from the private container registry.
+By subscribing to Scalar products in the AWS Marketplace, you can pull the container images of Scalar products from the private container registry ([ECR](https://aws.amazon.com/ecr/)) of the AWS Marketplace. This section explains how to deploy Scalar products with pay-as-you-go pricing in your [EKS](https://aws.amazon.com/eks/) cluster from the private container registry.
 
 1. Create an OIDC provider.
 
@@ -53,7 +53,7 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull the contain
 
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.
 
-   You need to specify the private container registry (ECR) of AWS Marketplace and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file. You also need to specify the service account name that you created in the previous step as the value of `[].serviceAccount.serviceAccountName` and set `true` to `[].serviceAccount.automountServiceAccountToken`.
+   You need to specify the private container registry (ECR) of the AWS Marketplace and the version (tag) as the value for `[].image.repository` and `[].image.version (tag)` in the custom values file. You also need to specify the service account name that you created in the previous step as the value for `[].serviceAccount.serviceAccountName` and set `[].serviceAccount.automountServiceAccountToken` to `true`.
 
    * ScalarDL Examples
       * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
@@ -91,7 +91,7 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull the contain
             version: "3.8.0"
         ```
 
-1. Deploy the Scalar products using the Helm Chart with the above custom values files.
+1. Deploy Scalar products by using Helm Charts in conjunction with the above custom values files.
    * ScalarDL Examples
       * ScalarDL Ledger
         ```console
@@ -112,7 +112,7 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull the contain
 
 ## **[BYOL]** Deploy containers on EKS (Amazon Elastic Kubernetes Service) from AWS Marketplace using Scalar Helm Charts
 
-If you subscribe to Scalar products in AWS Marketplace, you can pull the container images of Scalar products from the private container registry ([ECR](https://aws.amazon.com/ecr/)) of AWS Marketplace. This section explains how to deploy BYOL Scalar products on your [EKS](https://aws.amazon.com/eks/) cluster from the private container registry.
+By subscribing to Scalar products in the AWS Marketplace, you can pull the container images of Scalar products from the private container registry ([ECR](https://aws.amazon.com/ecr/)) of the AWS Marketplace. This section explains how to deploy Scalar products with the BYOL option in your [EKS](https://aws.amazon.com/eks/) cluster from the private container registry.
 
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
    You need to specify the private container registry (ECR) of AWS Marketplace and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
