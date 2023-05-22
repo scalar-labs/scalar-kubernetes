@@ -51,8 +51,10 @@ If you subscribe to Scalar products in AWS Marketplace, you can pull the contain
        --override-existing-serviceaccounts
    ```
 
-1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
+1. Update the custom values file of the Helm Chart of a Scalar product you want to install.
+
    You need to specify the private container registry (ECR) of AWS Marketplace and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file. You also need to specify the service account name that you created in the previous step as the value of `[].serviceAccount.serviceAccountName` and set `true` to `[].serviceAccount.automountServiceAccountToken`.
+
    * ScalarDL Examples
       * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
         ```yaml
