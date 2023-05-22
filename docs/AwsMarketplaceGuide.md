@@ -2,7 +2,7 @@
 
 Scalar products (ScalarDB, ScalarDL, and their tools) are provided in AWS Marketplace as Container Image. This guide explains how to install Scalar products through AWS Marketplace.
 
-Note that some Scalar products are licensed under commercial licenses, and the AWS Marketplace provides them as Pay-As-You-Go and BYOL (Bring Your Own License). If you select Pay-As-You-Go, AWS charges you our product license fee. If you choose BYOL, please make sure you have appropriate licenses.
+Note that some Scalar products are licensed under commercial licenses, and the AWS Marketplace provides them as Pay-As-You-Go and BYOL (Bring Your Own License). If you select Pay-As-You-Go, AWS charges you our product license fee. If you select BYOL, please make sure you have appropriate licenses.
 
 ## Subscribe to Scalar products from AWS Marketplace
 
