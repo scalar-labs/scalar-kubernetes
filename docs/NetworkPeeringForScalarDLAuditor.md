@@ -38,7 +38,9 @@ The default network ports for connecting ScalarDL Ledger, ScalarDL Auditor, and 
 
 Note that, if you change the listening port for ScalarDL in the configuration file (ledger.properties or auditor.properties) from the default, you must allow the connections by using the port that you configured.
 
-Private-network peering
+## Private-network peering
+
+For details on how to connect private networks in each cloud, see official documents.
 
 ### Amazon VPC peering
 
