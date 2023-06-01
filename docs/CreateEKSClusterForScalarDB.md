@@ -34,9 +34,9 @@ Note that you should configure resource limits based on your system's workload i
 
 It is recommended to run only pods related to ScalarDB Server on the worker node for ScalarDB Server. If you want to run other application pods on the same EKS cluster, you should create other node groups for your application pods.
 
-### Create a node group for monitoring components (kube-prometheus-stack)
+### Create a node group for monitoring components (kube-prometheus-stack and loki-stack)
 
-It is recommended to run only pods related to ScalarDB Server on the worker node for ScalarDB Server. If you want to run monitoring pods (Prometheus, Grafana, Loki, etc) by using kube-prometheus-stack on the same EKS cluster, you should create other node groups for monitoring pods.
+It is recommended to run only pods related to ScalarDB Server on the worker node for ScalarDB Server. If you want to run monitoring pods (Prometheus, Grafana, Loki, etc) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same EKS cluster, you should create other node groups for monitoring pods.
 
 ### Configure Cluster Autoscaler of EKS
 

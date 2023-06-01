@@ -38,9 +38,9 @@ AKS creates one system node pool named **agentpool** that is preferred for syste
 
 It is recommended to run only ScalarDB Server pods on the worker node (node pool) for ScalarDB Server. If you want to run other application pods on the same AKS, you should create other node pools for your application pods.
 
-### Create a node group for monitoring components (kube-prometheus-stack)
+### Create a node group for monitoring components (kube-prometheus-stack and loki-stack)
 
-It is recommended to run only ScalarDB Server pods on the worker node (node pool) for ScalarDB Server. If you want to run monitoring pods (Prometheus, Grafana, Loki, etc) by using kube-prometheus-stack on the same AKS cluster, you should create other node pool for monitoring pods.
+It is recommended to run only ScalarDB Server pods on the worker node (node pool) for ScalarDB Server. If you want to run monitoring pods (Prometheus, Grafana, Loki, etc) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same AKS cluster, you should create other node groups for monitoring pods.
 
 ### Configure Cluster Autoscaler of AKS
 

@@ -31,9 +31,9 @@ So, you should use the worker node that has 4vCPU / 8GB memory resources. It is 
 
 Note that you should configure resource limits based on your system's workload if the Envoy pod exceeds the above resource usage. Also, you should consider scaling out the worker node and the ScalarDL Ledger pod if all the ScalarDL Ledger pod exceeds the above resource usage and the latency is high (throughput is low) in your system.
 
-### Create a node group for monitoring components (kube-prometheus-stack)
+### Create a node group for monitoring components (kube-prometheus-stack and loki-stack)
 
-It is recommended to run only pods related to ScalarDL Ledger on the worker node for ScalarDL Ledger. If you want to run monitoring pods (Prometheus, Grafana, Loki, etc) by using kube-prometheus-stack on the same EKS cluster, you should create other node groups for monitoring pods.
+It is recommended to run only pods related to ScalarDL Ledger on the worker node for ScalarDL Ledger. If you want to run monitoring pods (Prometheus, Grafana, Loki, etc) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same EKS cluster, you should create other node groups for monitoring pods.
 
 ### Configure Cluster Autoscaler of EKS
 

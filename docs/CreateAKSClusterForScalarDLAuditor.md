@@ -12,7 +12,7 @@ There are some requirements for the deployment of ScalarDL Ledger and ScalarDL A
 
 * You must create the ASK cluster with Kubernetes version 1.21 or higher for the ScalarDL Ledger and ScalarDL Auditor deployment.
 * You cannot deploy your application pods on the same ASK cluster as ScalarDL Ledger and ScalarDL Auditor deployment to make Byzantine fault detection work properly.
-* You must create two ASK clusters. One is for ScalarDL Ledger another one is for ScalarDL Auditor.
+* You must create two ASK clusters. One is for ScalarDL Ledger and another one is for ScalarDL Auditor.
 * You must configure a VNet as follows.
     * You must connect the **VNet of AKS (for Ledger)** and the **VNet of AKS (for Auditor)** using [VNet Peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering). So, you must specify the different IP ranges for the **VNet of AKS (for Ledger)** and the **VNet of AKS (for Auditor)** when you create them.
     * You must allow the **connections between Ledger and Auditor** to make ScalarDL (Auditor mode) work properly.
@@ -45,9 +45,9 @@ Note that you should configure resource limits based on your system's workload i
 
 AKS creates one system node pool named **agentpool** that is preferred for system pods (used to keep AKS running) by default. It is recommended to create other node pools with **user** mode for ScalarDL Ledger and ScalarDL Auditor pods and deploy ScalarDL Ledger and ScalarDL Auditor pods on those additional node pools.
 
-### Create a node pool for monitoring components (kube-prometheus-stack)
+### Create a node pool for monitoring components (kube-prometheus-stack and loki-stack)
 
-It is recommended to run only pods related to ScalarDL Ledger and ScalarDL Auditor on the worker node for ScalarDL Ledger and ScalarDL Auditor. If you want to run monitoring pods (Prometheus, Grafana, Loki, etc) by using kube-prometheus-stack on the same ASK cluster, you should create other node pools for monitoring pods.
+It is recommended to run only pods related to ScalarDL Ledger and ScalarDL Auditor on the worker node for ScalarDL Ledger and ScalarDL Auditor. If you want to run monitoring pods (Prometheus, Grafana, Loki, etc) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same AKS cluster, you should create other node groups for monitoring pods.
 
 ### Configure Cluster Autoscaler of AKS
 
