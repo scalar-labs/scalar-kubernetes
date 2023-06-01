@@ -2,19 +2,9 @@
 
 This document explains how to connect multiple private networks for ScalarDL Auditor mode to perform network peering. For ScalarDL Auditor mode to work properly, you must connect ScalarDL Ledger to ScalarDL Auditor.
 
-## Private networks to connect
+## What network you must connect
 
-Depending on your application (client) deployment, you must connect multiple private networks.
-
-### Connect two private networks
-
-If you deploy your application (client) on the same private network as ScalarDL Ledger or ScalarDL Auditor, you must connect two private networks.
-
-* [ScalarDL Ledger network] <-> [ScalarDL Auditor network]
-
-### Connect three private networks
-
-If you deploy your application (client) on a separate private network away from ScalarDL Ledger or ScalarDL Auditor, you must connect three private networks.
+To make ScalarDL Auditor mode (Byzantine fault detection) work properly, you must connect three private networks.
 
 * [ScalarDL Ledger network] <-> [ScalarDL Auditor network]
 * [ScalarDL Ledger network] <-> [application (client) network]
@@ -57,4 +47,3 @@ For details on how to peer virtual private clouds (VPCs) in an Amazon Web Servic
 ### Azure VNet peering
 
 For details on how to peer virtual networks in an Azure environment, see the official documentation from Microsoft at [Virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview).
-
