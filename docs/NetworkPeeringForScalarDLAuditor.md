@@ -1,4 +1,4 @@
-# Configure Scalar DL Auditor mode for network peering
+# Configure ScalarDL Auditor mode for network peering
 
 This document explains how to connect multiple private networks for ScalarDL Auditor mode to perform network peering. For ScalarDL Auditor mode to work properly, you must connect ScalarDL Ledger to ScalarDL Auditor.
 
