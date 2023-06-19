@@ -1,110 +1,112 @@
-# Create an EKS cluster for ScalarDL Ledger and ScalarDL Auditor
+# Create an Amazon EKS cluster for ScalarDL Ledger and ScalarDL Auditor
 
-This document explains how to create an EKS cluster for the ScalarDL Ledger and ScalarDL Auditor deployment. For details on how to deploy ScalarDL Ledger and ScalarDL Auditor on the EKS cluster, please see [Deploy ScalarDL Ledger and ScalarDL Auditor on Amazon EKS (Amazon Elastic Kubernetes Service)](./ManualDeploymentGuideScalarDLAuditorOnEKS.md).
+This document explains how to create an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDL Ledger and ScalarDL Auditor deployment. For details on how to deploy ScalarDL Ledger and ScalarDL Auditor on an EKS cluster, see [Deploy ScalarDL Ledger and ScalarDL Auditor on Amazon EKS](./ManualDeploymentGuideScalarDLAuditorOnEKS.md).
 
-## Steps
+## Before you begin
 
-You must create an EKS cluster based on the following requirements, recommendations, and your project's requirements. For details on how to create the EKS cluster, please see the [AWS official document](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html).
+You must create an EKS cluster based on the following requirements, recommendations, and your project's requirements. For specific details about how to create an EKS cluster, see the official Amazon documentation at [Creating an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html).
 
 ## Requirements
 
-There are some requirements for the deployment of ScalarDL Ledger and ScalarDL Auditor. Please configure your EKS cluster based on the following requirement and your project's requirements.
+When deploying ScalarDL Ledger and ScalarDL Auditor, you must:
 
-* You must create the EKS cluster with Kubernetes version 1.21 or higher for the ScalarDL Ledger and ScalarDL Auditor deployment.
-* You cannot deploy your application pods on the same EKS cluster as ScalarDL Ledger and ScalarDL Auditor deployment to make Byzantine fault detection work properly.
-* You must create two EKS clusters. One is for ScalarDL Ledger another one is for ScalarDL Auditor.
-* You must configure a VPC as follows.
-    * You must connect the **VPC of EKS (for Ledger)** and the **VPC of EKS (for Auditor)** using [VPC Peering](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html). So, you must specify the different IP ranges for the **VPC of EKS (for Ledger)** and the **VPC of EKS (for Auditor)** when you create them.
-    * You must allow the **connections between Ledger and Auditor** to make ScalarDL (Auditor mode) work properly.
-    * Please refer to the [Create network peering for ScalarDL Auditor mode // TODO: Add link of new document]() for more details of these network requirements.
+* Create two EKS clusters by using Kubernetes version 1.21 or higher.
+    * One EKS cluster for ScalarDL Ledger
+    * One EKS cluster for ScalarDL Auditor
+* Configure the EKS clusters based on the version of Kubernetes and your project's requirements.
+* Configure an Amazon Virtual Private Cloud (VPC) as follows.
+    * Connect the **VPC of EKS (for Ledger)** and the **VPC of EKS (for Auditor)** by using [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html). To do so, you must specify the different IP ranges for the **VPC of EKS (for Ledger)** and the **VPC of EKS (for Auditor)** when you create those VPCs.
+    * Allow **connections between Ledger and Auditor** to make ScalarDL (Auditor mode) work properly.
+    * For more details about these network requirements, refer to [Create network peering for ScalarDL Auditor mode // TODO: Add link of new document]().
 
-## Recommendations (Optional / Not required)
+### Note
+For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same EKS clusters as the ScalarDL Ledger and ScalarDL Auditor deployments.
 
-There are some recommendations for the deployment of ScalarDL Ledger and ScalarDL Auditor. These are not required. So, you can choose to apply these recommendations or not based on your requirement.
+## Recommendations (optional)
+
+The following are some recommendations for deploying ScalarDL Ledger and ScalarDL Auditor. These recommendations are not required, so you can choose whether or not to apply these recommendations based on your needs.
 
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDL Ledger and ScalarDL Auditor node group
 
 From the perspective of commercial license, resources for one pod of ScalarDL Ledger and ScalarDL Auditor are limited to 2vCPU / 4GB memory. Also, it is recommended to deploy "one ScalarDL Ledger pod and one Envoy pod" on one worker node and deploy "one ScalarDL Auditor pod and one Envoy pod" on one worker node as well.
 
-In other words, the following components run on the one worker node.
+In other words, the following components run on one worker node:
 
-* EKS cluster for ScalarDL Ledger
+* Amazon EKS cluster for ScalarDL Ledger
   * ScalarDL Ledger pod (2vCPU / 4GB)
-  * Envoy proxy (0.2 ~ 0.3 vCPU / 256 ~ 328 MB)
+  * Envoy proxy (0.2–0.3 vCPU / 256–328 MB)
   * Kubernetes components
-* EKS cluster for ScalarDL Auditor
+* Amazon EKS cluster for ScalarDL Auditor
   * ScalarDL Auditor pod (2vCPU / 4GB)
-  * Envoy proxy (0.2 ~ 0.3 vCPU / 256 ~ 328 MB)
+  * Envoy proxy (0.2–0.3 vCPU / 256–328 MB)
   * Kubernetes components
 
-So, you should use the worker node that has 4vCPU / 8GB memory resources. It is recommended to run only the above components on the worker node for ScalarDL Ledger and ScalarDL Auditor. Also, you cannot deploy your application pods on the same EKS cluster as ScalarDL Ledger and ScalarDL Auditor deployment to make Byzantine fault detection work properly.
+With this in mind, you should use the worker node that has 4vCPU / 8GB memory resources. We recommend running only the above components on the worker node for ScalarDL Ledger and ScalarDL Auditor. And remember, for Byzantine fault detection to work properly, you cannot deploy your application pods on the same EKS clusters as the ScalarDL Ledger and ScalarDL Auditor deployments.
 
-Note that you should configure resource limits based on your system's workload if the Envoy pod exceeds the above resource usage. Also, you should consider scaling out the worker node and the ScalarDL (Ledger or Auditor) pod if all the ScalarDL (Ledger or Auditor) pod exceeds the above resource usage and the latency is high (throughput is low) in your system.
+Note that you should configure resource limits based on your system's workload if the Envoy pod exceeds the above resource usage. In addition, you should consider scaling out the worker node and the ScalarDL Ledger or ScalarDL Auditor pod if the ScalarDL Ledger or ScalarDL Auditor pod exceeds the above resource usage and if latency is high (throughput is low) in your system.
 
 ### Create a node group for monitoring components (kube-prometheus-stack and loki-stack)
 
-It is recommended to run only pods related to ScalarDL Ledger and ScalarDL Auditor on the worker node for ScalarDL Ledger and ScalarDL Auditor. If you want to run monitoring pods (Prometheus, Grafana, Loki, etc) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same EKS cluster, you should create other node groups for monitoring pods.
+We recommend running only pods related to ScalarDL Ledger and ScalarDL Auditor on the worker node for ScalarDL Ledger and ScalarDL Auditor. If you want to run monitoring pods (e.g., Prometheus, Grafana, Loki, etc.) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same EKS cluster, you should create other node groups for monitoring pods.
 
-### Configure Cluster Autoscaler of EKS
+### Configure Cluster Autoscaler in EKS
 
-If you want to scale ScalarDL Ledger or ScalarDL Auditor pods automatically using [HPA (Horizontal Pod Autoscaler)](https://docs.aws.amazon.com/eks/latest/userguide/horizontal-pod-autoscaler.html), you should configure Cluster Autoscaler of EKS too. See the [official document](https://docs.aws.amazon.com/eks/latest/userguide/autoscaling.html#cluster-autoscaler) for more details.
+If you want to scale ScalarDL Ledger or ScalarDL Auditor pods automatically by using [Horizontal Pod Autoscaler](https://docs.aws.amazon.com/eks/latest/userguide/horizontal-pod-autoscaler.html), you should configure Cluster Autoscaler in EKS too. For details, see the official Amazon documentation at [Autoscaling](https://docs.aws.amazon.com/eks/latest/userguide/autoscaling.html#cluster-autoscaler).
 
-Also, if you configure Cluster Autoscaler, you should create a subnet in VPC for EKS with the prefix (e.g., `/24`) that can ensure a sufficient number of IPs to make EKS work without network issues after scaling.
+In addition, if you configure Cluster Autoscaler, you should create a subnet in a VPC for EKS with the prefix (e.g., `/24`) to ensure a sufficient number of IPs exist so that EKS can work without network issues after scaling.
 
 ### Create the EKS cluster on a private network
 
-You should create the EKS cluster on a private network (private subnet in VPC) since ScalarDL Ledger and ScalarDL Auditor don't provide any services to users directly via internet access. It is better to access ScalarDL Ledger and ScalarDL Auditor via a private network from your applications.
+You should create the EKS cluster on a private network (private subnet in a VPC) since ScalarDL Ledger and ScalarDL Auditor do not provide any services to users directly via internet access. We recommend accessing ScalarDL Ledger and ScalarDL Auditor via a private network from your applications.
 
 ### Use three availability zones
 
-To make the EKS cluster has higher availability, you should use several resources in 3 [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) as follows.
+To ensure that the EKS cluster has high availability, you should use several resources in three [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) as follows:
 
-* Create 3 subnets in different availability zones in the VPC.
-* Create at least 3 worker nodes.
+* Create three subnets in different availability zones in the VPC.
+* Create at least three worker nodes.
 
-### Restrict connections using some security feature based on your requirements
+### Restrict connections by using some security features based on your requirements
 
-You should restrict unused connections in ScalarDL Ledger and ScalarDL Auditor. You can do it using some security features of AWS like [Security Groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html) and [Network ACLs](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html).
+You should restrict unused connections in ScalarDL Ledger and ScalarDL Auditor. To restrict unused connections, you can use some security features in AWS, like [security groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html) and [network access control lists](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html).
 
-The connections (ports) that ScalarDL Ledger and ScalarDL Auditor use by default are the following. Note that if you change the listening port of ScalarDL Ledger and ScalarDL Auditor in a configuration file (`ledger.properties` and `auditor.properties`) from default, you must allow the connections using the port you configured.
+The connections (ports) that ScalarDL Ledger and ScalarDL Auditor use by default are as follows. Note that, if you change the default listening port for ScalarDL Ledger and ScalarDL Auditor in their configuration files (`ledger.properties` and `auditor.properties`, respectively), you must allow the connections by using the port that you configured.
 
 * ScalarDL Ledger
-    * 50051/TCP (Accept the requests from a client and Auditor)
-    * 50052/TCP (Accept the privileged requests from a client and Auditor)
-    * 50053/TCP (Accept the pause/unpause requests from a scalar-admin client tool)
-    * 8080/TCP (Accept the monitoring requests)
+    * 50051/TCP (accepts requests from a client and ScalarDL Auditor)
+    * 50052/TCP (accepts privileged requests from a client and ScalarDL Auditor)
+    * 50053/TCP (accepts pause and unpause requests from a scalar-admin client tool)
+    * 8080/TCP (accepts monitoring requests)
 * ScalarDL Auditor
-    * 40051/TCP (Accept the requests from a client)
-    * 40052/TCP (Accept the privileged requests from a client)
-    * 40053/TCP (Accept the pause/unpause requests from a scalar-admin client tool)
-    * 8080/TCP (Accept the monitoring requests)
-* Scalar Envoy (Used with ScalarDL Ledger and ScalarDL Auditor)
-    * 50051/TCP (Load balancing for ScalarDL Ledger)
-    * 50052/TCP (Load balancing for ScalarDL Ledger)
-    * 40051/TCP (Load balancing for ScalarDL Auditor)
-    * 40052/TCP (Load balancing for ScalarDL Auditor)
-    * 9001/TCP (Accept the monitoring requests of Scalar Envoy itself)
+    * 40051/TCP (accepts requests from a client)
+    * 40052/TCP (accepts privileged requests from a client)
+    * 40053/TCP (accepts pause and unpause requests from a scalar-admin client tool)
+    * 8080/TCP (accepts monitoring requests)
+* Scalar Envoy (used with ScalarDL Ledger and ScalarDL Auditor)
+    * 50051/TCP (load balancing for ScalarDL Ledger)
+    * 50052/TCP (load balancing for ScalarDL Ledger)
+    * 40051/TCP (load balancing for ScalarDL Auditor)
+    * 40052/TCP (load balancing for ScalarDL Auditor)
+    * 9001/TCP (accepts monitoring requests for Scalar Envoy itself)
 
-Note that you also must allow the connections that EKS uses itself. Please refer to the [AWS Official Document](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html) for more details on Amazon EKS security group requirements.
+Note that you also must allow the connections that EKS uses itself. For more details about Amazon EKS security group requirements, refer to [Amazon EKS security group requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html).
 
 ### Add a **label** to the worker node that is used for **nodeAffinity**
 
-You can make a specific worker node dedicated to ScalarDL Ledger or ScalarDL Auditor using **nodeAffinity** and **taint/toleration** which are the feature of Kubernetes. In other words, you can avoid deploying some pods other than ScalarDL Ledger and ScalarDL Auditor (e.g., application pods) on the worker node for ScalarDL Ledger and ScalarDL Auditor. To add a label to the worker node, you can use the `kubectl` command as follows.
+You can make a specific worker node dedicated to ScalarDL Ledger or ScalarDL Auditor by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDL Ledger and non-ScalarDL Auditor pods (e.g., application pods) on the worker node for ScalarDL Ledger and ScalarDL Auditor. To add a label to the worker node, you can use the `kubectl` command as follows.
 
-* ScalarDL Ledger Example
+* ScalarDL Ledger example
   ```console
-  kubectl label node <worker node name> scalar-labs.com/dedicated-node=scalardl-ledger
+  kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-ledger
   ```
-* ScalarDL Auditor Example
+* ScalarDL Auditor example
   ```console
-  kubectl label node <worker node name> scalar-labs.com/dedicated-node=scalardl-auditor
+  kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-auditor
   ```
 
-Also, if you use [Managed Node Group](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) of EKS, you can set these labels when you create a managed node group.
+In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) in EKS, you can set this label when you create a managed node group. If you add this label to make specific worker nodes dedicated to ScalarDL Ledger and ScalarDL Auditor, you must configure **nodeAffinity** in your custom values file as follows.
 
-And, if you add these labels to make specific worker nodes dedicated to ScalarDL Ledger and ScalarDL Auditor, you must configure the following **nodeAffinity** configuration in your custom values file.
-
-* ScalarDL Ledger Example
+* ScalarDL Ledger example
   ```yaml
   envoy:
     affinity:
@@ -128,7 +130,7 @@ And, if you add these labels to make specific worker nodes dedicated to ScalarDL
                   values:
                     - scalardl-ledger
   ```
-* ScalarDL Auditor Example
+* ScalarDL Auditor example
   ```yaml
   envoy:
     affinity:
@@ -155,22 +157,22 @@ And, if you add these labels to make specific worker nodes dedicated to ScalarDL
 
 ### Add **taint** to the worker node that is used for **toleration**
 
-You can make a specific worker node dedicated to ScalarDL Ledger or ScalarDL Auditor using **nodeAffinity** and **taint/toleration** which are the feature of Kubernetes. In other words, you can avoid deploying some pods other than ScalarDL Ledger and ScalarDL Auditor (e.g., application pods) on the worker node for ScalarDL Ledger and ScalarDL Auditor. To add taint to the worker node, you can use the `kubectl` command as follows.
+You can make a specific worker node dedicated to ScalarDL Ledger or ScalarDL Auditor by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDL Ledger and non-ScalarDL Auditor pods (e.g., application pods) on the worker node for ScalarDL Ledger and ScalarDL Auditor. To add taint to the worker node, you can use the `kubectl` command as follows.
 
-* ScalarDL Ledger Example
+* ScalarDL Ledger example
   ```console
-  kubectl taint node <worker node name> scalar-labs.com/dedicated-node=scalardl-ledger:NoSchedule
+  kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-ledger:NoSchedule
   ```
-* ScalarDL Auditor Example
+* ScalarDL Auditor example
   ```console
-  kubectl taint node <worker node name> scalar-labs.com/dedicated-node=scalardl-auditor:NoSchedule
+  kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-auditor:NoSchedule
   ```
 
-Also, if you use [Managed Node Group](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) of EKS, you can set these taints when you create managed node group. Please refer to the [official document](https://docs.aws.amazon.com/eks/latest/userguide/node-taints-managed-node-groups.html) to configure Kubernetes taints through managed node groups.
+In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) in EKS, you can set this taint when you create a managed node group. For details on how to configure Kubernetes taints through managed node groups, refer to [Node taints on managed node groups](https://docs.aws.amazon.com/eks/latest/userguide/node-taints-managed-node-groups.html).
 
-And, if you add these taints to make specific worker nodes dedicated to ScalarDL Ledger and ScalarDL Auditor, you must configure the following **tolerations** configuration in your custom values file.
+If you add these taints to make specific worker nodes dedicated to ScalarDL Ledger and ScalarDL Auditor, you must configure **tolerations** in your custom values file as follows.
 
-* ScalarDL Ledger Example
+* ScalarDL Ledger example
   ```yaml
   envoy:
     tolerations:
@@ -186,7 +188,7 @@ And, if you add these taints to make specific worker nodes dedicated to ScalarDL
         operator: Equal
         value: scalardl-ledger
   ```
-* ScalarDL Auditor Example
+* ScalarDL Auditor example
   ```yaml
   envoy:
     tolerations:
