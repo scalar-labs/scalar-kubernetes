@@ -10,8 +10,6 @@ You must create an EKS cluster based on the following requirements, recommendati
 
 When deploying ScalarDL Ledger, you must:
 
-There are some requirements for the deployment of ScalarDL Ledger. Please configure your EKS cluster based on the following requirement and your project's requirements.
-
 * Create the EKS cluster by using Kubernetes version 1.21 or higher.
 * Configure the EKS cluster based on the version of Kubernetes and your project's requirements.
 
@@ -21,7 +19,7 @@ For Byzantine fault detection in ScalarDL to work properly, do not deploy your a
 
 ## Recommendations (optional)
 
-The following are some recommendations for deploying ScalarDL Ledger. These recommendations are not required, so you can choose whether or not to apply these recommendations or not based on your needs.
+The following are some recommendations for deploying ScalarDL Ledger. These recommendations are not required, so you can choose whether or not to apply these recommendations based on your needs.
 
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDL Ledger node group
 

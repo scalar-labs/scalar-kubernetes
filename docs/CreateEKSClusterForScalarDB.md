@@ -33,7 +33,7 @@ Note that you should configure resource limits based on your system's workload i
 
 ### Create a node group for other application pods than ScalarDB Server pods
 
-We recommend running only ScalarDB Server pods on the worker node (node pool) for ScalarDB Server. If you want to run other application pods on the same EKS cluster, you should create other node pools for your application pods.
+We recommend running only ScalarDB Server pods on the worker node (node group) for ScalarDB Server. If you want to run other application pods on the same EKS cluster, you should create other node groups for your application pods.
 
 ### Create a node group for monitoring components (kube-prometheus-stack and loki-stack)
 
@@ -111,7 +111,7 @@ In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/la
 
 You can make a specific worker node dedicated to ScalarDB Server by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDB Server pods (e.g., application pods) on the worker node for ScalarDB Server. To add taint to the worker node, you can use the `kubectl` command as follows.
 
-* ScalarDB example
+* ScalarDB Server example
   ```console
   kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardb:NoSchedule
   ```

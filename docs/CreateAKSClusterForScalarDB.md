@@ -4,7 +4,7 @@ This document explains how to create an Azure Kubernetes Service (AKS) cluster f
 
 ## Before you begin
 
-You must create an AKS cluster based on the following requirements and recommendations, and your project's requirements. For specific details about how to create an AKS cluster, refer to the following official Microsoft documentation based on the tool you use in your environment:
+You must create an AKS cluster based on the following requirements, recommendations, and your project's requirements. For specific details about how to create an AKS cluster, refer to the following official Microsoft documentation based on the tool you use in your environment:
 
 * [Azure CLI](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-cli)
 * [PowerShell](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-powershell)
@@ -47,11 +47,11 @@ We recommend running only ScalarDB Server pods on the worker node (node pool) fo
 
 We recommend running only ScalarDB Server pods on the worker node (node pool) for ScalarDB Server. If you want to run monitoring pods (e.g., Prometheus, Grafana, Loki, etc.) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same AKS cluster, you should create other node groups for monitoring pods.
 
-### Configure Cluster Autoscaler in AKS
+### Configure cluster autoscaler in AKS
 
-If you want to scale ScalarDB Server pods automatically by using [Horizontal Pod Autoscaler](https://learn.microsoft.com/en-us/azure/aks/concepts-scale#horizontal-pod-autoscaler), you should configure Cluster Autoscaler in AKS too. For details, refer to the official Microsoft documentation at [Cluster autoscaler](https://learn.microsoft.com/en-us/azure/aks/concepts-scale#cluster-autoscaler).
+If you want to scale ScalarDB Server pods automatically by using [Horizontal Pod Autoscaler](https://learn.microsoft.com/en-us/azure/aks/concepts-scale#horizontal-pod-autoscaler), you should configure cluster autoscaler in AKS too. For details, refer to the official Microsoft documentation at [Cluster autoscaler](https://learn.microsoft.com/en-us/azure/aks/concepts-scale#cluster-autoscaler).
 
-In addition, if you configure Cluster Autoscaler, you should create a subnet in a virtual network (VNet) for AKS to ensure a sufficient number of IPs exist so that AKS can work without network issues after scaling. The required number of IPs varies depending on the networking plug-in. For more details about the number of IPs required, refer to the following:
+In addition, if you configure cluster autoscaler, you should create a subnet in a virtual network (VNet) for AKS to ensure a sufficient number of IPs exist so that AKS can work without network issues after scaling. The required number of IPs varies depending on the networking plug-in. For more details about the number of IPs required, refer to the following:
 
 * [Use kubenet networking with your own IP address ranges in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-kubenet)
 * [Configure Azure CNI networking in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni)
@@ -131,7 +131,7 @@ In addition, you can set this label in the Azure portal or use the `--labels` fl
 
 You can make a specific worker node dedicated to ScalarDB Server by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDB Server pods (e.g., application pods) on the worker node for ScalarDB Server. To add taint to the worker node, you can use the `kubectl` command as follows.
 
-* ScalarDB example
+* ScalarDB Server example
   ```console
   kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardb:NoSchedule
   ```
