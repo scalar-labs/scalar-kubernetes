@@ -45,7 +45,7 @@ We recommend running only ScalarDB Server pods on the worker node (node pool) fo
 
 ### Create a node pool for monitoring components (kube-prometheus-stack and loki-stack)
 
-We recommend running only ScalarDB Server pods on the worker node (node pool) for ScalarDB Server. If you want to run monitoring pods (e.g., Prometheus, Grafana, Loki, etc.) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same AKS cluster, you should create other node groups for monitoring pods.
+We recommend running only ScalarDB Server pods on the worker node (node pool) for ScalarDB Server. If you want to run monitoring pods (e.g., Prometheus, Grafana, Loki, etc.) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same AKS cluster, you should create other node pools for monitoring pods.
 
 ### Configure cluster autoscaler in AKS
 

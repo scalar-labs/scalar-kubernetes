@@ -45,7 +45,7 @@ AKS creates one system node pool named **agentpool** that is preferred for syste
 
 ### Create a node pool for monitoring components (kube-prometheus-stack and loki-stack)
 
-We recommend running only pods related to ScalarDL Ledger on the worker node for ScalarDL Ledger. If you want to run monitoring pods (e.g., Prometheus, Grafana, Loki, etc.) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same AKS cluster, you should create other node groups for monitoring pods.
+We recommend running only pods related to ScalarDL Ledger on the worker node for ScalarDL Ledger. If you want to run monitoring pods (e.g., Prometheus, Grafana, Loki, etc.) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same AKS cluster, you should create other node pools for monitoring pods.
 
 ### Configure cluster autoscaler in AKS
 
