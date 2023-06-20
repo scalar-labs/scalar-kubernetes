@@ -28,7 +28,7 @@ The following are some recommendations for deploying ScalarDL Ledger and ScalarD
 
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDL Ledger and ScalarDL Auditor node group
 
-From the perspective of commercial license, resources for one pod of ScalarDL Ledger and ScalarDL Auditor are limited to 2vCPU / 4GB memory. Also, it is recommended to deploy "one ScalarDL Ledger pod and one Envoy pod" on one worker node and deploy "one ScalarDL Auditor pod and one Envoy pod" on one worker node as well.
+From the perspective of commercial licenses, resources for each pod running ScalarDL Ledger or ScalarDL Auditor is limited to 2vCPU / 4GB memory. In addition, we recommend deploying one ScalarDL Ledger pod and one Envoy pod on each worker node and deploying one ScalarDL Auditor pod and one Envoy pod on each worker node.
 
 In other words, the following components run on one worker node:
 
