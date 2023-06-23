@@ -1,10 +1,10 @@
-# Deploy Scalar DL Ledger on AKS (Azure Kubernetes Service)
+# Deploy ScalarDL Ledger on AKS (Azure Kubernetes Service)
 
-Scalar DL is scalable and practical Byzantine fault detection middleware for transactional database systems, which achieves correctness, scalability, and database agnosticism.  
+ScalarDL is scalable and practical Byzantine fault detection middleware for transactional database systems, which achieves correctness, scalability, and database agnosticism.  
 
-Scalar DL is composed of [Ledger](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md), [Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md), and [Client SDK](https://github.com/scalar-labs/scalardl/tree/master/docs#client-sdks). Scalar DL Ledger manages application data in its own unique way using hash-chain and digital signature. Scalar DL Auditor is an optional component and manages a copy of Ledger data without depending on Ledger to identify the discrepancy between Ledger and Auditor data. The Client SDK is a set of user-facing programs to interact with Ledger and Auditor.  
+ScalarDL is composed of [Ledger](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md), [Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md), and [Client SDK](https://github.com/scalar-labs/scalardl/tree/master/docs#client-sdks). ScalarDL Ledger manages application data in its own unique way using hash-chain and digital signature. ScalarDL Auditor is an optional component and manages a copy of Ledger data without depending on Ledger to identify the discrepancy between Ledger and Auditor data. The Client SDK is a set of user-facing programs to interact with Ledger and Auditor.  
 
-We can deploy **Scalar DL Ledger** on any Kubernetes services. This document explains how to deploy **Scalar DL Ledger** on AKS.  
+We can deploy **ScalarDL Ledger** on any Kubernetes services. This document explains how to deploy **ScalarDL Ledger** on AKS.  
 
 ## What we create
 
@@ -14,61 +14,61 @@ In this guide, we create the following envi/ronment on your Azure account.
 
 // TODO: Update the figure based on the latest document
 
-## Step 1. Subscribe to Scalar DL Ledger in Azure Marketplace
+## Step 1. Subscribe to ScalarDL Ledger in Azure Marketplace
 
-You can get the Scalar DL Ledger container image from [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardl). First, you need to subscribe to it. Please refer to the following document to subscribe to Scalar DL Ledger in Azure Marketplace.  
+You can get the ScalarDL Ledger container image from [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardl). First, you need to subscribe to it. Please refer to the following document to subscribe to ScalarDL Ledger in Azure Marketplace.  
 
 * [How to install Scalar products through Azure Marketplace](./AzureMarketplaceGuide.md)
 
 Note: Please see the **Get Scalar products from Microsoft Azure Marketplace** section in the above document.  
 
-## Step 2. Set up a database for Scalar DL Ledger
+## Step 2. Set up a database for ScalarDL Ledger
 
-Scalar DL Ledger uses Scalar DB in its internal to access a database and Scalar DB supports [several databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md). You need to prepare a database before you deploy Scalar DL Ledger.  
+ScalarDL Ledger uses ScalarDB in its internal to access a database and ScalarDB supports [several databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md). You need to prepare a database before you deploy ScalarDL Ledger.  
 
 Please refer to the following document for more details.  
 
-* [Set up a database for Scalar DB/Scalar DL deployment in Azure](./SetupDatabaseForAzure.md)
+* [Set up a database for ScalarDB/ScalarDL deployment in Azure](./SetupDatabaseForAzure.md)
 
 ## Step 3. Create an AKS cluster
 
-Create an AKS cluster for the deployment of Scalar DL Ledger. Please refer to the following document for more details.  
+Create an AKS cluster for the deployment of ScalarDL Ledger. Please refer to the following document for more details.  
 
 * [Create an AKS cluster for Scalar Products]() // TODO: Create a new document
 
 ## Step 4. Create a bastion server
 
-For executing some tools to deploy and manage Scalar DL Ledger on AKS, you need to prepare a bastion server in the same VNet of the AKS cluster you created in **Step 3**. Please refer to the following document for more details.  
+For executing some tools to deploy and manage ScalarDL Ledger on AKS, you need to prepare a bastion server in the same VNet of the AKS cluster you created in **Step 3**. Please refer to the following document for more details.  
 
 * [Create a bastion server]() // TODO: Create a new document
 
 ## Step 5. Prepare a custom values file of Helm 
 
-You need to configure a custom values file for the Helm Chart of Scalar DL Ledger and Scalar DL Schema Loader based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
+You need to configure a custom values file for the Helm Chart of ScalarDL Ledger and ScalarDL Schema Loader based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
 
 * [Configure a custom values file of Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
 
-## Step 6. Deploy Scalar DL Ledger using Scalar Helm Chart
+## Step 6. Deploy ScalarDL Ledger using Scalar Helm Chart
 
-Deploy Scalar DL Ledger on your AKS cluster using Scalar Helm Chart. Please refer to the following document for more details.  
+Deploy ScalarDL Ledger on your AKS cluster using Scalar Helm Chart. Please refer to the following document for more details.  
 
 * [Deploy Scalar Products using Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
 
-## Step 7. Check the status of Scalar DL Ledger deployment
+## Step 7. Check the status of ScalarDL Ledger deployment
 
-After deploying Scalar DL Ledger on your AKS cluster, you need to check the status of each component. Please refer to the following document for more details.  
+After deploying ScalarDL Ledger on your AKS cluster, you need to check the status of each component. Please refer to the following document for more details.  
 
 * [What you might want to check on a regular basis](./RegularCheck.md) // TODO: Update existing document
 
-## Step 8. Monitoring for Scalar DL Ledger deployment
+## Step 8. Monitoring for ScalarDL Ledger deployment
 
-After deploying Scalar DL Ledger on your AKS cluster, it is recommended to monitor the deployed components and collect their logs, especially in production. Please refer to the following document for more details.  
+After deploying ScalarDL Ledger on your AKS cluster, it is recommended to monitor the deployed components and collect their logs, especially in production. Please refer to the following document for more details.  
 
 * [Kubernetes Monitor Guide](./K8sMonitorGuide.md) // TODO: Update existing document
 * [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) // TODO: Update existing document
 
 ---
 
-## Uninstall Scalar DL Ledger on AKS
+## Uninstall ScalarDL Ledger on AKS
 
 If you want to uninstall the environment you created, please uninstall/remove resources in the reverse order of creation.  // TODO: Add delete steps in each document
