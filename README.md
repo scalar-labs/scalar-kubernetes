@@ -1,12 +1,26 @@
-[![AWS Kubernetes Integration Test](https://github.com/scalar-labs/scalar-terratest/workflows/Integration-test-with-terratest-for-AWS-Kubernetes/badge.svg?branch=master)](https://github.com/scalar-labs/scalar-terratest/actions)
+This repository contains a set of [documents](./docs/) and the [configuration samples](./conf/) that help you create a ScalarDB or ScalarDL environment on some Kubernetes clusters.
 
-[![Azure Kubernetes Integration Test](https://github.com/scalar-labs/scalar-terratest/workflows/Integration-test-with-terratest-for-Azure-Kubernetes/badge.svg?branch=master)](https://github.com/scalar-labs/scalar-terratest/actions)
+## Index
 
-This repository contains a set of documents and the custom configurations for [Scalar Helm Charts](https://github.com/scalar-labs/helm-charts) that help you create a Scalar DL and DB environment.
-It also contains a set of Ansible playbooks to automate installation and configuration for testing purposes, however, it is not for production.
+### Deployment guide
 
-## Getting Started
+* [Deploy ScalarDB Server on Amazon EKS (Amazon Elastic Kubernetes Service)](./docs/ManualDeploymentGuideScalarDBServerOnEKS.md)
+* [Deploy ScalarDB Server on AKS (Azure Kubernetes Service)](./docs/ManualDeploymentGuideScalarDBServerOnAKS.md)
+* [Deploy ScalarDL Ledger on Amazon EKS (Amazon Elastic Kubernetes Service)](./docs/ManualDeploymentGuideScalarDLOnEKS.md)
+* [Deploy ScalarDL Ledger on AKS (Azure Kubernetes Service)](./docs/ManualDeploymentGuideScalarDLOnAKS.md)
+* [Deploy ScalarDL Ledger and ScalarDL Auditor on Amazon EKS (Amazon Elastic Kubernetes Service)](./docs/ManualDeploymentGuideScalarDLAuditorOnEKS.md)
+* [Deploy ScalarDL Ledger and ScalarDL Auditor on AKS (Azure Kubernetes Service)](./docs/ManualDeploymentGuideScalarDLAuditorOnAKS.md)
 
-* [Deploy Scalar DL on AWS](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/ManualDeploymentGuideScalarDLOnAWS.md)
-* [Deploy Scalar DL on Azure](https://github.com/scalar-labs/scalar-kubernetes/blob/master/docs/ManualDeploymentGuideScalarDLOnAzure.md)
-* Deploy Scalar DB (Coming soon)
+### Monitoring guide
+
+* [Monitoring Scalar products on a Kubernetes cluster](./docs/K8sMonitorGuide.md)
+* [Collecting logs from Scalar products on a Kubernetes cluster](./docs/K8sLogCollectionGuide.md)
+
+### Backup and restore guide
+
+* [Back up and restore ScalarDB or ScalarDL data in a Kubernetes environment](./docs/BackupRestoreGuide.md)
+
+### Install Scalar products from marketplace of each cloud provider
+
+* [How to install Scalar products through AWS Marketplace](./docs/AwsMarketplaceGuide.md)
+* [How to install Scalar products through Azure Marketplace](./docs/AzureMarketplaceGuide.md)
