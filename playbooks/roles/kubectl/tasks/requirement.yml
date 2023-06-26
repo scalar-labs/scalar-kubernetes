@@ -1,5 +1,0 @@
----
-- name: Install python library requirements for kubernetes
-  pip:
-    name: "{{ python_package }}"
-    extra_args: "--ignore-installed pyyaml"
