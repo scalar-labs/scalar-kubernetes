@@ -1,7 +1,5 @@
 This repository contains a set of [documents](./docs/) and [configuration samples](./conf/) that help you create a ScalarDB or ScalarDL environment on managed Kubernetes services.
 
-# Index
-
 ## Deployment guides
 
 * [Deploy ScalarDB Server on Amazon EKS (Amazon Elastic Kubernetes Service)](./docs/ManualDeploymentGuideScalarDBServerOnEKS.md)
