@@ -20,12 +20,7 @@ In this guide, you will create one of the following three environments in your A
 
 ## Step 1. Subscribe to ScalarDL Ledger and ScalarDL Auditor in AWS Marketplace
 
-You can get the container images from [AWS Marketplace](https://aws.amazon.com/marketplace/seller-profile?id=bd4cd7de-49cd-433f-97ba-5cf71d76ec7b).
-
-* [AWS Marketplace (ScalarDL Ledger)](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)
-* [AWS Marketplace (ScalarDL Auditor)](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6)
-
-First, you need to subscribe to them. For more details on how to subscribe to ScalarDL Ledger and ScalarDL Auditor in AWS Marketplace, see [Subscribe to Scalar products from AWS Marketplace - How to install Scalar products through AWS Marketplace](./AwsMarketplaceGuide.md#subscribe-to-scalar-products-from-aws-marketplace).
+You must get the ScalarDL Ledger and ScalarDL Auditor container images from [AWS Marketplace](https://aws.amazon.com/marketplace/seller-profile?id=bd4cd7de-49cd-433f-97ba-5cf71d76ec7b) and subscribe to ScalarDL Ledger and ScalarDL Auditor. For details on how to subscribe to ScalarDL Ledger and ScalarDL Auditor in AWS Marketplace, see [Subscribe to Scalar products from AWS Marketplace](./AwsMarketplaceGuide.md#subscribe-to-scalar-products-from-aws-marketplace).
 
 ## Step 2. Create an EKS cluster for ScalarDL Ledger
 
