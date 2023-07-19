@@ -1,14 +1,8 @@
 # Deploy ScalarDL Ledger on AKS (Azure Kubernetes Service)
 
-ScalarDL is scalable and practical Byzantine fault detection middleware for transactional database systems, which achieves correctness, scalability, and database agnosticism.
+This document explains how to deploy **ScalarDL Ledger** on Azure Kubernetes Service (AKS).
 
-ScalarDL is composed of [Ledger](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md), [Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md), and [Client SDK](https://github.com/scalar-labs/scalardl/tree/master/docs#client-sdks). ScalarDL Ledger manages application data in its own unique way using hash-chain and digital signature. ScalarDL Auditor is an optional component and manages a copy of Ledger data without depending on Ledger to identify the discrepancy between Ledger and Auditor data. The Client SDK is a set of user-facing programs to interact with Ledger and Auditor.
-
-We can deploy **ScalarDL Ledger** on any Kubernetes services. This document explains how to deploy **ScalarDL Ledger** on AKS.
-
-## What we create
-
-In this guide, we create the following environment on your Azure account.
+In this guide, you will create the following environment in your Azure environment.
 
 ![image](./images/png/AKS_ScalarDL_Ledger.drawio.png)
 

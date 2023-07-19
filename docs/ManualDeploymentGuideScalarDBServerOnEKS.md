@@ -1,10 +1,8 @@
 # Deploy ScalarDB Server on Amazon EKS (Amazon Elastic Kubernetes Service)
 
-ScalarDB Server is a gRPC server that implements the ScalarDB interface. With ScalarDB Server, you can use ScalarDB features from multiple programming languages that are supported by gRPC. We can deploy ScalarDB Server on any Kubernetes services. This document explains how to deploy ScalarDB Server on EKS.
+This guide explains how to deploy ScalarDB Server on Amazon Elastic Kubernetes Service (EKS).
 
-## What we create
-
-In this guide, we create one of the following two environments on your AWS account. The difference is application deployment.
+In this guide, you will create one of the following two environments in your AWS environment. The difference between the two environments is how you plan to deploy the application:
 
 * Deploy your application on the same EKS cluster as ScalarDB Server deployment. In this case, you don't need to use the load balancers that AWS provides to access Scalar Envoy from your application.
   ![image](./images/png/EKS_ScalarDB_Server_App_In_Cluster.drawio.png)

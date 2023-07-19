@@ -1,14 +1,8 @@
 # Deploy ScalarDL Ledger and ScalarDL Auditor on Amazon EKS (Amazon Elastic Kubernetes Service)
 
-ScalarDL is scalable and practical Byzantine fault detection middleware for transactional database systems, which achieves correctness, scalability, and database agnosticism.
+This guide explains how to deploy ScalarDL Ledger and ScalarDL Auditor on Amazon Elastic Kubernetes Service (EKS).
 
-ScalarDL is composed of [Ledger](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md), [Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md), and [Client SDK](https://github.com/scalar-labs/scalardl/tree/master/docs#client-sdks). ScalarDL Ledger manages application data in its own unique way using hash-chain and digital signature. ScalarDL Auditor is an optional component and manages a copy of Ledger data without depending on Ledger to identify the discrepancy between Ledger and Auditor data. The Client SDK is a set of user-facing programs to interact with Ledger and Auditor.
-
-We can deploy **ScalarDL Ledger** and **ScalarDL Auditor** on any Kubernetes services. This document explains how to deploy **ScalarDL Ledger** and **ScalarDL Auditor** on EKS.
-
-## What we create
-
-In this guide, we create one of the following three environments on your AWS account. To make byzantine fault detection work properly, we recommend deploying ScalarDL Ledger and ScalarDL Auditor on different administrative domains (separated environments).
+In this guide, you will create one of the following three environments in your AWS environment. To make Byzantine fault detection work properly, we recommend deploying ScalarDL Ledger and ScalarDL Auditor on different administrative domains (i.e., separate environments).
 
 * Use different AWS accounts (most recommended way)
   ![image](./images/png/EKS_ScalarDL_Auditor_Multi_Account.drawio.png)
