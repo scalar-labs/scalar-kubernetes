@@ -1,4 +1,4 @@
-# Deploy ScalarDB Server on AKS (Azure Kubernetes Service)
+# Deploy ScalarDB Server on Azure Kubernetes Service (AKS)
 
 ScalarDB Server is a gRPC server that implements the ScalarDB interface. With ScalarDB Server, you can use ScalarDB features from multiple programming languages that are supported by gRPC. We can deploy ScalarDB Server on any Kubernetes services. This document explains how to deploy ScalarDB Server on AKS.
 
