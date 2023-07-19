@@ -1,19 +1,22 @@
-# Deploy ScalarDL Ledger and ScalarDL Auditor on AKS (Azure Kubernetes Service)
+# Deploy ScalarDL Ledger and ScalarDL Auditor on Azure Kubernetes Service (AKS)
 
 This guide explains how to deploy ScalarDL Ledger and ScalarDL Auditor on Azure Kubernetes Service (AKS).
 
 In this guide, you will create one of the following three environments in your Azure environment. To make Byzantine fault detection work properly, we recommend deploying ScalarDL Ledger and ScalarDL Auditor on different administrative domains (i.e., separate environments).
 
 * Use different Azure accounts (most recommended way)
+
   ![image](./images/png/AKS_ScalarDL_Auditor_Multi_Account.drawio.png)
 
-* Use different VNets (second recommended way)
+* Use different Azure Virtual Networks (VNets) (second recommended way)
+
   ![image](./images/png/AKS_ScalarDL_Auditor_Multi_VNet.drawio.png)
 
 * Use different namespaces (third recommended way)
+
   ![image](./images/png/AKS_ScalarDL_Auditor_Multi_Namespace.drawio.png)
 
-Note: In this guide, we assume that the "Different VNets" for the explanation.
+**Note:** This guide follows the second recommended way, "Use different VNets."
 
 ## Step 1. Subscribe to ScalarDL Ledger and ScalarDL Auditor in Azure Marketplace
 
@@ -23,70 +26,72 @@ First, you need to subscribe to them. For more details on how to subscribe to Sc
 
 ## Step 2. Create an AKS cluster for ScalarDL Ledger
 
-Create an AKS cluster for the deployment of ScalarDL Ledger. See [Create an AKS cluster for Scalar Products](./CreateAKSClusterForScalarProducts.md) for more details.
+You must create an AKS cluster for the ScalarDL Ledger deployment. For details, see [Create an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md).
 
 ## Step 3. Create an AKS cluster for ScalarDL Auditor
 
-Create an AKS cluster for the deployment of ScalarDL Auditor. See [Create an AKS cluster for Scalar Products](./CreateAKSClusterForScalarProducts.md) for more details.
+You must also create an AKS cluster for the ScalarDL Auditor deployment. For details, see [Create an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md).
 
 ## Step 4. Set up a database for ScalarDL Ledger
 
-ScalarDL Ledger uses ScalarDB in its internal to access a database and ScalarDB supports [several databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md). You need to prepare a database before you deploy ScalarDL Ledger. See [Set up a database for ScalarDB/ScalarDL deployment in Azure](./SetupDatabaseForAzure.md) for more details.
+You must prepare a database before deploying ScalarDL Ledger. Because ScalarDL Ledger uses ScalarDB internally to access databases, refer to [ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md) to see which types of databases ScalarDB supports.
+
+For details on setting up a database, see [Set up a database for ScalarDB/ScalarDL deployment in Azure](./SetupDatabaseForAzure.md).
 
 ## Step 5. Set up a database for ScalarDL Auditor
 
-ScalarDL Auditor uses ScalarDB in its internal to access a database and ScalarDB supports [several databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md). You need to prepare a database before you deploy ScalarDL Auditor. See [Set up a database for ScalarDB/ScalarDL deployment in Azure](./SetupDatabaseForAzure.md) for more details.
+You must also prepare a database before deploying ScalarDL Auditor. Because ScalarDL Auditor uses ScalarDB internally to access databases, refer to [ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md) to see which types of databases ScalarDB supports.
+
+For details on setting up a database, see [Set up a database for ScalarDB/ScalarDL deployment in Azure](./SetupDatabaseForAzure.md).
 
 ## Step 6. Create a bastion server for ScalarDL Ledger
 
-For executing some tools to deploy and manage ScalarDL Ledger on AKS, you need to prepare a bastion server in the same VNet of the AKS cluster you created in **Step 2**. See [Create a bastion server](./CreateBastionServer.md) for more details.
+To execute some tools for deploying and managing ScalarDL Ledger on AKS, you must prepare a bastion server in the same VNet of the AKS cluster that you created in **Step 2**. For details, see [Create a Bastion Server](./CreateBastionServer.md).
 
 ## Step 7. Create a bastion server for ScalarDL Auditor
 
-For executing some tools to deploy and manage ScalarDL Auditor on AKS, you need to prepare a bastion server in the same VNet of the AKS cluster you created in **Step 3**. See [Create a bastion server](./CreateBastionServer.md) for more details.
+To execute some tools for deploying and managing ScalarDL Auditor on AKS, you must prepare a bastion server in the same VNet of the AKS cluster that you created in **Step 3**. For details, see [Create a Bastion Server](./CreateBastionServer.md).
 
 ## Step 8. Create network peering between two AKS clusters
 
-To make ScalarDL work properly, ScalarDL Ledger and ScalarDL Auditor need to connect with each other. You need to connect two VNets using [Virtual Network Peering](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview). See [Configure network peering for ScalarDL Auditor mode](./NetworkPeeringForScalarDLAuditor.md) fro more details.
+To make ScalarDL work properly, ScalarDL Ledger and ScalarDL Auditor need to connect to each other. You must connect two VNets by using [virtual network peering](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview). For details, see [Configure Network Peering for ScalarDL Auditor Mode](./NetworkPeeringForScalarDLAuditor.md).
 
-## Step 9. Prepare a custom values file of Helm Chart of ScalarDL Ledger
+## Step 9. Prepare custom values files for the Scalar Helm Charts for both ScalarDL Ledger and ScalarDL Schema Loader
 
-You need to configure a custom values file for the Helm Chart of ScalarDL Ledger and ScalarDL Schema Loader (for Ledger) based on your environment (e.g., access information of the database you created in **Step 4**). See [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md) for more details.
+To perform a task, like accessing information in the database that you created in **Step 4**, you must configure custom values files for the Scalar Helm Charts for both ScalarDL Ledger and ScalarDL Schema Loader (for Ledger) based on your environment. For details, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
 
-## Step 10. Deploy ScalarDL Ledger using Scalar Helm Chart
+## Step 10. Deploy ScalarDL Ledger by using the Scalar Helm Chart
 
-Deploy ScalarDL Ledger on your AKS cluster using Scalar Helm Chart. See [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md) for more details.
+You must deploy ScalarDL Ledger on your AKS cluster by using the Scalar Helm Chart. For details, see [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
 
-Note: We recommend creating a dedicated namespace by using the `kubectl create ns scalardl-ledger` command and deploying ScalarDL Ledger in the namespace by using the `-n scalardl-ledger` option with the `helm install` command.
+**Note:** We recommend creating a dedicated namespace by using the `kubectl create ns scalardl-ledger` command and deploying ScalarDL Ledger in the namespace by using the `-n scalardl-ledger` option with the `helm install` command.
 
-## Step 11. Prepare a custom values file of Helm Chart of ScalarDL Auditor
+## Step 11. Prepare a custom values file for the Scalar Helm Chart for ScalarDL Auditor
 
-You need to configure a custom values file for the Helm Chart of ScalarDL Auditor and ScalarDL Schema Loader (for Auditor) based on your environment (e.g., access information of the database you created in **Step 5**). See [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md) for more details.
+To perform tasks, like accessing information in the database that you created in **Step 5**, you must also configure a custom values file for the Scalar Helm Chart for ScalarDL Auditor and ScalarDL Schema Loader (for Auditor) based on your environment. For details, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
 
-## Step 12. Deploy ScalarDL Auditor using Scalar Helm Chart
+## Step 12. Deploy ScalarDL Auditor by using the Scalar Helm Chart
 
-Deploy ScalarDL Auditor on your AKS cluster using Scalar Helm Chart. See [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md) for more details.
+You must deploy ScalarDL Auditor on your AKS cluster by using the Scalar Helm Chart. For details, see [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
 
-Note: We recommend creating a dedicated namespace by using the `kubectl create ns scalardl-auditor` command and deploying ScalarDL Auditor in the namespace by using the `-n scalardl-auditor` option with the `helm install` command.
+**Note:** We recommend creating a dedicated namespace by using the `kubectl create ns scalardl-auditor` command and deploying ScalarDL Auditor in the namespace by using the `-n scalardl-auditor` option with the `helm install` command.
 
-## Step 13. Check the status of ScalarDL Ledger deployment
+## Step 13. Check the status of your ScalarDL Ledger deployment
 
-After deploying ScalarDL Ledger on your AKS cluster, you need to check the status of each component. See [What you might want to check on a regular basis](./RegularCheck.md) for more details.
+After deploying ScalarDL Ledger in your AKS cluster, you must check the status of each component. For details, see [Components to Regularly Check When Running in a Kubernetes Environment](./RegularCheck.md).
 
-## Step 14. Check the status of ScalarDL Auditor deployment
+## Step 14. Check the status of your ScalarDL Auditor deployment
 
-After deploying ScalarDL Auditor on your AKS cluster, you need to check the status of each component. See [What you might want to check on a regular basis](./RegularCheck.md) for more details.
+After deploying ScalarDL Auditor in your AKS cluster, you must check the status of each component. For details, see [Components to Regularly Check When Running in a Kubernetes Environment](./RegularCheck.md).
 
-## Step 15. Monitoring for ScalarDL Ledger deployment
+## Step 15. Monitor your ScalarDL Ledger deployment
 
-After deploying ScalarDL Ledger on your AKS cluster, we recommend monitoring the deployed components and collecting their logs, especially in production. See [Monitoring Scalar products on a Kubernetes cluster](./K8sMonitorGuide.md) and [Collecting logs from Scalar products on a Kubernetes cluster](./K8sLogCollectionGuide.md) for more details.
+After deploying ScalarDL Ledger in your AKS cluster, we recommend monitoring the deployed components and collecting their logs, especially in production. For details, see [Monitoring Scalar products on a Kubernetes cluster](./K8sMonitorGuide.md) and [Collecting logs from Scalar products on a Kubernetes cluster](./K8sLogCollectionGuide.md).
 
-## Step 16. Monitoring for ScalarDL Auditor deployment
+## Step 16. Monitor your ScalarDL Auditor deployment
 
-After deploying ScalarDL Auditor on your AKS cluster, we recommend monitoring the deployed components and collecting their logs, especially in production. See [Monitoring Scalar products on a Kubernetes cluster](./K8sMonitorGuide.md) and [Collecting logs from Scalar products on a Kubernetes cluster](./K8sLogCollectionGuide.md) for more details.
+After deploying ScalarDL Auditor in your AKS cluster, we recommend monitoring the deployed components and collecting their logs, especially in production. For details, see [Monitoring Scalar products on a Kubernetes cluster](./K8sMonitorGuide.md) and [Collecting logs from Scalar products on a Kubernetes cluster](./K8sLogCollectionGuide.md).
 
----
+## Remove ScalarDL Ledger and ScalarDL Auditor from AKS
 
-## Uninstall ScalarDL Ledger and ScalarDL Auditor on AKS
-
-If you want to uninstall the environment you created, please uninstall/remove resources in the reverse order of creation.
+If you want to remove the environment that you created, please remove all the resources in reverse order from which you created them in.
