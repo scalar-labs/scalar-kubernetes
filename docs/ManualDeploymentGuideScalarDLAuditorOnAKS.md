@@ -20,9 +20,7 @@ In this guide, you will create one of the following three environments in your A
 
 ## Step 1. Subscribe to ScalarDL Ledger and ScalarDL Auditor in Azure Marketplace
 
-You can get the container images of ScalarDL Ledger and ScalarDL Auditor from [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardl).
-
-First, you need to subscribe to them. For more details on how to subscribe to ScalarDL Ledger and ScalarDL Auditor in Azure Marketplace, see [Get Scalar products from Microsoft Azure Marketplace - How to install Scalar products through Azure Marketplace](./AzureMarketplaceGuide.md#get-scalar-products-from-microsoft-azure-marketplace).
+You must get the ScalarDL Ledger and ScalarDL Auditor container images by visiting [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardl) and subscribing to ScalarDL Ledger and ScalarDL Auditor. For details on how to subscribe to ScalarDL Ledger and ScalarDL Auditor in Azure Marketplace, see [Get Scalar products from Microsoft Azure Marketplace](./AzureMarketplaceGuide.md#get-scalar-products-from-microsoft-azure-marketplace).
 
 ## Step 2. Create an AKS cluster for ScalarDL Ledger
 
