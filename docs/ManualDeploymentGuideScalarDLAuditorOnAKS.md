@@ -56,7 +56,7 @@ To make ScalarDL work properly, ScalarDL Ledger and ScalarDL Auditor need to con
 
 ## Step 9. Prepare custom values files for the Scalar Helm Charts for both ScalarDL Ledger and ScalarDL Schema Loader
 
-To perform a task, like accessing information in the database that you created in **Step 4**, you must configure custom values files for the Scalar Helm Charts for both ScalarDL Ledger and ScalarDL Schema Loader (for Ledger) based on your environment. For details, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
+To perform tasks, like accessing information in the database that you created in **Step 4**, you must configure custom values files for the Scalar Helm Charts for both ScalarDL Ledger and ScalarDL Schema Loader (for Ledger) based on your environment. For details, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
 
 ## Step 10. Deploy ScalarDL Ledger by using the Scalar Helm Chart
 
@@ -64,9 +64,9 @@ You must deploy ScalarDL Ledger on your AKS cluster by using the Scalar Helm Cha
 
 **Note:** We recommend creating a dedicated namespace by using the `kubectl create ns scalardl-ledger` command and deploying ScalarDL Ledger in the namespace by using the `-n scalardl-ledger` option with the `helm install` command.
 
-## Step 11. Prepare a custom values file for the Scalar Helm Chart for ScalarDL Auditor
+## Step 11. Prepare custom values files for the Scalar Helm Charts for both ScalarDL Auditor and ScalarDL Schema Loader
 
-To perform tasks, like accessing information in the database that you created in **Step 5**, you must also configure a custom values file for the Scalar Helm Chart for ScalarDL Auditor and ScalarDL Schema Loader (for Auditor) based on your environment. For details, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
+To perform tasks, like accessing information in the database that you created in **Step 5**, you must also configure a custom values files for the Scalar Helm Chart for both ScalarDL Auditor and ScalarDL Schema Loader (for Auditor) based on your environment. For details, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
 
 ## Step 12. Deploy ScalarDL Auditor by using the Scalar Helm Chart
 
