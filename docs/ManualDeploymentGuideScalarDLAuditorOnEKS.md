@@ -54,7 +54,7 @@ To execute some tools for deploying and managing ScalarDL Auditor on EKS, you mu
 
 To make ScalarDL work properly, ScalarDL Ledger and ScalarDL Auditor need to connect to each other. You must connect two VPCs by using [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/create-vpc-peering-connection.html). For details, see [Configure network peering for ScalarDL Auditor mode](./NetworkPeeringForScalarDLAuditor.md).
 
-## Step 9. Prepare custom values files of the Scalar Helm Charts for ScalarDL Ledger and ScalarDL Schema Loader
+## Step 9. Prepare custom values files for the Scalar Helm Charts for ScalarDL Ledger and ScalarDL Schema Loader
 
 To perform tasks, like accessing information in the database that you created in **Step 4**, you must configure custom values files for the Scalar Helm Charts for ScalarDL Ledger and ScalarDL Schema Loader (for Ledger) based on your environment. For details, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
 
