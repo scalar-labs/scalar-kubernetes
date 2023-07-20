@@ -1,74 +1,47 @@
-# Deploy Scalar DL Ledger on AKS (Azure Kubernetes Service)
+# Deploy ScalarDL Ledger on Azure Kubernetes Service (AKS)
 
-Scalar DL is scalable and practical Byzantine fault detection middleware for transactional database systems, which achieves correctness, scalability, and database agnosticism.  
+This document explains how to deploy **ScalarDL Ledger** on Azure Kubernetes Service (AKS).
 
-Scalar DL is composed of [Ledger](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started.md), [Auditor](https://github.com/scalar-labs/scalardl/blob/master/docs/getting-started-auditor.md), and [Client SDK](https://github.com/scalar-labs/scalardl/tree/master/docs#client-sdks). Scalar DL Ledger manages application data in its own unique way using hash-chain and digital signature. Scalar DL Auditor is an optional component and manages a copy of Ledger data without depending on Ledger to identify the discrepancy between Ledger and Auditor data. The Client SDK is a set of user-facing programs to interact with Ledger and Auditor.  
+In this guide, you will create the following environment in your Azure environment.
 
-We can deploy **Scalar DL Ledger** on any Kubernetes services. This document explains how to deploy **Scalar DL Ledger** on AKS.  
+![image](./images/png/AKS_ScalarDL_Ledger.drawio.png)
 
-## What we create
+## Step 1. Subscribe to ScalarDL Ledger in Azure Marketplace
 
-In this guide, we create the following envi/ronment on your Azure account.  
+You must get the ScalarDL Ledger container image from [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardl) and subscribe to ScalarDL. For details on how to subscribe to ScalarDL Ledger in Azure Marketplace, see [Get Scalar products from Microsoft Azure Marketplace](./AzureMarketplaceGuide.md#get-scalar-products-from-microsoft-azure-marketplace).
 
-![image](images/azure-diagram.png)
+## Step 2. Create an AKS cluster
 
-// TODO: Update the figure based on the latest document
+You must create an AKS cluster for the ScalarDL Ledger deployment. For details, see [Create an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md).
 
-## Step 1. Subscribe to Scalar DL Ledger in Azure Marketplace
+## Step 3. Set up a database for ScalarDL Ledger
 
-You can get the Scalar DL Ledger container image from [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardl). First, you need to subscribe to it. Please refer to the following document to subscribe to Scalar DL Ledger in Azure Marketplace.  
+You must prepare a database before deploying ScalarDL Ledger. Because ScalarDL Ledger uses ScalarDB internally to access databases, refer to [ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md) to see which types of databases ScalarDB supports.
 
-* [How to install Scalar products through Azure Marketplace](./AzureMarketplaceGuide.md)
-
-Note: Please see the **Get Scalar products from Microsoft Azure Marketplace** section in the above document.  
-
-## Step 2. Set up a database for Scalar DL Ledger
-
-Scalar DL Ledger uses Scalar DB in its internal to access a database and Scalar DB supports [several databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md). You need to prepare a database before you deploy Scalar DL Ledger.  
-
-Please refer to the following document for more details.  
-
-* [Set up a database for Scalar DB/Scalar DL deployment in Azure](./SetupDatabaseForAzure.md)
-
-## Step 3. Create an AKS cluster
-
-Create an AKS cluster for the deployment of Scalar DL Ledger. Please refer to the following document for more details.  
-
-* [Create an AKS cluster for Scalar Products]() // TODO: Create a new document
+For details on setting up a database, see [Set up a database for ScalarDB/ScalarDL deployment in Azure](./SetupDatabaseForAzure.md).
 
 ## Step 4. Create a bastion server
 
-For executing some tools to deploy and manage Scalar DL Ledger on AKS, you need to prepare a bastion server in the same VNet of the AKS cluster you created in **Step 3**. Please refer to the following document for more details.  
+To execute some tools for deploying and managing ScalarDL Ledger on AKS, you must prepare a bastion server in the same Azure Virtual Network (VNet) of the AKS cluster that you created in **Step 2**. For details, see [Create a Bastion Server](./CreateBastionServer.md).
 
-* [Create a bastion server]() // TODO: Create a new document
+## Step 5. Prepare custom values files for the Scalar Helm Charts for both ScalarDL Ledger and ScalarDL Schema Loader
 
-## Step 5. Prepare a custom values file of Helm 
+To perform tasks, like accessing information in the database that you created in **Step 3**, you must configure custom values files for the Scalar Helm Charts for both ScalarDL Ledger and ScalarDL Schema Loader (for Ledger) based on your environment. For details, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
 
-You need to configure a custom values file for the Helm Chart of Scalar DL Ledger and Scalar DL Schema Loader based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
+## Step 6. Deploy ScalarDL Ledger by using the Scalar Helm Chart
 
-* [Configure a custom values file of Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
+Deploy ScalarDL Ledger in your AKS cluster by using the Helm Chart for ScalarDL Ledger. For details, see [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
 
-## Step 6. Deploy Scalar DL Ledger using Scalar Helm Chart
+**Note:** We recommend creating a dedicated namespace by using the `kubectl create ns scalardl-ledger` command and deploying ScalarDL Ledger in the namespace by using the `-n scalardl-ledger` option with the `helm install` command.
 
-Deploy Scalar DL Ledger on your AKS cluster using Scalar Helm Chart. Please refer to the following document for more details.  
+## Step 7. Check the status your ScalarDL Ledger deployment
 
-* [Deploy Scalar Products using Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
+After deploying ScalarDL Ledger in your AKS cluster, you must check the status of each component. For details, see [Components to Regularly Check When Running in a Kubernetes Environment](./RegularCheck.md).
 
-## Step 7. Check the status of Scalar DL Ledger deployment
+## Step 8. Monitor your ScalarDL Ledger deployment
 
-After deploying Scalar DL Ledger on your AKS cluster, you need to check the status of each component. Please refer to the following document for more details.  
+After deploying ScalarDL Ledger in your AKS cluster, we recommend monitoring the deployed components and collecting their logs, especially in production. For details, see [Monitoring Scalar products on a Kubernetes cluster](./K8sMonitorGuide.md) and [Collecting logs from Scalar products on a Kubernetes cluster](./K8sLogCollectionGuide.md).
 
-* [What you might want to check on a regular basis](./RegularCheck.md) // TODO: Update existing document
+## Remove ScalarDL Ledger from AKS
 
-## Step 8. Monitoring for Scalar DL Ledger deployment
-
-After deploying Scalar DL Ledger on your AKS cluster, it is recommended to monitor the deployed components and collect their logs, especially in production. Please refer to the following document for more details.  
-
-* [Kubernetes Monitor Guide](./K8sMonitorGuide.md) // TODO: Update existing document
-* [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) // TODO: Update existing document
-
----
-
-## Uninstall Scalar DL Ledger on AKS
-
-If you want to uninstall the environment you created, please uninstall/remove resources in the reverse order of creation.  // TODO: Add delete steps in each document
+If you want to remove the environment that you created, please remove all the resources in reverse order from which you created them in.

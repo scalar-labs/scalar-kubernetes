@@ -1,72 +1,55 @@
-# Deploy Scalar DB Server on AKS (Azure Kubernetes Service)
+# Deploy ScalarDB Server on Azure Kubernetes Service (AKS)
 
-Scalar DB Server is a gRPC server that implements the Scalar DB interface. With Scalar DB Server, you can use Scalar DB features from multiple programming languages that are supported by gRPC.  
+This guide explains how to deploy ScalarDB Server on Azure Kubernetes Service (AKS).
 
-We can deploy Scalar DB Server on any Kubernetes services. This document explains how to deploy Scalar DB Server on AKS.  
+In this guide, you will create one of the following two environments in your Azure environment. The difference between the two environments is how you plan to deploy the application:
 
-## What we create
+* Deploy your application in the same AKS cluster as your ScalarDB Server deployment. In this case, you don't need to use the load balancers that Azure provides to access Scalar Envoy from your application.
+  
+  ![image](./images/png/AKS_ScalarDB_Server_App_In_Cluster.drawio.png)  
 
-In this guide, we create the following environment on your Azure account.  
+* Deploy your application in an environment that is different from the AKS cluster that contains your ScalarDB Server deployment. In this case, you must use the load balancers that Azure provides to access Scalar Envoy from your application.
 
-![image](images/scalardbserver-aks-diagram.png)
+  ![image](./images/png/AKS_ScalarDB_Server_App_Out_Cluster.drawio.png)  
 
-// TODO: Update the figure based on the latest document
+## Step 1. Subscribe to ScalarDB Server in Azure Marketplace
 
-## Step 1. Subscribe to Scalar DB Server in Azure Marketplace
+You must get the ScalarDB Server container image by visiting [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardb) and subscribing to ScalarDB Server. For details on how to subscribe to ScalarDB Server in Azure Marketplace, see [Get Scalar products from Microsoft Azure Marketplace](./AzureMarketplaceGuide.md#get-scalar-products-from-microsoft-azure-marketplace).
 
-You can get the Scalar DB Server container image from [Azure Marketplace](https://azuremarketplace.microsoft.com/en/marketplace/apps/scalarinc.scalardb). First, you need to subscribe to it. Please refer to the following document to subscribe to Scalar DB Server in Azure Marketplace.  
+## Step 2. Create an AKS cluster
 
-* [How to install Scalar products through Azure Marketplace](./AzureMarketplaceGuide.md)
+You must create an AKS cluster for the ScalarDB Server deployment. For details, see [Create an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md).
 
-Note: Please see the **Get Scalar products from Microsoft Azure Marketplace** section in the above document.  
+## Step 3. Set up a database for ScalarDB Server
 
-## Step 2. Set up a database for Scalar DB Server
+You must prepare a database before deploying ScalarDB Server. To see which types of databases ScalarDB supports, refer to [ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md).
 
-Scalar DB supports [several databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md). You need to prepare a database before you deploy Scalar DB Server.  
-
-Please refer to the following document for more details.  
-
-* [Set up a database for Scalar DB/Scalar DL deployment in Azure](./SetupDatabaseForAzure.md) // TODO: Update existing document
-
-## Step 3. Create an AKS cluster
-
-Create an AKS cluster for the deployment of Scalar DB Server. Please refer to the following document for more details.  
-
-* [Create an AKS cluster for Scalar Products]() // TODO: Create a new document
+For details on setting up a database, see [Set up a database for ScalarDB/ScalarDL deployment in Azure](./SetupDatabaseForAzure.md).
 
 ## Step 4. Create a bastion server
 
-For executing some tools to deploy and manage Scalar DB Server on AKS, you need to prepare a bastion server in the same VNet of the AKS cluster you created in **Step 3**. Please refer to the following document for more details.  
+To execute some tools for deploying and managing ScalarDB Server on AKS, you must prepare a bastion server in the same Azure Virtual Network (VNet) of the AKS cluster that you created in **Step 2**.  For details, see [Create a Bastion Server](./CreateBastionServer.md).
 
-* [Create a bastion server]() // TODO: Create a new document
+## Step 5. Prepare a custom values file for the Scalar Helm Chart
 
-## Step 5. Prepare a custom values file of Helm
+To perform tasks, like accessing information in the database that you created in **Step 3**, you must configure a custom values file for the Scalar Helm Chart for ScalarDB Server based on your environment. For details, see [Configure a custom values file of Scalar Helm Chart](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md). 
 
-You need to configure a custom values file for the Helm Chart of Scalar DB Server based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
+**Note:** If you deploy your application in an environment that is different from the AKS cluster that has your ScalarDB Server deployment, you must set the `envoy.service.type` parameter to `LoadBalancer` to access Scalar Envoy from your application.
 
-* [Configure a custom values file of Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
+## Step 6. Deploy ScalarDB Server by using the Scalar Helm Chart
 
-## Step 6. Deploy Scalar DB Server using Scalar Helm Chart
+Deploy ScalarDB Server on your AKS cluster by using the Helm Chart for ScalarDB Server. For details, see [Deploy Scalar Products using Scalar Helm Chart](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
 
-Deploy Scalar DB Server on your AKS cluster using Scalar Helm Chart. Please refer to the following document for more details.  
+**Note:** We recommend creating a dedicated namespace by using the `kubectl create ns scalardb` command and deploying ScalarDB Server in the namespace by using the `-n scalardb` option with the `helm install` command.
 
-* [Deploy Scalar Products using Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
+## Step 7. Check the status of your ScalarDB Server deployment
 
-## Step 7. Check the status of Scalar DB Server deployment
+After deploying ScalarDB Server in your AKS cluster, you must check the status of each component. For details, see [Components to Regularly Check When Running in a Kubernetes Environment](./RegularCheck.md).
 
-After deploying Scalar DB Server on your AKS cluster, you need to check the status of each component. Please refer to the following document for more details.  
+## Step 8. Monitor your ScalarDB Server deployment
 
-* [What you might want to check on a regular basis](./RegularCheck.md) // TODO: Update existing document
+After deploying ScalarDB Server in your AKS cluster, we recommend monitoring the deployed components and collecting their logs, especially in production. For details, see [Monitoring Scalar products on a Kubernetes cluster](./K8sMonitorGuide.md) and [Collecting logs from Scalar products on a Kubernetes cluster](./K8sLogCollectionGuide.md).
 
-## Step 8. Monitoring for Scalar DB Server deployment
+## Remove ScalarDB Server from AKS
 
-After deploying Scalar DB Server on your AKS cluster, it is recommended to monitor the deployed components and collect their logs, especially in production. Please refer to the following document for more details.  
-
-* [Kubernetes Monitor Guide](./K8sMonitorGuide.md) // TODO: Update existing document
-* [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) // TODO: Update existing document
-
----
-
-## Uninstall Scalar DB Server on AKS
-
-If you want to uninstall the environment you created, please uninstall/remove resources in the reverse order of creation.  // TODO: Add delete steps in each document
+If you want to remove the environment that you created, please remove all the resources in reverse order from which you created them in.

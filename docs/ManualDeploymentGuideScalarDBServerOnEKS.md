@@ -1,72 +1,55 @@
-# Deploy Scalar DB Server on Amazon EKS (Amazon Elastic Kubernetes Service)
+# Deploy ScalarDB Server on Amazon Elastic Kubernetes Service (EKS)
 
-Scalar DB Server is a gRPC server that implements the Scalar DB interface. With Scalar DB Server, you can use Scalar DB features from multiple programming languages that are supported by gRPC.  
+This guide explains how to deploy ScalarDB Server on Amazon Elastic Kubernetes Service (EKS).
 
-We can deploy Scalar DB Server on any Kubernetes services. This document explains how to deploy Scalar DB Server on EKS.  
+In this guide, you will create one of the following two environments in your AWS environment. The difference between the two environments is how you plan to deploy the application:
 
-## What we create
+* Deploy your application in the same EKS cluster as your ScalarDB Server deployment. In this case, you don't need to use the load balancers that AWS provides to access Scalar Envoy from your application.
 
-In this guide, we create the following environment on your AWS account.  
+  ![image](./images/png/EKS_ScalarDB_Server_App_In_Cluster.drawio.png)  
 
-![image](images/scalardbserver-eks-diagram.png)
+* Deploy your application in an environment that is different from the EKS cluster that contains your ScalarDB Server deployment. In this case, you must use the load balancers that AWS provides to access Scalar Envoy from your application.
 
-// TODO: Update the figure based on the latest document
+  ![image](./images/png/EKS_ScalarDB_Server_App_Out_Cluster.drawio.png)  
 
-## Step 1. Subscribe to Scalar DB Server in AWS Marketplace
+## Step 1. Subscribe to ScalarDB Server in AWS Marketplace
 
-You can get the Scalar DB Server container image from [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2). First, you need to subscribe to it. Please refer to the following document to subscribe to Scalar DB Server in AWS Marketplace.  
+You must get the ScalarDB Server container image by visiting [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2) and subscribing to ScalarDB Server. For details on how to subscribe to ScalarDB Server in AWS Marketplace, see [Subscribe to Scalar products from AWS Marketplace](./AwsMarketplaceGuide.md#subscribe-to-scalar-products-from-aws-marketplace).
 
-* [How to install Scalar products through AWS Marketplace](./AwsMarketplaceGuide.md)
+## Step 2. Create an EKS cluster
 
-Note: Please see the **Subscribe to Scalar products from AWS Marketplace** section in the above document.  
+You must create an EKS cluster for the ScalarDB Server deployment. For details, see [Create an Amazon EKS cluster for Scalar products](./CreateEKSClusterForScalarProducts.md).
 
-## Step 2. Set up a database for Scalar DB Server
+## Step 3. Set up a database for ScalarDB Server
 
-Scalar DB supports [several databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md). You need to prepare a database before you deploy Scalar DB Server.  
+You must prepare a database before deploying ScalarDB Server. To see which types of databases ScalarDB supports, refer to [ScalarDB Supported Databases](https://github.com/scalar-labs/scalardb/blob/master/docs/scalardb-supported-databases.md).
 
-Please refer to the following document for more details.  
-
-* [Set up a database for Scalar DB/Scalar DL deployment on AWS](./SetupDatabaseForAWS.md) // TODO: Update existing document
-
-## Step 3. Create an EKS cluster
-
-Create an EKS cluster for the deployment of Scalar DB Server. Please refer to the following document for more details.  
-
-* [Create an EKS cluster for Scalar Products]() // TODO: Create a new document
+For details on setting up a database, see [Set up a database for ScalarDB/ScalarDL deployment on AWS](./SetupDatabaseForAWS.md).
 
 ## Step 4. Create a bastion server
 
-For executing some tools to deploy and manage Scalar DB Server on EKS, you need to prepare a bastion server in the same VPC of the EKS cluster you created in **Step 3**. Please refer to the following document for more details.  
+To execute some tools for deploying and managing ScalarDB Server on EKS, you must prepare a bastion server in the same Amazon Virtual Private Cloud (VPC) of the EKS cluster that you created in **Step 2**. For details, see [Create a Bastion Server](./CreateBastionServer.md).
 
-* [Create a bastion server]() // TODO: Create a new document
+## Step 5. Prepare a custom values file for the Scalar Helm Chart
 
-## Step 5. Prepare a custom values file of Helm
+To perform tasks, like accessing information in the database that you created in **Step 3**, you must configure a custom values file for the Scalar Helm Chart for ScalarDB Server based on your environment. For details, see [Configure a custom values file for Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-file.md).
 
-You need to configure a custom values file for the Helm Chart of Scalar DB Server based on your environment (e.g., access information of the database you created in **Step 2**). Please refer to the following document for more details.  
+**Note:** If you deploy your application in an environment that is different from the EKS cluster that has your ScalarDB Server deployment, you must set the `envoy.service.type` parameter to `LoadBalancer` to access Scalar Envoy from your application.
 
-* [Configure a custom values file of Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
+## Step 6. Deploy ScalarDB Server by using the Scalar Helm Chart
 
-## Step 6. Deploy Scalar DB Server using Scalar Helm Chart
+Deploy ScalarDB Server on your EKS cluster by using the Helm Chart for ScalarDB Server. For details, see [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
 
-Deploy Scalar DB Server on your EKS cluster using Scalar Helm Chart. Please refer to the following document for more details.  
+**Note:** We recommend creating a dedicated namespace by using the `kubectl create ns scalardb` command and deploying ScalarDB Server in the namespace by using the `-n scalardb` option with the `helm install` command.
 
-* [Deploy Scalar Products using Scalar Helm Chart]() // TODO: Create a new document in the Scalar Helm Chart repository
+## Step 7. Check the status of your ScalarDB Server deployment
 
-## Step 7. Check the status of Scalar DB Server deployment
+After deploying ScalarDB Server in your EKS cluster, you must check the status of each component. For details, see [Components to Regularly Check When Running in a Kubernetes Environment](./RegularCheck.md).
 
-After deploying Scalar DB Server on your EKS cluster, you need to check the status of each component. Please refer to the following document for more details.  
+## Step 8. Monitor your ScalarDB Server deployment
 
-* [What you might want to check on a regular basis](./RegularCheck.md) // TODO: Update existing document
+After deploying ScalarDB Server in your EKS cluster, we recommend monitoring the deployed components and collecting their logs, especially in production. For details, see [Monitoring Scalar products on a Kubernetes cluster](./K8sMonitorGuide.md) and [Collecting logs from Scalar products on a Kubernetes cluster](./K8sLogCollectionGuide.md).
 
-## Step 8. Monitoring for Scalar DB Server deployment
+## Remove ScalarDB Server from EKS
 
-After deploying Scalar DB Server on your EKS cluster, it is recommended to monitor the deployed components and collect their logs, especially in production. Please refer to the following document for more details.  
-
-* [Kubernetes Monitor Guide](./K8sMonitorGuide.md) // TODO: Update existing document
-* [How to collect logs from Kubernetes applications](./K8sLogCollectionGuide.md) // TODO: Update existing document
-
----
-
-## Uninstall Scalar DB Server on EKS
-
-If you want to uninstall the environment you created, please uninstall/remove resources in the reverse order of creation.  // TODO: Add delete steps in each document
+If you want to remove the environment that you created, please remove all the resources in reverse order from which you created them in.
