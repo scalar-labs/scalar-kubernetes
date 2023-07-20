@@ -60,7 +60,7 @@ To perform tasks, like accessing information in the database that you created in
 
 ## Step 10. Deploy ScalarDL Ledger by using the Scalar Helm Chart
 
-You must deploy ScalarDL Ledger on your AKS cluster by using the Scalar Helm Chart. For details, see [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
+Deploy ScalarDL Ledger on your AKS cluster by using the Helm Chart for ScalarDL Ledger. For details, see [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
 
 **Note:** We recommend creating a dedicated namespace by using the `kubectl create ns scalardl-ledger` command and deploying ScalarDL Ledger in the namespace by using the `-n scalardl-ledger` option with the `helm install` command.
 
@@ -70,7 +70,7 @@ To perform tasks, like accessing information in the database that you created in
 
 ## Step 12. Deploy ScalarDL Auditor by using the Scalar Helm Chart
 
-You must deploy ScalarDL Auditor on your AKS cluster by using the Scalar Helm Chart. For details, see [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
+Deploy ScalarDL Auditor on your AKS cluster by using the Helm Chart for ScalarDL Auditor. For details, see [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
 
 **Note:** We recommend creating a dedicated namespace by using the `kubectl create ns scalardl-auditor` command and deploying ScalarDL Auditor in the namespace by using the `-n scalardl-auditor` option with the `helm install` command.
 

@@ -30,7 +30,7 @@ To perform tasks, like accessing information in the database that you created in
 
 ## Step 6. Deploy ScalarDL Ledger by using the Scalar Helm Chart
 
-You must deploy ScalarDL Ledger in your AKS cluster by using the Scalar Helm Chart. For details, see [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
+Deploy ScalarDL Ledger in your AKS cluster by using the Helm Chart for ScalarDL Ledger. For details, see [Deploy Scalar products using Scalar Helm Charts](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
 
 **Note:** We recommend creating a dedicated namespace by using the `kubectl create ns scalardl-ledger` command and deploying ScalarDL Ledger in the namespace by using the `-n scalardl-ledger` option with the `helm install` command.
 

@@ -38,7 +38,7 @@ To perform tasks, like accessing information in the database that you created in
 
 ## Step 6. Deploy ScalarDB Server by using the Scalar Helm Chart
 
-Deploy ScalarDB Server on your AKS cluster by using the Helm Chart for ScalarDB. For details, see [Deploy Scalar Products using Scalar Helm Chart](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
+Deploy ScalarDB Server on your AKS cluster by using the Helm Chart for ScalarDB Server. For details, see [Deploy Scalar Products using Scalar Helm Chart](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalar-products.md).
 
 **Note:** We recommend creating a dedicated namespace by using the `kubectl create ns scalardb` command and deploying ScalarDB Server in the namespace by using the `-n scalardb` option with the `helm install` command.
 
