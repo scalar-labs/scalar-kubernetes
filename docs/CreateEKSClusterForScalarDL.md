@@ -1,6 +1,6 @@
-# Create an Amazon EKS cluster for ScalarDL Ledger
+# A guideline for creating an EKS cluster for ScalarDL Ledger
 
-This document explains how to create an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDL Ledger deployment. For details on how to deploy ScalarDL Ledger on an EKS cluster, see [Deploy ScalarDL Ledger on Amazon EKS](./ManualDeploymentGuideScalarDLOnEKS.md).
+This document explains the requirements and recommendations for creating an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDL Ledger deployment. For details on how to deploy ScalarDL Ledger on an EKS cluster, see [Deploy ScalarDL Ledger on Amazon EKS](./ManualDeploymentGuideScalarDLOnEKS.md).
 
 ## Before you begin
 

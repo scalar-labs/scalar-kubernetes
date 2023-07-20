@@ -1,6 +1,6 @@
-# Create an AKS cluster for ScalarDL Ledger and ScalarDL Auditor
+# A guideline for creating an AKS cluster for ScalarDL Ledger and ScalarDL Auditor
 
-This document explains how to create an Azure Kubernetes Service (AKS) cluster for ScalarDL Ledger and ScalarDL Auditor deployment. For details on how to deploy ScalarDL Ledger and ScalarDL Auditor on an AKS cluster, see [Deploy ScalarDL Ledger and ScalarDL Auditor on AKS](./ManualDeploymentGuideScalarDLAuditorOnAKS.md).
+This document explains the requirements and recommendations for creating an Azure Kubernetes Service (AKS) cluster for ScalarDL Ledger and ScalarDL Auditor deployment. For details on how to deploy ScalarDL Ledger and ScalarDL Auditor on an AKS cluster, see [Deploy ScalarDL Ledger and ScalarDL Auditor on AKS](./ManualDeploymentGuideScalarDLAuditorOnAKS.md).
 
 ## Before you begin
 
