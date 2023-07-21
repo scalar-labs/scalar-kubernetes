@@ -1,0 +1,69 @@
+promtail:
+
+  nodeSelector:
+    scalar-labs.com/dedicated-node: scalardb
+    # scalar-labs.com/dedicated-node: scalardl-ledger
+    # scalar-labs.com/dedicated-node: scalardl-auditor
+
+  tolerations:
+    - effect: NoSchedule
+      key: scalar-labs.com/dedicated-node
+      operator: Equal
+      value: scalardb
+      # value: scalardl-ledger
+      # value: scalardl-auditor
+
+  config:
+    snippets:
+      # -- `scapeConfigs` is exactly the part of https://grafana.com/docs/loki/latest/clients/promtail/configuration/#scrape_configs
+      # -- The value will be created as a Kubernetes ConfigMap and then mounted to the Promtail Pod.
+      # -- Not really need to change this value. It's set to scrape all logs of Scalar DL/DB Pods by using regular expression.
+      scrapeConfigs: |
+        # -- the `scalardl` job scrapes all the logs from Scalar Ledger Pods, Scalar Auditor Pods, and the corresponding Envoy Pods
+        - job_name: scalardl
+          pipeline_stages:
+            - docker: {}
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels:
+                - __meta_kubernetes_pod_node_name
+              target_label: __host__
+            - action: replace
+              source_labels:
+                - __meta_kubernetes_pod_name
+              target_label: pod
+            - action: keep
+              regex: (.*)scalardl-(.+)
+              source_labels:
+                - pod
+            - replacement: /var/log/pods/*$1/*.log
+              separator: /
+              source_labels:
+                - __meta_kubernetes_pod_uid
+                - __meta_kubernetes_pod_container_name
+              target_label: __path__
+        # -- the `scalardb` job scrapes all the logs of Scalar DB Server Pods and the corresponding Envoy Pods
+        - job_name: scalardb
+          pipeline_stages:
+            - docker: {}
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels:
+                - __meta_kubernetes_pod_node_name
+              target_label: __host__
+            - action: replace
+              source_labels:
+                - __meta_kubernetes_pod_name
+              target_label: pod
+            - action: keep
+              regex: (.*)scalardb-(.+)
+              source_labels:
+                - pod
+            - replacement: /var/log/pods/*$1/*.log
+              separator: /
+              source_labels:
+                - __meta_kubernetes_pod_uid
+                - __meta_kubernetes_pod_container_name
+              target_label: __path__

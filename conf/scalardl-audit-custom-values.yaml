@@ -14,40 +14,37 @@ envoy:
     type: LoadBalancer
     annotations:
       service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-      service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "k8s_ingress"
       service.beta.kubernetes.io/aws-load-balancer-internal: "true"
       service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
 
   tolerations:
     - effect: NoSchedule
-      key: kubernetes.io/app
+      key: scalar-labs.com/dedicated-node
       operator: Equal
-      value: scalardlpool
+      value: scalardl-auditor
 
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: agentpool
+              - key: scalar-labs.com/dedicated-node
                 operator: In
                 values:
-                  - scalardlpool
+                  - scalardl-auditor
     podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-                - key: app.kubernetes.io/name
-                  operator: In
-                  values:
-                    - scalardl-audit
-                - key: app.kubernetes.io/app
-                  operator: In
-                  values:
-                    - envoy
-            topologyKey: kubernetes.io/hostname
-          weight: 50
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - scalardl-audit
+              - key: app.kubernetes.io/app
+                operator: In
+                values:
+                  - envoy
+          topologyKey: kubernetes.io/hostname
 
   resources:
     requests:
@@ -64,25 +61,43 @@ auditor:
     - name: reg-docker-secrets
 
   scalarAuditorConfiguration:
-    dbContactPoints: cassandra-lb.internal.scalar-labs.com
 
+  auditorProperties: |
+    # # Cosmo DB for NoSQL
+    # # The Cosmos DB for NoSQL URI
+    # scalar.db.contact_points=<COSMOS_DB_FOR_NOSQL_URI>
     #
-    # Cosmos DB
+    # # The Cosmos DB for NoSQL key
+    # scalar.db.password=<COSMOS_DB_FOR_NOSQL_KEY>
     #
-    # dbContactPoints: <Cosmos DB account endpoint>
-    # dbPassword: <Cosmos DB account primary master key>
-    # dbStorage: cosmos
+    # # Cosmos DB for NoSQL storage implementation
+    # scalar.db.storage=cosmos
 
+    # # DynamoDB
+    # # The AWS region
+    # scalar.db.contact_points=<REGION>
     #
-    # DynamoDB
+    # # The AWS access key ID and secret access key
+    # scalar.db.username=<ACCESS_KEY_ID>
+    # scalar.db.password=<SECRET_ACCESS_KEY>
     #
-    # dbStorage: dynamo
-    # dbContactPoints: <REGION>
-    # dbUsername: <AWS_ACCESS_KEY_ID>
-    # dbPassword: <AWS_ACCESS_SECRET_KEY>
+    # # DynamoDB storage implementation
+    # scalar.db.storage=dynamo
 
-    # To use Auditor
-    # auditorLedgerHost: <the service endpoint of ledger-side envoy>
+    # # Auditor configurations
+    # scalar.dl.auditor.ledger.host=<Host name to access ScalarDL Ledger pods>
+    # scalar.dl.auditor.private_key_path=/keys/private-key
+    # scalar.dl.auditor.cert_path=/keys/certificate
+
+  extraVolumes:
+    - name: auditor-keys
+      secret:
+        secretName: auditor-keys
+
+  extraVolumeMounts:
+    - name: auditor-keys
+      mountPath: /keys
+      readOnly: true
 
   prometheusRule:
     enabled: false
@@ -97,39 +112,37 @@ auditor:
 
   tolerations:
     - effect: NoSchedule
-      key: kubernetes.io/app
+      key: scalar-labs.com/dedicated-node
       operator: Equal
-      value: scalardlpool
+      value: scalardl-auditor
 
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: agentpool
+              - key: scalar-labs.com/dedicated-node
                 operator: In
                 values:
-                  - scalardlpool
+                  - scalardl-auditor
     podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-                - key: app.kubernetes.io/name
-                  operator: In
-                  values:
-                    - scalardl-audit
-                - key: app.kubernetes.io/app
-                  operator: In
-                  values:
-                    - auditor
-            topologyKey: kubernetes.io/hostname
-          weight: 50
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - scalardl-audit
+              - key: app.kubernetes.io/app
+                operator: In
+                values:
+                  - auditor
+          topologyKey: kubernetes.io/hostname
 
   resources:
     requests:
-      cpu: 1000m
-      memory: 2Gi
+      cpu: 2000m
+      memory: 4Gi
     limits:
-      cpu: 1500m
-      memory: 3Gi
+      cpu: 2000m
+      memory: 4Gi
