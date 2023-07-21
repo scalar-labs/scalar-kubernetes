@@ -18,7 +18,7 @@ You must get the ScalarDB Server container image by visiting [AWS Marketplace](h
 
 ## Step 2. Create an EKS cluster
 
-You must create an EKS cluster for the ScalarDB Server deployment. For details, see [Create an Amazon EKS cluster for Scalar products](./CreateEKSClusterForScalarProducts.md).
+You must create an EKS cluster for the ScalarDB Server deployment. For details, see [A guideline for creating an Amazon EKS cluster for Scalar products](./CreateEKSClusterForScalarProducts.md).
 
 ## Step 3. Set up a database for ScalarDB Server
 
