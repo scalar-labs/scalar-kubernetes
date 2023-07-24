@@ -1,4 +1,4 @@
-# Guidelines for creating an EKS cluster for ScalarDB Server
+# A guideline for creating an EKS cluster for ScalarDB Server
 
 This document explains the requirements and recommendations for creating an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDB Server deployment. For details on how to deploy ScalarDB Server on an EKS cluster, see [Deploy ScalarDB Server on Amazon EKS](./ManualDeploymentGuideScalarDBServerOnEKS.md).
 

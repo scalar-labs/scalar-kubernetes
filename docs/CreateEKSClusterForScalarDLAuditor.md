@@ -1,4 +1,4 @@
-# Guidelines for creating an EKS cluster for ScalarDL Ledger and ScalarDL Auditor
+# A guideline for creating an EKS cluster for ScalarDL Ledger and ScalarDL Auditor
 
 This document explains the requirements and recommendations for creating an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDL Ledger and ScalarDL Auditor deployment. For details on how to deploy ScalarDL Ledger and ScalarDL Auditor on an EKS cluster, see [Deploy ScalarDL Ledger and ScalarDL Auditor on Amazon EKS](./ManualDeploymentGuideScalarDLAuditorOnEKS.md).
 
