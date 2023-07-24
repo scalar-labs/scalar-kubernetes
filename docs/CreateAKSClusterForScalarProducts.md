@@ -1,10 +1,10 @@
-# A guideline for creating an AKS cluster for Scalar products
+# Guidelines for creating an AKS cluster for Scalar products
 
 To create an Azure Kubernetes Service (AKS) cluster for Scalar products, refer to the following:
 
-* [A guideline for creating an AKS cluster for ScalarDB Server](./CreateAKSClusterForScalarDB.md)
-* [A guideline for creating an AKS cluster for ScalarDL Ledger](./CreateAKSClusterForScalarDL.md)
-* [A guideline for creating an AKS cluster for ScalarDL Ledger and ScalarDL Auditor](./CreateAKSClusterForScalarDLAuditor.md)
+* [Guidelines for creating an AKS cluster for ScalarDB Server](./CreateAKSClusterForScalarDB.md)
+* [Guidelines for creating an AKS cluster for ScalarDL Ledger](./CreateAKSClusterForScalarDL.md)
+* [Guidelines for creating an AKS cluster for ScalarDL Ledger and ScalarDL Auditor](./CreateAKSClusterForScalarDLAuditor.md)
 
 To deploy Scalar products on AKS, refer to the following:
 
