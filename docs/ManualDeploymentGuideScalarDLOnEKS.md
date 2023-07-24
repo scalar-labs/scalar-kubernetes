@@ -12,7 +12,7 @@ You must get the ScalarDL Ledger container image from [AWS Marketplace](https://
 
 ## Step 2. Create an EKS cluster
 
-You must create an EKS cluster for the ScalarDL Ledger deployment. For details, see [Guidelines for creating an Amazon EKS cluster for Scalar products](./CreateEKSClusterForScalarProducts.md).
+You must create an EKS cluster for the ScalarDL Ledger deployment. For details, see [A guideline for creating an Amazon EKS cluster for Scalar products](./CreateEKSClusterForScalarProducts.md).
 
 ## Step 3. Set up a database for ScalarDL Ledger
 
