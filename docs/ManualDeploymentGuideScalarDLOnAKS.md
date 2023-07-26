@@ -12,7 +12,7 @@ You must get the ScalarDL Ledger container image from [Azure Marketplace](https:
 
 ## Step 2. Create an AKS cluster
 
-You must create an AKS cluster for the ScalarDL Ledger deployment. For details, see [A guideline for creating an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md).
+You must create an AKS cluster for the ScalarDL Ledger deployment. For details, see [Guidelines for creating an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md).
 
 ## Step 3. Set up a database for ScalarDL Ledger
 
