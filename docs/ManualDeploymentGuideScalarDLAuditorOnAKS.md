@@ -24,11 +24,11 @@ You must get the ScalarDL Ledger and ScalarDL Auditor container images by visiti
 
 ## Step 2. Create an AKS cluster for ScalarDL Ledger
 
-You must create an AKS cluster for the ScalarDL Ledger deployment. For details, see [Create an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md).
+You must create an AKS cluster for the ScalarDL Ledger deployment. For details, see [Guidelines for creating an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md).
 
 ## Step 3. Create an AKS cluster for ScalarDL Auditor
 
-You must also create an AKS cluster for the ScalarDL Auditor deployment. For details, see [Create an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md).
+You must also create an AKS cluster for the ScalarDL Auditor deployment. For details, see [Guidelines for creating an AKS cluster for Scalar products](./CreateAKSClusterForScalarProducts.md).
 
 ## Step 4. Set up a database for ScalarDL Ledger
 

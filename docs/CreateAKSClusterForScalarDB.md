@@ -1,4 +1,4 @@
-# A guideline for creating an AKS cluster for ScalarDB Server
+# Guidelines for creating an AKS cluster for ScalarDB Server
 
 This document explains the requirements and recommendations for creating an Azure Kubernetes Service (AKS) cluster for ScalarDB Server deployment. For details on how to deploy ScalarDB Server on an AKS cluster, see [Deploy ScalarDB Server on AKS](./ManualDeploymentGuideScalarDBServerOnAKS.md).
 
