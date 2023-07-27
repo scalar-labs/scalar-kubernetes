@@ -41,19 +41,19 @@ In the production environment, it is recommended to add labels to the worker nod
 
 Since the promtail pods deployed in this document collect only Scalar product logs, it is sufficient to deploy promtail pods only on the worker node where Scalar products are running. So, you should set nodeSelector in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add labels to your Kubernetes worker node.
 
-* Scalar DB Example
+* ScalarDB Example
   ```yaml
   promtail:
     nodeSelector:
       scalar-labs.com/dedicated-node: scalardb
   ```
-* Scalar DL Ledger Example
+* ScalarDL Ledger Example
   ```yaml
   promtail:
     nodeSelector:
       scalar-labs.com/dedicated-node: scalardl-ledger
   ```
-* Scalar DL Auditor Example
+* ScalarDL Auditor Example
   ```yaml
   promtail:
     nodeSelector:
@@ -69,7 +69,7 @@ In the production environment, it is recommended to add taints to the worker nod
 
 Since promtail pods are deployed as DaemonSet, you must set tolerations in the custom values file (scalar-loki-stack-custom-values.yaml) as follows if you add taints to your Kubernetes worker node.
 
-* Scalar DB Example
+* ScalarDB Example
   ```yaml
   promtail:
     tolerations:
@@ -78,7 +78,7 @@ Since promtail pods are deployed as DaemonSet, you must set tolerations in the c
         operator: Equal
         value: scalardb
   ```
-* Scalar DL Ledger Example
+* ScalarDL Ledger Example
   ```yaml
   promtail:
     tolerations:
@@ -87,7 +87,7 @@ Since promtail pods are deployed as DaemonSet, you must set tolerations in the c
         operator: Equal
         value: scalardl-ledger
   ```
-* Scalar DL Auditor Example
+* ScalarDL Auditor Example
   ```yaml
   promtail:
     tolerations:

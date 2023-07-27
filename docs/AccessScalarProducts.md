@@ -39,7 +39,7 @@ scalardl-ledger-metrics          ClusterIP      10.104.216.189   <none>        8
 
 If you deploy your application (client) in the same Kubernetes cluster as ScalarDB or ScalarDL (for example, if you deploy your application [client] on another node group or pool in the same Kubernetes cluster), the application can access ScalarDB or ScalarDL by using Kubernetes service resources. The format of the service resource name (FQDN) is `<HELM_RELEASE_NAME>-envoy.<NAMESPACE>.svc.cluster.local`.
 
-The following are examples of ScalarDB and Scalar DL deployments on the `ns-scalar` namespace:
+The following are examples of ScalarDB and ScalarDL deployments on the `ns-scalar` namespace:
 
 * **ScalarDB Server**
     ```console
