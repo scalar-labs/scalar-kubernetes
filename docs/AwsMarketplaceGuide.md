@@ -1,12 +1,14 @@
 # How to install Scalar products through AWS Marketplace
 
-Scalar products (ScalarDB, ScalarDL, and their tools) are available in the AWS Marketplace as container images. This guide explains how to install Scalar products through the AWS Marketplace.
+Scalar products (ScalarDB Server, ScalarDB Cluster, ScalarDL, and their tools) are available in the AWS Marketplace as container images. This guide explains how to install Scalar products through the AWS Marketplace.
 
 Note that some Scalar products are available under commercial licenses, and the AWS Marketplace provides those products as pay-as-you-go pricing or a Bring Your Own License (BYOL) option. If you select pay-as-you-go pricing, AWS will charge you our product license fee based on your usage. If you select BYOL, please make sure you have the appropriate license for the product.
 
 ## Subscribe to Scalar products from AWS Marketplace
 
 1. Access to the AWS Marketplace.
+   * [ScalarDB Cluster Standard Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4)
+   * [ScalarDB Cluster Premium Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6)
    * [ScalarDL Ledger (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-wttioaezp5j6e)
    * [ScalarDL Auditor (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu)
    * [ScalarDB (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2)
@@ -55,6 +57,27 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
 
    You need to specify the private container registry (ECR) of the AWS Marketplace and the version (tag) as the value for `[].image.repository` and `[].image.version (tag)` in the custom values file. You also need to specify the service account name that you created in the previous step as the value for `[].serviceAccount.serviceAccountName` and set `[].serviceAccount.automountServiceAccountToken` to `true`.
 
+   * ScalarDB Cluster Examples
+     * ScalarDB Cluster Standard Edition (scalardb-cluster-standard-custom-values.yaml)
+        ```yaml
+        scalardbCluster:
+          image:
+            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-payg-standard"
+            tag: "3.10.1"
+          serviceAccount:
+            serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+            automountServiceAccountToken: true
+        ```
+     * ScalarDB Cluster Premium Edition (scalardb-cluster-premium-custom-values.yaml)
+       ```yaml
+       scalardbCluster:
+         image:
+           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-payg-premium"
+           tag: "3.10.1"
+          serviceAccount:
+            serviceAccountName: "<SERVICE_ACCOUNT_NAME>"
+            automountServiceAccountToken: true
+       ```
    * ScalarDL Examples
       * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
         ```yaml
@@ -92,6 +115,15 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
         ```
 
 1. Deploy Scalar products by using Helm Charts in conjunction with the above custom values files.
+   * ScalarDB Cluster Examples
+     * ScalarDB Cluster Standard Edition
+       ```console
+       helm install scalardb-cluster-standard scalar-labs/scalardb-cluster -f scalardb-cluster-standard-custom-values.yaml
+       ```
+     * ScalarDB Cluster Premium Edition
+       ```console
+       helm install scalardb-cluster-premium scalar-labs/scalardb-cluster -f scalardb-cluster-premium-custom-values.yaml
+       ```
    * ScalarDL Examples
       * ScalarDL Ledger
         ```console

@@ -1,0 +1,146 @@
+envoy:
+  enabled: true
+
+  replicaCount: 3
+  
+  serviceMonitor:
+    enabled: false
+
+  prometheusRule:
+    enabled: false
+
+  grafanaDashboard:
+    enabled: false
+
+  service:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+      service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 300m
+      memory: 328Mi
+
+  tolerations:
+    - effect: NoSchedule
+      key: scalar-labs.com/dedicated-node
+      operator: Equal
+      value: scalardb-cluster
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: scalar-labs.com/dedicated-node
+                operator: In
+                values:
+                  - scalardb-cluster
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - scalardb-cluster
+              - key: app.kubernetes.io/app
+                operator: In
+                values:
+                  - envoy
+          topologyKey: kubernetes.io/hostname
+
+scalardbCluster:
+  replicaCount: 3
+
+  logLevel: INFO
+
+  graphql:
+    enabled: false
+    service:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+      service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+
+  scalardbClusterNodeProperties: |
+    # Fixed values
+    scalar.db.cluster.membership.type=KUBERNETES
+    scalar.db.cluster.membership.kubernetes.endpoint.namespace_name=${env:SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAMESPACE_NAME}
+    scalar.db.cluster.membership.kubernetes.endpoint.name=${env:SCALAR_DB_CLUSTER_MEMBERSHIP_KUBERNETES_ENDPOINT_NAME}
+
+    # # Cosmo DB for NoSQL
+    # # The Cosmos DB for NoSQL URI
+    # scalar.db.contact_points=<COSMOS_DB_FOR_NOSQL_URI>
+    #
+    # # The Cosmos DB for NoSQL key
+    # scalar.db.password=<COSMOS_DB_FOR_NOSQL_KEY>
+    #
+    # # Cosmos DB for NoSQL storage implementation
+    # scalar.db.storage=cosmos
+
+    # # DynamoDB
+    # # The AWS region
+    # scalar.db.contact_points=<REGION>
+    #
+    # # The AWS access key ID and secret access key
+    # scalar.db.username=<ACCESS_KEY_ID>
+    # scalar.db.password=<SECRET_ACCESS_KEY>
+    #
+    # # DynamoDB storage implementation
+    # scalar.db.storage=dynamo
+
+  serviceMonitor:
+    enabled: false
+
+  prometheusRule:
+    enabled: false
+
+  grafanaDashboard:
+    enabled: false
+
+  resources:
+    requests:
+      cpu: 2000m
+      memory: 4Gi
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+
+  tolerations:
+    - effect: NoSchedule
+      key: scalar-labs.com/dedicated-node
+      operator: Equal
+      value: scalardb-cluster
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: scalar-labs.com/dedicated-node
+                operator: In
+                values:
+                  - scalardb-cluster
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - scalardb-cluster
+              - key: app.kubernetes.io/app
+                operator: In
+                values:
+                  - scalardb-cluster
+          topologyKey: kubernetes.io/hostname
+
+  secretName: ""

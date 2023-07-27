@@ -2,7 +2,8 @@
 
 To create an Amazon Elastic Kubernetes Service (EKS) cluster for Scalar products, refer to the following:
 
-* [Guidelines for creating an EKS cluster for ScalarDB Server](./CreateEKSClusterForScalarDB.md)
+* [Guidelines for creating an EKS cluster for ScalarDB Cluster](./CreateEKSClusterForScalarDBCluster.md)
+* [(Deprecated) Guidelines for creating an EKS cluster for ScalarDB Server](./CreateEKSClusterForScalarDB.md)
 * [Guidelines for creating an EKS cluster for ScalarDL Ledger](./CreateEKSClusterForScalarDL.md)
 * [Guidelines for creating an EKS cluster for ScalarDL Ledger and ScalarDL Auditor](./CreateEKSClusterForScalarDLAuditor.md)
 
