@@ -10,4 +10,4 @@ To deploy Scalar products on AKS, refer to the following:
 
 * [Deploy ScalarDB Server on AKS](./ManualDeploymentGuideScalarDBServerOnAKS.md)
 * [Deploy ScalarDL Ledger on AKS](./ManualDeploymentGuideScalarDLOnAKS.md)
-* [Deploy ScalarDL Ledger and Scalar DL Auditor on AKS](./ManualDeploymentGuideScalarDLAuditorOnAKS.md)
+* [Deploy ScalarDL Ledger and ScalarDL Auditor on AKS](./ManualDeploymentGuideScalarDLAuditorOnAKS.md)
