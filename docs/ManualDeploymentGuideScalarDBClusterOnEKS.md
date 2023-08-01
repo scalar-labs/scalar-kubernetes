@@ -14,7 +14,7 @@ In this guide, you will create one of the following two environments in your AWS
 
 ## Step 1. Subscribe to ScalarDB Cluster in AWS Marketplace
 
-You must get the ScalarDB Cluster container image by visiting [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2) and subscribing to ScalarDB Cluster. For details on how to subscribe to ScalarDB Cluster in AWS Marketplace, see [Subscribe to Scalar products from AWS Marketplace](./AwsMarketplaceGuide.md#subscribe-to-scalar-products-from-aws-marketplace).
+You must get the ScalarDB Cluster container image by visiting AWS Marketplace and subscribing to [ScalarDB Cluster Standard Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4) or [ScalarDB Cluster Premium Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6). For details on how to subscribe to ScalarDB Cluster in AWS Marketplace, see [Subscribe to Scalar products from AWS Marketplace](./AwsMarketplaceGuide.md#subscribe-to-scalar-products-from-aws-marketplace).
 
 ## Step 2. Create an EKS cluster
 
