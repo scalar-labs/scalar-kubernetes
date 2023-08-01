@@ -19,7 +19,7 @@ The following are some recommendations for deploying ScalarDB Cluster. These rec
 
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDB Cluster node group
 
-From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, we recommend deploying one ScalarDB Cluster pod and one Envoy pod on one worker node. Note that the Envoy pod does not exist when you use `direct-kubernetes` mode.
+From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, we recommend deploying one ScalarDB Cluster pod and one Envoy pod on one worker node. Note that you do not need to deploy an Envoy pod when using `direct-kubernetes` mode.
 
 In other words, the following components run on one worker node:
 

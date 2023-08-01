@@ -2,13 +2,13 @@
 
 This guide explains how to deploy ScalarDB Cluster on Amazon Elastic Kubernetes Service (EKS).
 
-In this guide, you will create one of the following two environments in your AWS environment. The difference between the two environments is which [client modes](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#client-modes) you use:
+In this guide, you will create one of the following two environments in your AWS environment. The environments differ depending on which [client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#client-modes) you use:
 
-* Use [`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode). In this mode, you deploy your application in the same EKS cluster as your ScalarDB Cluster deployment.
+* **[`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode).** In this mode, you deploy your application in the same EKS cluster as your ScalarDB Cluster deployment.
 
   ![image](./images/png/EKS_ScalarDB_Cluster_Direct_Kubernetes_Mode.drawio.png)  
 
-* Use [`indirect` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#indirect-client-mode). In this mode, you deploy your application in an environment that is different from the EKS cluster that contains your ScalarDB Cluster deployment.
+* **[`indirect` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#indirect-client-mode).** In this mode, you deploy your application in an environment that is different from the EKS cluster that contains your ScalarDB Cluster deployment.
 
   ![image](./images/png/EKS_ScalarDB_Cluster_Indirect_Mode.drawio.png)
 
