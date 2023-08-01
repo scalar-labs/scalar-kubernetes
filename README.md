@@ -22,3 +22,7 @@ This repository contains a set of [documents](./docs/) and [configuration sample
 
 * [How to install Scalar products through AWS Marketplace](./docs/AwsMarketplaceGuide.md)
 * [How to install Scalar products through Azure Marketplace](./docs/AzureMarketplaceGuide.md)
+
+## Production checklist
+
+* [Production checklist for ScalarDB Cluster](./docs/ProductionChecklistForScalarDBCluster.md)
