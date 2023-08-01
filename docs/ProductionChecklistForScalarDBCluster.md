@@ -12,7 +12,6 @@ We assume that you deploy ScalarDB Cluster on managed Kubernetes cluster which i
 
 To ensure that the Kubernetes cluster has high availability, you should use at least three worker nodes in three availability zones and deploy at least three pods. You also should ensure that deploying one pod on one worker node by using [Node Affinity](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/).
 
-
 ### Worker node spec
 
 From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, we recommend deploying one ScalarDB Cluster pod and one Envoy pod on one worker node. Note that you do not need to deploy an Envoy pod when using `direct-kubernetes` mode.
