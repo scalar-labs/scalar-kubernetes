@@ -58,7 +58,7 @@ You must always run CRUD requests via ScalarDB Cluster. To ensure requests are r
     A(<b>App</b> <br> ScalarDB Cluster Library with Consensus Commit) --> B(Underlying storage/database)
   ```
 
-### Deployment of client application with `direct-kubernetes` client mode
+### Deployment of the client application when using `direct-kubernetes` client mode
 
 If you use [`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode), you must deploy your client application on the same Kubernetes cluster as the ScalarDB Cluster deployment.
 
