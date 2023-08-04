@@ -46,13 +46,16 @@ The following is a checklist of recommendations when setting up a client applica
 
 You must always run CRUD requests via ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured.
 
-* Recommended in production
-  ```console
-  [App (ScalarDB Cluster Library with gRPC)] ---> [ScalarDB Cluster (ScalarDB Library with Consensus Commit)] ---> [Underlying storage/database]
+* Recommended for production environments
+  ```mermaid
+  flowchart LR
+    A(<b>App</b> <br> ScalarDB Cluster Library with gRPC) --> B(<b>ScalarDB Cluster</b> <br> ScalarDB Library with Consensus Commit) --> C(Underlying storage/database)
   ```
-* Not recommended in production (Testing purpose only)
-  ```console
-  [App (ScalarDB Cluster Library with Consensus Commit)] ---> [Underlying storage/database]
+
+* Not recommended for production environments (for testing purposes only)
+  ```mermaid
+  flowchart LR
+    A(<b>App</b> <br> ScalarDB Cluster Library with Consensus Commit) --> B(Underlying storage/database)
   ```
 
 ### Deployment of client application with `direct-kubernetes` client mode
