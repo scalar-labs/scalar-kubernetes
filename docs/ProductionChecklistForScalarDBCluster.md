@@ -1,18 +1,20 @@
 # Production checklist for ScalarDB Cluster
 
-This document explains the recommendations of ScalarDB Cluster for production deployment.
+This checklist provides recommendations when deploying ScalarDB Cluster in a production environment.
 
 ## Before you begin
 
-We assume that you deploy ScalarDB Cluster on managed Kubernetes cluster which is recommended way.
+In this checklist, we assume that you are deploying ScalarDB Cluster on a managed Kubernetes cluster, which is recommended.
 
-## ScalarDB Cluster
+## Production checklist: ScalarDB Cluster
+
+The following is a checklist of recommendations when setting up ScalarDB Cluster in a production environment.
 
 ### Number of pods and Kubernetes worker nodes
 
-To ensure that the Kubernetes cluster has high availability, you should use at least three worker nodes in three availability zones and deploy at least three pods. You also should ensure that deploying one pod on one worker node by using [Node Affinity](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/).
+To ensure that the Kubernetes cluster has high availability, you should use at least three worker nodes in three availability zones and deploy at least three pods. You also should ensure that one pod is deployed on one worker node by using [Node Affinity](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/).
 
-### Worker node spec
+### Worker node specifications
 
 From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, we recommend deploying one ScalarDB Cluster pod and one Envoy pod on one worker node. Note that you do not need to deploy an Envoy pod when using `direct-kubernetes` mode.
 
@@ -36,11 +38,13 @@ You should monitor the deployed components and collect their logs. For details, 
 
 You should enable the automatic backup feature and PITR feature in the backend database. For details, see [Set up a database for ScalarDB/ScalarDL deployment](./SetupDatabase.md).
 
-## Client application of ScalarDB Cluster
+## Production checklist: Client application that uses ScalarDB Cluster
 
-### Configuration of the transaction manager
+The following is a checklist of recommendations when setting up a client application that is using ScalarDB Cluster in a production environment.
 
-You must always run the CRUD requests via ScalarDB Cluster. Please check your client's properties file that includes the configuration `scalar.db.transaction_manager=cluster`.
+### Transaction manager configuration
+
+You must always run CRUD requests via ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured.
 
 * Recommended in production
   ```console
@@ -53,9 +57,9 @@ You must always run the CRUD requests via ScalarDB Cluster. Please check your cl
 
 ### Deployment of client application with `direct-kubernetes` client mode
 
-If you use the [`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode), you have to deploy your client application on the same Kubernetes cluster as ScalarDB Cluster deployment.
+If you use [`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode), you must deploy your client application on the same Kubernetes cluster as the ScalarDB Cluster deployment.
 
-And, you must deploy additional Kubernetes resources to make your client application work properly.  For details, see [Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode).
+Also, when using `direct-kubernetes` client mode, you must deploy additional Kubernetes resources to make your client application work properly.  For details, see [Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode).
 
 ### Transaction handling
 
@@ -63,4 +67,4 @@ In your application, you must make sure it always runs [`commit()`](https://java
 
 ### Exception handling
 
-In your application, you must make sure it handles transaction exceptions. For details, see [Handle exceptions](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#handle-exceptions).
+You must make sure that your application handles transaction exceptions. For details, see [Handle exceptions](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#handle-exceptions).
