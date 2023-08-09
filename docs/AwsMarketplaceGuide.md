@@ -1,6 +1,6 @@
 # How to install Scalar products through AWS Marketplace
 
-Scalar products (ScalarDB Server, ScalarDB Cluster, ScalarDL, and their tools) are available in the AWS Marketplace as container images. This guide explains how to install Scalar products through the AWS Marketplace.
+Scalar products (ScalarDB, ScalarDL, and their tools) are available in the AWS Marketplace as container images. This guide explains how to install Scalar products through the AWS Marketplace.
 
 Note that some Scalar products are available under commercial licenses, and the AWS Marketplace provides those products as pay-as-you-go pricing or a Bring Your Own License (BYOL) option. If you select pay-as-you-go pricing, AWS will charge you our product license fee based on your usage. If you select BYOL, please make sure you have the appropriate license for the product.
 
