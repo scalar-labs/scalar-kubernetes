@@ -38,13 +38,13 @@ You should monitor the deployed components and collect their logs. For details, 
 
 You should enable the automatic backup feature and PITR feature in the backend database. For details, see [Set up a database for ScalarDB/ScalarDL deployment](./SetupDatabase.md).
 
-## Production checklist: Client application that uses ScalarDB Cluster
+## Production checklist: Client applications that access ScalarDB Cluster
 
-The following is a checklist of recommendations when setting up a client application that is using ScalarDB Cluster in a production environment.
+The following is a checklist of recommendations when setting up a client application that accesses ScalarDB Cluster in a production environment.
 
 ### Transaction manager configuration
 
-You must always run CRUD requests via ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured.
+You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured.
 
 * Recommended for production environments
   ```mermaid
