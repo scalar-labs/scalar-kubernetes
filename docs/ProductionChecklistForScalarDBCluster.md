@@ -24,7 +24,9 @@ In other words, the following components run on one worker node:
 * Envoy proxy (0.2–0.3 vCPU / 256–328 MB)
 * Kubernetes components
 
-With this in mind, you should use a worker node that has 4vCPU / 8GB memory resources. We recommend running only the above components on the worker node for ScalarDB Cluster.
+With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use the same number of worker nodes as the number of ScalarDB Cluster pods.
+
+We recommend running only the above components on the worker node for ScalarDB Cluster. If you use `direct-kubernetes` mode, we recommend using additional worker nodes and running your application pods on the different worker nodes from ScalarDB Cluster pods.
 
 ### Network
 
