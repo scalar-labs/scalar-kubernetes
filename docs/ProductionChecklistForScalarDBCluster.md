@@ -46,7 +46,7 @@ The following is a checklist of recommendations when setting up a client applica
 
 ### Transaction manager configuration
 
-You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured.
+You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured when you use CRUD API.
 
 * Recommended for production environments
   ```mermaid
@@ -58,6 +58,22 @@ You must always access ScalarDB Cluster. To ensure requests are running properly
   ```mermaid
   flowchart LR
     A(<b>App</b> <br> ScalarDB Cluster Library with Consensus Commit) --> B(Underlying storage/database)
+  ```
+
+### SQL connection configuration
+
+You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.sql.connection_mode=cluster` is configured when you use SQL API.
+
+* Recommended for production environments
+  ```mermaid
+  flowchart LR
+    A("<b>App</b> <br> ScalarDB SQL Library (Cluster mode)") --> B(<b>ScalarDB Cluster</b> <br> ScalarDB Library with Consensus Commit) --> C(Underlying storage/database)
+  ```
+
+* Not recommended for production environments (for testing purposes only)
+  ```mermaid
+  flowchart LR
+    A("<b>App</b> <br> ScalarDB SQL Library (Direct mode)") --> B(Underlying storage/database)
   ```
 
 ### Deployment of the client application when using `direct-kubernetes` client mode
