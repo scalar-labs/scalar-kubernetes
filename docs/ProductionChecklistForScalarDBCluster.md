@@ -44,6 +44,12 @@ You should enable the automatic backup feature and PITR feature in the backend d
 
 The following is a checklist of recommendations when setting up a client application that accesses ScalarDB Cluster in a production environment.
 
+### Client mode
+
+From the perspective of performance, we recommend using the `direct-kubernetes` mode. To use the `direct-kubernetes` mode, you must use the Java client library and deploy your application pods on the same Kubernetes cluster as ScalarDB Cluster pods.
+
+If you use other programming languages than Java (i.e., you use gRPC API without Java client library) for your application, you need to use the `indirect` mode. If you cannot deploy your application pods on the same Kubernetes cluster as ScalarDB Cluster pods for some reason, you also need to use the `indirect` mode.
+
 ### Transaction manager configuration
 
 You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured when you use CRUD API.
