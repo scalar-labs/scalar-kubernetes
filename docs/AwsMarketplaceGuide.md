@@ -11,7 +11,7 @@ Note that some Scalar products are available under commercial licenses, and the 
    * [ScalarDB Cluster Premium Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6)
    * [ScalarDL Ledger (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-wttioaezp5j6e)
    * [ScalarDL Auditor (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu)
-   * [ScalarDB (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2)
+   * [[Deprecated] ScalarDB Server (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2)
    * [ScalarDL Ledger (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)
    * [ScalarDL Auditor (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6)
 
