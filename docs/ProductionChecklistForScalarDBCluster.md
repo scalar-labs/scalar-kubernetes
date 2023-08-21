@@ -16,17 +16,20 @@ To ensure that the Kubernetes cluster has high availability, you should use at l
 
 ### Worker node specifications
 
-From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, we recommend deploying one ScalarDB Cluster pod and one Envoy pod on one worker node. Note that you do not need to deploy an Envoy pod when using `direct-kubernetes` mode.
+From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, there are some pods other than ScalarDB Cluster pods on the worker nodes.
 
 In other words, the following components run on one worker node:
 
 * ScalarDB Cluster pod (2vCPU / 4GB)
-* Envoy proxy (0.2–0.3 vCPU / 256–328 MB)
+* Envoy proxy if you use `indirect` client mode (0.2–0.3 vCPU / 256–328 MB)
 * Kubernetes components
+* Your application pod
 
-With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use the same number of worker nodes as the number of ScalarDB Cluster pods.
+**Note:** You do not need to deploy an Envoy pod when using `direct-kubernetes` mode.
 
-We recommend running only the above components on the worker node for ScalarDB Cluster. If you use `direct-kubernetes` mode, we recommend using additional worker nodes and running your application pods on the different worker nodes from ScalarDB Cluster pods.
+With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability that we mentioned in the previous section [Number of pods and Kubernetes worker nodes](./ProductionChecklistForScalarDBCluster.md#number-of-pods-and-kubernetes-worker-nodes).
+
+You should also consider the worker node resources based on the resources that your application pod use. If you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should also consider the maximum number of pods on the worker node.
 
 ### Network
 
