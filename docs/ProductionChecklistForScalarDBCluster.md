@@ -57,7 +57,7 @@ If you cannot deploy your Java application pods on the same Kubernetes cluster a
 
 **Note:** The client mode configuration is dedicated to the Java client library. When you use other programming languages than Java (i.e., you use [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) and [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) without the Java client library) for your application, there is no such configuration. In this case, you must deploy Envoy pods.
 
-### Transaction manager configuration
+### Transaction manager configuration (Java client library only)
 
 You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured when you use CRUD API.
 
@@ -73,7 +73,7 @@ You must always access ScalarDB Cluster. To ensure requests are running properly
     A(<b>App</b> <br> ScalarDB Cluster Library with Consensus Commit) --> B(Underlying storage/database)
   ```
 
-### SQL connection configuration
+### SQL connection configuration (Java client library only)
 
 You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.sql.connection_mode=cluster` is configured when you use SQL API.
 
@@ -89,17 +89,19 @@ You must always access ScalarDB Cluster. To ensure requests are running properly
     A("<b>App</b> <br> ScalarDB SQL Library (Direct mode)") --> B(Underlying storage/database)
   ```
 
-### Deployment of the client application when using `direct-kubernetes` client mode
+### Deployment of the client application when using `direct-kubernetes` client mode (Java client library only)
 
 If you use [`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode), you must deploy your client application on the same Kubernetes cluster as the ScalarDB Cluster deployment.
 
 Also, when using `direct-kubernetes` client mode, you must deploy additional Kubernetes resources to make your client application work properly.  For details, see [Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode).
 
-### Transaction handling
+### Transaction handling (Java client library and gRPC API)
 
 You must make that sure your application always runs [`commit()`](https://javadoc.io/static/com.scalar-labs/scalardb/3.10.0/com/scalar/db/api/DistributedTransaction.html#commit--) or [`rollback()`](https://javadoc.io/static/com.scalar-labs/scalardb/3.10.0/com/scalar/db/api/DistributedTransaction.html#rollback--) after you [`begin()`](https://javadoc.io/static/com.scalar-labs/scalardb/3.10.0/com/scalar/db/api/DistributedTransactionManager.html#begin--) a transaction. If the application does not run `commit()` or `rollback()`, your application might experience unexpected issues or read inconsistent data from the backend database.
 
-### Exception handling
+**Note:** When you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) and [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md), your application should call a `Commit` or `Rollback` service after you call a `Begin` service to begin a transaction.
+
+### Exception handling (Java client library and gRPC API)
 
 You must make sure that your application handles transaction exceptions. For details, see each document of API that you use:
 
