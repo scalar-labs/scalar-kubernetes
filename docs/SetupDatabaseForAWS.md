@@ -17,7 +17,7 @@ scalar.db.storage=dynamo
 
 Please refer to the following document for more details on the properties for DynamoDB.
 
-* [Getting Started with ScalarDB on DynamoDB](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-dynamodb.md)
+* [Configure ScalarDB for DynamoDB](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-2)
 
 ### Required configuration/steps
 
@@ -77,7 +77,7 @@ scalar.db.storage=jdbc
 
 Please refer to the following document for more details on the properties for RDS (JDBC databases).
 
-* [Getting Started with ScalarDB on JDBC databases](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-jdbc.md)
+* [Configure ScalarDB for JDBC databases](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-3)
 
 ### Required configuration/steps
 
@@ -132,7 +132,7 @@ scalar.db.storage=jdbc
 
 Please refer to the following document for more details on the properties for Amazon Aurora (JDBC databases).
 
-* [Getting Started with ScalarDB on JDBC databases](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-jdbc.md)
+* [Configure ScalarDB for JDBC databases](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-3)
 
 ### Required configuration/steps
 
