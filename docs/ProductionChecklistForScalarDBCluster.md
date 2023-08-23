@@ -21,7 +21,7 @@ From the perspective of commercial licenses, resources for one pod running Scala
 In other words, the following components run on one worker node:
 
 * ScalarDB Cluster pod (2vCPU / 4GB)
-* Envoy proxy if you use `indirect` client mode (0.2–0.3 vCPU / 256–328 MB)
+* Envoy proxy if you use `indirect` client mode or use other programming languages than Java (0.2–0.3 vCPU / 256–328 MB)
 * Kubernetes components
 * Your application pod
 
@@ -47,11 +47,15 @@ You should enable the automatic backup feature and PITR feature in the backend d
 
 The following is a checklist of recommendations when setting up a client application that accesses ScalarDB Cluster in a production environment.
 
-### Client mode
+### Client mode (Java client library only)
 
-From the perspective of performance, we recommend using the `direct-kubernetes` mode. To use the `direct-kubernetes` mode, you must use the Java client library and deploy your application pods on the same Kubernetes cluster as ScalarDB Cluster pods.
+When you use Java for your application, you can use an official Java client library. In this case, you can choose one of the two client modes [`direct-kubernetes mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode) and [`indirect mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#indirect-client-mode).
 
-If you use other programming languages than Java (i.e., you use gRPC API without Java client library) for your application, you need to use the `indirect` mode. If you cannot deploy your application pods on the same Kubernetes cluster as ScalarDB Cluster pods for some reason, you also need to use the `indirect` mode.
+From the perspective of performance, we recommend using the `direct-kubernetes` mode. To use the `direct-kubernetes` mode, you must deploy your application pods on the same Kubernetes cluster as ScalarDB Cluster pods. In this case, you do not need to deploy Envoy pods.
+
+If you cannot deploy your Java application pods on the same Kubernetes cluster as ScalarDB Cluster pods for some reason, you must use the `indirect` mode. In this case, you must deploy Envoy pods.
+
+**Note:** The client mode configuration is dedicated to the Java client library. When you use other programming languages than Java (i.e., you use [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) and [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) without the Java client library) for your application, there is no such configuration. In this case, you must deploy Envoy pods.
 
 ### Transaction manager configuration
 
