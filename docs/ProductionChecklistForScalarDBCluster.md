@@ -12,7 +12,7 @@ The following is a checklist of recommendations when setting up ScalarDB Cluster
 
 ### Number of pods and Kubernetes worker nodes
 
-To ensure that the Kubernetes cluster has high availability, you should use at least three worker nodes in three availability zones and deploy at least three pods. You also should ensure that one pod is deployed on one worker node by using [Node Affinity](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/). You can see the [sample configurations](https://github.com/scalar-labs/scalar-kubernetes/blob/master/conf/scalardb-cluster-custom-values-direct-kubernetes-mode.yaml#L65-L86) of Node Affinity for this recommendation.
+To ensure that the Kubernetes cluster has high availability, you should use at least three worker nodes in three availability zones and deploy at least three pods.
 
 ### Worker node specifications
 
