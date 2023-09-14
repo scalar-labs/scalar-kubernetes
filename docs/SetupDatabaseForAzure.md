@@ -16,7 +16,7 @@ scalar.db.storage=cosmos
 
 Please refer to the following document for more details on the properties for Cosmos DB for NoSQL.
 
-* [Getting Started with ScalarDB on Cosmos DB](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-cosmosdb.md)
+* [Configure ScalarDB for Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-1)
 
 ### Required configuration/steps
 
@@ -85,7 +85,7 @@ scalar.db.storage=jdbc
 
 Please refer to the following document for more details on the properties for Azure Database for MySQL (JDBC databases).
 
-* [Getting Started with ScalarDB on JDBC databases](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-jdbc.md)
+* [Configure ScalarDB for JDBC databases](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-3)
 
 ### Required configuration/steps
 
@@ -149,7 +149,7 @@ scalar.db.storage=jdbc
 
 Please refer to the following document for more details on the properties for Azure Database for PostgreSQL (JDBC databases).
 
-* [Getting Started with ScalarDB on JDBC databases](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-jdbc.md)
+* [Configure ScalarDB for JDBC databases](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-3)
 
 ### Required configuration/steps
 

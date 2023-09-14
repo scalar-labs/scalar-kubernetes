@@ -87,7 +87,7 @@ When using the PITR feature, Azure Cosmos DB restores data by using another acco
 3. Update **database.properties** for ScalarDB Schema Loader or ScalarDL Schema Loader based on the newly restored account.
 
    ScalarDB implements the Cosmos DB adapter by using its stored procedures, which are installed when creating schemas by using ScalarDB Schema Loader or ScalarDL Schema Loader. However, the PITR feature in Cosmos DB does not restore stored procedures, so you will need to reinstall the required stored procedures for all tables after restoration. You can reinstall the required stored procedures by using the `--repair-all` option in ScalarDB Schema Loader or ScalarDL Schema Loader.
-   * **ScalarDB tables:** For details on how to configure **database.properties** for ScalarDB Schema Loader, see [Getting Started with ScalarDB on Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb-on-cosmosdb.md).
+   * **ScalarDB tables:** For details on how to configure **database.properties** for ScalarDB Schema Loader, see [Configure ScalarDB for Cosmos DB for NoSQL](https://github.com/scalar-labs/scalardb/blob/master/docs/getting-started-with-scalardb.md#configure-scalardb-1).
 
    * **ScalarDL tables:** For details on how to configure the custom values file for ScalarDL Schema Loader, see [Configure a custom values file for ScalarDL Schema Loader](https://github.com/scalar-labs/helm-charts/blob/main/docs/configure-custom-values-scalardl-schema-loader.md).
 
