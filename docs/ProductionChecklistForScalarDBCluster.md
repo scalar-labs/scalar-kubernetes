@@ -18,7 +18,7 @@ To ensure that the Kubernetes cluster has high availability, you should use at l
 
 From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, there are some pods other than ScalarDB Cluster pods on the worker nodes.
 
-In other words, the following components run on one worker node:
+In other words, the following components could run on one worker node:
 
 * ScalarDB Cluster pod (2vCPU / 4GB)
 * Envoy proxy if you use `indirect` client mode or use other programming languages than Java (0.2–0.3 vCPU / 256–328 MB)
