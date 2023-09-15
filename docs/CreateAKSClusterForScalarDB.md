@@ -31,6 +31,8 @@ To ensure that the AKS cluster has high availability, you should use at least th
 If you place the worker nodes in different [availability zones](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview) (AZs), you can survive an AZ failure.
 {% endcapture %}
 
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDB Server node pool
 
 From the perspective of commercial licenses, resources for one pod running ScalarDB Server are limited to 2vCPU / 4GB memory. In addition, there are some pods other than ScalarDB Server pods on the worker nodes.

@@ -27,6 +27,8 @@ To ensure that the EKS cluster has high availability, you should use at least th
 If you place the worker nodes in different [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) (AZs), you can survive an AZ failure.
 {% endcapture %}
 
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDB Cluster node group
 
 From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, there are some pods other than ScalarDB Cluster pods on the worker nodes.
