@@ -12,7 +12,15 @@ The following is a checklist of recommendations when setting up ScalarDB Cluster
 
 ### Number of pods and Kubernetes worker nodes
 
-To ensure that the Kubernetes cluster has high availability, you should use at least three worker nodes in three availability zones and deploy at least three pods.
+To ensure that the Kubernetes cluster has high availability, you should use at least three worker nodes and deploy at least three pods spread across the worker nodes. You can see the [sample configurations](../conf/scalardb-cluster-custom-values-indirect-mode.yaml) of `podAntiAffinity` for making three pods spread across the worker nodes.
+
+{% capture notice--info %}
+**Note**
+
+If you place the worker nodes in different availability zones (AZs), you can survive an AZ failure.
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
 
 ### Worker node specifications
 
@@ -21,15 +29,22 @@ From the perspective of commercial licenses, resources for one pod running Scala
 In other words, the following components could run on one worker node:
 
 * ScalarDB Cluster pod (2vCPU / 4GB)
-* Envoy proxy if you use `indirect` client mode or use other programming languages than Java (0.2–0.3 vCPU / 256–328 MB)
+* Envoy proxy (if you use `indirect` client mode or use other programming languages than Java)
+* Your application pods  (if you choose to run your application's pods in the same worker node)
+* Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
 * Kubernetes components
-* Your application pod
 
-**Note:** You do not need to deploy an Envoy pod when using `direct-kubernetes` mode.
+{% capture notice--info %}
+**Note**
+
+You do not need to deploy an Envoy pod when using `direct-kubernetes` mode.
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
 
 With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability that we mentioned in the previous section [Number of pods and Kubernetes worker nodes](./ProductionChecklistForScalarDBCluster.md#number-of-pods-and-kubernetes-worker-nodes).
 
-You should also consider the worker node resources based on the resources that your application pod use. If you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should also consider the maximum number of pods on the worker node.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is a minimum environment for production. You should also consider the resources of the Kubernetes cluster (e.g., the number of worker nodes, vCPUs per node, memories per node, pods of ScalarDB Cluster, and pods of your application) depends on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should also consider the maximum number of pods on the worker node to decide on the worker node resources.
 
 ### Network
 
@@ -55,7 +70,13 @@ From the perspective of performance, we recommend using the `direct-kubernetes` 
 
 If you cannot deploy your Java application pods on the same Kubernetes cluster as ScalarDB Cluster pods for some reason, you must use the `indirect` mode. In this case, you must deploy Envoy pods.
 
-**Note:** The client mode configuration is dedicated to the Java client library. When you use other programming languages than Java (i.e., you use [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) and [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) without the Java client library) for your application, there is no such configuration. In this case, you must deploy Envoy pods.
+{% capture notice--info %}
+**Note**
+
+The client mode configuration is dedicated to the Java client library. When you use other programming languages than Java (i.e., you use [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) and [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) without the Java client library) for your application, there is no such configuration. In this case, you must deploy Envoy pods.
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
 
 ### Transaction manager configuration (Java client library only)
 
@@ -99,7 +120,13 @@ Also, when using `direct-kubernetes` client mode, you must deploy additional Kub
 
 You must make sure that your application always runs [`commit()`](https://javadoc.io/static/com.scalar-labs/scalardb/3.10.0/com/scalar/db/api/DistributedTransaction.html#commit--) or [`rollback()`](https://javadoc.io/static/com.scalar-labs/scalardb/3.10.0/com/scalar/db/api/DistributedTransaction.html#rollback--) after you [`begin()`](https://javadoc.io/static/com.scalar-labs/scalardb/3.10.0/com/scalar/db/api/DistributedTransactionManager.html#begin--) a transaction. If the application does not run `commit()` or `rollback()`, your application might experience unexpected issues or read inconsistent data from the backend database.
 
-**Note:** When you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) and [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md), your application should call a `Commit` or `Rollback` service after you call a `Begin` service to begin a transaction.
+{% capture notice--info %}
+**Note**
+
+When you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) and [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md), your application should call a `Commit` or `Rollback` service after you call a `Begin` service to begin a transaction.
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
 
 ### Exception handling (Java client library and gRPC API)
 
