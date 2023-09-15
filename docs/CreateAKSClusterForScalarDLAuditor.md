@@ -23,40 +23,55 @@ When deploying ScalarDL Ledger and ScalarDL Auditor, you must:
     * Allow **connections between Ledger and Auditor** to make ScalarDL (Auditor mode) work properly.
     * For more details about these network requirements, refer to [Create network peering for ScalarDL Auditor mode // TODO: Add link of new document]().
 
-### Note
+{% capture notice--info %}
+**Note**
 
 For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same AKS clusters as the ScalarDL Ledger and ScalarDL Auditor deployments.
+
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
 
 ## Recommendations (optional)
 
 The following are some recommendations for deploying ScalarDL Ledger and ScalarDL Auditor. These recommendations are not required, so you can choose whether or not to apply these recommendations based on your needs.
 
+### Create at least three worker nodes and three pods per AKS cluster
+
+To ensure that the AKS cluster has high availability, you should use at least three worker nodes and deploy at least three pods spread across the worker nodes. You can see the [ScalarDL Ledger sample configurations](../conf/scalardl-custom-values.yaml) and [ScalarDL Auditor sample configurations](../conf/scalardl-audit-custom-values.yaml) of `podAntiAffinity` for making three pods spread across the worker nodes.
+
+{% capture notice--info %}
+**Note**
+
+If you place the worker nodes in different [availability zones](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview) (AZs), you can survive an AZ failure.
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDL Ledger and ScalarDL Auditor node pool
 
-From the perspective of commercial licenses, resources for each pod running ScalarDL Ledger or ScalarDL Auditor is limited to 2vCPU / 4GB memory. In addition, we recommend deploying one ScalarDL Ledger pod and one Envoy pod on each worker node and deploying one ScalarDL Auditor pod and one Envoy pod on each worker node.
+From the perspective of commercial licenses, resources for each pod running ScalarDL Ledger or ScalarDL Auditor is limited to 2vCPU / 4GB memory. In addition, there are some pods other than ScalarDL Ledger and ScalarDL Auditor pods on the worker nodes.
 
-In other words, the following components run on one worker node:
+In other words, the following components could run on one worker node:
 
 * AKS cluster for ScalarDL Ledger
   * ScalarDL Ledger pod (2vCPU / 4GB)
-  * Envoy proxy (0.2–0.3 vCPU / 256–328 MB)
+  * Envoy proxy
+  * Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
   * Kubernetes components
 * AKS cluster for ScalarDL Auditor
   * ScalarDL Auditor pod (2vCPU / 4GB)
-  * Envoy proxy (0.2–0.3 vCPU / 256–328 MB)
+  * Envoy proxy
+  * Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
   * Kubernetes components
 
-With this in mind, you should use the worker node that has 4vCPU / 8GB memory resources. We recommend running only the above components on the worker node for ScalarDL Ledger and ScalarDL Auditor. And remember, for Byzantine fault detection to work properly, you cannot deploy your application pods on the same AKS clusters as the ScalarDL Ledger and ScalarDL Auditor deployments.
+With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability that we mentioned in the previous section [Create at least three worker nodes and three pods](./CreateAKSClusterForScalarDLAuditor.md#create-at-least-three-worker-nodes-and-three-pods-per-aks-cluster). And remember, for Byzantine fault detection to work properly, you cannot deploy your application pods on the same AKS clusters as the ScalarDL Ledger and ScalarDL Auditor deployments.
 
-Note that you should configure resource limits based on your system's workload if the Envoy pod exceeds the above resource usage. In addition, you should consider scaling out the worker node and the ScalarDL Ledger or ScalarDL Auditor pod if the ScalarDL Ledger or ScalarDL Auditor pod exceeds the above resource usage and if latency is high (throughput is low) in your system.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is a minimum environment for production. You should also consider the resources of the AKS cluster (e.g., the number of worker nodes, vCPUs per node, memories per node, pods of ScalarDL Ledger, and pods of ScalarDL Auditor) depends on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should also consider the maximum number of pods on the worker node to decide on the worker node resources.
 
 ### Create node pools for ScalarDL Ledger and ScalarDL Auditor pods
 
 AKS creates one system node pool named **agentpool** that is preferred for system pods (used to keep AKS running) by default. We recommend creating additional node pools with **user** mode for ScalarDL Ledger and ScalarDL Auditor pods and deploying ScalarDL Ledger and ScalarDL Auditor pods on those additional node pools.
-
-### Create a node pool for monitoring components (kube-prometheus-stack and loki-stack)
-
-We recommend running only pods related to ScalarDL Ledger and ScalarDL Auditor on the worker node for ScalarDL Ledger and ScalarDL Auditor. If you want to run monitoring pods (e.g., Prometheus, Grafana, Loki, etc.) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same AKS cluster, you should create other node pools for monitoring pods.
 
 ### Configure cluster autoscaler in AKS
 
@@ -83,15 +98,11 @@ The Azure support and engineering teams, however, do support Azure CNI. So, if y
 * [Use kubenet networking with your own IP address ranges in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-kubenet)
 * [Configure Azure CNI networking in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni)
 
-### Use three availability zones
-
-To ensure that the AKS cluster has high availability, you should use several resources in three [availability zones](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview). To achieve high availability, we recommend creating at least three worker nodes and selecting three availability zones when you create a node pool.
-
 ### Restrict connections by using some security features based on your requirements
 
 You should restrict unused connections in ScalarDL and ScalarDL Auditor. To restrict unused connections, you can use some security features of Azure, like [network security groups](https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview).
 
-The connections (ports) that ScalarDL Ledger and ScalarDL Auditor use by default are as follows. Note that, if you change the default listening port for ScalarDL Ledger and ScalarDL Auditor in their configuration files (`ledger.properties` and `auditor.properties`, respectively), you must allow connections by using the port that you configured.
+The connections (ports) that ScalarDL Ledger and ScalarDL Auditor use by default are as follows.
 
 * ScalarDL Ledger
     * 50051/TCP (accepts requests from a client and ScalarDL Auditor)
@@ -110,116 +121,18 @@ The connections (ports) that ScalarDL Ledger and ScalarDL Auditor use by default
     * 40052/TCP (load balancing for ScalarDL Auditor)
     * 9001/TCP (accepts monitoring requests for Scalar Envoy itself)
 
-Note that you also must allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
+{% capture notice--info %}
+**Note**
 
-### Add a **label** to the worker node that is used for **nodeAffinity**
+If you change the default listening port for ScalarDL Ledger and ScalarDL Auditor in their configuration files (`ledger.properties` and `auditor.properties`, respectively), you must allow connections by using the port that you configured.
+{% endcapture %}
 
-You can make a specific worker node dedicated to ScalarDL Ledger or ScalarDL Auditor by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDL Ledger and non-ScalarDL Auditor pods (e.g., application pods) on the worker node for ScalarDL Ledger and ScalarDL Auditor. To add a label to the worker node, you can use the `kubectl` command as follows.
+<div class="notice--info">{{ notice--info | markdownify }}</div>
 
-* ScalarDL Ledger example
-  ```console
-  kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-ledger
-  ```
-* ScalarDL Auditor example
-  ```console
-  kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-auditor
-  ```
+{% capture notice--info %}
+**Note**
 
-In addition, you can set these labels in the Azure portal or use the `--labels` flag of the [az aks nodepool add](https://learn.microsoft.com/en-us/cli/azure/aks/nodepool?view=azure-cli-latest#az-aks-nodepool-add) command when you create a node pool. If you add these labels to make specific worker nodes dedicated to ScalarDL Ledger and ScalarDL Auditor, you must configure **nodeAffinity** in your custom values file as follows.
+You also must allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
+{% endcapture %}
 
-* ScalarDL Ledger example
-  ```yaml
-  envoy:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: scalar-labs.com/dedicated-node
-                  operator: In
-                  values:
-                    - scalardl-ledger
-
-  ledger:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: scalar-labs.com/dedicated-node
-                  operator: In
-                  values:
-                    - scalardl-ledger
-  ```
-* ScalarDL Auditor example
-  ```yaml
-  envoy:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: scalar-labs.com/dedicated-node
-                  operator: In
-                  values:
-                    - scalardl-auditor
-
-  auditor:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: scalar-labs.com/dedicated-node
-                  operator: In
-                  values:
-                    - scalardl-auditor
-  ```
-
-### Add **taint** to the worker node that is used for **toleration**
-
-You can make a specific worker node dedicated to ScalarDL Ledger or ScalarDL Auditor by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDL Ledger and non-ScalarDL Auditor pods (e.g., application pods) on the worker node for ScalarDL Ledger and ScalarDL Auditor. To add taint to the worker node, you can use the `kubectl` command as follows.
-
-* ScalarDL Ledger example
-  ```console
-  kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-ledger:NoSchedule
-  ```
-* ScalarDL Auditor example
-  ```console
-  kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-auditor:NoSchedule
-  ```
-
-In addition, you can set these taints in the Azure portal or use the `--node-taints` flag of the [az aks nodepool add](https://learn.microsoft.com/en-us/cli/azure/aks/nodepool?view=azure-cli-latest#az-aks-nodepool-add) command when you create a node pool. If you add these taints to make specific worker nodes dedicated to ScalarDL Ledger and ScalarDL Auditor, you must configure **tolerations** in your custom values file as follows.
-
-* ScalarDL Ledger example
-  ```yaml
-  envoy:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardl-ledger
-
-  ledger:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardl-ledger
-  ```
-* ScalarDL Auditor example
-  ```yaml
-  envoy:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardl-auditor
-
-  auditor:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardl-auditor
-  ```
+<div class="notice--info">{{ notice--info | markdownify }}</div>
