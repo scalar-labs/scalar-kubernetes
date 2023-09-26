@@ -32,7 +32,7 @@ From the perspective of commercial licenses, resources for one pod running Scala
 In other words, the following components run on one worker node:
 
 * ScalarDL Ledger pod (2vCPU / 4GB)
-* Envoy proxy (0.2–0.3 vCPU / 256–328 MB)
+* Envoy proxy
 * Kubernetes components
 
 With this in mind, you should use a worker node that has 4vCPU / 8GB memory resources. We recommend running only the above components on the worker node for ScalarDL Ledger. And remember, for Byzantine fault detection to work properly, you cannot deploy your application pods on the same AKS cluster as the ScalarDL Ledger deployment.
