@@ -24,13 +24,13 @@ If you place the worker nodes in different availability zones (AZs), you can sur
 
 ### Worker node specifications
 
-From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, there are some pods other than ScalarDB Cluster pods on the worker nodes.
+From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDB Cluster pods exist on the worker nodes.
 
 In other words, the following components could run on one worker node:
 
 * ScalarDB Cluster pod (2vCPU / 4GB)
-* Envoy proxy (if you use `indirect` client mode or use other programming languages than Java)
-* Your application pods  (if you choose to run your application's pods in the same worker node)
+* Envoy proxy (if you use `indirect` client mode or use a programming language other than Java)
+* Your application pods (if you choose to run your application's pods on the same worker node)
 * Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
 * Kubernetes components
 
@@ -42,9 +42,9 @@ You do not need to deploy an Envoy pod when using `direct-kubernetes` mode.
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
 
-With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability that we mentioned in the previous section [Number of pods and Kubernetes worker nodes](./ProductionChecklistForScalarDBCluster.md#number-of-pods-and-kubernetes-worker-nodes).
+With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Number of pods and Kubernetes worker nodes](./ProductionChecklistForScalarDBCluster.md#number-of-pods-and-kubernetes-worker-nodes).
 
-However, three nodes with at least 4vCPU / 8GB memory resources per node is a minimum environment for production. You should also consider the resources of the Kubernetes cluster (e.g., the number of worker nodes, vCPUs per node, memories per node, pods of ScalarDB Cluster, and pods of your application) depends on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should also consider the maximum number of pods on the worker node to decide on the worker node resources.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the Kubernetes cluster (for example, the number of worker nodes, vCPUs per node, memories per node, ScalarDB Cluster pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node to decide on the worker node resources.
 
 ### Network
 
@@ -56,7 +56,7 @@ You should monitor the deployed components and collect their logs. For details, 
 
 ### Backup and restore
 
-You should enable the automatic backup feature and PITR feature in the backend database. For details, see [Set up a database for ScalarDB/ScalarDL deployment](./SetupDatabase.md).
+You should enable the automatic backup feature and point-in-time recovery (PITR) feature in the backend database. For details, see [Set up a database for ScalarDB/ScalarDL deployment](./SetupDatabase.md).
 
 ## Production checklist: Client applications that access ScalarDB Cluster
 
@@ -64,11 +64,11 @@ The following is a checklist of recommendations when setting up a client applica
 
 ### Client mode (Java client library only)
 
-When you use Java for your application, you can use an official Java client library. In this case, you can choose one of the two client modes [`direct-kubernetes mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode) and [`indirect mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#indirect-client-mode).
+When using Java for your application, you can use an official Java client library. In this case, you can choose one of the two client modes: [`direct-kubernetes mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode) or [`indirect mode`](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#indirect-client-mode).
 
-From the perspective of performance, we recommend using the `direct-kubernetes` mode. To use the `direct-kubernetes` mode, you must deploy your application pods on the same Kubernetes cluster as ScalarDB Cluster pods. In this case, you do not need to deploy Envoy pods.
+From the perspective of performance, we recommend using `direct-kubernetes` mode. To use `direct-kubernetes` mode, you must deploy your application pods on the same Kubernetes cluster as ScalarDB Cluster pods. In this case, you don't need to deploy Envoy pods.
 
-If you cannot deploy your Java application pods on the same Kubernetes cluster as ScalarDB Cluster pods for some reason, you must use the `indirect` mode. In this case, you must deploy Envoy pods.
+If you can't deploy your Java application pods on the same Kubernetes cluster as ScalarDB Cluster pods for some reason, you must use `indirect` mode. In this case, you must deploy Envoy pods.
 
 {% capture notice--info %}
 **Note**
@@ -82,39 +82,53 @@ The client mode configuration is dedicated to the Java client library. When you 
 
 You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured when you use CRUD API.
 
-* Recommended for production environments
-  ```mermaid
-  flowchart LR
-    A(<b>App</b> <br> ScalarDB Cluster Library with gRPC) --> B(<b>ScalarDB Cluster</b> <br> ScalarDB Library with Consensus Commit) --> C(Underlying storage/database)
-  ```
+#### Recommended for production environments
 
-* Not recommended for production environments (for testing purposes only)
-  ```mermaid
-  flowchart LR
-    A(<b>App</b> <br> ScalarDB Cluster Library with Consensus Commit) --> B(Underlying storage/database)
-  ```
+```mermaid
+flowchart LR
+  app["<b>App</b><br />ScalarDB Cluster Library with gRPC"]
+  server["<b>ScalarDB Cluster</b><br />ScalarDB Library with<br />Consensus Commit"]
+  db[(Underlying storage or database)]
+  app --> server --> db
+```
+
+#### Not recommended for production environments (for testing purposes only)
+
+```mermaid
+flowchart LR
+  app["<b>App</b><br />ScalarDB Cluster Library with<br />Consensus Commit"]
+  db[(Underlying storage or database)]
+  app --> db
+```
 
 ### SQL connection configuration (Java client library only)
 
 You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.sql.connection_mode=cluster` is configured when you use SQL API.
 
-* Recommended for production environments
-  ```mermaid
-  flowchart LR
-    A("<b>App</b> <br> ScalarDB SQL Library (Cluster mode)") --> B(<b>ScalarDB Cluster</b> <br> ScalarDB Library with Consensus Commit) --> C(Underlying storage/database)
-  ```
+#### Recommended for production environments
 
-* Not recommended for production environments (for testing purposes only)
-  ```mermaid
-  flowchart LR
-    A("<b>App</b> <br> ScalarDB SQL Library (Direct mode)") --> B(Underlying storage/database)
-  ```
+```mermaid
+flowchart LR
+  app["<b>App</b><br />ScalarDB SQL Library (Cluster mode)"]
+  server["<b>ScalarDB Cluster</b><br />ScalarDB Library with<br />Consensus Commit"]
+  db[(Underlying storage or database)]
+  app --> server --> db
+```
+
+#### Not recommended for production environments (for testing purposes only)
+
+```mermaid
+flowchart LR
+  app["<b>App</b><br />ScalarDB SQL Library (Direct mode)"]
+  db[(Underlying storage or database)]
+  app --> db
+```
 
 ### Deployment of the client application when using `direct-kubernetes` client mode (Java client library only)
 
 If you use [`direct-kubernetes` client mode](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/developer-guide-for-scalardb-cluster-with-java-api.md#direct-kubernetes-client-mode), you must deploy your client application on the same Kubernetes cluster as the ScalarDB Cluster deployment.
 
-Also, when using `direct-kubernetes` client mode, you must deploy additional Kubernetes resources to make your client application work properly.  For details, see [Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode).
+Also, when using `direct-kubernetes` client mode, you must deploy additional Kubernetes resources to make your client application work properly. For details, see [Deploy your client application on Kubernetes with `direct-kubernetes` mode](https://github.com/scalar-labs/helm-charts/blob/main/docs/how-to-deploy-scalardb-cluster.md#deploy-your-client-application-on-kubernetes-with-direct-kubernetes-mode).
 
 ### Transaction handling (Java client library and gRPC API)
 
@@ -123,17 +137,17 @@ You must make sure that your application always runs [`commit()`](https://javado
 {% capture notice--info %}
 **Note**
 
-When you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) and [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md), your application should call a `Commit` or `Rollback` service after you call a `Begin` service to begin a transaction.
+If you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) or [SQL gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md), your application should call a `Commit` or `Rollback` service after you call a `Begin` service to begin a transaction.
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
 
 ### Exception handling (Java client library and gRPC API)
 
-You must make sure that your application handles transaction exceptions. For details, see each document of API that you use:
+You must make sure that your application handles transaction exceptions. For details, see the document for the API that you are using:
 
 * [Handle exceptions (Transactional API)](https://github.com/scalar-labs/scalardb/blob/master/docs/api-guide.md#handle-exceptions).
-* [Handle exceptions (Two-phase Commit Transactions API)](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md#handle-exceptions)
+* [Handle exceptions (two-phase commit transactions API)](https://github.com/scalar-labs/scalardb/blob/master/docs/two-phase-commit-transactions.md#handle-exceptions)
 * [Execute transactions (ScalarDB SQL API)](https://github.com/scalar-labs/scalardb-sql/blob/main/docs/sql-api-guide.md#execute-transactions)
 * [Handle SQLException (ScalarDB JDBC)](https://github.com/scalar-labs/scalardb-sql/blob/main/docs/jdbc-guide.md#handle-sqlexception)
 * [Error handling (ScalarDB Cluster gRPC API)](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md#error-handling-1)
