@@ -17,7 +17,7 @@ To ensure that the Kubernetes cluster has high availability, you should use at l
 {% capture notice--info %}
 **Note**
 
-If you place the worker nodes in different availability zones (AZs), you can survive an AZ failure.
+If you place the worker nodes in different availability zones (AZs), you can withstand an AZ failure.
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
