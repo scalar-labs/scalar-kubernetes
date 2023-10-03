@@ -17,7 +17,7 @@ When deploying ScalarDL Ledger and ScalarDL Auditor, you must:
 * Configure an Amazon Virtual Private Cloud (VPC) as follows.
     * Connect the **VPC of EKS (for Ledger)** and the **VPC of EKS (for Auditor)** by using [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html). To do so, you must specify the different IP ranges for the **VPC of EKS (for Ledger)** and the **VPC of EKS (for Auditor)** when you create those VPCs.
     * Allow **connections between Ledger and Auditor** to make ScalarDL (Auditor mode) work properly.
-    * For more details about these network requirements, refer to [Create network peering for ScalarDL Auditor mode // TODO: Add link of new document]().
+    * For more details about these network requirements, refer to [Configure Network Peering for ScalarDL Auditor Mode](./NetworkPeeringForScalarDLAuditor.md).
 
 ### Note
 For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same EKS clusters as the ScalarDL Ledger and ScalarDL Auditor deployments.

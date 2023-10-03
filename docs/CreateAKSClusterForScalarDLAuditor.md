@@ -21,7 +21,7 @@ When deploying ScalarDL Ledger and ScalarDL Auditor, you must:
 * Configure a virtual network (VNet) as follows.
     * Connect the **VNet of AKS (for Ledger)** and the **VNet of AKS (for Auditor)** by using [virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering). To do so, you must specify the different IP ranges for the **VNet of AKS (for Ledger)** and the **VNet of AKS (for Auditor)** when you create those VNets.
     * Allow **connections between Ledger and Auditor** to make ScalarDL (Auditor mode) work properly.
-    * For more details about these network requirements, refer to [Create network peering for ScalarDL Auditor mode // TODO: Add link of new document]().
+    * For more details about these network requirements, refer to [Configure Network Peering for ScalarDL Auditor Mode](./NetworkPeeringForScalarDLAuditor.md).
 
 ### Note
 
