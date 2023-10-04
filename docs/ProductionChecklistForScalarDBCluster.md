@@ -73,14 +73,14 @@ If you can't deploy your Java application pods on the same Kubernetes cluster as
 {% capture notice--info %}
 **Note**
 
-The client mode configuration is dedicated to the Java client library. When you use other programming languages than Java (i.e., you use [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) and [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) without the Java client library) for your application, there is no such configuration. In this case, you must deploy Envoy pods.
+The client mode configuration is dedicated to the Java client library. If you use a programming language other than Java for your application (essentially, if you use the [gRPC API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-grpc-api-guide.md) or [gRPC SQL API](https://github.com/scalar-labs/scalardb-cluster/blob/main/docs/scalardb-cluster-sql-grpc-api-guide.md) directly from the programming language), no such configuration exists. In this case, you must deploy Envoy pods.
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
 
 ### Transaction manager configuration (Java client library only)
 
-You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured when you use CRUD API.
+The client application must always access the database through ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.transaction_manager=cluster` is configured when using the CRUD API.
 
 #### Recommended for production environments
 
