@@ -21,7 +21,7 @@ When deploying ScalarDL Ledger and ScalarDL Auditor, you must:
 * Configure a virtual network (VNet) as follows.
     * Connect the **VNet of AKS (for Ledger)** and the **VNet of AKS (for Auditor)** by using [virtual network peering](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering). To do so, you must specify the different IP ranges for the **VNet of AKS (for Ledger)** and the **VNet of AKS (for Auditor)** when you create those VNets.
     * Allow **connections between Ledger and Auditor** to make ScalarDL (Auditor mode) work properly.
-    * For more details about these network requirements, refer to [Create network peering for ScalarDL Auditor mode // TODO: Add link of new document]().
+    * For more details about these network requirements, refer to [Configure Network Peering for ScalarDL Auditor Mode](./NetworkPeeringForScalarDLAuditor.md).
 
 ### Note
 
@@ -39,11 +39,11 @@ In other words, the following components run on one worker node:
 
 * AKS cluster for ScalarDL Ledger
   * ScalarDL Ledger pod (2vCPU / 4GB)
-  * Envoy proxy (0.2–0.3 vCPU / 256–328 MB)
+  * Envoy proxy
   * Kubernetes components
 * AKS cluster for ScalarDL Auditor
   * ScalarDL Auditor pod (2vCPU / 4GB)
-  * Envoy proxy (0.2–0.3 vCPU / 256–328 MB)
+  * Envoy proxy
   * Kubernetes components
 
 With this in mind, you should use the worker node that has 4vCPU / 8GB memory resources. We recommend running only the above components on the worker node for ScalarDL Ledger and ScalarDL Auditor. And remember, for Byzantine fault detection to work properly, you cannot deploy your application pods on the same AKS clusters as the ScalarDL Ledger and ScalarDL Auditor deployments.
