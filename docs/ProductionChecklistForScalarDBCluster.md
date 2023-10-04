@@ -103,7 +103,7 @@ flowchart LR
 
 ### SQL connection configuration (Java client library only)
 
-You must always access ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.sql.connection_mode=cluster` is configured when you use SQL API.
+The client application must always access the database through ScalarDB Cluster. To ensure requests are running properly, check the properties file for your client application and confirm that `scalar.db.sql.connection_mode=cluster` is configured when using the SQL API.
 
 #### Recommended for production environments
 
