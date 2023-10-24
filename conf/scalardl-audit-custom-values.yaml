@@ -46,14 +46,6 @@ envoy:
                   - envoy
           topologyKey: kubernetes.io/hostname
 
-  resources:
-    requests:
-      cpu: 200m
-      memory: 256Mi
-    limits:
-      cpu: 300m
-      memory: 328Mi
-
 auditor:
   replicaCount: 3
 
