@@ -46,7 +46,6 @@ In other words, the following components could run on one worker node:
 
 * ScalarDL Ledger pod (2vCPU / 4GB)
 * Envoy proxy
-* Your application pods (if you choose to run your application's pods on the same worker node)
 * Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
 * Kubernetes components
 
