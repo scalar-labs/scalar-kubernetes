@@ -32,26 +32,26 @@ To ensure that the EKS cluster has high availability, you should use at least th
 {% capture notice--info %}
 **Note**
 
-If you place the worker nodes in different [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) (AZs), you can survive an AZ failure.
+If you place the worker nodes in different [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) (AZs), you can withstand an AZ failure.
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
 
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDB Server node group
 
-From the perspective of commercial licenses, resources for one pod running ScalarDB Server are limited to 2vCPU / 4GB memory. In addition, there are some pods other than ScalarDB Server pods on the worker nodes.
+From the perspective of commercial licenses, resources for one pod running ScalarDB Server  are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDB Server pods exist on the worker nodes.
 
 In other words, the following components could run on one worker node:
 
 * ScalarDB Server pod (2vCPU / 4GB)
 * Envoy proxy
-* Your application pods  (if you choose to run your application's pods in the same worker node)
+* Your application pods (if you choose to run your application's pods on the same worker node)
 * Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
 * Kubernetes components
 
-With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability that we mentioned in the previous section [Create at least three worker nodes and three pods](./CreateEKSClusterForScalarDB.md#create-at-least-three-worker-nodes-and-three-pods).
+With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Create at least three worker nodes and three pods](#create-at-least-three-worker-nodes-and-three-pods).
 
-However, three nodes with at least 4vCPU / 8GB memory resources per node is a minimum environment for production. You should also consider the resources of the EKS cluster (e.g., the number of worker nodes, vCPUs per node, memories per node, pods of ScalarDB Server, and pods of your application) depends on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should also consider the maximum number of pods on the worker node to decide on the worker node resources.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the EKS cluster (for example, the number of worker nodes, vCPUs per node, memories per node, ScalarDB Server pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node to decide on the worker node resources.
 
 ### Configure Cluster Autoscaler in EKS
 
@@ -79,7 +79,7 @@ The connections (ports) that ScalarDB Server uses by default are as follows.
 {% capture notice--info %}
 **Note**
 
-if you change the default listening port for ScalarDB Server in the configuration file (`database.properties`), you must allow connections by using the port that you configured.
+If you change the default listening port for ScalarDB Server in the configuration file (`database.properties`), you must allow connections by using the port that you configured.
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
