@@ -33,25 +33,26 @@ To ensure that the EKS cluster has high availability, you should use at least th
 {% capture notice--info %}
 **Note**
 
-If you place the worker nodes in different [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) (AZs), you can survive an AZ failure.
+If you place the worker nodes in different [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) (AZs), you can withstand an AZ failure.
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
 
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDL Ledger node group
 
-From the perspective of commercial licenses, resources for one pod running ScalarDL Ledger are limited to 2vCPU / 4GB memory. In addition, there are some pods other than ScalarDL Ledger pods on the worker nodes.
+From the perspective of commercial licenses, resources for one pod running ScalarDL Ledger are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDL Ledger pods exist on the worker nodes.
 
 In other words, the following components could run on one worker node:
 
 * ScalarDL Ledger pod (2vCPU / 4GB)
 * Envoy proxy
+* Your application pods (if you choose to run your application's pods on the same worker node)
 * Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
 * Kubernetes components
 
-With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability that we mentioned in the previous section [Create at least three worker nodes and three pods](./CreateEKSClusterForScalarDL.md#create-at-least-three-worker-nodes-and-three-pods). And remember, for Byzantine fault detection to work properly, you cannot deploy your application pods on the same EKS clusters as the ScalarDL Ledger deployment.
+With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Create at least three worker nodes and three pods](#create-at-least-three-worker-nodes-and-three-pods).
 
-However, three nodes with at least 4vCPU / 8GB memory resources per node is a minimum environment for production. You should also consider the resources of the EKS cluster (e.g., the number of worker nodes, vCPUs per node, memories per node, and pods of ScalarDL Ledger) depends on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should also consider the maximum number of pods on the worker node to decide on the worker node resources.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the EKS cluster (for example, the number of worker nodes, vCPUs per node, memories per node, ScalarDL Ledger pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node to decide on the worker node resources.
 
 ### Configure Cluster Autoscaler in EKS
 
