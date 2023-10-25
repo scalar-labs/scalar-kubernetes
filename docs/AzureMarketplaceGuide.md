@@ -33,16 +33,15 @@ Note that **Company** is not required, but please enter it.
    You need several container images to run Scalar products on Kubernetes, but Azure Marketplace copies only one container image at a time. So, you need to subscribe to several software plans (repeat subscribe operation) as needed.
    * Container images that you need are the following.
         * ScalarDB
-            * ScalarDB Server Default (2vCPU, 4GiB Memory)
-            * ScalarDB Server Envoy Proxy
-            * ScalarDB GraphQL Server (optional)
-            * ScalarDB SQL Server (optional)
+            * [Deprecated] ScalarDB Server Default (2vCPU, 4GiB Memory)
+            * [Deprecated] ScalarDB GraphQL Server (optional)
+            * [Deprecated] ScalarDB SQL Server (optional)
+            * [Recommended / coming soon] ScalarDB Cluster
         * ScalarDL
             * ScalarDL Ledger Default (2vCPU, 4GiB Memory)
             * ScalarDL Auditor Default (2vCPU, 4GiB Memory)
                 * The **ScalarDL Auditor** is optional. If you use the **ScalarDL Auditor**, subscribe to it.
             * ScalarDL Schema Loader
-            * ScalarDL Envoy
 
 Now, you can pull the container images of the Scalar products from your private container registry.
 Please refer to the [Azure Container Registry documentation](https://docs.microsoft.com/en-us/azure/container-registry/) for more details about the Azure Container Registry.
@@ -56,72 +55,46 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
      Please specify `--attach-acr` flag with the name of your private container registry. Also, you can configure Azure Container Registry integration for existing AKS clusters using [az aks update](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-update) command with `--attach-acr` flag. Please refer to the [Azure Official Document](https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration) for more details.
 
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
-   You need to specify your private container registry and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
+   You need to specify your private container registry as the value of `[].image.repository` in the custom values file.  
    * ScalarDB Examples
-      * ScalarDB Server (scalardb-custom-values.yaml)
+      * [Deprecated] ScalarDB Server (scalardb-custom-values.yaml)
         ```yaml
-        envoy:
-          image:
-            repository: "example.azurecr.io/scalarinc/scalardb-envoy"
-            version: "1.2.0"
-        
-        ...
-        
         scalardb:
           image:
             repository: "example.azurecr.io/scalarinc/scalardb-server"
-            tag: "3.5.2"
         ```
-      * ScalarDB GraphQL Server (scalardb-graphql-custom-values.yaml)
+      * [Deprecated] ScalarDB GraphQL Server (scalardb-graphql-custom-values.yaml)
         ```yaml
         image:
           repository: "example.azurecr.io/scalarinc/scalardb-graphql"
-          tag: "3.6.0"
         ```
    * ScalarDL Examples
       * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
         ```yaml
-        envoy:
-          image:
-            repository: "example.azurecr.io/scalarinc/scalardl-envoy"
-            version: "1.2.0"
-        
-        ...
-        
         ledger:
           image:
             repository: "example.azurecr.io/scalarinc/scalar-ledger"
-            version: "3.4.0"
         ```
       * ScalarDL Auditor (scalardl-auditor-custom-values.yaml)
         ```yaml
-        envoy:
-          image:
-            repository: "example.azurecr.io/scalarinc/scalardl-envoy"
-            version: "1.2.0"
-        
-        ...
-        
         auditor:
           image:
             repository: "example.azurecr.io/scalarinc/scalar-auditor"
-            version: "3.4.0"
         ```
       * ScalarDL Schema Loader (schema-loader-custom-values.yaml)
         ```yaml
         schemaLoading:
           image:
             repository: "example.azurecr.io/scalarinc/scalardl-schema-loader"
-            version: "3.4.0"
         ```
 
 1. Deploy the Scalar product using the Helm Chart with the above custom values file.
    * ScalarDB Examples
-      * ScalarDB Server
+      * [Deprecated] ScalarDB Server
         ```console
         helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
         ```
-      * ScalarDB GraphQL Server
+      * [Deprecated] ScalarDB GraphQL Server
         ```console
         helm install scalardb-graphql scalar-labs/scalardb-graphql -f scalardb-graphql-custom-values.yaml
         ```
@@ -160,69 +133,38 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
    ```
 
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
-   You need to specify your private container registry and the version (tag) as the value of `[].image.repository` and `[].image.version (tag)` in the custom values file.  
+   You need to specify your private container registry as the value of `[].image.repository` in the custom values file.  
    Also, you need to specify the `reg-acr-secrets` as the value of `[].imagePullSecrets`.
    * ScalarDB Examples
-      * ScalarDB Server (scalardb-custom-values.yaml)
+      * [Deprecated]  (scalardb-custom-values.yaml)
         ```yaml
-        envoy:
-          image:
-            repository: "example.azurecr.io/scalarinc/scalardb-envoy"
-            version: "1.2.0"
-          imagePullSecrets:
-            - name: "reg-acr-secrets"
-        
-        ...
-        
         scalardb:
           image:
             repository: "example.azurecr.io/scalarinc/scalardb-server"
-            tag: "3.5.2"
           imagePullSecrets:
             - name: "reg-acr-secrets"
         ```
-      * ScalarDB GraphQL Server (scalardb-graphql-custom-values.yaml)
+      * [Deprecated] ScalarDB GraphQL Server (scalardb-graphql-custom-values.yaml)
         ```yaml
         image:
           repository: "example.azurecr.io/scalarinc/scalardb-graphql"
-          tag: "3.6.0"
         imagePullSecrets:
           - name: "reg-acr-secrets"
         ```
    * ScalarDL Examples
       * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
         ```yaml
-        envoy:
-          image:
-            repository: "example.azurecr.io/scalarinc/scalardl-envoy"
-            version: "1.2.0"
-          imagePullSecrets:
-            - name: "reg-acr-secrets"
-        
-        ...
-        
         ledger:
           image:
             repository: "example.azurecr.io/scalarinc/scalar-ledger"
-            version: "3.4.0"
           imagePullSecrets:
             - name: "reg-acr-secrets"
         ```
       * ScalarDL Auditor (scalardl-auditor-custom-values.yaml)
         ```yaml
-        envoy:
-          image:
-            repository: "example.azurecr.io/scalarinc/scalardl-envoy"
-            version: "1.2.0"
-          imagePullSecrets:
-            - name: "reg-acr-secrets"
-        
-        ...
-        
         auditor:
           image:
             repository: "example.azurecr.io/scalarinc/scalar-auditor"
-            version: "3.4.0"
           imagePullSecrets:
             - name: "reg-acr-secrets"
         ```
@@ -231,7 +173,6 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
         schemaLoading:
           image:
             repository: "example.azurecr.io/scalarinc/scalardl-schema-loader"
-            version: "3.4.0"
           imagePullSecrets:
             - name: "reg-acr-secrets"
         ```
