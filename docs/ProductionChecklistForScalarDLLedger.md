@@ -84,55 +84,6 @@ graph LR
   end
 ```
 
-### Return assets that you read in the contract
-
-For Byzantine fault detection in ScalarDL to work properly, you must return all assets that you read in the contract. If you don't return assets, the Byzantine fault detection doesn't work properly.
-
-#### Return assets (required for Byzantine fault detection)
-
-```java
-public class StateReader extends JacksonBasedContract {
-
-  @Nullable
-  @Override
-  public JsonNode invoke(
-      Ledger<JsonNode> ledger, JsonNode argument, @Nullable JsonNode properties) {
-
-    String assetId = argument.get("asset_id").asText();
-    Optional<Asset<JsonNode>> asset = ledger.get(assetId);
-
-    return asset
-        .map(
-            value ->
-                (JsonNode)
-                    getObjectMapper()
-                        .createObjectNode()
-                        .put("id", value.id())
-                        .put("age", value.age())
-                        .set("output", value.data()))
-        .orElse(null);
-  }
-}
-```
-
-#### Not return assets (Byzantine fault detection doesn't work properly)
-
-```java
-public class StateReader extends JacksonBasedContract {
-
-  @Nullable
-  @Override
-  public JsonNode invoke(
-      Ledger<JsonNode> ledger, JsonNode argument, @Nullable JsonNode properties) {
-
-    String assetId = argument.get("asset_id").asText();
-    Optional<Asset<JsonNode>> asset = ledger.get(assetId);
-
-    return null;
-  }
-}
-```
-
 ### Versioning contracts
 
 When you register a contract once, you cannot overwrite the existing contract. So, you should consider the versioning of contracts. We recommend one of the following two methods:
