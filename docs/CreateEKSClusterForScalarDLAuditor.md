@@ -46,7 +46,7 @@ If you place the worker nodes in different [availability zones](https://docs.aws
 
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDL Ledger and ScalarDL Auditor node group
 
-From the perspective of commercial licenses, resources for each pod running ScalarDL Ledger or ScalarDL Auditor are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDL Ledger and ScalarDL Auditor pods exist on the worker nodes.
+From the perspective of commercial licenses, resources for each pod running ScalarDL Ledger or ScalarDL Auditor are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDL Ledger and ScalarDL Auditor pods could exist on the worker nodes.
 
 In other words, the following components could run on one worker node:
 

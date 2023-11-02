@@ -44,7 +44,7 @@ If you place the worker nodes in different [availability zones](https://learn.mi
 
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDL Ledger node pool
 
-From the perspective of commercial licenses, resources for one pod running ScalarDL Ledger are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDL Ledger pods exist on the worker nodes.
+From the perspective of commercial licenses, resources for one pod running ScalarDL Ledger are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDL Ledger pods could exist on the worker nodes.
 
 In other words, the following components could run on one worker node:
 
