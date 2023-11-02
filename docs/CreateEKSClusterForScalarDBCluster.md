@@ -31,7 +31,7 @@ If you place the worker nodes in different [availability zones](https://docs.aws
 
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDB Cluster node group
 
-From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDB Cluster pods exist on the worker nodes.
+From the perspective of commercial licenses, resources for one pod running ScalarDB Cluster are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDB Cluster pods could exist on the worker nodes.
 
 In other words, the following components could run on one worker node:
 
