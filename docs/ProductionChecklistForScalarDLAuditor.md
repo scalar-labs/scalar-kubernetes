@@ -51,19 +51,20 @@ You should enable the automatic backup feature and point-in-time recovery (PITR)
 
 ### Do not deploy ScalarDL Auditor on the same Kubernetes cluster as ScalarDL Ledger
 
-For Byzantine fault detection in ScalarDL to work properly, do not deploy ScalarDL Auditor pods on the same Kubernetes clusters as the ScalarDL Ledger deployment. Please deploy ScalarDL Auditor pods on an environment other than the Kubernetes cluster for ScalarDL Ledger deployment.
+For Byzantine fault detection in ScalarDL to work properly, do not deploy ScalarDL Auditor pods on the same Kubernetes clusters as the ScalarDL Ledger deployment. Please deploy ScalarDL Auditor pods on an environment other than the administrative domain (other than the Kubernetes cluster) for ScalarDL Ledger deployment.
+
 
 #### Required for production environments
 
 ```mermaid
 graph LR
   subgraph "ScalarDL Auditor mode"
-    subgraph "Private network"
+    subgraph "Administrative domain 1"
       subgraph "Kubernetes cluster for Ledger"
         B-1[ScalarDL Ledger]
       end
     end
-    subgraph "Private network"
+    subgraph "Administrative domain 2"
       subgraph "Kubernetes cluster for Auditor"
         C-1[ScalarDL Auditor]
       end
@@ -125,24 +126,24 @@ The following is a checklist of recommendations when setting up a client applica
 
 ### Do not deploy your application on the same Kubernetes cluster as ScalarDL
 
-For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same Kubernetes clusters as the ScalarDL deployment. Please deploy your application on an environment other than the Kubernetes cluster for ScalarDL deployment.
+For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same Kubernetes clusters as the ScalarDL deployment. Please deploy your application on an environment other than the administrative domain (other than the Kubernetes cluster) for ScalarDL deployment.
 
 #### Required for production environments
 
 ```mermaid
 graph LR
-  subgraph "Private network"
+  subgraph "Administrative domain 1"
     subgraph "Another environment"
       A-1[User application]
     end
   end
   subgraph "ScalarDL Auditor mode"
-    subgraph "Private network"
+    subgraph "Administrative domain 2"
       subgraph "Kubernetes cluster for Ledger"
         B-1[ScalarDL Ledger]
       end
     end
-    subgraph "Private network"
+    subgraph "Administrative domain 3"
       subgraph "Kubernetes cluster for Auditor"
         C-1[ScalarDL Auditor]
       end

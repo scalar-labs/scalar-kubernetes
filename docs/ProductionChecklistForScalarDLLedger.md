@@ -55,18 +55,18 @@ The following is a checklist of recommendations when setting up a client applica
 
 ### Do not deploy your application on the same Kubernetes cluster as ScalarDL Ledger
 
-For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same Kubernetes clusters as the ScalarDL Ledger deployment. Please deploy your application on an environment other than the Kubernetes cluster for ScalarDL Ledger deployment.
+For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same Kubernetes clusters as the ScalarDL Ledger deployment. Please deploy your application on an environment other than the administrative domain (other than the Kubernetes cluster) for ScalarDL Ledger deployment.
 
 #### Required for production environments
 
 ```mermaid
 graph LR
-  subgraph "Private network"
+  subgraph "Administrative domain 1"
     subgraph "Another environment"
       A-1[User application]
     end
   end
-  subgraph "Private network"
+  subgraph "Administrative domain 2"
     subgraph "Kubernetes cluster"
       B-1[ScalarDL Ledger]
     end
