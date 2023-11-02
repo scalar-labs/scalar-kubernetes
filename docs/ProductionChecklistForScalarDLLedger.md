@@ -84,6 +84,13 @@ graph LR
   end
 ```
 
+### Check if your contract and function follow guidelines
+
+You should check if your contract and function follow the guidelines:
+
+* [A Guide on How to Write a Good Contract for ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/how-to-write-contract.md)
+* [A Guide on How to Write Function for ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/how-to-write-function.md)
+
 ### Versioning contracts
 
 When you register a contract once, you cannot overwrite the existing contract. So, you should consider the versioning of contracts. We recommend one of the following two methods:
