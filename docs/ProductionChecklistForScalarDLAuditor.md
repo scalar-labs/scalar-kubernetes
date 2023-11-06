@@ -58,7 +58,7 @@ For Byzantine fault detection in ScalarDL to work properly, do not deploy Scalar
 
 ```mermaid
 graph LR
-  subgraph "ScalarDL Auditor mode"
+  subgraph "ScalarDL"
     subgraph "Administrative domain 1"
       subgraph "Kubernetes cluster for Ledger"
         B-1[ScalarDL Ledger]
@@ -108,9 +108,9 @@ ScalarDL uses the following ports for the connections between ScalarDL Ledger an
   * 40051/TCP
   * 40052/TCP
 
-### Secret key and certification file requirements
+### Private key and certificate requirements
 
-You must make sure that your secret key and certification file that you register to ScalarDL Ledger and ScalaDL Auditor match the following ScalarDL requirements.
+When you use PKI for authentication, you must make sure that private keys and certificates that you register to ScalarDL Ledger and ScalaDL Auditor match the following requirements.
 
 ```console
 Algorithm       : ECDSA
@@ -137,7 +137,7 @@ graph LR
       A-1[User application]
     end
   end
-  subgraph "ScalarDL Auditor mode"
+  subgraph "ScalarDL"
     subgraph "Administrative domain 2"
       subgraph "Kubernetes cluster for Ledger"
         B-1[ScalarDL Ledger]
