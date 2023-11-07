@@ -139,9 +139,9 @@ Binary Name              : com.example.contract.v7.Foo
 Class file (Class Name)  : src/main/java/com/example/contract/v8/Foo.class
 ```
 
-### Secret key and certification file requirements
+### Private key and certificate requirements
 
-You must make sure that your secret key and certification file match the following ScalarDL requirements.
+When you use PKI for authentication, you must make sure that private keys and certificates that you register to ScalarDL Ledger match the following requirements.
 
 ```console
 Algorithm       : ECDSA
