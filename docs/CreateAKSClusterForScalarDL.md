@@ -17,14 +17,13 @@ When deploying ScalarDL Ledger, you must:
 * Create the AKS cluster by using Kubernetes version 1.21 or higher.
 * Configure the AKS cluster based on the version of Kubernetes and your project's requirements.
 
-{% capture notice--info %}
-**Note**
+{% capture notice--warning %}
+**Attention**
 
 For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same AKS cluster as the ScalarDL Ledger deployment.
-
 {% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+<div class="notice--warning">{{ notice--warning | markdownify }}</div>
 
 ## Recommendations (optional)
 
@@ -50,7 +49,7 @@ In other words, the following components could run on one worker node:
 
 * ScalarDL Ledger pod (2vCPU / 4GB)
 * Envoy proxy
-* Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
+* Monitoring components (if you deploy monitoring components such as `kube-prometheus-stack`)
 * Kubernetes components
 
 With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Create at least three worker nodes and three pods](#create-at-least-three-worker-nodes-and-three-pods).
@@ -90,7 +89,7 @@ The Azure support and engineering teams, however, do support Azure CNI. So, if y
 
 You should restrict unused connections in ScalarDL Ledger. To restrict unused connections, you can use some security features in Azure, like [network security groups](https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview).
 
-The connections (ports) that ScalarDL Ledger uses by default are as follows.
+The connections (ports) that ScalarDL Ledger uses by default are as follows:
 
 * ScalarDL Ledger
     * 50051/TCP (accepts requests from a client)
