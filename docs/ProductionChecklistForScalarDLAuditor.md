@@ -35,7 +35,7 @@ In other words, the following components could run on one worker node:
 
 With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Number of pods and Kubernetes worker nodes](#number-of-pods-and-kubernetes-worker-nodes).
 
-However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the Kubernetes cluster (for example, the number of worker nodes, vCPUs per node, memory per node, and ScalarDL Auditor pods), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum environment for production. You should also consider the resources of the Kubernetes cluster (for example, the number of worker nodes, vCPUs per node, memory per node, and ScalarDL Auditor pods), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
 
 ### Network
 
@@ -168,5 +168,5 @@ graph LR
 
 ### Checklist for the client applications that access ScalarDL Ledger
 
-You also must make sure that you satisfy the [Production checklist: Client applications that access ScalarDL Ledger](./ProductionChecklistForScalarDLLedger.md#production-checklist-client-applications-that-access-scalardl-ledger).
+You must also make sure that you satisfy the [Production checklist: Client applications that access ScalarDL Ledger](./ProductionChecklistForScalarDLLedger.md#production-checklist-client-applications-that-access-scalardl-ledger).
 
