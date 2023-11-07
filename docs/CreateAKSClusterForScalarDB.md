@@ -35,7 +35,7 @@ If you place the worker nodes in different [availability zones](https://learn.mi
 
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDB Server node pool
 
-From the perspective of commercial licenses, resources for one pod running ScalarDB Server  are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDB Server pods could exist on the worker nodes.
+From the perspective of commercial licenses, resources for one pod running ScalarDB Server are limited to 2vCPU / 4GB memory. In addition, some pods other than ScalarDB Server pods could exist on the worker nodes.
 
 In other words, the following components could run on one worker node:
 
@@ -47,7 +47,7 @@ In other words, the following components could run on one worker node:
 
 With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Create at least three worker nodes and three pods](#create-at-least-three-worker-nodes-and-three-pods).
 
-However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the AKS cluster (for example, the number of worker nodes, vCPUs per node, memory per node, ScalarDB Server pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for production environment. You should also consider the resources of the AKS cluster (for example, the number of worker nodes, vCPUs per node, memory per node, ScalarDB Server pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
 
 ### Create a node pool for ScalarDB Server pods
 
@@ -95,7 +95,7 @@ The connections (ports) that ScalarDB Server uses by default are as follows:
 **Note**
 
 - If you change the default listening port for ScalarDB Server in the configuration file (`database.properties`), you must allow connections by using the port that you configured.
-- You also must allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
+- You must also allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>

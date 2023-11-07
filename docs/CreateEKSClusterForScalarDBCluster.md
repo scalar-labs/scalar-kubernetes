@@ -51,7 +51,7 @@ You do not need to deploy an Envoy pod when using `direct-kubernetes` mode.
 
 With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Create at least three worker nodes and three pods](#create-at-least-three-worker-nodes-and-three-pods).
 
-However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the EKS cluster (for example, the number of worker nodes, vCPUs per node, memory per node, ScalarDB Cluster pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for production environment. You should also consider the resources of the EKS cluster (for example, the number of worker nodes, vCPUs per node, memory per node, ScalarDB Cluster pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
 
 ### Configure Cluster Autoscaler in EKS
 
@@ -81,7 +81,7 @@ The connections (ports) that ScalarDB Cluster uses by default are as follows:
 **Note**
 
 - If you change the default listening port for ScalarDB Cluster in the configuration file (`scalardb-cluster-node.properties`), you must allow connections by using the port that you configured.
-- You also must allow the connections that EKS uses itself. For more details about Amazon EKS security group requirements, refer to [Amazon EKS security group requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html).
+- You must also allow the connections that EKS uses itself. For more details about Amazon EKS security group requirements, refer to [Amazon EKS security group requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html).
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
