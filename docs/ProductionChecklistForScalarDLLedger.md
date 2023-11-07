@@ -30,12 +30,12 @@ In other words, the following components could run on one worker node:
 
 * ScalarDL Ledger pod (2vCPU / 4GB)
 * Envoy proxy
-* Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
+* Monitoring components (if you deploy monitoring components such as `kube-prometheus-stack`)
 * Kubernetes components
 
 With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Number of pods and Kubernetes worker nodes](#number-of-pods-and-kubernetes-worker-nodes).
 
-However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the Kubernetes cluster (for example, the number of worker nodes, vCPUs per node, memories per node, and ScalarDL Ledger pods), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node to decide on the worker node resources.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the Kubernetes cluster (for example, the number of worker nodes, vCPUs per node, memory per node, and ScalarDL Ledger pods), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
 
 ### Network
 
@@ -55,7 +55,7 @@ The following is a checklist of recommendations when setting up a client applica
 
 ### Do not deploy your application on the same Kubernetes cluster as ScalarDL Ledger
 
-For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same Kubernetes clusters as the ScalarDL Ledger deployment. Please deploy your application on an environment other than the administrative domain (other than the Kubernetes cluster) for ScalarDL Ledger deployment.
+For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same Kubernetes clusters as the ScalarDL Ledger deployment. Instead, you must deploy your application in an environment other than the administrative domain (other than the Kubernetes cluster) for the ScalarDL Ledger deployment.
 
 #### Required for production environments
 
@@ -86,14 +86,14 @@ graph LR
 
 ### Check if your contract and function follow guidelines
 
-You should check if your contract and function follow the guidelines:
+To check if your contract and function follow the guidelines, see the following:
 
 * [A Guide on How to Write a Good Contract for ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/how-to-write-contract.md)
 * [A Guide on How to Write Function for ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/how-to-write-function.md)
 
 ### Versioning contracts
 
-When you register a contract once, you cannot overwrite the existing contract. So, you should consider the versioning of contracts. We recommend one of the following two methods:
+After you register a contract, you cannot overwrite that existing contract. So, you should consider the versioning of contracts. We recommend one of the following two methods.
 
 #### Versioning by using `Class Name`
 
@@ -121,7 +121,7 @@ Class file (Class Name) : src/main/java/com/example/contract/v4/Foo.class
 
 ### Use the same binary name, package name, and class name when you register the contract
 
-If the binary name, package name, and class name are different when you register the contract, you cannot execute such a contract after you register it.
+If the binary name, package name, and class name are different when you register the contract, you cannot execute that contract after registering it.
 
 #### Binary name and class name are different (you cannot execute this contract)
 
@@ -154,3 +154,4 @@ For details, see [How to get a certificate](https://github.com/scalar-labs/scala
 ### Exception handling
 
 You must make sure that your application handles exceptions. For details, see [A Guide on How to Handle Errors in ScalarDL](https://github.com/scalar-labs/scalardl/blob/master/docs/how-to-handle-errors.md).
+

@@ -30,12 +30,12 @@ In other words, the following components could run on one worker node:
 
 * ScalarDL Auditor pod (2vCPU / 4GB)
 * Envoy proxy
-* Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
+* Monitoring components (if you deploy monitoring components such as `kube-prometheus-stack`)
 * Kubernetes components
 
 With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Number of pods and Kubernetes worker nodes](#number-of-pods-and-kubernetes-worker-nodes).
 
-However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the Kubernetes cluster (for example, the number of worker nodes, vCPUs per node, memories per node, and ScalarDL Auditor pods), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node to decide on the worker node resources.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the Kubernetes cluster (for example, the number of worker nodes, vCPUs per node, memory per node, and ScalarDL Auditor pods), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
 
 ### Network
 
@@ -51,8 +51,7 @@ You should enable the automatic backup feature and point-in-time recovery (PITR)
 
 ### Do not deploy ScalarDL Auditor on the same Kubernetes cluster as ScalarDL Ledger
 
-For Byzantine fault detection in ScalarDL to work properly, do not deploy ScalarDL Auditor pods on the same Kubernetes clusters as the ScalarDL Ledger deployment. Please deploy ScalarDL Auditor pods on an environment other than the administrative domain (other than the Kubernetes cluster) for ScalarDL Ledger deployment.
-
+For Byzantine fault detection in ScalarDL to work properly, do not deploy ScalarDL Auditor pods on the same Kubernetes clusters as the ScalarDL Ledger deployment. Instead, you must deploy ScalarDL Auditor pods in an environment other than the administrative domain (other than the Kubernetes cluster) for the ScalarDL Ledger deployment.
 
 #### Required for production environments
 
@@ -99,7 +98,7 @@ graph LR
   A-1 --- B-1
 ```
 
-ScalarDL uses the following ports for the connections between ScalarDL Ledger and ScalarDL Auditor. You must allow these connections between ScalarDL Ledger and ScalarDL Auditor. 
+ScalarDL uses the following ports for the connections between ScalarDL Ledger and ScalarDL Auditor. You must allow these connections between ScalarDL Ledger and ScalarDL Auditor:
 
 * ScalarDL Ledger
   * 50051/TCP
@@ -110,7 +109,7 @@ ScalarDL uses the following ports for the connections between ScalarDL Ledger an
 
 ### Private key and certificate requirements
 
-When you use PKI for authentication, you must make sure that private keys and certificates that you register to ScalarDL Ledger and ScalaDL Auditor match the following requirements.
+When you use PKI for authentication, you must make sure that private keys and certificates that you register to ScalarDL Ledger and ScalaDL Auditor match the following requirements:
 
 ```console
 Algorithm       : ECDSA
@@ -126,7 +125,7 @@ The following is a checklist of recommendations when setting up a client applica
 
 ### Do not deploy your application on the same Kubernetes cluster as ScalarDL
 
-For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same Kubernetes clusters as the ScalarDL deployment. Please deploy your application on an environment other than the administrative domain (other than the Kubernetes cluster) for ScalarDL deployment.
+For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same Kubernetes clusters as the ScalarDL deployment. Instead, you must deploy your application in an environment other than the administrative domain (other than the Kubernetes cluster) for the ScalarDL deployment.
 
 #### Required for production environments
 
@@ -170,3 +169,4 @@ graph LR
 ### Checklist for the client applications that access ScalarDL Ledger
 
 You also must make sure that you satisfy the [Production checklist: Client applications that access ScalarDL Ledger](./ProductionChecklistForScalarDLLedger.md#production-checklist-client-applications-that-access-scalardl-ledger).
+
