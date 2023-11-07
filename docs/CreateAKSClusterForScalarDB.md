@@ -42,12 +42,12 @@ In other words, the following components could run on one worker node:
 * ScalarDB Server pod (2vCPU / 4GB)
 * Envoy proxy
 * Your application pods (if you choose to run your application's pods on the same worker node)
-* Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
+* Monitoring components (if you deploy monitoring components such as `kube-prometheus-stack`)
 * Kubernetes components
 
 With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Create at least three worker nodes and three pods](#create-at-least-three-worker-nodes-and-three-pods).
 
-However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the AKS cluster (for example, the number of worker nodes, vCPUs per node, memories per node, ScalarDB Server pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node to decide on the worker node resources.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for a production environment. You should also consider the resources of the AKS cluster (for example, the number of worker nodes, vCPUs per node, memory per node, ScalarDB Server pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
 
 ### Create a node pool for ScalarDB Server pods
 
@@ -82,7 +82,7 @@ The Azure support and engineering teams, however, do support Azure CNI. So, if y
 
 You should restrict unused connections in ScalarDB Server. To restrict unused connections, you can use some security features in Azure, like [network security groups](https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview).
 
-The connections (ports) that ScalarDB Server uses by default are as follows.
+The connections (ports) that ScalarDB Server uses by default are as follows:
 
 * ScalarDB Server
     * 60051/TCP (accepts requests from a client)
@@ -94,15 +94,8 @@ The connections (ports) that ScalarDB Server uses by default are as follows.
 {% capture notice--info %}
 **Note**
 
-If you change the default listening port for ScalarDB Server in the configuration file (`database.properties`), you must allow connections by using the port that you configured.
-{% endcapture %}
-
-<div class="notice--info">{{ notice--info | markdownify }}</div>
-
-{% capture notice--info %}
-**Note**
-
-You also must allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
+- If you change the default listening port for ScalarDB Server in the configuration file (`database.properties`), you must allow connections by using the port that you configured.
+- You also must allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
