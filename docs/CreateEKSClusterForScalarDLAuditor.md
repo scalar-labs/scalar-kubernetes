@@ -19,14 +19,13 @@ When deploying ScalarDL Ledger and ScalarDL Auditor, you must:
     * Allow **connections between Ledger and Auditor** to make ScalarDL (Auditor mode) work properly.
     * For more details about these network requirements, refer to [Configure Network Peering for ScalarDL Auditor Mode](./NetworkPeeringForScalarDLAuditor.md).
 
-{% capture notice--info %}
-**Note**
+{% capture notice--warning %}
+**Attention**
 
 For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same EKS clusters as the ScalarDL Ledger and ScalarDL Auditor deployments.
-
 {% endcapture %}
 
-<div class="notice--info">{{ notice--info | markdownify }}</div>
+<div class="notice--warning">{{ notice--warning | markdownify }}</div>
 
 ## Recommendations (optional)
 
@@ -53,17 +52,17 @@ In other words, the following components could run on one worker node:
 * EKS cluster for ScalarDL Ledger
   * ScalarDL Ledger pod (2vCPU / 4GB)
   * Envoy proxy
-  * Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
+  * Monitoring components (if you deploy monitoring components such as `kube-prometheus-stack`)
   * Kubernetes components
 * EKS cluster for ScalarDL Auditor
   * ScalarDL Auditor pod (2vCPU / 4GB)
   * Envoy proxy
-  * Monitoring components (if you deploy monitoring components such `kube-prometheus-stack`)
+  * Monitoring components (if you deploy monitoring components such as `kube-prometheus-stack`)
   * Kubernetes components
 
 With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Create at least three worker nodes and three pods](#create-at-least-three-worker-nodes-and-three-pods-per-eks-cluster). And remember, for Byzantine fault detection to work properly, you cannot deploy your application pods on the same EKS clusters as the ScalarDL Ledger and ScalarDL Auditor deployments.
 
-However, three nodes with at least 4vCPU / 8GB memory resources per node is a minimum environment for production. You should also consider the resources of the EKS cluster (for example, the number of worker nodes, vCPUs per node, memories per node, ScalarDL Ledger pods, and ScalarDL Auditor pods) which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node to decide on the worker node resources.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is a minimum environment for production. You should also consider the resources of the EKS cluster (for example, the number of worker nodes, vCPUs per node, memories per node, ScalarDL Ledger pods, and ScalarDL Auditor pods), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
 
 ### Configure Cluster Autoscaler in EKS
 
@@ -79,7 +78,7 @@ You should create the EKS cluster on a private network (private subnet in a VPC)
 
 You should restrict unused connections in ScalarDL Ledger and ScalarDL Auditor. To restrict unused connections, you can use some security features in AWS, like [security groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html) and [network access control lists](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html).
 
-The connections (ports) that ScalarDL Ledger and ScalarDL Auditor use by default are as follows.
+The connections (ports) that ScalarDL Ledger and ScalarDL Auditor use by default are as follows:
 
 * ScalarDL Ledger
     * 50051/TCP (accepts requests from a client and ScalarDL Auditor)
@@ -101,15 +100,8 @@ The connections (ports) that ScalarDL Ledger and ScalarDL Auditor use by default
 {% capture notice--info %}
 **Note**
 
-If you change the default listening port for ScalarDL Ledger and ScalarDL Auditor in their configuration files (`ledger.properties` and `auditor.properties`, respectively), you must allow the connections by using the port that you configured.
-{% endcapture %}
-
-<div class="notice--info">{{ notice--info | markdownify }}</div>
-
-{% capture notice--info %}
-**Note**
-
-You also must allow the connections that EKS uses itself. For more details about Amazon EKS security group requirements, refer to [Amazon EKS security group requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html).
+- If you change the default listening port for ScalarDL Ledger and ScalarDL Auditor in their configuration files (`ledger.properties` and `auditor.properties`, respectively), you must allow the connections by using the port that you configured.
+- You must also allow the connections that EKS uses itself. For more details about Amazon EKS security group requirements, refer to [Amazon EKS security group requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html).
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
