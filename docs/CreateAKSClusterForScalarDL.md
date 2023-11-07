@@ -104,15 +104,8 @@ The connections (ports) that ScalarDL Ledger uses by default are as follows:
 {% capture notice--info %}
 **Note**
 
-If you change the default listening port for ScalarDL Ledger in the configuration file (`ledger.properties`), you must allow connections by using the port that you configured.
-{% endcapture %}
-
-<div class="notice--info">{{ notice--info | markdownify }}</div>
-
-{% capture notice--info %}
-**Note**
-
-You must also allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
+- If you change the default listening port for ScalarDL Ledger in the configuration file (`ledger.properties`), you must allow connections by using the port that you configured.
+- You must also allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
 {% endcapture %}
 
 <div class="notice--info">{{ notice--info | markdownify }}</div>
