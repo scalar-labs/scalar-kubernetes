@@ -33,10 +33,10 @@ Note that **Company** is not required, but please enter it.
    You need several container images to run Scalar products on Kubernetes, but Azure Marketplace copies only one container image at a time. So, you need to subscribe to several software plans (repeat subscribe operation) as needed.
    * Container images that you need are the following.
         * ScalarDB
+            * ScalarDB Cluster (BYOL)
             * [Deprecated] ScalarDB Server Default (2vCPU, 4GiB Memory)
             * [Deprecated] ScalarDB GraphQL Server (optional)
             * [Deprecated] ScalarDB SQL Server (optional)
-            * [Recommended / coming soon] ScalarDB Cluster
         * ScalarDL
             * ScalarDL Ledger Default (2vCPU, 4GiB Memory)
             * ScalarDL Auditor Default (2vCPU, 4GiB Memory)
@@ -56,18 +56,12 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
 
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
    You need to specify your private container registry as the value of `[].image.repository` in the custom values file.  
-   * ScalarDB Examples
-      * [Deprecated] ScalarDB Server (scalardb-custom-values.yaml)
-        ```yaml
-        scalardb:
-          image:
-            repository: "example.azurecr.io/scalarinc/scalardb-server"
-        ```
-      * [Deprecated] ScalarDB GraphQL Server (scalardb-graphql-custom-values.yaml)
-        ```yaml
-        image:
-          repository: "example.azurecr.io/scalarinc/scalardb-graphql"
-        ```
+   * ScalarDB Cluster Examples
+     ```yaml
+     scalardbCluster:
+       image:
+         repository: "example.azurecr.io/scalarinc/scalardb-cluster-node-azure-byol"
+     ```
    * ScalarDL Examples
       * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
         ```yaml
@@ -89,15 +83,10 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
         ```
 
 1. Deploy the Scalar product using the Helm Chart with the above custom values file.
-   * ScalarDB Examples
-      * [Deprecated] ScalarDB Server
-        ```console
-        helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
-        ```
-      * [Deprecated] ScalarDB GraphQL Server
-        ```console
-        helm install scalardb-graphql scalar-labs/scalardb-graphql -f scalardb-graphql-custom-values.yaml
-        ```
+   * ScalarDB Cluster Examples
+     ```console
+     helm install scalardb-cluster scalar-labs/scalardb-cluster -f scalardb-cluster-custom-values.yaml
+     ```
    * ScalarDL Examples
       * ScalarDL Ledger
         ```console
@@ -135,22 +124,14 @@ Please refer to the [Azure Container Registry documentation](https://docs.micros
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
    You need to specify your private container registry as the value of `[].image.repository` in the custom values file.  
    Also, you need to specify the `reg-acr-secrets` as the value of `[].imagePullSecrets`.
-   * ScalarDB Examples
-      * [Deprecated]  (scalardb-custom-values.yaml)
-        ```yaml
-        scalardb:
-          image:
-            repository: "example.azurecr.io/scalarinc/scalardb-server"
-          imagePullSecrets:
-            - name: "reg-acr-secrets"
-        ```
-      * [Deprecated] ScalarDB GraphQL Server (scalardb-graphql-custom-values.yaml)
-        ```yaml
-        image:
-          repository: "example.azurecr.io/scalarinc/scalardb-graphql"
-        imagePullSecrets:
-          - name: "reg-acr-secrets"
-        ```
+   * ScalarDB Cluster Examples
+     ```yaml
+     scalardbCluster:
+       image:
+         repository: "example.azurecr.io/scalarinc/scalardb-cluster-node-azure-byol"
+       imagePullSecrets:
+         - name: "reg-acr-secrets"
+     ```
    * ScalarDL Examples
       * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
         ```yaml

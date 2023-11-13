@@ -9,11 +9,12 @@ Note that some Scalar products are available under commercial licenses, and the 
 1. Access to the AWS Marketplace.
    * [ScalarDB Cluster Standard Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-jx6qxatkxuwm4)
    * [ScalarDB Cluster Premium Edition (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-djqw3zk6dwyk6)
+   * [ScalarDB Cluster (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-alcwrmw6v4cfy)
    * [ScalarDL Ledger (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-wttioaezp5j6e)
    * [ScalarDL Auditor (Pay-As-You-Go)](https://aws.amazon.com/marketplace/pp/prodview-ke3yiw4mhriuu)
-   * [[Deprecated] ScalarDB Server (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2)
    * [ScalarDL Ledger (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-3jdwfmqonx7a2)
    * [ScalarDL Auditor (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-tj7svy75gu7m6)
+   * [[Deprecated] ScalarDB Server (BYOL)](https://aws.amazon.com/marketplace/pp/prodview-rzbuhxgvqf4d2)
 
 1. Select **Continue to Subscribe**.
 
@@ -142,18 +143,12 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
 
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
    You need to specify the private container registry (ECR) of AWS Marketplace as the value of `[].image.repository` in the custom values file.  
-   * ScalarDB Examples
-      * [Deprecated] ScalarDB Server (scalardb-custom-values.yaml)
-        ```yaml
-        scalardb:
-          image:
-            repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-server"
-        ```
-      * [Deprecated] ScalarDB GraphQL Server (scalardb-graphql-custom-values.yaml)
-        ```yaml
-        image:
-          repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-graphql"
-        ```
+   * ScalarDB Cluster Examples
+     ```yaml
+     scalardbCluster:
+       image:
+         repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-byol"
+     ```
    * ScalarDL Examples
       * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
         ```yaml
@@ -181,15 +176,10 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
         ```
 
 1. Deploy the Scalar products using the Helm Chart with the above custom values files.
-   * ScalarDB Examples
-      * [Deprecated] ScalarDB Server
-        ```console
-        helm install scalardb scalar-labs/scalardb -f ./scalardb-custom-values.yaml
-        ```
-      * [Deprecated] ScalarDB GraphQL Server
-        ```console
-        helm install scalardb-graphql scalar-labs/scalardb-graphql -f scalardb-graphql-custom-values.yaml
-        ```
+   * ScalarDB Cluster Examples
+     ```console
+     helm install scalardb-cluster scalar-labs/scalardb-cluster -f scalardb-cluster-custom-values.yaml
+     ```
    * ScalarDL Examples
       * ScalarDL Ledger
         ```console
@@ -225,22 +215,14 @@ By subscribing to Scalar products in the AWS Marketplace, you can pull the conta
 1. Update the custom values file of the Helm Chart of a Scalar product you want to install.  
    You need to specify the private container registry (ECR) of AWS Marketplace as the value of `[].image.repository` in the custom values file.  
    Also, you need to specify the `reg-ecr-mp-secrets` as the value of `[].imagePullSecrets`.
-   * ScalarDB Examples
-       * [Deprecated] ScalarDB Server (scalardb-custom-values.yaml)
-         ```yaml
-         scalardb:
-           image:
-             repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-server"
-           imagePullSecrets:
-             - name: "reg-ecr-mp-secrets"
-         ```
-       * [Deprecated] ScalarDB GraphQL Server (scalardb-graphql-custom-values.yaml)
-         ```yaml
-         image:
-           repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-graphql"
-         imagePullSecrets:
-           - name: "reg-ecr-mp-secrets"
-         ```
+   * ScalarDB Cluster Examples
+     ```yaml
+     scalardbCluster:
+       image:
+         repository: "709825985650.dkr.ecr.us-east-1.amazonaws.com/scalar/scalardb-cluster-node-aws-byol"
+       imagePullSecrets:
+         - name: "reg-ecr-mp-secrets"
+     ```
    * ScalarDL Examples
        * ScalarDL Ledger (scalardl-ledger-custom-values.yaml)
          ```yaml
