@@ -17,35 +17,46 @@ When deploying ScalarDL Ledger, you must:
 * Create the AKS cluster by using Kubernetes version 1.21 or higher.
 * Configure the AKS cluster based on the version of Kubernetes and your project's requirements.
 
-### Note
+{% capture notice--warning %}
+**Attention**
 
 For Byzantine fault detection in ScalarDL to work properly, do not deploy your application pods on the same AKS cluster as the ScalarDL Ledger deployment.
+{% endcapture %}
+
+<div class="notice--warning">{{ notice--warning | markdownify }}</div>
 
 ## Recommendations (optional)
 
 The following are some recommendations for deploying ScalarDL Ledger. These recommendations are not required, so you can choose whether or not to apply these recommendations based on your needs.
 
+### Create at least three worker nodes and three pods
+
+To ensure that the AKS cluster has high availability, you should use at least three worker nodes and deploy at least three pods spread across the worker nodes. You can see the [sample configurations](../conf/scalardl-custom-values.yaml) of `podAntiAffinity` for making three pods spread across the worker nodes.
+
+{% capture notice--info %}
+**Note**
+
+If you place the worker nodes in different [availability zones](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview) (AZs), you can withstand an AZ failure.
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDL Ledger node pool
 
-From the perspective of commercial licenses, resources for one pod running ScalarDL Ledger are limited to 2vCPU / 4GB memory. In addition, we recommend deploying one ScalarDL Ledger pod and one Envoy pod on one worker node.
-
-In other words, the following components run on one worker node:
+From the perspective of commercial licenses, resources for one pod running ScalarDL Ledger are limited to 2vCPU / 4GB memory. In addition to the ScalarDL Ledger pod, Kubernetes could deploy some of the following components to each worker node:
 
 * ScalarDL Ledger pod (2vCPU / 4GB)
 * Envoy proxy
+* Monitoring components (if you deploy monitoring components such as `kube-prometheus-stack`)
 * Kubernetes components
 
-With this in mind, you should use a worker node that has 4vCPU / 8GB memory resources. We recommend running only the above components on the worker node for ScalarDL Ledger. And remember, for Byzantine fault detection to work properly, you cannot deploy your application pods on the same AKS cluster as the ScalarDL Ledger deployment.
+With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Create at least three worker nodes and three pods](#create-at-least-three-worker-nodes-and-three-pods).
 
-Note that you should configure resource limits based on your system's workload if the Envoy pod exceeds the above resource usage. In addition, you should consider scaling out the worker node and the ScalarDL Ledger pod if the ScalarDL Ledger pod exceeds the above resource usage and if latency is high (throughput is low) in your system.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum environment for production. You should also consider the resources of the AKS cluster (for example, the number of worker nodes, vCPUs per node, memory per node, and ScalarDL Ledger pods), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
 
 ### Create a node pool for ScalarDL Ledger pods
 
 AKS creates one system node pool named **agentpool** that is preferred for system pods (used to keep AKS running) by default. We recommend creating another node pool with **user** mode for ScalarDL Ledger pods and deploying ScalarDL Ledger pods on this additional node pool.
-
-### Create a node pool for monitoring components (kube-prometheus-stack and loki-stack)
-
-We recommend running only pods related to ScalarDL Ledger on the worker node for ScalarDL Ledger. If you want to run monitoring pods (e.g., Prometheus, Grafana, Loki, etc.) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same AKS cluster, you should create other node pools for monitoring pods.
 
 ### Configure cluster autoscaler in AKS
 
@@ -72,15 +83,11 @@ The Azure support and engineering teams, however, do support Azure CNI. So, if y
 * [Use kubenet networking with your own IP address ranges in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-kubenet)
 * [Configure Azure CNI networking in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni)
 
-### Use three availability zones
-
-To ensure that the AKS cluster has high availability, you should use several resources in three [availability zones](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview). To achieve high availability, we recommend creating at least three worker nodes and selecting three availability zones when you create a node pool.
-
 ### Restrict connections by using some security features based on your requirements
 
 You should restrict unused connections in ScalarDL Ledger. To restrict unused connections, you can use some security features in Azure, like [network security groups](https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview).
 
-The connections (ports) that ScalarDL Ledger uses by default are as follows. Note that, if you change the default listening port for ScalarDL Ledger in the configuration file (`ledger.properties`), you must allow connections by using the port that you configured.
+The connections (ports) that ScalarDL Ledger uses by default are as follows:
 
 * ScalarDL Ledger
     * 50051/TCP (accepts requests from a client)
@@ -92,68 +99,11 @@ The connections (ports) that ScalarDL Ledger uses by default are as follows. Not
     * 50052/TCP (load balancing for ScalarDL Ledger)
     * 9001/TCP (accepts monitoring requests for Scalar Envoy itself)
 
-Note that you also must allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
+{% capture notice--info %}
+**Note**
 
-### Add a **label** to the worker node that is used for **nodeAffinity**
+- If you change the default listening port for ScalarDL Ledger in the configuration file (`ledger.properties`), you must allow connections by using the port that you configured.
+- You must also allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
+{% endcapture %}
 
-You can make a specific worker node dedicated to ScalarDL Ledger by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDL Ledger pods (e.g., application pods) on the worker node for ScalarDL Ledger. To add a label to the worker node, you can use the `kubectl` command as follows.
-
-* ScalarDL Ledger example
-  ```console
-  kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-ledger
-  ```
-
-In addition, you can set this label in the Azure portal or use the `--labels` flag of the [az aks nodepool add](https://learn.microsoft.com/en-us/cli/azure/aks/nodepool?view=azure-cli-latest#az-aks-nodepool-add) command when you create a node pool. If you add this label to make specific worker nodes dedicated to ScalarDL Ledger, you must configure **nodeAffinity** in your custom values file as follows.
-
-* ScalarDL Ledger example
-  ```yaml
-  envoy:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: scalar-labs.com/dedicated-node
-                  operator: In
-                  values:
-                    - scalardl-ledger
-
-  ledger:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: scalar-labs.com/dedicated-node
-                  operator: In
-                  values:
-                    - scalardl-ledger
-  ```
-
-### Add **taint** to the worker node that is used for **toleration**
-
-You can make a specific worker node dedicated to ScalarDL Ledger by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDL Ledger pods (e.g., application pods) on the worker node for ScalarDL Ledger. To add taint to the worker node, you can use the `kubectl` command as follows.
-
-* ScalarDL Ledger example
-  ```console
-  kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardl-ledger:NoSchedule
-  ```
-
-In addition, you can set this taint in the Azure portal or use the `--node-taints` flag of the [az aks nodepool add](https://learn.microsoft.com/en-us/cli/azure/aks/nodepool?view=azure-cli-latest#az-aks-nodepool-add) command when you create a node pool. If you add this taint to make specific worker nodes dedicated to ScalarDL Ledger, you must configure **tolerations** in your custom values file as follows.
-
-* ScalarDL Ledger example
-  ```yaml
-  envoy:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardl-ledger
-
-  ledger:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardl-ledger
-  ```
+<div class="notice--info">{{ notice--info | markdownify }}</div>
