@@ -21,31 +21,35 @@ When deploying ScalarDB Server, you must:
 
 The following are some recommendations for deploying ScalarDB Server. These recommendations are not required, so you can choose whether or not to apply these recommendations based on your needs.
 
+### Create at least three worker nodes and three pods
+
+To ensure that the AKS cluster has high availability, you should use at least three worker nodes and deploy at least three pods spread across the worker nodes. You can see the [sample configurations](../conf/scalardb-custom-values.yaml) of `podAntiAffinity` for making three pods spread across the worker nodes.
+
+{% capture notice--info %}
+**Note**
+
+If you place the worker nodes in different [availability zones](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview) (AZs), you can withstand an AZ failure.
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDB Server node pool
 
-From the perspective of commercial licenses, resources for one pod running ScalarDB Server are limited to 2vCPU / 4GB memory. In addition, we recommend deploying one ScalarDB Server pod and one Envoy pod on one worker node.
-
-In other words, the following components run on one worker node:
+From the perspective of commercial licenses, resources for one pod running ScalarDB Server are limited to 2vCPU / 4GB memory. In addition to the ScalarDB Server pod, Kubernetes could deploy some of the following components to each worker node:
 
 * ScalarDB Server pod (2vCPU / 4GB)
 * Envoy proxy
+* Your application pods (if you choose to run your application's pods on the same worker node)
+* Monitoring components (if you deploy monitoring components such as `kube-prometheus-stack`)
 * Kubernetes components
 
-With this in mind, you should use a worker node that has 4vCPU / 8GB memory resources. We recommend running only the above components on the worker node for ScalarDB Server. However, if you want to run other pods on the worker node for ScalarDB Server, you should use a worker node that has more than 4vCPU / 8GB memory.
+With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Create at least three worker nodes and three pods](#create-at-least-three-worker-nodes-and-three-pods).
 
-Note that you should configure resource limits based on your system's workload if the Envoy pod exceeds the above resource usage. In addition, you should consider scaling out the worker node and the ScalarDB Server pod if the ScalarDB Server pod exceeds the above resource usage and if latency is high (throughput is low) in your system.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for production environment. You should also consider the resources of the AKS cluster (for example, the number of worker nodes, vCPUs per node, memory per node, ScalarDB Server pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
 
 ### Create a node pool for ScalarDB Server pods
 
 AKS creates one system node pool named **agentpool** that is preferred for system pods (used to keep AKS running) by default. We recommend creating another node pool with **user** mode for ScalarDB Server pods and deploying ScalarDB Server pods on this additional node pool.
-
-### Create a node pool for other, non-ScalarDB Server application pods
-
-We recommend running only ScalarDB Server pods on the worker node (node pool) for ScalarDB Server. If you want to run other application pods on the same AKS cluster, you should create other node pools for your application pods.
-
-### Create a node pool for monitoring components (kube-prometheus-stack and loki-stack)
-
-We recommend running only ScalarDB Server pods on the worker node (node pool) for ScalarDB Server. If you want to run monitoring pods (e.g., Prometheus, Grafana, Loki, etc.) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same AKS cluster, you should create other node pools for monitoring pods.
 
 ### Configure cluster autoscaler in AKS
 
@@ -72,15 +76,11 @@ The Azure support and engineering teams, however, do support Azure CNI. So, if y
 * [Use kubenet networking with your own IP address ranges in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-kubenet)
 * [Configure Azure CNI networking in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni)
 
-### Use three availability zones
-
-To ensure that the AKS cluster has high availability, you should use several resources in three [availability zones](https://learn.microsoft.com/en-us/azure/availability-zones/az-overview). To achieve high availability, we recommend creating at least three worker nodes and selecting three availability zones when you create a node pool.
-
 ### Restrict connections by using some security features based on your requirements
 
 You should restrict unused connections in ScalarDB Server. To restrict unused connections, you can use some security features in Azure, like [network security groups](https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview).
 
-The connections (ports) that ScalarDB Server uses by default are as follows. Note that, if you change the default listening port for ScalarDB Server in the configuration file (`database.properties`), you must allow connections by using the port that you configured.
+The connections (ports) that ScalarDB Server uses by default are as follows:
 
 * ScalarDB Server
     * 60051/TCP (accepts requests from a client)
@@ -89,68 +89,12 @@ The connections (ports) that ScalarDB Server uses by default are as follows. Not
     * 60051/TCP (load balancing for ScalarDB Server)
     * 9001/TCP (accepts monitoring requests for Scalar Envoy itself)
 
-Note that you also must allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
+{% capture notice--info %}
+**Note**
 
-### Add a **label** to the worker node that is used for **nodeAffinity**
+- If you change the default listening port for ScalarDB Server in the configuration file (`database.properties`), you must allow connections by using the port that you configured.
+- You must also allow the connections that AKS uses itself. For more details about AKS traffic requirements, refer to [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/limit-egress-traffic).
+{% endcapture %}
 
-You can make a specific worker node dedicated to ScalarDB Server by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDB Server pods (e.g., application pods) on the worker node for ScalarDB Server. To add a label to the worker node, you can use the `kubectl` command as follows.
+<div class="notice--info">{{ notice--info | markdownify }}</div>
 
-* ScalarDB Server example
-  ```console
-  kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardb
-  ```
-
-In addition, you can set this label in the Azure portal or use the `--labels` flag of the [az aks nodepool add](https://learn.microsoft.com/en-us/cli/azure/aks/nodepool?view=azure-cli-latest#az-aks-nodepool-add) command when you create a node pool. If you add this label to make specific worker nodes dedicated to ScalarDB Server, you must configure **nodeAffinity** in your custom values file as follows.
-
-* ScalarDB Server example
-  ```yaml
-  envoy:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: scalar-labs.com/dedicated-node
-                  operator: In
-                  values:
-                    - scalardb
-
-  scalardb:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: scalar-labs.com/dedicated-node
-                  operator: In
-                  values:
-                    - scalardb
-  ```
-
-### Add **taint** to the worker node that is used for **toleration**
-
-You can make a specific worker node dedicated to ScalarDB Server by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDB Server pods (e.g., application pods) on the worker node for ScalarDB Server. To add taint to the worker node, you can use the `kubectl` command as follows.
-
-* ScalarDB Server example
-  ```console
-  kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardb:NoSchedule
-  ```
-
-In addition, you can set this taint in the Azure portal or use the `--node-taints` flag of the [az aks nodepool add](https://learn.microsoft.com/en-us/cli/azure/aks/nodepool?view=azure-cli-latest#az-aks-nodepool-add) command when you create a node pool. If you add this taint to make specific worker nodes dedicated to ScalarDB Server, you must configure **tolerations** in your custom values file as follows.
-
-* ScalarDB Server example
-  ```yaml
-  envoy:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardb
-
-  scalardb:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardb
-  ```

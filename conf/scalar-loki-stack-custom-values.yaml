@@ -1,18 +1,4 @@
 promtail:
-
-  nodeSelector:
-    scalar-labs.com/dedicated-node: scalardb
-    # scalar-labs.com/dedicated-node: scalardl-ledger
-    # scalar-labs.com/dedicated-node: scalardl-auditor
-
-  tolerations:
-    - effect: NoSchedule
-      key: scalar-labs.com/dedicated-node
-      operator: Equal
-      value: scalardb
-      # value: scalardl-ledger
-      # value: scalardl-auditor
-
   config:
     snippets:
       # -- `scapeConfigs` is exactly the part of https://grafana.com/docs/loki/latest/clients/promtail/configuration/#scrape_configs

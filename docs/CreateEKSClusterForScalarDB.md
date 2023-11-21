@@ -1,6 +1,12 @@
 # (Deprecated) Guidelines for creating an EKS cluster for ScalarDB Server
 
-**Note:** ScalarDB Server is now deprecated. Please use [ScalarDB Cluster](./ManualDeploymentGuideScalarDBClusterOnEKS.md) instead.
+{% capture notice--warning %}
+**Attention**
+
+ScalarDB Server is now deprecated. Please use [ScalarDB Cluster](./ManualDeploymentGuideScalarDBClusterOnEKS.md) instead.
+{% endcapture %}
+
+<div class="notice--warning">{{ notice--warning | markdownify }}</div>
 
 This document explains the requirements and recommendations for creating an Amazon Elastic Kubernetes Service (EKS) cluster for ScalarDB Server deployment. For details on how to deploy ScalarDB Server on an EKS cluster, see [Deploy ScalarDB Server on Amazon EKS](./ManualDeploymentGuideScalarDBServerOnEKS.md).
 
@@ -19,27 +25,31 @@ When deploying ScalarDB Server, you must:
 
 The following are some recommendations for deploying ScalarDB Server. These recommendations are not required, so you can choose whether or not to apply these recommendations based on your needs.
 
+### Create at least three worker nodes and three pods
+
+To ensure that the EKS cluster has high availability, you should use at least three worker nodes and deploy at least three pods spread across the worker nodes. You can see the [sample configurations](../conf/scalardb-custom-values.yaml) of `podAntiAffinity` for making three pods spread across the worker nodes.
+
+{% capture notice--info %}
+**Note**
+
+If you place the worker nodes in different [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) (AZs), you can withstand an AZ failure.
+{% endcapture %}
+
+<div class="notice--info">{{ notice--info | markdownify }}</div>
+
 ### Use 4vCPU / 8GB memory nodes for the worker node in the ScalarDB Server node group
 
-From the perspective of commercial licenses, resources for one pod running ScalarDB Server are limited to 2vCPU / 4GB memory. In addition, we recommend deploying one ScalarDB Server pod and one Envoy pod on one worker node.
-
-In other words, the following components run on one worker node:
+From the perspective of commercial licenses, resources for one pod running ScalarDB Server are limited to 2vCPU / 4GB memory. In addition to the ScalarDB Server pod, Kubernetes could deploy some of the following components to each worker node:
 
 * ScalarDB Server pod (2vCPU / 4GB)
 * Envoy proxy
+* Your application pods (if you choose to run your application's pods on the same worker node)
+* Monitoring components (if you deploy monitoring components such as `kube-prometheus-stack`)
 * Kubernetes components
 
-With this in mind, you should use a worker node that has 4vCPU / 8GB memory resources. We recommend running only the above components on the worker node for ScalarDB Server. However, if you want to run other pods on the worker node for ScalarDB Server, you should use a worker node that has more than 4vCPU / 8GB memory.
+With this in mind, you should use a worker node that has at least 4vCPU / 8GB memory resources and use at least three worker nodes for availability, as mentioned in [Create at least three worker nodes and three pods](#create-at-least-three-worker-nodes-and-three-pods).
 
-Note that you should configure resource limits based on your system's workload if the Envoy pod exceeds the above resource usage. In addition, you should consider scaling out the worker node and the ScalarDB Server pod if the ScalarDB Server pod exceeds the above resource usage and if latency is high (throughput is low) in your system.
-
-### Create a node group for other application pods than ScalarDB Server pods
-
-We recommend running only ScalarDB Server pods on the worker node (node group) for ScalarDB Server. If you want to run other application pods on the same EKS cluster, you should create other node groups for your application pods.
-
-### Create a node group for monitoring components (kube-prometheus-stack and loki-stack)
-
-We recommend running only pods related to ScalarDB Server on the worker node for ScalarDB Server. If you want to run monitoring pods (e.g., Prometheus, Grafana, Loki, etc.) by using [kube-prometheus-stack](./K8sMonitorGuide.md) and [loki-stack](./K8sLogCollectionGuide.md) on the same EKS cluster, you should create other node groups for monitoring pods.
+However, three nodes with at least 4vCPU / 8GB memory resources per node is the minimum for production environment. You should also consider the resources of the EKS cluster (for example, the number of worker nodes, vCPUs per node, memory per node, ScalarDB Server pods, and pods for your application), which depend on your system's workload. In addition, if you plan to scale the pods automatically by using some features like [Horizontal Pod Autoscaling (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), you should consider the maximum number of pods on the worker node when deciding the worker node resources.
 
 ### Configure Cluster Autoscaler in EKS
 
@@ -51,18 +61,11 @@ In addition, if you configure Cluster Autoscaler, you should create a subnet in 
 
 You should create the EKS cluster on a private network (private subnet in a VPC) since ScalarDB Server does not provide any services to users directly via internet access. We recommend accessing ScalarDB Server via a private network from your applications.
 
-### Use three availability zones
-
-To ensure that the EKS cluster has high availability, you should use several resources in three [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) as follows:
-
-* Create three subnets in different availability zones in the VPC.
-* Create at least three worker nodes.
-
 ### Restrict connections by using some security features based on your requirements
 
 You should restrict unused connections in ScalarDB Server. To restrict unused connections, you can use some security features in AWS, like [security groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html) and [network access control lists](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html).
 
-The connections (ports) that ScalarDB Server uses by default are as follows. Note that, if you change the default listening port for ScalarDB Server in the configuration file (`database.properties`), you must allow connections by using the port that you configured.
+The connections (ports) that ScalarDB Server uses by default are as follows:
 
 * ScalarDB Server
     * 60051/TCP (accepts requests from a client)
@@ -71,70 +74,11 @@ The connections (ports) that ScalarDB Server uses by default are as follows. Not
     * 60051/TCP (load balancing for ScalarDB Server)
     * 9001/TCP (accepts monitoring requests for Scalar Envoy itself)
 
-Note that you also must allow the connections that EKS uses itself. For more details about Amazon EKS security group requirements, refer to [Amazon EKS security group requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html).
+{% capture notice--info %}
+**Note**
 
-### Add a **label** to the worker node that is used for **nodeAffinity**
+- If you change the default listening port for ScalarDB Server in the configuration file (`database.properties`), you must allow connections by using the port that you configured.
+- You must also allow the connections that EKS uses itself. For more details about Amazon EKS security group requirements, refer to [Amazon EKS security group requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/sec-group-reqs.html).
+{% endcapture %}
 
-You can make a specific worker node dedicated to ScalarDB Server by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDB Server pods (e.g., application pods) on the worker node for ScalarDB Server. To add a label to the worker node, you can use the `kubectl` command as follows.
-
-* ScalarDB Server example
-  ```console
-  kubectl label node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardb
-  ```
-
-In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) in EKS, you can set this label when you create a managed node group. If you add this label to make specific worker nodes dedicated to ScalarDB Server, you must configure **nodeAffinity** in your custom values file as follows.
-
-* ScalarDB Server example
-  ```yaml
-  envoy:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: scalar-labs.com/dedicated-node
-                  operator: In
-                  values:
-                    - scalardb
-
-  scalardb:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: scalar-labs.com/dedicated-node
-                  operator: In
-                  values:
-                    - scalardb
-  ```
-
-### Add **taint** to the worker node that is used for **toleration**
-
-You can make a specific worker node dedicated to ScalarDB Server by using **nodeAffinity** and **taint/toleration**, which are Kubernetes features. In other words, you can avoid deploying non-ScalarDB Server pods (e.g., application pods) on the worker node for ScalarDB Server. To add taint to the worker node, you can use the `kubectl` command as follows.
-
-* ScalarDB Server example
-  ```console
-  kubectl taint node <WORKER_NODE_NAME> scalar-labs.com/dedicated-node=scalardb:NoSchedule
-  ```
-
-In addition, if you use [managed node groups](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html) in EKS, you can set this taint when you create a managed node group. For details on how to configure Kubernetes taints through managed node groups, refer to [Node taints on managed node groups](https://docs.aws.amazon.com/eks/latest/userguide/node-taints-managed-node-groups.html).
-
-If you add this taint to make specific worker nodes dedicated to ScalarDB Server, you must configure **tolerations** in your custom values file as follows.
-
-* ScalarDB Server example
-  ```yaml
-  envoy:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardb
-
-  scalardb:
-    tolerations:
-      - effect: NoSchedule
-        key: scalar-labs.com/dedicated-node
-        operator: Equal
-        value: scalardb
-  ```
+<div class="notice--info">{{ notice--info | markdownify }}</div>
