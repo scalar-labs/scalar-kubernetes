@@ -1,3 +1,12 @@
+> [!CAUTION]
+> 
+> The `docs` folder has been moved to the centralized documentation repository, [docs-internal](https://github.com/scalar-labs/docs-internal). Please update this documentation in that repository instead.
+> 
+> To view the Scalar Kubernetes documentation, visit the documentation site for the product you are using:
+> 
+> - [ScalarDB Enterprise Documentation](https://scalardb.scalar-labs.com/docs/latest/scalar-kubernetes/deploy-kubernetes/).
+> - [ScalarDL Documentation](https://scalardl.scalar-labs.com/docs/latest/scalar-kubernetes/deploy-kubernetes/).
+
 # Guidelines for creating an AKS cluster for ScalarDB Server
 
 This document explains the requirements and recommendations for creating an Azure Kubernetes Service (AKS) cluster for ScalarDB Server deployment. For details on how to deploy ScalarDB Server on an AKS cluster, see [Deploy ScalarDB Server on AKS](./ManualDeploymentGuideScalarDBServerOnAKS.md).
