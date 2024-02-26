@@ -1,6 +1,6 @@
 > [!CAUTION]
 > 
-> The `docs` folder has been moved to the centralized documentation repository, [docs-internal](https://github.com/scalar-labs/docs-internal). Please update this documentation in that repository instead.
+> The contents of the `docs` folder have been moved to the [docs-internal-orchestration](https://github.com/scalar-labs/docs-internal-orchestration) repository. Please update this documentation in that repository instead.
 > 
 > To view the Scalar Kubernetes documentation, visit the documentation site for the product you are using:
 > 
